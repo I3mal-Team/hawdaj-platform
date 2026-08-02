@@ -1,0 +1,64 @@
+#tour-guide-home {
+  // background-image: url(../../../../../assets/images/footer/footer-bg-2.svg);
+  background-position: top right;
+  background-repeat: no-repeat;
+
+  .tour-guide-second-bg {
+    // background-image: url(../../../../../assets/images/footer/footer-bg-2.svg);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+  }
+
+  .sub-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #787878;
+  }
+}
+
+@media (max-width:1024px) {
+  #tour-guide-home {
+    .title {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (max-width:767px) {
+  #tour-guide-home {
+    .title {
+      font-size: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #tour-guide-home {
+    .tour-guide-second-bg {
+      background-image: none;
+    }
+
+    .title {
+      font-size: 1.8rem;
+    }
+
+    .sub-title {
+      font-size: 1rem;
+      line-height: 26px !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    width: 10px;
+    height: 5px;
+    border-radius: 2px;
+  }
+
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    width: 15px;
+    background: #7939A7;
+  }
+
+}

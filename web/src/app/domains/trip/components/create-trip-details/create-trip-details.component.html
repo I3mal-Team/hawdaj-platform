@@ -1,0 +1,266 @@
+<div id="create-trip-details">
+  <div class="row g-0 d-flex align-items-center justify-content-center">
+    <div class="col-xl-10 col-lg-10 p-0">
+      <mat-stepper #stepper [linear]="true" (selectionChange)="changeStep($event)">
+        <ng-template matStepperIcon="edit">
+          <i class="pi pi-check text-white-color"></i>
+        </ng-template>
+        <mat-step label="Step 1" [stepControl]="priceForm">
+          <ng-template matStepLabel>
+            <h6 class="text-start fs-6 mb-0">
+              {{'createTrip.priceRange'|translate}}
+            </h6>
+          </ng-template>
+          <div class="trip-details-height">
+            <div class="container">
+              <div class="row mt-1 align-items-center">
+                <ng-container *ngIf="pricesList?.length>0; else noPrice">
+                  <p class="fs-6 mb-3 text-center">
+                    {{'trip.pleaseDecideDetails'|translate}}
+                  </p>
+                  <ng-container *ngFor="let item of pricesList">
+                    <div class="col-6 mb-3">
+                      <div class="p-3 price-content h-100 d-flex justify-content-between align-items-center"
+                        [class.price-content-selected]="item?.isSelected" (click)="toggleItemSelection(item)">
+                        <div class="d-flex flex-column gap-2 mb-2">
+                          <h5 class="fs-4-1 fw-bold mb-0 text-white-color text-capitalize" for="item">
+                            {{item?.name}}
+                          </h5>
+                          <p class="mb-0 text-muted-color d-sm-block d-none">
+                            {{item?.description | stripHtml}}
+                          </p>
+                        </div>
+                        <input class="form-check-input" type="checkbox" id="{{item.id}}" value="{{item.id}}"
+                          (click)="$event.stopPropagation()" [(ngModel)]="item.isSelected" aria-label="item">
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noPrice>
+                  <div class="py-4 mt-5 d-flex justify-content-center align-items-center gap-3 flex-column">
+                    <div class="row justify-content-center">
+                      <div class="col-md-6 col-8">
+                        <img src="assets/images/not-found/no-data.svg" appLazyLoadImage class="w-100" alt="no-data"
+                          aria-label="no-data">
+                      </div>
+                    </div>
+                    <p>{{'general.noPrice'|translate}}</p>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center gap-3 mt-md-4 mt-3">
+
+            <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+              aria-label="back to previous" (click)="backToPrevStep()"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}">
+              <img src="assets/images-v2/create-trip/icon/colored-arrow.svg" alt="Arrows" aria-label="arrows"
+                [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}">
+              {{'general.prev'|translate}}
+            </button>
+
+            <button class="btn confirm-btn d-flex justify-content-center align-items-center gap-2"
+              [class.flex-row-reverse]="currentLanguage === 'ar'"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}" aria-label="go to next" (click)="next(stepper)">
+              <img src="assets/images-v2/create-trip/icon/Arrows.svg" class="scaleX-rtl" alt="Arrows"
+                aria-label="arrows">
+              {{'general.next'|translate}}
+
+            </button>
+
+          </div>
+        </mat-step>
+        <mat-step label="Step 2" [stepControl]="tripPlanForm">
+          <ng-template matStepLabel>
+            <h6 class="text-start fs-6 mb-0">
+              {{'createTrip.tripPlan'|translate}}
+            </h6>
+          </ng-template>
+          <form [formGroup]="tripPlanForm" class="trip-details-height">
+            <div class="container d-flex flex-column align-items-center justify-content-center">
+              <p class="fs-6 mb-3 text-center">
+                {{'trip.select_places'|translate}}
+              </p>
+              <div class="row justify-content-around w-100">
+                <div class="align-items-center col-12 col-md-6 d-flex gap-2 mb-4">
+                  <label class="text-dark" for=" {{'createTrip.numOfDays'|translate}}">
+                    {{'createTrip.numOfDays'|translate}}:
+                  </label>
+                  <div class="input-content position-relative text-center w-75">
+                    <img src="assets/images-v2/create-trip/icon/calender.svg" alt="calender" aria-label="calender"
+                      class="position-absolute opacity-50">
+                    <input type="text" class="opacity-50" disabled value="{{totalDays}} {{'general.days'|translate}}"
+                      aria-label="day" id="day">
+                  </div>
+                </div>
+                <div class="align-items-center  col-12 col-md-6 d-flex gap-2 mb-4">
+
+                  <label class="text-dark" for=" {{'createTrip.numOfPlaces'|translate}}">
+                    {{'createTrip.numOfPlaces'|translate}}:
+                  </label>
+                  <div class="input-content position-relative text-center w-75">
+                    <img src="assets/images-v2/create-trip/icon/earth.svg" class="position-absolute opacity-50"
+                      alt="earth" aria-label="earth">
+                    <input type="text" class="opacity-50" disabled value="{{tripPlanForm.value.visitPlace == 'trip' ?(tripPlanForm.value.placesNum):
+                    tripPlanForm.value.placesNum 
+                     }} {{'titles.places'|translate}}" aria-label="day" id="day">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div>
+              <div class="place-num-details row gap-4 align-items-center justify-content-between w-100">
+                <div class="places-num row align-items-center justify-content-between col-lg-6 col-12 text-center">
+                  <h4>{{'createTrip.numOfPlaceTrip'|translate}}</h4>
+                </div>
+                <div class="d-flex col-lg-6 col-12 align-items-center justify-content-center flex-column">
+                  <h5>{{'labels.placesNum'|translate}} - {{ tripPlanForm?.controls?.placesNum.value }} -
+                  </h5>
+                  <div class="d-flex col-lg-6 col-12 align-items-center justify-content-center">
+                    <ng-container *ngFor="let item of items; let i = index">
+                      <label [for]="'item-' + i" class="d-flex">
+                        <ng-container *ngIf="i>0">
+                          <div class="dots d-flex align-items-center justify-content-center">
+                            <span [class.active]="i <= activeIndex"></span>
+                            <span [class.active]="i <= activeIndex"></span>
+                            <span [class.active]="i <= activeIndex"></span>
+                          </div>
+                        </ng-container>
+                        <span [class.active]="i <= activeIndex" class="number">
+                          <ng-container *ngIf="i > activeIndex">
+                            {{ item * totalDays }}
+                          </ng-container>
+                        </span>
+                      </label>
+                      <input type="radio" name="group2" [id]="'item-' + i" (click)="updateColors(i)"
+                        value="{{ item * totalDays }}" (change)="getInputValue($event)" [checked]="i === activeIndex"
+                        hidden />
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="place-num-details row gap-4 align-items-center justify-content-between w-100">
+                <div class="places-num row align-items-center justify-content-between col-lg-6 col-12 text-center">
+                  <h4>{{'createTrip.numOfPlaceDay'|translate}}</h4>
+                </div>
+                <div class="d-flex col-lg-6 col-12 align-items-center justify-content-center flex-column">
+                  <h5>{{'labels.placesNum'|translate}} -{{ tripPlanForm?.controls?.placesNum.value / totalDays }} -</h5>
+                  <div class="d-flex col-lg-6 col-12 align-items-center justify-content-center">
+
+                    <ng-container *ngFor="let item of items; let i = index">
+                      <label [for]="'item-' + i" class="d-flex">
+                        <ng-container *ngIf="i>0">
+                          <div class="dots d-flex align-items-center justify-content-center">
+                            <span [class.active]="i <= activeIndex"></span>
+                            <span [class.active]="i <= activeIndex"></span>
+                            <span [class.active]="i <= activeIndex"></span>
+                          </div>
+                        </ng-container>
+                        <span [class.active]="i <= activeIndex" class="number">
+                          <ng-container *ngIf="i > activeIndex">
+                            {{ item }}
+                          </ng-container>
+                        </span>
+                      </label>
+                      <input type="radio" name="group" [id]="'item-' + i" (click)="updateColors(i)"
+                        [value]="item * totalDays" (change)="getInputValue($event)" [checked]="i === activeIndex"
+                        hidden />
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="d-flex justify-content-center gap-3 mt-md-4 mt-3">
+            <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}" (click)="back(stepper)">
+              <img src="assets/images-v2/create-trip/icon/colored-arrow.svg" alt="Arrows" aria-label="Arrows"
+                [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}">
+              {{'general.prev'|translate}}
+
+            </button>
+            <button class="btn confirm-btn d-flex justify-content-center align-items-center gap-2 flex-row-reverse"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}" (click)="next(stepper)">
+              <img src="assets/images-v2/create-trip/icon/Arrows.svg" class="scaleX-rtl" alt="Arrows"
+                aria-label="Arrows">
+              {{'general.next'|translate}}
+
+            </button>
+          </div>
+        </mat-step>
+        <mat-step label="Step 3" [stepControl]="vehicleForm">
+          <ng-template matStepLabel>
+            <h6 class="text-start fs-6 mb-0">
+              {{'createTrip.vehiclesType'|translate}}
+            </h6>
+          </ng-template>
+          <form [formGroup]="vehicleForm" id="vehicle-types" class="trip-details-height">
+            <div class="container">
+              <p class="fs-6 mb-3 text-center">
+                {{'trip.select_transportation'|translate}}
+              </p>
+              <div class="row mt-3 justify-content-around">
+                <div class="col-md-6 col-12 mb-3">
+                  <!-- <input class="form-check-input" type="radio" (change)="onChangeVehicle()"
+                    formControlName="vehicleType" id="car" value="car"> -->
+                  <div class="p-3 vehicletype-content h-100 d-flex justify-content-between align-items-center"
+                    [class.vehicletype-selected]="vehicleForm?.value?.vehicleType === 'car'"
+                    (click)="selectVehicle('car')">
+                    <div class="d-flex align-items-center gap-4">
+                      <img src="assets/images-v2/create-trip/vehicle-types/car.png" alt="car" aria-label="cars">
+                      <div class="d-flex flex-column gap-2 mb-2">
+                        <h5 class="fs-4-1 fw-bold mb-0 text-white-color text-capitalize" for="item">
+                          {{'createTrip.landTravel'|translate}}
+                        </h5>
+                        <p class="mb-0 text-muted-color d-sm-block d-none">
+                          {{'createTrip.car'|translate}}
+                        </p>
+                      </div>
+                    </div>
+                    <input class="form-check-input" type="radio" id="car" value="car" (click)="$event.stopPropagation()"
+                      formControlName="vehicleType" aria-label="vehicle-types">
+                  </div>
+                </div>
+                <div class="col-md-6 col-12 mb-3">
+                  <div class="p-3 vehicletype-content h-100 d-flex justify-content-between align-items-center"
+                    [class.vehicletype-selected]="vehicleForm?.value?.vehicleType === 'airplane'"
+                    (click)="selectVehicle('airplane')">
+                    <div class="d-flex align-items-center gap-4">
+                      <img src="assets/images-v2/create-trip/vehicle-types/plane.png" alt="plane" aria-label="plane">
+                      <div class="d-flex flex-column gap-2 mb-2">
+                        <h5 class="fs-4-1 fw-bold mb-0 text-white-color text-capitalize" for="item">
+                          {{'createTrip.airTravel'|translate}} </h5>
+                        <p class="mb-0 text-muted-color d-sm-block d-none">
+                          {{'createTrip.plane'|translate}}
+                        </p>
+                      </div>
+                    </div>
+                    <input class="form-check-input" type="radio" id="airplane" value="airplane"
+                      (click)="$event.stopPropagation()" formControlName="vehicleType" aria-label="vehicle-types">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="d-flex justify-content-center gap-3 mt-md-4 mt-3">
+            <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}" (click)="back(stepper)">
+              <img src="assets/images-v2/create-trip/icon/colored-arrow.svg" alt="Arrows" aria-label="Arrows"
+                [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}">
+              {{'general.prev'|translate}}
+            </button>
+
+            <button class="btn confirm-btn d-flex justify-content-center align-items-center gap-2 flex-row-reverse"
+              [ngClass]="{'text-truncate': currentLanguage === 'ru'}" (click)="next(stepper)">
+              <img src="assets/images-v2/create-trip/icon/Arrows.svg" class="scaleX-rtl" alt="Arrows"
+                aria-label="Arrows">
+              {{'general.next'|translate}}
+            </button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
+</div>

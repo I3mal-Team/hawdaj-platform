@@ -1,0 +1,20 @@
+<div id="scroll" class="d-flex flex-column justify-content-end align-items-end gap-3">
+  <!-- Start Trip Section -->
+  <div #camelContent class="w-content pointer camel-content d-none align-items-center" (click)="startTrip()">
+    <button class="btn btn-solid-main startTrip d-none d-flex align-items-center gap-2 w-0 py-2 overflow-hidden"
+            aria-label="Start Trip">
+      {{ 'general.startTrip' | translate }}
+    </button>
+    <a href="#" aria-label="Camel Icon, Start Trip"
+       class="gif-icon nav-link d-flex justify-content-center align-items-center rounded-circle position-relative shadow camel-hover">
+      <img src="assets/images/camel.gif" width="55" height="55" alt="Animated Camel Icon">
+    </a>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <div #progress id="progress" class="d-flex align-items-center justify-content-center d-none mt-3" (click)="scrollTop()">
+    <button id="progress-button" class="btn" aria-label="Scroll to Top">
+      <i class="pi pi-arrow-up fs-5" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

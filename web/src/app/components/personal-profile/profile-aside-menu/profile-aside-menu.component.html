@@ -1,0 +1,46 @@
+<div class="profile-sidemenu global-card p-2 py-3">
+  <div class="px-md-2 content">
+    <ul class="p-0 d-flex flex-column gap-3 px-1">
+      <ng-container *ngFor="let item of asideMenuLinks">
+        <li *ngIf="item.type=='route'">
+          <a class="d-flex flex-column gap-2 align-items-center justify-content-center text-center py-3 px-2 nav-link"
+            [routerLink]="item.route" [routerLinkActive]="['active']" [class.active]="url.includes(item.route)">
+            <span [innerHTML]="item.icon"></span>
+            <span class="d-md-flex d-none">
+              {{item.text | translate}}
+            </span>
+          </a>
+        </li>
+        <li *ngIf="item.type=='click'">
+          <a class="d-flex flex-column gap-2 align-items-center justify-content-center text-center py-3 px-2 nav-link"
+            (click)="clickTab(item.id)">
+            <span [innerHTML]="item.icon"></span>
+            <span class="d-md-flex d-none text-break">
+              {{item.text | translate}}
+            </span>
+          </a>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <ul class="px-sm-2 p-0">
+    <li>
+      <a (click)="logOut()"
+        class="d-flex flex-column gap-2 align-items-center justify-content-center text-center py-3 px-2 nav-link text-danger">
+        <span>
+          <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0.0834417 9.56886C0.194708 9.45759 0.194706 9.34633 0.305972 9.23506L3.64394 5.89709C4.089 5.45203 4.7566 5.45203 5.20166 5.89709C5.64672 6.34215 5.64672 7.00975 5.20166 7.45481L3.75521 8.90126H8.87343C9.54102 8.90126 9.98608 9.34633 9.98608 10.0139C9.98608 10.6815 9.54102 11.1266 8.87343 11.1266H3.75521L5.20166 12.573C5.64672 13.0181 5.64672 13.6857 5.20166 14.1307C4.97913 14.3533 4.64533 14.4645 4.4228 14.4645C4.20027 14.4645 3.86647 14.3533 3.64394 14.1307L0.305972 10.7928C0.194706 10.6815 0.0834417 10.5702 0.0834417 10.459C-0.0278234 10.1252 -0.0278234 9.90265 0.0834417 9.56886Z"
+              fill="currentColor" />
+            <path
+              d="M6.09179 16.8011C7.31571 17.4687 8.6509 17.8025 9.98609 17.8025C14.3255 17.8025 17.7747 14.3533 17.7747 10.0139C17.7747 5.67455 14.3255 2.22531 9.98609 2.22531C8.6509 2.22531 7.31571 2.55911 6.09179 3.2267C5.53546 3.5605 4.86787 3.33797 4.53407 2.78164C4.20028 2.22531 4.42281 1.55772 4.97914 1.22392C6.53685 0.445063 8.20584 0 9.98609 0C15.5494 0 20 4.45063 20 10.0139C20 15.5772 15.5494 20.0278 9.98609 20.0278C8.20584 20.0278 6.53685 19.5828 4.97914 18.6926C4.42281 18.3588 4.31154 17.6912 4.53407 17.1349C4.86787 16.6898 5.53546 16.4673 6.09179 16.8011Z"
+              fill="currentColor" />
+          </svg>
+        </span>
+        <span class="d-sm-flex d-none">
+          {{'general.logout' | translate}}
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>

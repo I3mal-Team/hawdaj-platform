@@ -1,0 +1,20 @@
+<div class="testimonial position-relative ">
+  <div class="position-absolute d-flex justify-content-center align-items-center quote rounded-circle">
+    <i class="fas fa-quote-left-alt fs-4 text-main-color fw-600"></i>
+  </div>
+  <ng-container *ngIf="testimonialData?.length>0; else elseTemplate">
+    <p-carousel [value]="testimonialData" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="true"
+      [responsiveOptions]="responsiveOptions" [attr.stagePadding]="50" [autoplayInterval]="7000">
+      <ng-template let-item pTemplate="item">
+        <div>
+          <p class="text-center fs-5 fw-500 px-3">{{item?.value}}</p>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+      <p>{{'general.noData'|translate}}</p>
+    </div>
+  </ng-template>
+</div>

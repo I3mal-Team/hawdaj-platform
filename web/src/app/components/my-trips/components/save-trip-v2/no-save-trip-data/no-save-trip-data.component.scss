@@ -1,0 +1,31 @@
+.no-data {
+    background-image: url(../../../../../../assets/images-v2/create-trip/planes.jpg);
+    .trip-img {
+        width: 330px;
+        max-width: 100%;
+    }
+    p {
+        color: #7939a7 !important;
+        font-weight: 700;
+        font-size: 1.3rem !important;
+        @media (max-width: 767px) {
+            font-size: 1rem !important;
+        }
+    }
+    button {
+        padding-inline: 35px;
+        &:first-child {
+            background-color: var(--light-new-color) !important;
+            border: none !important;
+            border: 1px solid var(--light-new-color) !important;
+        }
+        &:last-child {
+            border: 1px solid var(--light-new-color) !important;
+            color: var(--light-new-color) !important;
+        }
+        @media (max-width: 767px) {
+            padding-inline: 20px;
+            font-size: 14px;
+        }
+    }
+}

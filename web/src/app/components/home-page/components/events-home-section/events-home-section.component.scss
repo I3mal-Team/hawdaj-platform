@@ -1,0 +1,29 @@
+#events-home {
+  background-image: url(../../../../../assets/images/footer/footer-bg-1.svg);
+  background-position: top right;
+  background-repeat: no-repeat;
+
+  .event-second-bg {
+    background-image: url(../../../../../assets/images/footer/footer-bg-1.svg);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+  }
+
+  .sub-title {
+    font-size: 18px;
+    color: #787878;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #events-home {
+    .title {
+      font-size: 1.8rem;
+    }
+
+    .sub-title {
+      font-size: 1rem;
+      line-height: 26px !important;
+    }
+  }
+}

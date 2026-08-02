@@ -1,0 +1,136 @@
+<main id="my-properties-listing-layout" class="my-properties-listing-layout"
+  [class.my-properties-listing-layout--ar]="currentLanguage() === 'ar'">
+  <div class="my-properties-listing-layout__content container p-0">
+    <ng-container *ngIf="!isCreateMode(); else createModeTpl">
+
+      <!-- Filters Section -->
+      <div class="my-properties-listing-layout__filters-section">
+        <app-tab-list [tabItems]="IMyPropertyTypeTabs()" [tabConfig]="tabListConfig()"
+          (tabChange)="onMyPropertyTypeTabChange($event)" class="my-properties-listing-layout__tabs">
+        </app-tab-list>
+        <div class="my-properties-listing-layout__left-actions">
+          <!-- Create Property Button -->
+          <button *ngIf="shouldShowHeaderCreateButton()" type="button" class="my-properties-listing-layout__create-btn"
+            (click)="createProperty()">
+            <app-svg-icon name="add-place-icon" />
+            <span>{{ 'general.add' | translate }}</span>
+          </button>
+
+          <!-- Search Input -->
+          <div *ngIf="shouldShowSearch()" class="my-properties-listing-layout__search-input">
+            <input type="text" class="my-properties-listing-layout__search-field" [value]="searchQuery()"
+              (input)="onSearchInput($event)" [placeholder]="'properties.locationPicker.search' | translate"
+              pInputText />
+
+            <div class="my-properties-listing-layout__search-actions">
+              <button *ngIf="searchQuery()" class="my-properties-listing-layout__clear-btn" (click)="clearSearch()"
+                type="button" [attr.aria-label]="'general.clearSearch' | translate">
+                <i class="pi pi-times text-danger"></i>
+              </button>
+
+              <button class="my-properties-listing-layout__search-btn" type="button"
+                [attr.aria-label]="'general.search' | translate">
+                <app-svg-icon name="search-icon" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Properties Cards Section -->
+      <div class="my-properties-listing-layout__cards">
+        <!-- Loading skeleton -->
+        <ng-container *ngIf="facade.isLoadingPropertiesList(); else loaded">
+          <div class="my-properties-listing-layout__cards-grid">
+            <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6]">
+              <app-skeleton type="propertiesList"></app-skeleton>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!-- Loaded Properties -->
+        <ng-template #loaded>
+          <!-- Error State -->
+          <ng-container *ngIf="facade.hasError(); else successState">
+            <div class="my-properties-listing-layout__error">
+              <p class="my-properties-listing-layout__error-message">
+                {{ facade.propertiesListErrorMessage() || 'general.errorOccurred' | translate }}
+              </p>
+            </div>
+          </ng-container>
+
+          <!-- Success State -->
+          <ng-template #successState>
+            <ng-container *ngIf="!facade.hasNoData(); else noData">
+              <div class="my-properties-listing-layout__cards-grid">
+                <!-- Places -->
+                <ng-container *ngFor="let property of facade.placesList()">
+                  <app-list-card [type]="'places'" [item]="mapPropertyToCardItem(property)" [status]="property.status"
+                    [showFavourite]="false" (deleteClicked)="deleteProperty(property)"
+                    (exploreClicked)="exploreProperty(property)">
+                  </app-list-card>
+                </ng-container>
+
+                <!-- Stores -->
+                <ng-container *ngFor="let property of facade.storesList()">
+                  <app-list-card [type]="'stores'" [item]="mapPropertyToCardItem(property)" [status]="property.status"
+                    [showFavourite]="false" (deleteClicked)="deleteProperty(property)"
+                    (exploreClicked)="exploreProperty(property)">
+                  </app-list-card>
+                </ng-container>
+
+                <!-- Events -->
+                <ng-container *ngFor="let property of facade.eventsList()">
+                  <app-list-card [type]="'events'" [item]="mapPropertyToCardItem(property)" [status]="property.status"
+                    [showFavourite]="false" (deleteClicked)="deleteProperty(property)"
+                    (exploreClicked)="exploreProperty(property)">
+                  </app-list-card>
+                </ng-container>
+
+                <!-- Zads -->
+                <ng-container *ngFor="let property of facade.zadList()">
+                  <app-list-card [type]="'restaurant'" [item]="mapPropertyToCardItem(property)"
+                    [status]="property.status" [showFavourite]="false" (deleteClicked)="deleteProperty(property)"
+                    (exploreClicked)="exploreProperty(property)">
+                  </app-list-card>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <!-- Empty State -->
+            <ng-template #noData>
+              <div class="my-properties-listing-layout__empty-state">
+                <app-svg-icon name="no-places"></app-svg-icon>
+                <p class="my-properties-listing-layout__empty-state-text">
+                  {{ getEmptyStateMessage() }}
+                </p>
+                <button *ngIf="!hasActiveSearch()" type="button" class="my-properties-listing-layout__create-btn"
+                  (click)="createProperty()">
+                  <app-svg-icon name="add-place-icon" />
+                  <span>{{ 'general.add' | translate }}</span>
+                </button>
+              </div>
+            </ng-template>
+          </ng-template>
+        </ng-template>
+      </div>
+
+      <!-- Pagination -->
+      <!-- <ng-container *ngIf="!facade.hasNoData() && !facade.hasError() && facade.total() > 0">
+        <div class="my-properties-listing-layout__pagination">
+          <app-shared-pagination [itemsPageNumber]="facade.currentPage()" [itemsListTotalCount]="facade.total()"
+            [itemsPerPageCount]="facade.perPage()" (pageChange)="onPageChange($event)">
+          </app-shared-pagination>
+        </div>
+      </ng-container> -->
+    </ng-container>
+  </div>
+</main>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" [hideTransitionOptions]="'0'" [baseZIndex]="5000000"></p-toast>
+
+<ng-template #createModeTpl>
+  <app-create-update-property-item (isSuccess)="isSuccessAdding($event)" (cancel)="cancelCreateMode()">
+  </app-create-update-property-item>
+</ng-template>

@@ -1,0 +1,17 @@
+.img-container {
+    width: 12.959rem;
+    height: 18.14263rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 1.5rem;
+
+    img {
+        height: 100%;
+        width: 100%;
+        border-radius: 1.5rem;
+        background-color: rgba(128, 128, 128, 0.289);
+    }
+    &.large {
+        width: 17.37781rem;
+        height: 26.003rem;
+    }
+}

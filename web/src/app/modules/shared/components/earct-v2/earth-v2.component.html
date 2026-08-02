@@ -1,0 +1,82 @@
+<div class="d-flex align-items-center justify-content-center flex-column">
+    <div class="content text-center">
+        <h4 class="section-title mb-3 fw-bold">{{'general.ourVisitors'|translate}}</h4>
+        <p>
+            {{'homePage.visitors'|translate}}</p>
+    </div>
+    <div class="position-relative contain">
+        <div class="img-container w-100 mt-3">
+            <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/visitors-banner/visitors-web.webp"
+                alt="earth" (load)="onImageLoad()">
+            <!-- <img ngOptimizedImage ngOptimizedImage src="assets/images/home/map.svg" alt="earth"> -->
+        </div>
+        <div class="countries d-flex flex-wrap gap-2 justify-content-center align-items-center" *ngIf="isImageLoaded">
+            <div class="first d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/germany.webp"
+                    alt="germany" height="48" width="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[0]?.name}}</h3>
+                    <p>{{this.specificCountries?.[0]?.count}}</p>
+                </div>
+            </div>
+            <div class="second d-flex flex-row card position-absolute">
+                <img ngOptimizedImage ngOptimizedImage
+                    src="assets/images-v2/pages/Home/Visitors-section/countries/sa.webp" alt="sa" width="48"
+                    height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[1]?.name}}</h3>
+                    <p>{{this.specificCountries?.[1]?.count}}</p>
+                </div>
+            </div>
+            <div class="third d-flex flex-row card position-absolute">
+                <img ngOptimizedImage ngOptimizedImage
+                    src="assets/images-v2/pages/Home/Visitors-section/countries/eg.webp" alt="Egypt" width="48"
+                    height="48">
+                <div class="content">
+                    <h3 class="text-truncate">{{this.specificCountries?.[2]?.name}}</h3>
+                    <p>{{this.specificCountries?.[2]?.count}}</p>
+                </div>
+            </div>
+            <div class="fourth d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/us.webp" alt="us"
+                    width="48" height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[3]?.name}}</h3>
+                    <p>{{this.specificCountries?.[3]?.count}}</p>
+                </div>
+            </div>
+            <div class="fifth d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/russia.webp"
+                    alt="russia" width="48" height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[4]?.name}}</h3>
+                    <p>{{this.specificCountries?.[4]?.count}}</p>
+                </div>
+            </div>
+            <div class="six d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/china.webp"
+                    alt="china" width="48" height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[5]?.name}}</h3>
+                    <p>{{this.specificCountries?.[5]?.count}}</p>
+                </div>
+            </div>
+            <div class="seven d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/india.webp"
+                    alt="india" width="48" height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[6]?.name}}</h3>
+                    <p>{{this.specificCountries?.[6]?.count}}</p>
+                </div>
+            </div>
+            <div class="eight d-flex flex-row card position-absolute">
+                <img ngOptimizedImage src="assets/images-v2/pages/Home/Visitors-section/countries/uk.webp" alt=""
+                    width="48" height="48">
+                <div class="content overflow-hidden">
+                    <h3 class="text-truncate">{{this.specificCountries?.[7]?.name}}</h3>
+                    <p>{{this.specificCountries?.[7]?.count}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

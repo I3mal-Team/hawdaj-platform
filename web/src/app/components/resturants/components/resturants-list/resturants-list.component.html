@@ -1,0 +1,756 @@
+<app-header></app-header>
+<div id="restaurants">
+  <div appLazyLoadSection (sectionInView)="heroSectionInView = true" id="hero-restaurant" class="position-relative">
+    <ng-container *ngIf="heroSectionInView">
+      <div class="overlay position-absolute"></div>
+      <div class="container content position-relative">
+        <h1 class="title fw-bold w-75 w-md-100 mb-4 text-white-color">
+          "{{'restaurants.title'|translate}}"
+        </h1>
+        <div class="row gx-lg-5 m-0 align-items-center">
+          <div class="col-md-8">
+            <ng-container *ngIf="isLoadingRestaurantCategories; else noRestImg">
+              <app-skeleton [type]="'restaurantImg'"></app-skeleton>
+            </ng-container>
+            <ng-template #noRestImg>
+              <div class="">
+                <img [src]="currentCategory?.icon" alt="hero" class="w-100 hero-img"
+                  onerror="src='assets/newImages/not-found/no-img.svg'">
+              </div>
+            </ng-template>
+          </div>
+          <div class="col-md-4 mt-md-0 mt-4">
+            <ng-container *ngIf="isLoadingRestaurantCategories; else noLoadingCategory">
+              <app-skeleton [type]="'restaurantSlider'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingCategory>
+              <ng-container *ngIf="restaurantCategories?.length>0; else noDataCategories">
+                <div class="mb-md-5">
+                  <div id="carouselResturantCategories" class="carousel slide">
+                    <div class="carousel-indicators">
+                      <button *ngFor="let category of restaurantCategories; let i = index" type="button"
+                        [attr.data-bs-target]="'#carouselResturantCategories'" [attr.data-bs-slide-to]="i"
+                        [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                        [attr.aria-label]="'Slide ' + (i + 1)">
+                      </button>
+                    </div>
+                    <div class="carousel-inner">
+                      <div *ngFor="let category of restaurantCategories; let i = index" class="carousel-item"
+                        [class.active]="i === 0" [attr.data-bs-interval]="category.interval || 5000">
+                        <div class="text-center text-white-color">
+                          <h5 class="mb-3 fs-3">{{category?.name}}</h5>
+                          <p class="lh-base fs-5-2 notes">{{category?.notes}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #noDataCategories>
+                <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                  <img src="assets/images/not-found/no-data.svg" width="150px" alt="no-data">
+                  <p class="text-white-color">{{'general.noDataFound'|translate}}</p>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <section appLazyLoadSection (sectionInView)="specialitySectionInView = true" class="pb-5 bg-white-color"
+    id="speciality">
+    <ng-container *ngIf="specialitySectionInView">
+
+      <div class="container">
+        <div class="row mt-4 mx-0 align-items-center py-3 px-5 speciality-food d-md-flex d-none position-relative">
+          <div class="speciality-overlay position-absolute"></div>
+          <div class="col-4">
+            <div data-aos="fade-up" data-aos-duration="500">
+              <h2 class="text-white-color border-end mb-0 lh-base py-2">{{'restaurants.specialtyFood'|translate}}</h2>
+            </div>
+          </div>
+          <div class="col-8">
+            <p class="mb-0 text-white-color lh-lg py-3" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">
+              {{'restaurants.descriptionFood'|translate}}</p>
+          </div>
+        </div>
+        <div class="mt-4 mx-0 align-items-center py-2 px-3 speciality-food d-md-none d-block  position-relative">
+          <div class="speciality-overlay position-absolute"></div>
+          <div>
+            <h2 class="text-white-color border-bottom py-2 mb-0 lh-base text-center fs-3 fw-bold">
+              {{'restaurants.specialtyFood'|translate}}
+            </h2>
+          </div>
+          <p class="mb-0 text-white-color lh-lg py-2 text-center">{{'restaurants.descriptionFood'|translate}}</p>
+        </div>
+      </div>
+      <div id="restaurantCategory" #category>
+        <div class="container">
+          <div class="mt-5">
+            <h1 class="text-capitalize text-center fs-3 fw-bold">{{'restaurants.mostCommon'|translate}}</h1>
+            <div class="d-flex justify-content-center mb-3">
+              <img src="assets/images/stores/popularStore-vector.svg" alt="vector">
+            </div>
+            <p class="text-muted-color text-center w-50 w-md-100 m-auto px-xl-4">
+              {{'restaurants.oneOfMostCommonRestaurant'|translate}}
+            </p>
+          </div>
+
+          <!-- Start Restaurants Categories -->
+          <div class="position-relative mt-4">
+            <ng-container *ngIf="isLoadingRestaurantCategories; else noRestaurantsCategoriesLoading">
+              <app-skeleton [type]="'stores-category'"></app-skeleton>
+            </ng-container>
+            <ng-template #noRestaurantsCategoriesLoading>
+              <ng-container *ngIf="restaurantCategories?.length>0; else noStoresCategory">
+                <ng-container *ngIf="true; else noCategorySlider">
+                  <!-- <div class="carousel-wrapper position-relative"> -->
+                  <!-- <a class="category-arrow category-arrow-left d-flex justify-content-center align-items-center">
+                  <img src="assets/images/stores/left-arrow.svg" alt="left-arrow">
+                </a> -->
+                  <p-tabView [scrollable]="true">
+                    <p-tabPanel *ngFor="let item of restaurantCategories">
+                      <ng-template pTemplate="header">
+                        <div class="h-100">
+                          <div
+                            class="global-card h-100 d-flex flex-column align-items-center justify-content-center pointer tab-card position-relative"
+                            [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                            <div class="img-container">
+                              <img [src]="item?.icon" width="75" alt="storeType" class="rounded"
+                                onerror="src='assets/images/not-found/no-img.svg'">
+                            </div>
+                            <h5 class="fs-5-2 mb-0 fw-bold text-center mt-2">{{ item?.name }}</h5>
+                            <p class="text-muted-color mb-0 fs-8 text-center">{{ item?.description | stripHtml }}</p>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-tabPanel>
+                  </p-tabView>
+                  <!-- <p-carousel [value]="restaurantCategories" [numVisible]="6" [numScroll]="1" [circular]="true"
+                    [responsiveOptions]="configCategories" [style]="{ 'width': '100%' }" [showIndicators]="false"
+                    containerClass="global-card-container">
+                    <ng-template pTemplate="item" let-item>
+                      <div class="p-2 h-100">
+                        <div
+                          class="global-card h-100 d-flex flex-column align-items-center justify-content-center pointer h-100"
+                          [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                          <div class="img-container">
+                            <img [src]="item?.icon" width="75" alt="storeType" class="rounded"
+                              onerror="src='assets/images/not-found/no-img.svg'">
+                          </div>
+                          <h5 class="fs-5-2 mb-0 fw-bold text-center mt-2">{{ item?.name }}</h5>
+                          <p class="text-muted-color mb-0 fs-8 text-center">{{ item?.description }}</p>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-carousel> -->
+                  <!-- <a class="category-arrow category-arrow-right d-flex justify-content-center align-items-center">
+                  <img src="assets/images/stores/right-arrow.svg" alt="right-arrow">
+                </a> -->
+                  <!-- </div> -->
+                </ng-container>
+                <ng-template #noCategorySlider>
+                  <div class="row justify-content-center gy-4 d-sm-flex d-none ">
+                    <ng-container *ngFor="let item of restaurantCategories">
+                      <div class="col">
+                        <div
+                          class="global-card d-flex flex-column align-items-center justify-content-center pointer h-100"
+                          [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                          <div class="img-container">
+                            <img [src]="item?.icon" width="75" alt="storeType"
+                              onerror="src='assets/images/not-found/no-img.svg'">
+                          </div>
+                          <h5 class="fs-5-2 fw-bold text-center mb-0 mt-2">{{item?.name}}</h5>
+                          <p class="text-muted-color mb-0 fs-8 text-center">{{item?.description | stripHtml}}</p>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-template>
+              </ng-container>
+              <ng-template #noStoresCategory>
+                <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                  <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                  <p>{{'general.noData'|translate}}</p>
+                </div>
+              </ng-template>
+              <div *ngIf="restaurantCategoriesIds?.length>0"
+                class="d-flex align-items-center justify-content-center gap-4 my-4 shadow-sm rounded py-sm-2 py-3 px-4 category-result rounded-pill w-content m-auto flex-wrap">
+                <div class="d-flex gap-2 flex-wrap align-items-center">
+                  <h6 class="fw-bold mb-0">{{'stores.specificCategories'|translate}} :</h6>
+                  <div class="d-flex gap-2 flex-wrap align-items-center">
+                    <ng-container *ngFor="let item of selectedRestaurantCategories;let i=index">
+                      <span *ngIf="i>0 &&i<2">,</span>
+                      <span *ngIf="i<2">{{item?.name}}</span>
+                    </ng-container>
+                    <span
+                      class="num-badge d-flex justify-content-center align-items-center rounded-circle text-main-color"
+                      *ngIf="restaurantCategoriesIds?.length>=3">+{{restaurantCategoriesIds?.length-2}}</span>
+                  </div>
+                </div>
+                <a class="reset text-white-color py-1 rounded-pill px-3"
+                  (click)="resetCategories()">{{'general.reset'|translate}}</a>
+              </div>
+            </ng-template>
+          </div>
+          <!-- End Restaurants Categories -->
+        </div>
+      </div>
+    </ng-container>
+  </section>
+  <section appLazyLoadSection (sectionInView)="topRestaurantsSectionInView = true" id="topRestaurants"
+    class="mt-4 position-relative">
+    <ng-container *ngIf="topRestaurantsSectionInView">
+      <a class="p-3 text-white-color position-absolute filter d-lg-none d-block" (click)="displayFilter=true"
+        [class.d-none]="topRestaurants?.length==0&&selectedFoodCategory?.length==0&&selectedScore==null&&region==null&&city==null">
+        <i class="pi pi-filter"></i>
+      </a>
+      <p-sidebar [(visible)]="displayFilter" [position]="currentLanguage=='ar'?'left':'right'" [baseZIndex]="10000">
+        <div class="search-sm-content">
+          <a class="close-search mb-3 mt-1" (click)="displayFilter=false"></a>
+          <section id="restaurant-filter">
+            <div class="d-flex justify-content-between align-items-center gap-2 p-3">
+              <h5 class="mb-0">{{'placeholder.search'|translate}}</h5>
+              <a (click)="displayFilter=false"><i class="pi pi-times"></i></a>
+            </div>
+            <div class="p-3 bg-light d-flex align-items-center justify-content-between pointer">
+              <h2 class="fs-5-2 fw-bold m-0 d-flex gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-map-pin text-main-color">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                {{"general.nearest"|translate}}
+              </h2>
+              <!-- <p-inputSwitch (onChange)="onChangeFilter()" name="showNearestInput2" [(ngModel)]="showNearest"
+                class="showNear"></p-inputSwitch> -->
+            </div>
+            <hr class="m-0">
+            <div class="m-3">
+              <div
+                class="p-inputgroup bg-white-color px-2 border rounded-3 d-flex justify-content-between align-items-center">
+                <input type="text" name="searchInput" class="form-control bg-transparent border-0 px-1 w-75" #search2
+                  [(ngModel)]="keyword" placeholder="{{'placeholder.search'|translate}}" pInputText
+                  (keyup)="handleSearch(search2.value)">
+                <div class="d-flex align-items-center gap-2">
+                  <ng-container *ngIf="isLoadingSearch">
+                    <i class="pi pi-spin pi-spinner"></i>
+                  </ng-container>
+                  <a *ngIf="search2.value" (click)="clearSearchValue(search2)"><i
+                      class="pi pi-times text-danger"></i></a>
+                </div>
+              </div>
+            </div>
+            <hr class="m-0">
+            <div class="filter-content pt-0">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button fw-bold gap-2 justify-content-between w-100" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                      <div class="d-flex gap-2 w-100">
+                        <i class="fa fa-cutlery text-main-color"></i>
+                        {{'restaurants.foodCategories'|translate}}
+                      </div>
+                      <i class="pi pi-times pointer" *ngIf="selectedFoodCategory?.length>0" (click)="selectedFoodCategory
+                    =null;onChangeFilter()"></i>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <ng-container *ngIf="isLoadingFoodCategories; else noLoadingFoodCategories">
+                        <app-skeleton [type]="'foodCategories'"></app-skeleton>
+                      </ng-container>
+                      <ng-template #noLoadingFoodCategories>
+                        <ng-container *ngIf="foodCategories?.length>0; else noFoodData">
+                          <div *ngFor="let food of foodCategories" class="field-checkbox mb-3 d-flex gap-2">
+                            <p-checkbox name="{{food?.id}}" [(ngModel)]="selectedFoodCategory" value="cuisine"
+                              [value]="food?.id" (onChange)="onChangeFilter()" [inputId]="food?.id"
+                              [disabled]="isLoadingTopRestaurants"></p-checkbox>
+                            <label [for]="food?.id">{{food?.name}}</label>
+                          </div>
+                        </ng-container>
+                        <ng-template #noFoodData>
+                          <div
+                            class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                            <img src="assets/images/not-found/no-data.svg" width="100px" alt="no-data">
+                            <p>{{'general.noDataFound'|translate}}</p>
+                          </div>
+                        </ng-template>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed fw-bold gap-2" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      <div class="d-flex gap-2 w-100">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler text-main-color icon-tabler-stars" width="22" height="22"
+                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path
+                            d="M17.8 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                          <path
+                            d="M6.2 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                          <path
+                            d="M12 9.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                        </svg>
+                        {{'restaurants.reviewScore'|translate}}
+                      </div>
+                      <i class="pi pi-times pointer" *ngIf="selectedScore" (click)="selectedScore
+                  =null;onChangeFilter()"></i>
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <div *ngFor="let score of scores; let i = index" class="field-checkbox mb-3 d-flex gap-2">
+                        <p-radioButton [inputId]="'score' + score.rate" name="score" [value]="score?.rate"
+                          [(ngModel)]="selectedScore" (ngModelChange)="onChangeFilter()">
+                        </p-radioButton>
+                        <label [for]="'score' + score.rate" class="d-flex gap-1">
+                          <ng-container *ngFor="let starIndex of [0, 1, 2, 3, 4]">
+                            <i class="pi pi-star-fill fs-5-1" *ngIf="starIndex < (5 - i)"></i>
+                          </ng-container>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div class="py-3 d-flex align-items-center justify-content-between pointer">
+                <h2 class="fs-5-2 fw-bold m-0 d-flex gap-2 text-truncate" (click)="openRegionsModal()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-map-pin text-main-color">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  {{region?region?.name:'labels.region'|translate}}
+                </h2>
+                <div class="d-flex gap-2 align-items-baseline">
+                  <i class="pi pi-times pointer" *ngIf="region" (click)="region
+                =null;onChangeFilter()"></i>
+                  <i class="fas fa-caret-down fs-5"></i>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div class="py-3 d-flex align-items-center justify-content-between pointer"
+                [class.disabled]="region==null">
+                <h2 class="fs-5-2 fw-bold m-0 d-flex gap-2" (click)="openCityModal()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-map-pin text-main-color">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  {{city?city?.name:'labels.city'|translate}}
+                </h2>
+                <div class="d-flex gap-2 align-items-baseline">
+                  <i class="pi pi-times pointer" *ngIf="city" (click)="city
+                =null;onChangeFilter()"></i>
+                  <i class="fas fa-caret-down fs-5"></i>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between gap-3 p-3 border-top">
+              <button class="btn search text-white-color py-2 px-3 fs-5-2 w-50">
+                <i class="pi pi-search fs-6-1"></i>
+                {{'placeholder.search'|translate}}
+              </button>
+              <button (click)="clear()" class="btn border-0 clear py-2 px-2 text-center text-capitalize w-50 pointer">
+                <i class="pi pi-refresh fs-6-1"></i>
+                {{'general.reset'|translate}}
+              </button>
+            </div>
+          </section>
+        </div>
+      </p-sidebar>
+      <div class=" container">
+        <div class="mb-5">
+          <h1 class="text-capitalize text-center fs-3 fw-bold">{{'restaurants.mostPopular'|translate}}</h1>
+          <div class="d-flex justify-content-center mb-3">
+            <img src="assets/images/stores/popularStore-vector.svg" alt="vector">
+          </div>
+          <p class="fw-bold mb-0 m-auto text-center">{{topRestaurants?.length}}
+            {{'restaurants.resultsFoundedFrom'|translate}} ({{topRestaurantsTotalCount ||0}})
+          </p>
+        </div>
+        <div class="row d-flex align-items-start">
+          <div
+            [class.d-none]="topRestaurants?.length==0&&selectedFoodCategory?.length==0&&selectedScore==null&&region==null&&city==null&&keyword==null"
+            class="col-lg-3 sidebar " data-aos="fade-right" data-aos-duration="500">
+            <div class=" shadow-sm bg-white-color global-card overflow-hidden d-lg-block d-none p-0">
+              <div class="p-3 bg-light d-flex align-items-center justify-content-between pointer">
+                <h2 class="fs-5-2 fw-bold m-0 d-flex gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-map-pin text-main-color">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  {{"general.nearest"|translate}}
+                </h2>
+                <!-- <p-inputSwitch (onChange)="onChangeFilter()" name="showNearestInput" [(ngModel)]="showNearest"
+                  class="showNear"></p-inputSwitch> -->
+              </div>
+              <hr class="m-0">
+              <div class="m-3">
+                <div
+                  class="p-inputgroup bg-white-color px-2 border rounded-3  d-flex justify-content-between align-items-center">
+                  <input type="text" class="form-control bg-transparent border-0 px-1 w-75" #search
+                    [(ngModel)]="keyword" name="searchInput2" placeholder="{{'placeholder.search'|translate}}"
+                    pInputText (keyup)="handleSearch(search.value)">
+                  <div class="d-flex align-items-center gap-2">
+                    <ng-container *ngIf="isLoadingSearch">
+                      <i class="pi pi-spin pi-spinner"></i>
+                    </ng-container>
+                    <a *ngIf="search.value" (click)="clearSearchValue(search)"><i
+                        class="pi pi-times text-danger"></i></a>
+                  </div>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div class="px-3">
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button fw-bold gap-2 justify-content-between w-100" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                        <div class="d-flex gap-2 w-100">
+                          <i class="fa fa-cutlery text-main-color"></i>
+                          {{'restaurants.foodCategories'|translate}}
+                        </div>
+                        <i class="pi pi-times pointer" *ngIf="selectedFoodCategory?.length>0" (click)="selectedFoodCategory
+                      =null;onChangeFilter()"></i>
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <ng-container *ngIf="isLoadingFoodCategories; else noLoadingFoodCategories">
+                          <app-skeleton [type]="'foodCategories'"></app-skeleton>
+                        </ng-container>
+                        <ng-template #noLoadingFoodCategories>
+                          <ng-container *ngIf="foodCategories?.length>0; else noFoodData">
+                            <div *ngFor="let food of foodCategories" class="field-checkbox mb-3 d-flex gap-2">
+                              <p-checkbox name="{{food?.id}}" [(ngModel)]="selectedFoodCategory" value="cuisine"
+                                [value]="food?.id" (onChange)="onChangeFilter()" [inputId]="food?.id"
+                                [disabled]="isLoadingTopRestaurants"></p-checkbox>
+                              <label [for]="food?.id">{{food?.name}}</label>
+                            </div>
+                          </ng-container>
+                          <ng-template #noFoodData>
+                            <div
+                              class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                              <img src="assets/images/not-found/no-data.svg" width="100px" alt="no-data">
+                              <p>{{'general.noDataFound'|translate}}</p>
+                            </div>
+                          </ng-template>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed fw-bold gap-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <div class="d-flex gap-2 w-100">
+                          <svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler text-main-color icon-tabler-stars" width="22" height="22"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                              d="M17.8 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                            <path
+                              d="M6.2 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                            <path
+                              d="M12 9.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                          </svg>
+                          {{'restaurants.reviewScore'|translate}}
+                        </div>
+                        <i class="pi pi-times pointer" *ngIf="selectedScore" (click)="selectedScore
+                    =null;onChangeFilter()"></i>
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingTwo"
+                      data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <div *ngFor="let score of scores; let i = index" class="field-checkbox mb-3 d-flex gap-2">
+                          <p-radioButton [inputId]="'score' + score.rate" name="score" [value]="score?.rate"
+                            [(ngModel)]="selectedScore" (ngModelChange)="onChangeFilter()">
+                          </p-radioButton>
+                          <label [for]="'score' + score.rate" class="d-flex gap-1">
+                            <ng-container *ngFor="let starIndex of [0, 1, 2, 3, 4]">
+                              <i class="pi pi-star-fill fs-5-1" *ngIf="starIndex < (5 - i)"></i>
+                            </ng-container>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="m-0">
+                <div class="py-3 d-flex align-items-center justify-content-between pointer"
+                  (click)="openRegionsModal()">
+                  <h2 class=" fs-5-2 fw-bold m-0 d-flex gap-2 text-truncate">
+                    <svg xmlns=" http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-map-pin text-main-color">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    {{region?region?.name:'labels.region'|translate}}
+                  </h2>
+                  <div class="d-flex gap-2 align-items-baseline">
+                    <i class="pi pi-times pointer" *ngIf="region" (click)="region
+                  =null;onChangeFilter()"></i>
+                    <i class="fas fa-caret-down fs-5"></i>
+                  </div>
+                </div>
+                <hr class="m-0">
+                <div class="py-3 d-flex align-items-center justify-content-between pointer"
+                  [class.disabled]="region==null">
+                  <h2 class="fs-5-2 fw-bold m-0 d-flex gap-2" (click)="openCityModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-map-pin text-main-color">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    {{city?city?.name:'labels.city'|translate}}
+                  </h2>
+                  <div class="d-flex gap-2 align-items-baseline">
+                    <i class="pi pi-times pointer" *ngIf="city" (click)="city
+                  =null;getTopRestaurants()"></i>
+                    <i class="fas fa-caret-down fs-5"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between gap-3 p-3 border-top">
+                <button class="btn search text-white-color py-2 px-3 fs-5-2 w-50">
+                  <i class="pi pi-search fs-6-1"></i>
+                  {{'placeholder.search'|translate}}
+                </button>
+                <button (click)="clear()" class="btn border-0 clear py-2 px-2 text-center text-capitalize w-50 pointer">
+                  <i class="pi pi-refresh fs-6-1"></i>
+                  {{'general.reset'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="content1"
+            [ngClass]="topRestaurants?.length==0&&selectedFoodCategory?.length==0&&selectedScore==null&&region==null&&city==null?'col-lg-12':'col-lg-9'">
+            <div class="row">
+              <ng-container *ngIf="isLoadingTopRestaurants; else noLoadingTopCategories">
+                <app-skeleton [type]="'topCategories'"></app-skeleton>
+              </ng-container>
+              <ng-template #noLoadingTopCategories>
+                <ng-container *ngIf="topRestaurants?.length>0; else noTopCategory">
+                  <ng-container *ngFor="let item of topRestaurants;let i=index">
+                    <div class="col-xl-4 col-lg-6 col-md-6 mb-4" data-aos="fade-up" [attr.data-aos-delay]="50+ i * 50">
+                      <div
+                        class="global-card overflow-hidden p-0 h-100 position-relative d-flex  flex-column justify-content-between pointer">
+                        <div>
+                          <div
+                            class="d-flex justify-content-between align-items-center position-absolute top-0 p-2 w-100 favourite">
+                            <span *ngIf="item?.rate>3" class="rate-btn fs-8 d-flex gap-1 rounded-pill">
+                              <img ngOptimizedImage ngSrc="assets/images/icons/star.svg" alt="star" LazyImgDirective
+                                width="15" height="15">
+                              {{'general.bestChoice'|translate}}
+                            </span>
+                            <ng-container *ngIf="isUserLoggedin">
+                              <a (click)="addToFavorite(item)"
+                                class="heart-icon d-flex justify-content-center align-items-center rounded-circle me-auto"
+                                [ngClass]="item?.is_favorite?'active':''">
+                                <i class="pi text-white-color"
+                                  [ngClass]="item?.is_favorite?'pi-heart-fill':' pi-heart'"></i>
+                              </a>
+                            </ng-container>
+                          </div>
+                          <div class="overflow-hidden category-img-content w-100"
+                            [routerLink]="['/restaurants/'+item.slug]">
+                            <img [src]="item?.image" alt="img" class="w-100 category-img"
+                              onerror="src='assets/images/not-found/no-img.svg'">
+                          </div>
+                          <div class="p-3">
+                            <h5 [routerLink]="['/restaurants/'+item.slug]"
+                              class="text-capitalize fw-bold mb-2 text-truncate">{{item?.title}}</h5>
+                            <p [routerLink]="['/restaurants/'+item.slug]"
+                              class="mb-1 text-muted-color d-flex align-items-baseline gap-2">
+                              <i class="fa fa-cutlery text-main-color"></i>
+                              <span class="d-flex flex-wrap gap-1">
+                                <ng-container *ngIf="item?.food_categories?.length>0; else noFoodCategory">
+                                  <ng-container *ngFor="let food of item?.food_categories;let i=index">
+                                    <span>{{food?.name}}</span><span *ngIf="i<item?.food_categories?.length-1">,</span>
+                                  </ng-container>
+                                </ng-container>
+                                <ng-template #noFoodCategory>
+                                  {{'general.noFoodCategory'|translate}}
+                                </ng-template>
+                              </span>
+                            </p>
+                            <a class="mb-1 text-muted-color d-flex gap-2" [href]="item?.address" target="_blank">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-map-pin text-main-color">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                              </svg> {{item?.address_name||'titles.saudiArabia'| translate}}
+                            </a>
+                            <a (click)="openMap(item)"
+                              class="mb-1 text-muted-color d-flex align-items-baseline gap-1 pointer" target="_blank">
+                              <i class="pi pi-map text-main-color"></i>
+                              <span class="fs-8">{{'general.showOnMap'|translate}} <strong class="fs-6-1">
+                                  {{item?.distance}} {{'general.km'|translate}}</strong>
+                                {{'general.fromCentre'|translate}}</span>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center gap-2 px-3 pb-3"
+                          [routerLink]="['/restaurants/'+item.slug]">
+                          <div>
+                            <p class="mb-0 d-flex gap-1">
+                              <strong class="">({{item?.review}})</strong>
+                              <strong>{{'general.reviews'|translate}}</strong>
+                            </p>
+                          </div>
+                          <a class="plus-icon d-flex justify-content-center align-items-center rounded-circle"
+                            [routerLink]="['/restaurants/'+item.slug]">
+                            <i class="pi pi-angle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noTopCategory>
+                  <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                    <p>{{'general.noDataFound'|translate}}</p>
+                  </div>
+                </ng-template>
+              </ng-template>
+              <p-paginator #paginatorRestaurant *ngIf="topRestaurants?.length>0" [first]="1"
+                [rows]="nearbyRestaurantsRows" [pageLinkSize]="3" (onPageChange)="onPageChangeTopRestaurants($event)"
+                [totalRecords]="topRestaurantsTotalCount"></p-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+  <div appLazyLoadSection (sectionInView)="nearbyRestaurantsSectionInView = true" class="container pt-5"
+    id="nearbyRestaurants">
+    <ng-container *ngIf="nearbyRestaurantsSectionInView">
+      <h1 class="mb-4 fs-2 fw-bold">
+        {{'restaurants.nearbyRestaurants'|translate}}
+      </h1>
+      <div class="row">
+        <ng-container *ngIf="isLoadingNearbyRestaurants; else noLoadingNearbyRestaurants">
+          <app-skeleton [type]="'nearbyRestaurants'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingNearbyRestaurants>
+          <ng-container *ngIf="nearbyRestaurants?.length>0; else noNearbyRestaurants">
+            <ng-container *ngFor="let item of nearbyRestaurants;let i=index">
+              <div class="col-xl-4 col-lg-6 col-sm-6 mb-4" data-aos="fade-up" [attr.data-aos-delay]="50+ i * 50">
+                <div class="global-card p-0 pointer h-100">
+                  <div class=" d-flex justify-content-between align-items-center gap-2 p-3 border-bottom"
+                    [routerLink]="['/restaurants/'+item.slug]">
+                    <p-rating [(ngModel)]="item.rate" [id]="'rating3'" name="rating" [disabled]="true"
+                      [cancel]="false"></p-rating>
+                    <div class="d-flex align-items-center gap-2 ">
+                      <div>
+                        <p class="mb-0">
+                          <strong class="">({{item?.review}}) </strong>
+                          <strong>{{'general.reviews'|translate}}</strong>
+                        </p>
+                      </div>
+                      <a class="plus-icon d-flex justify-content-center align-items-center rounded-circle"
+                        [routerLink]="['/restaurants/'+item.slug]">
+                        <i class="pi pi-angle-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row p-3">
+                    <div class="col-md-4 col-sm-12 col-4 overflow-hidden" [routerLink]="['/restaurants/'+item.slug]">
+                      <div class="overflow-hidden restaurant-img-content w-100 h-100">
+                        <img [src]="item?.image" alt="img" class="w-100 restaurant-img"
+                          onerror="src='assets/images/not-found/no-img.svg'">
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-sm-12 col-8 mt-md-0 mt-sm-3 mt-0">
+                      <div class="">
+                        <h5 [routerLink]="['/restaurants/'+item.slug]"
+                          class="text-capitalize fw-bold mb-2 text-truncate">
+                          {{item?.title}}</h5>
+                        <p [routerLink]="['/restaurants/'+item.slug]"
+                          class="mb-1 text-muted-color d-flex align-items-baseline gap-2">
+                          <i class="fa fa-cutlery text-main-color"></i>
+                          <span class="d-flex flex-wrap gap-1">
+                            <ng-container *ngIf="item?.food_categories?.length>0; else noFoodCategory2">
+                              <ng-container *ngFor="let food of item?.food_categories;let i=index">
+                                <span>{{food?.name}}</span><span *ngIf="i<item?.food_categories?.length-1">,</span>
+                              </ng-container>
+                            </ng-container>
+                            <ng-template #noFoodCategory2>
+                              {{'general.noFoodCategory'|translate}}
+                            </ng-template>
+                          </span>
+                        </p>
+                        <a class="mb-1 text-muted-color text-truncate pointer" [href]="item?.address" target="_blank">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-map-pin text-main-color">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                          </svg> {{item?.address_name||'titles.saudiArabia'| translate}}
+                        </a>
+                        <a (click)="openMap(item)" class="mb-1 text-muted-color d-flex align-items-baseline gap-1">
+                          <i class="pi pi-map text-main-color"></i>
+                          <span class="fs-8">{{'general.showOnMap'|translate}} <strong class="fs-6-1">
+                              {{item?.distance}} {{'general.km'|translate}}</strong>
+                            {{'general.fromCentre'|translate}}</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-template #noNearbyRestaurants>
+            <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+              <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+              <p>{{'general.noData'|translate}}</p>
+            </div>
+          </ng-template>
+        </ng-template>
+      </div>
+      <p-paginator *ngIf="nearbyRestaurants?.length>0" [first]="1" [rows]="nearbyRestaurantsRows" [pageLinkSize]="3"
+        [totalRecords]="nearbyRestaurantsTotalCount" (onPageChange)="onPageChangeRestaurant($event)"></p-paginator>
+    </ng-container>
+  </div>
+  <div appLazyLoadSection (sectionInView)="footerSectionInView = true">
+    <ng-container *ngIf="footerSectionInView">
+      <app-new-footer></app-new-footer>
+    </ng-container>
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

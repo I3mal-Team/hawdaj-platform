@@ -1,0 +1,164 @@
+<div class="story">
+  <div class="story--content">
+    <div class="d-none d-lg-block">
+      <div class="story--content__header">
+        <div class="story--content__header--title-category">
+          <p class="story--content__header--title-category--title">
+            {{item?.title}}
+          </p>
+          <div class="story--content__header--title-category--categories">
+            <div *ngFor="let category of item?.categories; let i = index"
+              class="story--content__header--title-category--categories--category"
+              [ngStyle]="{ 'background': getCategoryBackground(i) }">
+              <ng-container *ngIf="category?.icon">
+                <div class="img-container">
+                  <img [src]="category?.icon" [alt]="category?.name">
+                </div>
+              </ng-container>
+              <p>{{category?.name}}</p>
+            </div>
+          </div>
+        </div>
+        <app-share-social [fullUrl]="fullUrl"></app-share-social>
+      </div>
+    </div>
+    <div class="story--content__content">
+      <div class="rich-text" [innerHTML]="(item?.content || item?.description || '') | safeHtml"></div>
+    </div>
+  </div>
+  <ng-container *ngIf="item?.timePeriod">
+    <div class="story--time-period">
+      <div class="story--time-period__title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.99609 17.0022L11.9031 17.0392" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M12 13.0002H17.0021" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M21.0036 8.99923H2.99609" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M7.9963 2.49609V5.49734" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M16.0002 2.49609V5.49734" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M18.0023 21.0042H5.99734C4.33965 21.0042 2.99609 19.6606 2.99609 18.0029V6.99832C2.99609 5.34063 4.33965 3.99707 5.99734 3.99707H18.0023C19.66 3.99707 21.0036 5.34063 21.0036 6.99832V18.0029C21.0036 19.6606 19.66 21.0042 18.0023 21.0042Z"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p>{{'storyDetails.timePeriod'|translate}}</p>
+      </div>
+      <div class="story--time-period__content">
+        <p>{{item?.timePeriod}}</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="item?.location">
+    <div class="story--location">
+      <div class="story--location__header">
+        <div class="story--location__title">
+          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13.1853 7.90788C13.8398 8.5624 13.8398 9.62358 13.1853 10.2781C12.5308 10.9326 11.4696 10.9326 10.8151 10.2781C10.1606 9.62358 10.1606 8.5624 10.8151 7.90788C11.4696 7.25336 12.5308 7.25336 13.1853 7.90788"
+              stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M17.4856 8.88V8.88C17.4856 10.37 16.8236 11.782 15.6796 12.736L13.8806 14.235C13.1636 14.833 12.6276 15.618 12.3326 16.504L12.0006 17.5L11.6686 16.504C11.3736 15.619 10.8376 14.833 10.1206 14.235L8.32162 12.736C7.17663 11.782 6.51562 10.37 6.51562 8.88V8.88V8.908C6.51562 5.486 9.34963 3.5 12.0006 3.5C14.6516 3.5 17.4856 5.486 17.4856 8.908"
+              stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M7 15.0977C4.591 15.7247 3 16.7877 3 17.9997C3 19.9327 7.029 21.4997 12 21.4997C16.971 21.4997 21 19.9327 21 17.9997C21 16.7877 19.409 15.7237 17 15.0977"
+              stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <p>{{'storyDetails.location'|translate}}</p>
+        </div>
+        <div class="story--location--link">
+          <a target="_blank" [href]="item?.address">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M13.1853 7.40788C13.8398 8.0624 13.8398 9.12358 13.1853 9.7781C12.5308 10.4326 11.4696 10.4326 10.8151 9.7781C10.1606 9.12358 10.1606 8.0624 10.8151 7.40788C11.4696 6.75336 12.5308 6.75336 13.1853 7.40788"
+                stroke="#3A4980" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M17.4856 8.38V8.38C17.4856 9.87 16.8236 11.282 15.6796 12.236L13.8806 13.735C13.1636 14.333 12.6276 15.118 12.3326 16.004L12.0006 17L11.6686 16.004C11.3736 15.119 10.8376 14.333 10.1206 13.735L8.32162 12.236C7.17663 11.282 6.51562 9.87 6.51562 8.38V8.38V8.408C6.51562 4.986 9.34963 3 12.0006 3C14.6516 3 17.4856 4.986 17.4856 8.408"
+                stroke="#3A4980" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M7 14.5977C4.591 15.2247 3 16.2877 3 17.4997C3 19.4327 7.029 20.9997 12 20.9997C16.971 20.9997 21 19.4327 21 17.4997C21 16.2877 19.409 15.2237 17 14.5977"
+                stroke="#3A4980" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="story--location__content">
+        <p>
+          {{item?.location}}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="item?.mainCharacters?.length >0">
+    <div class="story--main-characters">
+      <div class="story--main-characters__title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 19C2 16.8 3.8 15 6 15H10C12.2 15 14 16.8 14 19" stroke="#7939A7" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M10.5007 6.00015C11.9007 7.40015 11.9007 9.60015 10.5007 10.9002C9.10066 12.2002 6.90066 12.3002 5.60066 10.9002C4.30066 9.50015 4.20066 7.40015 5.50066 6.00015C6.80066 4.60015 9.10066 4.70015 10.5007 6.00015"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M16 14H19C20.7 14 22 15.3 22 17" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path
+            d="M19.2989 6.70039C20.2989 7.70039 20.2989 9.30039 19.2989 10.2004C18.2989 11.1004 16.6989 11.2004 15.7989 10.2004C14.8989 9.20039 14.7989 7.60039 15.7989 6.70039C16.6989 5.80039 18.2989 5.80039 19.2989 6.70039"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p>{{'storyDetails.mainCharacters'|translate}}</p>
+      </div>
+      <div class="story--main-characters__content">
+        <ul>
+          <li *ngFor="let mainCharacter of item?.mainCharacters">
+            <p>
+              {{mainCharacter?.value}}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="item?.storyImportance">
+    <div class="story--story-importance">
+      <div class="story--story-importance__title">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 7.5H17" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M12.0012 16.6628L13.5052 17.4528C13.7982 17.6068 14.1402 17.3578 14.0842 17.0318L13.7972 15.3568L15.0142 14.1718C15.2512 13.9408 15.1202 13.5388 14.7932 13.4908L13.1112 13.2468L12.3592 11.7218C12.2132 11.4248 11.7892 11.4248 11.6432 11.7218L10.8912 13.2468L9.20917 13.4918C8.88217 13.5388 8.75117 13.9418 8.98817 14.1728L10.2052 15.3578L9.91817 17.0328C9.86217 17.3588 10.2042 17.6078 10.4972 17.4538L12.0012 16.6628"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M19 3.65625H5C3.895 3.65625 3 4.55125 3 5.65625V19.5002C3 20.6052 3.895 21.5002 5 21.5002H19C20.105 21.5002 21 20.6052 21 19.5002V5.65625C21 4.55125 20.105 3.65625 19 3.65625Z"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p>{{'storyDetails.storyImportance'|translate}}</p>
+      </div>
+      <div class="story--story-importance__content">
+        <p>
+          {{item?.storyImportance}}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="item?.relevanceToPresent">
+    <div class="story--relevance-to-present">
+      <div class="story--relevance-to-present__title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M6.64479 12.9348L8.77737 13.7451C10.3802 14.3542 11.6458 15.6198 12.2549 17.2226L13.0652 19.3552C13.2127 19.7434 13.5847 20 14 20C14.4152 20 14.7873 19.7434 14.9348 19.3552L15.7451 17.2226C16.3542 15.6198 17.6198 14.3542 19.2226 13.7451L21.3552 12.9348C21.7434 12.7873 22 12.4152 22 12C22 11.5847 21.7434 11.2127 21.3552 11.0652L19.2226 10.2549C17.6198 9.64582 16.3542 8.38016 15.7451 6.77736L14.9348 4.64479C14.7873 4.25662 14.4152 4 14 4C13.5847 4 13.2127 4.25662 13.0652 4.64479L12.2549 6.77736C11.6458 8.38016 10.3802 9.64582 8.77737 10.2549L6.64479 11.0652C6.25662 11.2127 6 11.5847 6 12C6 12.4152 6.25662 12.7873 6.64479 12.9348Z"
+            stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M6 21V17" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M4 19H8" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5 7V3" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M3 5H7" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p>{{'storyDetails.relevanceToPresent'|translate}}</p>
+      </div>
+      <div class="story--relevance-to-present__content">
+        <p>
+          {{item?.relevanceToPresent}}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</div>

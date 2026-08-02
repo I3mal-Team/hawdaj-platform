@@ -1,0 +1,40 @@
+<div class="earth d-flex justify-content-center align-items-center flex-column">
+  <ng-container *ngIf="false; else noLoading">
+    <app-skeleton [type]="'earth'"></app-skeleton>
+  </ng-container>
+  <ng-template #noLoading>
+    <div class="row m-0 visitors">
+      <div class="col-xl-4 col-lg-5 col-md-12 p-0 order-lg-1 order-2">
+        <div class="bg-visitors-content h-100 p-md-5 p-4 text-white-color">
+          <h4 class="mb-3 fw-bold">{{'general.ourVisitors'|translate}}</h4>
+          <p>
+            {{'homePage.visitors'|translate}}</p>
+          <ng-container *ngIf="isLoading; else noLoading">
+            <app-skeleton [type]="'service'"></app-skeleton>
+          </ng-container>
+          <ng-template #noLoading>
+            <div class="d-flex gap-xl-5 gap-4 flex-wrap mt-4">
+              <ng-container *ngFor=" let item of countriesCounters">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <h3 class="fs-3 fw-bold w-100 text-center service-count">{{item?.count}}</h3>
+                  <p class="fw-500 fs-5-2 mb-0">{{item?.name}}</p>
+                </div>
+              </ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-7 col-md-12 p-0 my-0 m-auto position-relative order-lg-2 order-1">
+        <div class="overlay position-absolute"></div>
+        <ng-container *ngIf="isLoading; else noLoadingEarth">
+          <app-skeleton [type]="'earth2'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingEarth>
+          <div class="w-100 p-4 h-100">
+            <div id="chartdiv" #chartdiv class="w-100 h-100"></div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+</div>

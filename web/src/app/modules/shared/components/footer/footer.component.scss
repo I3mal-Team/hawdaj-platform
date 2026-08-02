@@ -1,0 +1,44 @@
+// .footer-bg {
+//   background-image: url(../../../../../assets/images/footer/bg.svg);
+//   background-repeat: no-repeat;
+//   // background-position: ;
+//   background-size: cover;
+// }
+#footer {
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 5rem;
+  // background-color: #8b008bbe;
+  clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0% 100%);
+  border-radius: 30px 50px 0 0;
+  background-image: url(../../../../../assets/newImages/restaurants/background.jpg);
+  .overlay-footer {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #8b008bd9;
+    z-index: 0;
+    clip-path: polygon(0 11%, 100% 0%, 100% 100%, 0% 100%);
+    border-radius: 30px 50px 0 0;
+  }
+  .container {
+    z-index: 1 !important;
+  }
+}
+.footerLtr {
+  // background-image: url(../../../../../assets/images/footer/footer-bg.png);
+  background-position: right top;
+}
+.footerRtl {
+  // background-image: url(../../../../../assets/images/footer/footer-bg-rtl.png);
+}
+.send {
+  right: 15px;
+  position: relative;
+}
+:host::ng-deep {
+  hr {
+    border-color: #ffe6d880 !important;
+  }
+}

@@ -1,0 +1,192 @@
+#restaurant-details {
+  overflow-x: hidden !important;
+
+  #hero-details {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    background-image: url(../../../../../assets/images/restaurants/banner-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+
+    .details-img {
+      transform: translate(-15px, -15px);
+      z-index: 1;
+      position: relative;
+      transition: all 0.3s ease-in-out;
+      height: 450px;
+      border-radius: 30px;
+      object-fit: cover;
+      // &:hover {
+      //   transform: translate(0px, 0px);
+      // }
+    }
+
+    .container-img {
+      border-radius: 30px;
+
+      &:after {
+        border-radius: 30px;
+        background-color: #fff5ef;
+        bottom: 5px;
+        content: "";
+        left: 5px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 0;
+      }
+    }
+
+    .all-social {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 10px 0 0 10px;
+      transition: all 0.3s ease-in-out;
+      background-color: #fff;
+      z-index: 3;
+
+      .pi {
+        color: var(--text-main-color);
+      }
+
+      &:hover {
+        scale: 1.05;
+        background-color: var(--bg-main-color) !important;
+
+        .pi {
+          color: var(--text-white-color);
+        }
+      }
+    }
+  }
+
+  .offer {
+    .offer-icon {
+      width: 70px;
+      height: 70px;
+      background-color: rgb(132 84 142 / 5%);
+    }
+  }
+
+  #menu {
+    .desc {
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+    }
+
+    .new {
+      background-color: var(--light-new-color);
+    }
+
+    .decor {
+      hr {
+        width: 5rem !important;
+        margin: 0 !important;
+      }
+    }
+
+    .menu-img {
+      height: 180px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .menu-border {
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+      padding-top: 3rem !important;
+    }
+  }
+
+  #offers {
+    background-color: #4720634f;
+    padding: 5rem 0 0;
+
+    .offer-img {
+      height: 350px;
+      transform: translate(-15px, -15px);
+      z-index: 1;
+      position: relative;
+      transition: all 0.3s ease-in-out;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    .container-img {
+      border-radius: 20px;
+
+      &:after {
+        border-radius: 20px;
+        background-color: rgb(252 237 255);
+        bottom: 5px;
+        content: "";
+        left: 5px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 0;
+      }
+    }
+
+    .offer-num {
+      width: 90px;
+      top: -2.5rem;
+      left: -2.5rem;
+      z-index: 2;
+
+      img {
+        width: 90px;
+      }
+    }
+
+    .offer-percentage {
+      top: 12%;
+      padding: 10px;
+    }
+
+    .moreDetails {
+      background-color:var(--light-new-color);
+      color: var(--text-white-color);
+      padding: 0.6rem 1.5rem;
+    }
+
+    .special {
+      color: var(--light-new-color);
+    }
+  }
+
+  .loadMore,
+  .moreDetails {
+    background-color: #efefef;
+    border-radius: 0 30px 30px 15px;
+  }
+}
+
+:host::ng-deep {
+  #restaurant-details {
+    .p-paginator {
+      background-color: transparent !important;
+    }
+
+    .p-paginator-pages {
+      gap: 10px;
+      display: flex;
+
+      .p-link {
+        border-radius: 50% !important;
+        background-color: transparent !important;
+        border: 1px solid #8589a08f !important;
+
+        &.p-highlight {
+          border: 1px solid #7939a7 !important;
+          color: #7939a7 !important;
+        }
+      }
+    }
+  }
+}

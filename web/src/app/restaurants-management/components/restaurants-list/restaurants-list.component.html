@@ -1,0 +1,109 @@
+<app-header></app-header>
+<div id="restaurants-page">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.zad'"
+        [largeImage]="'assets/images-v2/pages/restaurant-list/banner/zad-list-banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/restaurant-list/banner/zad-list-banner-tablet.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div appLazyLoadSection class="d-flex align-items-center justify-content-center">
+        <div id="restaurants-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" (formValues)="search($event)"
+                (fieldChanged)="onFieldChanged($event)" (clearEvent)="clearSearch($event)"
+                [searchTitle]="'home.searchRestaurant'" [defaultSelectId]="defaultSelectedType"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (formValues)="search($event)"
+        (fieldChanged)="onFieldChanged($event)" (clearEvent)="clearSearch($event)"
+        [searchTitle]="'home.searchRestaurant'" [searchSubtitle]="' '"></app-search-list-sm>
+    <!-- End search sm-->
+
+    <ng-container>
+        <!-- Start Tabs -->
+        <div appLazyLoadSection class="container section-space">
+            <app-tabs [items]="restaurantCategories" (selectedItemsChange)="onSelectedItemsChange($event)"
+                [enableAll]="true"></app-tabs>
+        </div>
+        <!-- End Tabs -->
+
+        <!--Start Restaurants List -->
+        <div appLazyLoadSection class="container m-auto">
+            <ng-container *ngIf="isLoadingTopRestaurants; else noLoadingFeatureRestaurants">
+                <app-skeleton [type]="'places-list'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingFeatureRestaurants>
+                <ng-container *ngIf="region !=null ||( keyword !==null &&  keyword !==''&&  keyword !==undefined)">
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'titles.searchResult'|translate}}
+                        </h4>
+                    </div>
+                </ng-container>
+                <div class="row g-2 mx-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                    <div *ngFor="let restaurant of topRestaurants" class="col-lg-3 col-sm-6 col-12"
+                        style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                        <app-list-card [type]="'restaurant'" [item]="restaurant"
+                            (favouriteClicked)="addToFavorite(restaurant)"></app-list-card>
+                    </div>
+                    <ng-container *ngIf="topRestaurants.length===0">
+                        <app-no-result [isWhite]="false"></app-no-result>
+                    </ng-container>
+                    <app-shared-pagination [itemsPageNumber]="topRestaurantsPage"
+                        [itemsListTotalCount]="topRestaurantsTotalCount" [itemsPerPageCount]="topRestaurantsPerPage"
+                        (pageChange)="changePage($event)"></app-shared-pagination>
+                </div>
+            </ng-template>
+        </div>
+        <!--End Restaurants List -->
+    </ng-container>
+
+    <!--Start Common Restaurants List -->
+    <div appLazyLoadSection
+        class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <h2 class="title text-center mb-lg-5 mb-2">{{'restaurants.title'|translate}}</h2>
+        <app-list-slider [items]="this.bestRestaurants.slice(0, 5)" (viewAllClicked)="handleViewAll()"
+            [link]="'/restaurants'" [type]="'restaurant'"></app-list-slider>
+    </div>
+    <!--End Common Restaurants List -->
+
+    <!--Start nearby Restaurants List -->
+    <div appLazyLoadSection class="container m-auto section-space">
+        <h2 class="subtitle fw-bold text-center mb-lg-5 mb-2">{{'restaurants.nearbyRestaurants'|translate}}</h2>
+        <ng-container *ngIf="isLoadingNearbyRestaurants; else noLoadingNearbyRestaurants">
+            <app-skeleton [type]="'neary-by-list'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingNearbyRestaurants>
+            <div class="row g-2 mx-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                <div *ngFor="let restaurant of nearbyRestaurants" class="col-lg-3 col-sm-6 col-12"
+                    style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                    <app-list-card [type]="'restaurant'" [item]="restaurant"></app-list-card>
+                </div>
+                <ng-container *ngIf="nearbyRestaurants.length===0">
+                    <app-no-result [isWhite]="false"></app-no-result>
+                </ng-container>
+                <app-shared-pagination [itemsPageNumber]="page" [itemsListTotalCount]="nearbyRestaurantsTotalCount"
+                    [itemsPerPageCount]="perPage" (pageChange)="changeNearlyPage($event)"></app-shared-pagination>
+            </div>
+        </ng-template>
+    </div>
+    <!--End nearby Restaurants List -->
+    <div appLazyLoadSection (sectionInView)="footerSectionInView = true" class="mt-5 mt-md-0">
+        <app-new-footer *ngIf="footerSectionInView"></app-new-footer>
+        <style *ngIf="footerSectionInView">
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

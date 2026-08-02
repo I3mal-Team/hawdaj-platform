@@ -1,0 +1,44 @@
+<header class="profile-settings-layout__header" role="banner">
+  <app-header></app-header>
+</header>
+
+<main id="profile-settings-layout" class="profile-settings-layout"
+  [class.profile-settings-layout--ar]="currentLanguage() === 'ar'" role="main">
+
+  <section class="profile-settings-layout__banner">
+    <app-profile-banner></app-profile-banner>
+  </section>
+
+  <section class="profile-settings-layout__featured-tabs">
+    <div class="container">
+      <app-profile-featured-tabs [tabs]="profileTabs" [selectedTabId]="currentTabIdSignal"
+        [isLoadingItems]="isLoadingSignal" (tabSelected)="onTabChange($event)">
+      </app-profile-featured-tabs>
+    </div>
+  </section>
+
+  <section #outletContainer class="profile-settings-layout__content">
+    <section class="profile-settings-layout__content">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+  </section>
+
+  <div appLazyLoadSection (sectionInView)="onSectionInView()" class="profile-settings-layout__footer-section">
+    <app-new-footer *ngIf="homeShowFooter()" class="profile-settings-layout__footer"></app-new-footer>
+    <style *ngIf="homeShowFooter()">
+      #home {
+        padding-bottom: 0 !important;
+      }
+    </style>
+  </div>
+</main>
+
+<app-scroll-top class="profile-settings-layout__scrolltop"></app-scroll-top>
+<app-overlay-loading class="profile-settings-layout__overlay"></app-overlay-loading>
+
+<p-toast class="profile-settings-layout__toast" position="top-center" [showTransitionOptions]="'0'"
+  [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="profile-settings-layout__toast" position="top-center" key="search" hideTransitionOptions
+  [baseZIndex]="5000000"></p-toast>

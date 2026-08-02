@@ -1,0 +1,60 @@
+<div class="wizard-container">
+  <!-- Responsive Stepper (Horizontal for Mobile, Vertical for Web) -->
+  <div class="stepper" [ngClass]="{'horizontal': isMobileView, 'vertical': !isMobileView}">
+    <p-steps [model]="steps" [readonly]="false" [(activeIndex)]="activeStepIndex" [class]="{'p-steps-vertical': !isMobileView}"></p-steps>
+  </div>
+
+  <!-- Stepper Content -->
+  <div class="step-content">
+    <ng-container [ngSwitch]="activeStepIndex">
+      <div *ngSwitchCase="0">
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+        <h3>Welcome to the Trip Program</h3>
+        <p>Select your trip duration to get started.</p>
+      </div>
+      <div *ngSwitchCase="1">
+        <h4>Choose Date Range</h4>
+        <!-- <p-calendar [(ngModel)]="tripDates" selectionMode="range"></p-calendar> -->
+      </div>
+      <div *ngSwitchCase="2">
+        <h4>Step 2: Personal Information</h4>
+        <!-- Form content for personal info -->
+      </div>
+      <div *ngSwitchCase="3">
+        <h4>Step 3: Travel Preferences</h4>
+        <!-- Form content for travel preferences -->
+      </div>
+      <div *ngSwitchCase="4">
+        <h4>Step 4: Confirmation</h4>
+        <p>Review and confirm your details.</p>
+      </div>
+      <div *ngSwitchCase="5">
+        <h3>Success</h3>
+        <p>Your trip program has been successfully created!</p>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Static Footer with Next/Previous buttons -->
+  <div class="stepper-footer">
+    <button pButton label="Previous" icon="pi pi-arrow-left" aria-label="Previous Step" (click)="prevStep()" [disabled]="activeStepIndex === 0"></button>
+    <button pButton label="Next" icon="pi pi-arrow-right" aria-label="Next Step" (click)="nextStep()" [disabled]="activeStepIndex === steps.length - 1"></button>
+  </div>
+</div>

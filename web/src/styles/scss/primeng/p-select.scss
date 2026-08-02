@@ -1,0 +1,83 @@
+.p-multiselect-panel .p-multiselect-header,
+.p-dropdown-panel .p-dropdown-header {
+  border: 0 !important;
+  background-color: #cecece40;
+}
+.p-scroller {
+  margin: 10px;
+}
+.p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-multiselect-filter-icon,
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter-icon {
+  left: 0.75rem;
+}
+.p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext,
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+  padding-left: 2.4rem;
+  border-radius: var(--border-input-radius);
+}
+.select-loading.p-input-icon-right > i:last-of-type {
+  right: 3rem !important;
+}
+.p-multiselect {
+  .p-multiselect-label.p-placeholder,
+  .p-multiselect-trigger-icon {
+    // color: var(--text-dark-color);
+  }
+}
+.p-dropdown {
+  .p-dropdown-label.p-placeholder,
+  .p-dropdown-trigger {
+    // color: var(--text-dark-color);
+  }
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  margin: 5px 10px 5px 0 !important;
+  background-color: white !important;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-radius: 6px;
+  }
+  &.p-highlight {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    color: var(--text-dark-color) !important;
+    border-radius: 6px;
+  }
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  background-color: var(bg-main-color);
+  border-color: #7939a7 !important;
+  background: #7939a7 !important;
+}
+.p-dropdown-panel .p-dropdown-items {
+  padding: 0;
+}
+.p-dropdown:not(.p-disabled).p-focus,
+.p-multiselect:not(.p-disabled).p-focus {
+  box-shadow: none !important;
+}
+.p-focus {
+  box-shadow: none !important;
+}
+.p-multiselect:not(.p-disabled):hover {
+  border-color: #ced4da;
+}
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 6px;
+  color: var(--text-dark-color);
+}
+.p-inputwrapper-filled .p-multiselect.p-multiselect-chip .p-multiselect-label {
+  display: flex;
+  gap: 6px;
+}
+#stores {
+  .p-dropdown-panel .p-dropdown-header {
+    background-color: #9d9dfc45 !important;
+  }
+  .p-dropdown-items-wrapper {
+    &::-webkit-scrollbar-thumb {
+      background: #9d9dfc !important;
+    }
+  }
+}

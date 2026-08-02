@@ -1,0 +1,67 @@
+#personal-info {
+  .text-main-color {
+    color: #7939A7 !important;
+  }
+
+  .btn-solid-main {
+    background-color: #7939A7 !important;
+    border-color: #7939A7 !important;
+  }
+
+  .btn-outline-main {
+    border-color: #7939A7 !important;
+    color: #7939A7 !important;
+  }
+
+  .tab-img {
+    height: 20rem;
+
+    img {
+      object-fit: cover;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-tabview {
+    .p-tabview-panels {
+      padding-top: 0 !important;
+    }
+
+    .p-tabview-nav {
+      padding: 0 !important;
+      border-width: 2px 0 0px 0 !important;
+      justify-content: center !important;
+      gap: 2rem !important;
+
+      .p-highlight {
+        .p-tabview-nav-link {
+          border-top: 2px solid #111 !important;
+          color: #111;
+        }
+      }
+
+      .p-tabview-nav-link {
+        padding-right: 0;
+        padding-left: 0;
+        border-radius: 0;
+        border-top: 2px solid transparent !important;
+        border: 0;
+        margin-top: -1px;
+        color: #777;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .tab-img {
+    height: 13rem !important;
+  }
+}
+
+@media (max-width: 567px) {
+  .tab-img {
+    height: 6rem !important;
+  }
+}

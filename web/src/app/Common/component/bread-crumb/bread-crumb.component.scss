@@ -1,0 +1,10 @@
+div {
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    background: #edf0f8;
+    color: #3a4980;
+    @media (max-width: 550px) {
+        font-size: 0.75rem !important;
+    }
+}

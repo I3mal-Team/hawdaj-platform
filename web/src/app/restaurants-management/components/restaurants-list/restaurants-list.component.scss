@@ -1,0 +1,44 @@
+#restaurants-page {
+    overflow: hidden;
+
+    .title {
+        color: #101828;
+        font-size: 3.5rem;
+        font-weight: 700;
+        @media (max-width: 1024px) {
+            font-size: 2rem;
+        }
+        @media (max-width: 767px) {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px !important;
+        }
+    }
+    .subtitle {
+        color: #371a4c;
+        @media (max-width: 1024px) {
+            font-size: 1.5rem;
+        }
+        @media (max-width: 767px) {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 20px !important;
+        }
+    }
+
+    .section-space {
+        margin-top: 7rem !important;
+        @media (max-width: 1024px) {
+            margin-top: 2rem !important;
+        }
+    }
+
+    #restaurants-search {
+        top: 26rem;
+        border-radius: 1.5rem;
+        background: url(../../../../assets/images-v2/pages/places-list/search/planes.png) no-repeat left;
+        box-shadow:
+            0px 20px 24px -4px rgba(121, 57, 167, 0.08),
+            0px 8px 8px -4px rgba(121, 57, 167, 0.03);
+    }
+}

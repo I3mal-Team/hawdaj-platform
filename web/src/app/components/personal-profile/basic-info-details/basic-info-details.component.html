@@ -1,0 +1,272 @@
+<div id="basic-info" [class.ar-content]="currentLanguage=='ar'">
+  <div class="mt-xl-5 mt-md-4 mt-4 p-0 overflow-hidden profile-data">
+    <!--Start Card Info Header -->
+    <div class="py-3 px-4 card-title d-flex justify-content-between align-items-center flex-wrap gap-3 border-bottom">
+      <h6 class="mb-0 fs-5-1 fw-bold">
+        {{'labels.personalInformation'|translate}}
+      </h6>
+      <div>
+        <div *ngIf="showDataStyleType" class="d-flex gap-3 align-items-center">
+          <a class="text-white-color" (click)="edit()">
+            <app-dynamic-svg [name]="'edit'"></app-dynamic-svg>
+          </a>
+          <div class="data-style d-flex align-items-center gap-2 p-2">
+            <a class="scaleX-rtl" [class.active]="dataStyleType=='list'" (click)="changeDateStyle('list')">
+              <app-dynamic-svg [name]="'list'"></app-dynamic-svg>
+            </a>
+            <a class="scaleX-rtl" [class.active]="dataStyleType=='grid'" (click)="changeDateStyle('grid')">
+              <app-dynamic-svg [name]="'grid'"></app-dynamic-svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Card Info Header -->
+    <ng-container *ngIf="dataStyleType=='grid'; else dataStyleTypeList">
+      <form [formGroup]="personalInfoForm" id="modal-form" aria-label="profile-form" (ngSubmit)="submit()" class="p-4">
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6">
+              <div class="mb-3">
+                <label for="firstName" class="mb-2" [class.required]="!isFormReadOnly">
+                  {{'labels.firstName'|translate}}
+                </label>
+                <input type="text" class="form-control" formControlName="firstName" autocomplete="cc-name" [min]="0"
+                  (input)="publicService?.clearValidationErrors(formControls?.firstName)"
+                  placeholder="{{'placeholder.firstName'|translate}}" [readOnly]="isFormReadOnly"
+                  [class.prevent-click]="isFormReadOnly"
+                  [class.border-red]="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                    <ng-container *ngIf="formControls?.firstName?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.firstNameRequired'|translate}}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="formControls?.firstName?.errors?.['minlength']">
+                      <span class="text-danger fs-8 d-block">
+                        {{'validations.length'|translate}}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="formControls?.firstName?.errors?.['pattern']">
+                      <span class="text-danger fs-8 d-block">
+                        {{'validations.noSpacesAtStart' | translate}}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6">
+              <div class="mb-3">
+                <label for="lastName" class="mb-2" [class.required]="!isFormReadOnly">
+                  {{'labels.lastName'|translate}}
+                </label>
+                <input type="text" class="form-control" [readOnly]="isFormReadOnly"
+                  [class.prevent-click]="isFormReadOnly" formControlName="lastName" autocomplete="cc-name" [min]="0"
+                  (input)="publicService?.clearValidationErrors(formControls?.lastName)"
+                  placeholder="{{'placeholder.lastName'|translate}}"
+                  [class.border-red]="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                    <ng-container *ngIf="formControls?.lastName?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.lastNameRequired'|translate}}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="formControls?.lastName?.errors?.['minlength']">
+                      <span class="text-danger fs-8 d-block">
+                        {{'validations.length'|translate}}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="formControls?.lastName?.errors?.['pattern']">
+                      <span class="text-danger fs-8 d-block">
+                        {{'validations.noSpacesAtStart' | translate}}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6">
+              <div class="mb-3">
+                <label for="email" class="mb-2">
+                  {{'labels.email'|translate}}
+                </label>
+                <input type="email" class="form-control" formControlName="email" autocomplete="cc-name"
+                  [readOnly]="isFormReadOnly" [class.prevent-click]="true"
+                  (input)="publicService?.clearValidationErrors(formControls?.email)"
+                  placeholder="{{'placeholder.email'|translate}}"
+                  [class.border-red]="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                    <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.emailRequired'|translate}}
+                      </span>
+                    </ng-container>
+                    <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                      <span class="text-danger fs-8 d-block">
+                        {{'validations.emailNotValid'|translate}}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mb-3">
+                <label class="mb-2" [class.required]="!isFormReadOnly">
+                  {{'labels.gender' | translate}}
+                </label>
+                <span class="p-input-icon-right w-100" [class.prevent-click]="isFormReadOnly"
+                [class.border-red]="formControls?.gender?.invalid && (formControls?.gender?.dirty || formControls?.gender?.touched)">
+                <p-dropdown [options]="genders" formControlName="gender" optionLabel="label" [filter]="false"
+                  [styleClass]="'bg-transparent w-100'" [dropdownIcon]="isFormReadOnly ? ' ' : 'fas fa-caret-down'"
+                  [virtualScroll]="true" [virtualScrollItemSize]="38" filterBy="label" appendTo="body"
+                  [placeholder]="'placeholder.select' | translate" [filterPlaceholder]="'placeholder.search' | translate"
+                  [readonly]="isLoadingGenders" scrollHeight="150px" [disabled]="isFormReadOnly"
+                  emptyMessage="{{ 'general.no_result_found' | translate }}" [showClear]="false">
+              
+                  <!-- Custom template for selected item -->
+                  <ng-template let-gender pTemplate="selectedItem">
+                    <div class="d-flex align-items-center justify-content-between w-100 mt-1">
+                      <span>{{ gender?.label}}</span>
+                      <i *ngIf="gender?.label" class="pi pi-times" 
+                         style="cursor: pointer;color: #6c757d;" 
+                         (click)="clearGender($event)"></i>
+                    </div>
+                  </ng-template>
+              
+                  <!-- Custom template for dropdown items -->
+                  <ng-template let-gender pTemplate="item">
+                    <div class="d-flex align-items-center">
+                      <span>{{ gender.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </span>              
+              
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.gender?.invalid && (formControls?.gender?.dirty || formControls?.gender?.touched)">
+                    <ng-container *ngIf="formControls?.gender?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.required_field'|translate}}
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+              <div class="mb-3">
+                <label for="phoneNumber" class="mb-2">
+                  {{'labels.phoneNumber'|translate}}
+                </label>
+                <!-- <span class="input-group-text border-0 fs-6-1 " id="basic-addon1">
+                  +966
+                </span> -->
+                
+                <input type="number" (keydown)="checkIfNumber($event)" class="form-control" [readOnly]="isFormReadOnly"
+                  [class.border-red]="formControls?.phoneNumber?.invalid && (formControls?.phoneNumber?.dirty || formControls?.phoneNumber?.touched)"
+                  [class.prevent-click]="isFormReadOnly" formControlName="phoneNumber" autocomplete="cc-name" [min]="0"
+                  (input)="publicService?.clearValidationErrors(formControls?.phoneNumber)"
+                  placeholder="{{'placeholder.phoneNumber'|translate}}">
+                <div class="mt-2">
+                  <ng-container
+                    *ngIf="formControls?.phoneNumber?.invalid && (formControls?.phoneNumber?.dirty || formControls?.phoneNumber?.touched)">
+                    <ng-container *ngIf="formControls?.phoneNumber?.errors?.['required']">
+                      <span class="text-danger fs-8">
+                        {{'validations.required_field'|translate}}
+                      </span>
+                    </ng-container>
+                    <!-- <ng-container *ngIf="formControls?.phoneNumber?.errors?.['pattern']">
+                    <span class="text-danger fs-8 d-block">
+                      {{'validations.phoneNotCorrect'|translate}}
+                    </span>
+                  </ng-container> -->
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start Social -->
+        <app-social-links [items]="currentProfileData?.social"
+          (changeSocialLinksHandler)="getSocialLinks($event)"></app-social-links>
+        <!-- End Social -->
+
+        <div class="d-flex justify-content-end align-items-center flex-wrap gap-2">
+          <button type="submit" class="btn btn-solid-main d-flex align-items-center gap-2">
+            <svg width="22" height="20" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0.6875 20.9375H24.3125V22.625H0.6875V20.9375ZM20.4312 6.59375C21.1062 5.91875 21.1062 4.90625 20.4312 4.23125L17.3937 1.19375C16.7188 0.51875 15.7063 0.51875 15.0312 1.19375L2.375 13.85V19.25H7.775L20.4312 6.59375ZM16.2125 2.375L19.25 5.4125L16.7188 7.94375L13.6812 4.90625L16.2125 2.375ZM4.0625 17.5625V14.525L12.5 6.0875L15.5375 9.125L7.1 17.5625H4.0625Z"
+                fill="#FFF" />
+            </svg>
+            <span>
+              {{'general.save'|translate}}
+            </span>
+          </button>
+
+          <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+            <i class="pi pi-times-circle"></i>
+            <span>
+              {{'general.cancel'|translate}}
+            </span>
+          </button>
+        </div>
+      </form>
+    </ng-container>
+    <ng-template #dataStyleTypeList>
+      <div class="p-4 d-flex gap-md-5 gap-4 flex-wrap">
+        <div>
+          <label for="firstName" class="mb-1 text-muted-color fw-500">
+            {{'labels.firstName'|translate}}
+          </label>
+          <p class="mb-0 fw-500">
+            {{this.personalInfo.first_name}}
+          </p>
+        </div>
+        <div>
+          <label for="lastName" class="mb-1 text-muted-color fw-500">
+            {{'labels.lastName'|translate}}
+          </label>
+          <p class="mb-0 fw-500">
+            {{this.personalInfo.last_name}}
+          </p>
+        </div>
+        <div>
+          <label for="email" class="mb-1 text-muted-color fw-500">
+            {{'labels.email'|translate}}
+          </label>
+          <p class="mb-0 fw-500">
+            {{this.personalInfo.email}}
+          </p>
+        </div>
+      </div>
+      <div class="p-4 pt-0 d-flex gap-md-5 gap-4 flex-wrap">
+        <div>
+          <label for="gender" class="mb-1 text-muted-color fw-500">
+            {{'labels.gender'|translate}}
+          </label>
+          <p class="mb-0 fw-500">
+            {{this.personalInfo.gender}}
+          </p>
+        </div>
+        <div>
+          <label for="phoneNumber" class="mb-1 text-muted-color fw-500">
+            {{'labels.phoneNumber'|translate}}
+          </label>
+          <p class="mb-0 fw-500">
+            {{this.personalInfo.phone}}
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

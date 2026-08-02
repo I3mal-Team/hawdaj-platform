@@ -1,0 +1,20 @@
+<ng-container *ngIf="isLoadingPlaceDetails; else rateSite">
+    <app-rate-site-shimmer></app-rate-site-shimmer>
+</ng-container>
+<ng-template #rateSite>
+    <div class="d-flex align-items-center justify-content-center gap-2 h-100">
+        <div>
+            <div class="img-container large"><img #img
+                    [src]="item?.galleries[0]?.file ||'assets/images-v2/rate-site/03.webp'" [alt]="item?.title"
+                    loading="lazy" onerror="this.src='assets/images-v2/rate-site/03.webp'" /></div>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center gap-3">
+            <div class="img-container"><img [src]="item?.galleries[1]?.file || 'assets/images-v2/rate-site/02.webp'"
+                    [alt]="item?.title" loading="lazy" onerror="this.src='assets/images-v2/rate-site/02.webp'">
+            </div>
+            <div class="img-container"><img [src]="item?.galleries[2]?.file || 'assets/images-v2/rate-site/01.webp'"
+                    [alt]="item?.title" loading="lazy" onerror="this.src='assets/images-v2/rate-site/01.webp'">
+            </div>
+        </div>
+    </div>
+</ng-template>

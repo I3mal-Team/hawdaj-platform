@@ -1,0 +1,47 @@
+<div id="coming-soon" class="d-flex align-items-center"
+  [style.background]="currentLanguage=='ar'?'url(../../../../../assets/images/coming-soon-rtl.svg)':'url(../../../../../assets/images/coming-soon.svg)'">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="text-white-color">
+          <h1 class="title mb-3">{{'comingSoon.comingSoon'|translate}}</h1>
+          <p class="fs-5 desc pb-5">{{'comingSoon.subscribe'|translate}}</p>
+          <form [formGroup]="form" class="mt-5" (ngSubmit)="submit()">
+            <div class="d-flex gap-3 flex-sm-nowrap flex-wrap">
+              <input type="text" placeholder="{{'placeholder.leaveInquiry'|translate}}"
+                class="form-control rounded-pill" formControlName="email"
+                (input)="publicService.clearValidationErrors(formControls?.email)">
+              <button type="submit"
+                class="btn sendMessage rounded-pill px-4 py-2 fw-500">{{'general.confirm'|translate}}</button>
+            </div>
+            <ng-container
+              *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+              <div class="mt-2">
+                <ng-container
+                  *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                  <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                    <span class="text-danger fs-8 px-2">
+                      {{'validations.emailRequired'|translate}}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                    <span class="text-danger fs-8 px-2">
+                      {{'validations.emailNotValid'|translate}}
+                    </span>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+          </form>
+          <!-- <div class="mt-4">
+            <div class="d-flex align-items-center gap-4 py-4 position-absolute bottom-0">
+              <a target="_blank"> <i class="pi pi-facebook fs-4 text-white-color"></i></a>
+              <a target="_blank"> <i class="pi pi-whatsapp fs-4 text-white-color"></i></a>
+              <a target="_blank"> <i class="pi pi-instagram fs-4 text-white-color"></i></a>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

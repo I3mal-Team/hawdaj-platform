@@ -1,0 +1,424 @@
+<app-header></app-header>
+<div id="events">
+  <div id="hero-events">
+    <div class="container hero-events-container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-1 order-2">
+          <div>
+            <div class="w-80 w-md-100">
+              <p class="text-main-color fw-bold">{{'events.stayUp'|translate}}</p>
+              <h1 class="fw-bold fs-2 mb-3">{{'events.discoverAll'|translate}}</h1>
+              <p class="text-muted-color">
+                {{'events.stay'|translate}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-2 order-1">
+          <div>
+            <img src="assets/images/events/heroSectionCards.svg" alt="heroSectionCards" class="w-100 mb-lg-0 mb-3">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-9 col-lg-10">
+          <section id="filter" class="d-lg-block d-none" #scrollTarget>
+            <form [formGroup]="filterForm">
+              <div class="row g-0">
+                <div class="col-xl-3 col-md-3 col-sm-12 mb-md-0 mb-3 border-end event-name shadow-bottom">
+                  <div class="px-3 py-3">
+                    <div class="w-100">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="filter-icon d-flex justify-content-center align-items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil-plus"
+                            width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                            <path d="M13.5 6.5l4 4" />
+                            <path d="M16 19h6" />
+                            <path d="M19 16v6" />
+                          </svg>
+                        </div>
+                        <!-- <img src="assets/images/events/name.svg" alt="name"> -->
+                        <span class="d-flex align-items-center gap-1 w-100">
+                          <input type="text" class="form-control p-0 h-auto bg-transparent border-0 w-100"
+                            formControlName="eventName" #eventName placeholder="{{'placeholder.eventName'|translate}}"
+                            (keyup)="handleSearch(eventName.value)" pInputText>
+                          <ng-container *ngIf="eventName?.value">
+                            <i (click)="clearSearchValue(eventName)" class="pi pi-times pointer"></i>
+                          </ng-container>
+                        </span>
+
+                      </div>
+                      <label for="placeName" class="fs-8 label-form">{{'events.whichEvent'|translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-12 mb-md-0 mb-3  border-end shadow-bottom">
+                  <div class="px-3 py-3">
+                    <div class="d-flex align-items-center gap-2">
+                      <div class="w-100">
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="filter-icon d-flex justify-content-center align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-plus"
+                              width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M12.5 21h-6.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v5" />
+                              <path d="M16 3v4" />
+                              <path d="M8 3v4" />
+                              <path d="M4 11h16" />
+                              <path d="M16 19h6" />
+                              <path d="M19 16v6" />
+                            </svg>
+                          </div>
+                          <p-calendar selectionMode="range" [showWeek]="true" dateFormat="dd-mm-yy"
+                            [readonlyInput]="true" formControlName="date"
+                            placeholder="{{'placeholder.selectDate'|translate}}" styleClass="event-calendar"
+                            (clickOutside)="onChangeDate()" inputStyleClass="border-0" [showIcon]="true"></p-calendar>
+                          <a *ngIf="dateRange" (click)="resetDate()"><i class="pi pi-times"></i></a>
+                        </div>
+                        <label for="region" class="fs-8 label-form">{{'events.whenYou'|translate}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-12 mb-md-0 mb-3 border-end shadow-bottom location-type">
+                  <div class="px-3 py-3">
+                    <div class="w-100">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="filter-icon d-flex justify-content-center align-items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="18"
+                            height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+                            <path d="M9 4v13" />
+                            <path d="M15 7v5.5" />
+                            <path
+                              d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z" />
+                            <path d="M19 18v.01" />
+                          </svg>
+                        </div>
+                        <!-- <img src="assets/images/events/location.svg" alt="location"> -->
+                        <span class="p-input-icon-right d-block bg-transparent w-80">
+                          <p-dropdown [options]="addressesType" formControlName="location" optionLabel="name"
+                            (onChange)="onChangeControl('location')" [filter]="true"
+                            filterPlaceholder="{{'placeholder.search' | translate}}" styleClass="border-0"
+                            [virtualScroll]="true" [virtualScrollItemSize]="40" filterBy="name" appendTo="body"
+                            [showClear]="false" scrollHeight="150px" [readonly]="isLoadingAddresses"
+                            [emptyMessage]="'general.noResultFound' | translate">
+
+                            <!-- Template for selected item -->
+                            <ng-template pTemplate="selectedItem">
+                              <div class="d-flex align-items-center justify-content-between w-100">
+                                <div>
+                                  <ng-container *ngIf="filterForm.value.location; else locPlaceholder">
+                                    {{ filterForm.value.location.name | translate }}
+                                  </ng-container>
+                                  <ng-template #locPlaceholder>
+                                    {{ 'placeholder.locType' | translate }}
+                                  </ng-template>
+                                </div>
+                                <!-- Clear Icon -->
+                                <i *ngIf="filterForm.value.location" class="pi pi-times ml-2" style="cursor: pointer;"
+                                  (click)="clearLocation()"></i>
+                              </div>
+                            </ng-template>
+
+                            <!-- Template for list item -->
+                            <ng-template let-item pTemplate="item">
+                              <span>{{ item.name | translate }}</span>
+                            </ng-template>
+                          </p-dropdown>
+
+                          <!-- Loading Spinner -->
+                          <ng-container *ngIf="isLoadingAddresses">
+                            <i class="pi pi-spin pi-spinner"></i>
+                          </ng-container>
+                        </span>
+
+                      </div>
+                      <label for="city" class="fs-8  label-form">{{'events.howYou'|translate}}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-1 col-lg-1 col-md-2 col-sm-5 col-6 shadow-bottom search">
+                  <div class="bg-search h-100 ps-2">
+                    <button type="button" *ngIf="eventsKeyword==null&&addressType==null&&dateRange==null"
+                      (click)="filter()"
+                      class="h-100 w-100 bg-transparent border-0 d-flex align-items-center justify-content-center px-xl-2 px-4 py-4 gap-1">
+                      <img src="assets/images/events/setting.svg" alt="setting">
+                    </button>
+                    <button type="button" *ngIf="eventsKeyword!=null||addressType!=null||dateRange!=null"
+                      (click)="resetForm()"
+                      class="h-100 w-100 bg-transparent border-0 d-flex align-items-center justify-content-center px-xl-2 px-4 py-4 gap-1">
+                      <i class="pi pi-refresh text-white-color fs-5 fw-bold scaleX-rtl"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>
+          <div id="search-sm" class="d-lg-none d-flex pt-4">
+            <div class="container">
+              <div class="d-flex align-items-center gap-3 search-sm-bg position-relative pointer"
+                (click)="displayFilter=true">
+                <div class="search-sm-icon d-flex justify-content-center align-items-center rounded-circle">
+                  <i class="pi pi-search text-white-color"></i>
+                </div>
+                <div class="text-white-color">
+                  <h5 class="fs-5-2">{{'events.searchForEvents'|translate}}</h5>
+                  <p class="mb-0 fs-6-1 pe-3">{{'events.searchBy'|translate}}</p>
+                </div>
+                <a class="search-sm-arrow position-absolute d-flex justify-content-center align-items-center rounded-circle"
+                  (click)="displayFilter=true">
+                  <i class="pi pi-angle-right text-white-color"></i>
+                </a>
+              </div>
+            </div>
+            <p-sidebar [(visible)]="displayFilter" position="bottom" [baseZIndex]="10000">
+              <div class="p-1 search-sm-content">
+                <a class="close-search mb-3 mt-1" (click)="displayFilter=false"></a>
+                <section id="filter">
+                  <form [formGroup]="filterForm" (ngSubmit)="filter()">
+                    <div class="mx-3">
+                      <div class="shadow-bottom mb-3 event-name">
+                        <div class="px-3 py-3">
+                          <div class="w-100">
+                            <div class="d-flex align-items-center gap-2">
+                              <div class="filter-icon d-flex justify-content-center align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil-plus"
+                                  width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff"
+                                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                  <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                  <path d="M13.5 6.5l4 4" />
+                                  <path d="M16 19h6" />
+                                  <path d="M19 16v6" />
+                                </svg>
+                              </div>
+                              <!-- <img src="assets/images/events/name.svg" alt="name"> -->
+                              <span class="d-flex align-items-center gap-1 w-100">
+                                <input type="text" class="form-control p-0 h-auto bg-transparent border-0 w-100"
+                                  formControlName="eventName" #eventName2
+                                  placeholder="{{'placeholder.eventName'|translate}}" pInputText
+                                  (blur)="onChangeControl('eventName')">
+                                <ng-container *ngIf="eventName2.value">
+                                  <i (click)="eventName2.value='';filterForm.get('eventName')?.reset()"
+                                    class="pi pi-times pointer"></i>
+                                </ng-container>
+                              </span>
+
+                            </div>
+                            <label for="placeName" class="fs-8  label-form">{{'events.whichEvent'|translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="shadow-bottom mb-3">
+                        <div class="px-3 py-3">
+                          <div class="d-flex align-items-center gap-2">
+                            <div class="w-100">
+                              <div class="d-flex align-items-center gap-2">
+                                <div class="filter-icon d-flex justify-content-center align-items-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-calendar-plus" width="18" height="18"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12.5 21h-6.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v5" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M16 19h6" />
+                                    <path d="M19 16v6" />
+                                  </svg>
+                                </div>
+                                <p-calendar selectionMode="range" [showWeek]="true" dateFormat="dd-mm-yy"
+                                  [readonlyInput]="true" formControlName="date"
+                                  placeholder="{{'placeholder.selectDate'|translate}}" styleClass="event-calendar"
+                                  (clickOutside)="onChangeDate(false)" inputStyleClass="border-0" [showIcon]="true"
+                                  appendTo="body"></p-calendar>
+                                <a *ngIf="dateRange" (click)="resetDate()"><i class="pi pi-times"></i></a>
+                              </div>
+                              <label for="region" class="fs-8 label-form">{{'events.whenYou'|translate}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="shadow-bottom mb-3 border-end location-type">
+                        <div class="px-3 py-3">
+                          <div class="w-100">
+                            <div class="d-flex align-items-center gap-2">
+                              <div class="filter-icon d-flex justify-content-center align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2"
+                                  width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff"
+                                  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                  <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+                                  <path d="M9 4v13" />
+                                  <path d="M15 7v5.5" />
+                                  <path
+                                    d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z" />
+                                  <path d="M19 18v.01" />
+                                </svg>
+                              </div>
+                              <!-- <img src="assets/images/events/location.svg" alt="location"> -->
+                              <span class="p-input-icon-right d-block bg-transparent w-80">
+                                <p-dropdown [options]="addressesType" formControlName="location" optionLabel="name"
+                                  (onChange)="onChangeControl('location')" [filter]="true"
+                                  filterPlaceholder="{{'placeholder.search'|translate}}" styleClass="border-0"
+                                  [virtualScroll]="true" [virtualScrollItemSize]="40" filterBy="name" appendTo="body"
+                                  [showClear]="true" scrollHeight="150px" [readonly]="isLoadingAddresses"
+                                  [emptyMessage]="'general.noResultFound'|translate"
+                                  placeholder="{{'placeholder.locType'|translate}}">
+                                  <ng-template pTemplate="selectedItem">
+                                    <div>
+                                      <ng-container *ngIf="filterForm.value.location; else locPlaceholder2">
+                                        {{filterForm.value.location.name|translate}}
+                                      </ng-container>
+                                      <ng-template #locPlaceholder2>
+                                        {{'placeholder.locType'|translate }}
+                                      </ng-template>
+                                    </div>
+                                  </ng-template>
+                                  <ng-template let-item pTemplate="item">
+                                    <span>{{item.name|translate}}</span>
+                                  </ng-template>
+                                </p-dropdown>
+                                <ng-container *ngIf="isLoadingAddresses">
+                                  <i class="pi pi-spin pi-spinner"></i>
+                                </ng-container>
+                              </span>
+                            </div>
+                            <label for="city" class="fs-8  label-form">{{'events.howYou'|translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="submit"
+                        class="w-100 bg-search bg-transparent border-0 mb-3 mt-4 d-flex align-items-center justify-content-center py-2 text-white-color gap-2 fs-5-2 fw-bold">
+                        <img src="assets/images/events/setting.svg" width="25px" alt="setting">
+                        {{'general.filter'|translate}}
+                      </button>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            </p-sidebar>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-5 all-events">
+
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-8 col-md-5">
+            <h3 class="fw-bold">{{'events.allEvents'|translate}}</h3>
+          </div>
+          <div class="col-lg-4 col-md-7 d-none">
+            <div class="d-flex justify-content-end align-items-center gap-3">
+              <span class="p-input-icon-right w-100 input-search">
+                <input pInputText class="form-control bg-white-color border-0" type="text" #search
+                  (keyup)="handleSearch(search.value)" placeholder="{{'placeholder.searchEvent'|translate}}" />
+                <ng-container *ngIf="search.value && !isLoadingSearch">
+                  <i (click)="clearSearchValue(search)" class="pi pi-times text-danger pointer px-2"></i>
+                </ng-container>
+                <ng-container *ngIf="isLoadingSearch">
+                  <i class="pi pi-spin pi-spinner"></i>
+                </ng-container>
+              </span>
+              <button class="btn btn-solid-main btn-search" [disabled]="!search.value"
+                (click)="handleSearch(search.value)">
+                <i class="pi pi-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4" appLazyLoadSection (sectionInView)="allEventsSection = true">
+          <ng-container *ngIf="allEventsSection">
+            <div class="mt-4 row mx-0">
+              <ng-container *ngIf="isLoadingEvents; else noLoading">
+                <app-skeleton [type]="'eventsList'"></app-skeleton>
+              </ng-container>
+              <ng-template #noLoading>
+                <ng-container *ngIf="eventsList?.length>0; else noData">
+                  <ng-container *ngFor="let item of eventsList">
+                    <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
+                      <div class="event-card w-100 position-relative shadow-sm pointer" (click)="showDetails(item)">
+                        <img [src]=" item?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                          class="event-img w-100" alt="Image">
+                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'closed'"
+                          class="position-absolute closed py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                          {{ 'general.finished' | translate }}
+                        </span>
+                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'open'"
+                          class="position-absolute open py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                          {{ 'open' | translate }}
+                        </span>
+                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'soon'"
+                          class="position-absolute soon py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                          {{ 'comingSoon.comingSoon' | translate }}
+                        </span>
+                        <ng-container *ngIf="item?.title&&item?.description">
+                          <div class="event-content position-absolute w-100 p-3">
+                            <div class="h-100 overflow-hidden">
+                              <h5 class="trip-title fs-5 fw-bold mb-0">
+                                {{item?.title || ''}}
+                              </h5>
+                              <p class="mb-0 fw-500 fs-6 description">
+                                {{(item?.description || '')|stripHtml}}
+                              </p>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <a class="btn-details rounded-circle d-flex justify-content-center align-items-center position-absolute text-white-color"
+                          (click)="showDetails(item)">
+                          <i class="pi pi-arrow-right scaleX-rtl"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noData>
+                  <ng-container *ngIf="search?.value; else elseTemplate">
+                    <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                      <img src="assets/images/not-found/no-search.svg" width="200px" alt="no-data">
+                      <p>{{'general.noSearchResult'|translate}}</p>
+                    </div>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                      <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                      <p>{{'general.noDataFound'|translate}}</p>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </ng-template>
+            </div>
+            <ng-container *ngIf="eventsList?.length>0;">
+              <div>
+                <p-paginator #paginator (onPageChange)="onPageChange($event)" [first]="1" [rows]="perPage"
+                  [totalRecords]="eventsTotalCount"></p-paginator>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+      <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+      <style *ngIf="homeShowFooter">
+        #home {
+          padding-bottom: 0 !important;
+        }
+      </style>
+    </div>
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

@@ -1,0 +1,74 @@
+.btn-solid-main {
+  background-color: #7939A7 !important;
+  border-color: #7939A7 !important;
+}
+
+#upload-img-container {
+  max-height: 340px;
+  overflow: auto;
+  height: 93%;
+}
+
+.uploader {
+  // background: #8c95a317;
+  // border: 2px dashed #8c95a399;
+  // border-radius: var(--border-radius-card);
+  min-height: 100px;
+
+  .loaded {
+    height: 90px;
+    width: 90px;
+    border-radius: var(--dashboard-border-radius) !important;
+  }
+
+  .badge-btn {
+    border-radius: 11px;
+    height: 2.6rem;
+    border: none;
+    padding: 0.9rem;
+  }
+
+  .badge-info {
+    background-color: #ead8ea;
+    color: #7939A7;
+  }
+
+  .badge-danger {
+    background: #e5555530;
+  }
+}
+
+.overlay-img {
+  background-color: #7939A7;
+  inset: 0;
+}
+
+:host::ng-deep {
+  p-image {
+    width: 100%;
+    min-width: 100%;
+    height: 190px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .p-image-preview-indicator {
+    height: 190px;
+    width: 100%;
+  }
+
+  .p-image,
+  .video-img {
+    width: 100%;
+    min-width: 100%;
+    height: 190px;
+    border-radius: 8px;
+
+    &>img {
+      width: 100%;
+      min-width: 100%;
+      height: 190px;
+      border-radius: 8px;
+    }
+  }
+}

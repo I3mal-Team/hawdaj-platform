@@ -1,0 +1,123 @@
+#startTripSection {
+    @media (max-width: 1024px) {
+        .container {
+            width: 100% !important;
+        }
+    }
+    .trips {
+        background: url("../../../../assets/images-v2/pages/stores-list/start-trip/start-trip-web.webp") no-repeat
+            center / cover;
+        height: 443px;
+        border-radius: 24px;
+        background-size: cover;
+        padding: 2rem;
+        overflow: hidden;
+        background-color: #80808099;
+        @media (max-width: 1024px) {
+            background: url("../../../../assets/images-v2/pages/stores-list/start-trip/start-trip-tablet.webp")
+                no-repeat center / cover;
+            border-radius: 0;
+        }
+        h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #101828;
+            text-align: center;
+            @media (max-width: 1024px) {
+                font-size: 2.5rem;
+            }
+            @media (max-width: 768px) {
+                font-size: 1.5rem;
+            }
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: black;
+            @media (max-width: 1024px) {
+                font-size: 1.125rem;
+            }
+            @media (max-width: 768px) {
+                font-size: 1rem;
+            }
+        }
+        a {
+            width: fit-content;
+            padding: 10px 30px !important;
+            border: 0;
+        }
+    }
+}
+
+.content {
+    z-index: 5;
+    width: 90%;
+    border-radius: 15px;
+    gap: 10px;
+    padding: 30px 25px 20px;
+    background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.12) 12%,
+            rgba(255, 255, 255, 0.04) 50%,
+            rgba(255, 255, 255, 0.08) 83%,
+            rgba(255, 255, 255, 0.2) 100%
+        ),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+}
+
+@media (max-width: 1024px) {
+    .home-trips {
+        // border-radius: 5px !important;
+        background: url("../../../../assets/images-v2/pages/Home/Our-trips-section/arab-tablet.webp");
+        padding: 1rem 0.5rem !important;
+        background-position: -100px 0px !important;
+
+        h2 {
+            font-size: 25px !important;
+        }
+
+        p {
+            font-size: 16px !important;
+            line-height: 25px;
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    #ourTripsSection {
+        .trip-overlay {
+            // border-radius: 5px !important;
+        }
+
+        .home-trips {
+            // border-radius: 5px !important;
+            padding: 1rem 0.5rem !important;
+            background-position: 0 0px !important;
+
+            h2 {
+                font-size: 25px !important;
+            }
+
+            p {
+                font-size: 14px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                margin-bottom: 10px;
+            }
+
+            .start-trip {
+                min-width: auto !important;
+                // border-radius: 5px !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 430px) {
+    #ourTripsSection {
+        .home-trips {
+            background: url("../../../../assets/images-v2/pages/Home/Our-trips-section/arab-mobile.webp");
+        }
+    }
+}

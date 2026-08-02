@@ -1,0 +1,53 @@
+<div id="apps-home">
+  <div class="apps-second-bg">
+    <div class="container">
+      <div class="d-flex flex-column flex-wrap gap-1 align-items-center justify-content-center">
+        <h4 class="title text-center mb-0">
+          {{ 'applications.appsListTitle' | translate }}
+        </h4>
+        <div class="col-lg-6 col-md-8 col-sm-11 col-12 sub-title text-center lh-base mt-1">
+          {{ 'applications.appsListSubTitle' | translate }}
+        </div>
+        <div class="under-title-vector">
+          <img ngOptimizedImage [ngSrc]="'assets/images/vector-title.svg'" width="60" height="4"
+            class="w-100 application-img" alt="Vector Decoration" onerror="src='assets/images/not-found/no-img.svg'">
+        </div>
+      </div>
+      <ng-container *ngIf="items?.length >0">
+        <div class="items-list mt-md-4 mt-3">
+          <!-- Normal view for larger screens -->
+          <div class="d-none d-md-block">
+            <div class="row g-3">
+              <ng-container *ngFor="let item of _PublicService.slicedData(items, 6)">
+                <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                  <app-application-card-home [item]="item"></app-application-card-home>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- PrimeNG Carousel for mobile view -->
+          <p-carousel [value]="_PublicService.slicedData(items, 6)" [numVisible]="1" [numScroll]="1" class="d-md-none"
+            [showNavigators]="false" [circular]="true" [showIndicators]="true">
+            <ng-template pTemplate="item" let-item>
+              <div class="d-flex justify-content-center">
+                <app-application-card-home [item]="item"></app-application-card-home>
+              </div>
+            </ng-template>
+          </p-carousel>
+
+          <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center mt-md-5 mt-3">
+            <button type="button" [attr.aria-label]="'general.seeAll' | translate"
+              [attr.title]="'general.seeAll' | translate" class="btn btn-solid-light-new" id="unique-button-id"
+              role="button" [routerLink]="['/applications']">
+              <span class="hover-underline-animation">
+                {{'general.seeAll'|translate}}
+              </span>
+              <i class="pi pi-arrow-right border border-2 rounded-circle p-1" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

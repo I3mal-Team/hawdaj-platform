@@ -1,0 +1,103 @@
+<div id="addPlaces">
+  <form [formGroup]="placeForm" class="mb-3">
+    <label for="" class="mb-2 text-capitalize fw-500 required">{{'placeholder.selectDate'|translate}}</label>
+    <div [class.border-red]="formControls?.date?.invalid && (formControls?.date?.dirty || formControls?.date?.touched)">
+      <p-dropdown [options]=" allDates" formControlName="date" optionLabel="title" optionValue="date" [filter]="true"
+        [virtualScroll]="true" [(ngModel)]="date" filterPlaceholder="{{'placeholder.search'|translate}}"
+        [virtualScrollItemSize]="40" filterBy="title" appendTo="body" scrollHeight="200px"
+        [emptyMessage]="'No results found'" [showClear]="true" placeholder="">
+        <ng-template pTemplate="selectedItem">
+          <div class="flex align-items-center gap-2">
+            <div>{{ placeForm.value.date?
+              placeForm.value.date.title:'placeholder.date'|translate}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="mt-1">
+      <ng-container *ngIf="formControls?.date?.invalid && (formControls?.date?.dirty || formControls?.date?.touched)">
+        <ng-container *ngIf="formControls?.date?.invalid && (formControls?.date?.dirty || formControls?.date?.touched)">
+          <ng-container *ngIf="formControls?.date?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field'|translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+  <div>
+    <label for="" class="mb-2 text-capitalize fw-500">{{'placeholder.selectPlaces'|translate}}</label>
+    <span class="p-input-icon-right w-100 mb-4">
+      <span class="p-input-icon-left w-100">
+        <i class="pi pi-search"></i>
+        <input pInputText class="search-input w-100 px-5 rounded" type="text" #search
+          (keyup)="handleSearch(search.value)" placeholder="{{'placeholder.searchPlaces'|translate}}" />
+      </span>
+      <ng-container *ngIf="search.value && !isLoadingSearch">
+        <i (click)="clearSearchValue(search)" class="pi pi-times text-danger pointer px-2"></i>
+      </ng-container>
+      <ng-container *ngIf="isLoadingSearch">
+        <i class="pi pi-spin pi-spinner"></i>
+      </ng-container>
+    </span>
+  </div>
+  <div class="suggestedPlaces">
+    <ng-container *ngIf="isLoading; else noLoading">
+      <ng-container *ngFor="let item of suggestedPlaces">
+        <p-skeleton width="100%" height="4.5rem" styleClass="mb-3"></p-skeleton>
+      </ng-container>
+    </ng-container>
+    <ng-template #noLoading>
+      <ng-container *ngIf="searchPlaces?.length>0; else noData">
+        <ng-container *ngFor="let item of searchPlaces;let i=index">
+          <a class="d-flex justify-content-between align-items-center flex-wrap w-100 service mb-2"
+            [class.active]="item?.isAdded">
+            <div class="d-flex align-items-center gap-3">
+              <img [src]="item?.image" width="80px" height="60px" alt="image" class="rounded">
+              <div>
+                <h6 class="fs-5-1 fw-500 mb-0 text-dark-color">{{item?.name}}</h6>
+                <p class="mb-0 fs-6-1 mt-1">{{item?.location}}</p>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <ng-container *ngIf="item?.isAdded; else elseTemplate">
+                <a class="action remove-btn" (click)="removePlace(item)">
+                  <i class="pi pi-trash"></i>
+                </a>
+                <a class="action add-btn">
+                  <i class="pi pi-check fw-bold text-main-color"></i>
+                </a>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <a class="action add-btn" (click)="addPlace(item)">
+                  <i class="pi pi-plus text-main-color fw-bold"></i>
+                </a>
+              </ng-template>
+
+            </div>
+
+          </a>
+        </ng-container>
+        <!-- <ng-container *ngIf="totalCount>states?.length||totalCount!=states?.length"> -->
+        <div
+          class="service d-flex justify-content-center align-items-center mt-4 loading-more position-relative w-100 bottom-0 pointer"
+          (click)="loadMore()">
+          <a class="text-main-color">{{'general.loadMore'|translate}}</a>
+        </div>
+        <!-- </ng-container> -->
+
+      </ng-container>
+      <ng-template #noData>
+        <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+          <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+          <p>{{'general.noDataFound'|translate}}</p>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+  <div class="d-flex justify-content-end gap-2 mt-3">
+    <button class="btn btn-outline-main" (click)="close()">{{'general.cancel'|translate}}</button>
+    <button class="btn btn-solid-main" (click)="save()">{{'general.save'|translate}}</button>
+  </div>
+</div>

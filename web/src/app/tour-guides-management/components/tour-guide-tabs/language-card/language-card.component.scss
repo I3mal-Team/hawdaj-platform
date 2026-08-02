@@ -1,0 +1,31 @@
+.language-card {
+    padding: 30px 0;
+    border-radius: 2rem;
+    width: 80%;
+    background: #fff;
+    z-index: 2;
+    height: 240px !important;
+    box-shadow:
+        0px 89.073px 71.258px 0px rgba(0, 0, 0, 0.02),
+        0px 57.732px 41.732px 0px rgba(0, 0, 0, 0.02),
+        0px 34.31px 22.697px 0px rgba(0, 0, 0, 0.01),
+        0px 17.815px 11.579px 0px rgba(0, 0, 0, 0.01),
+        0px 7.258px 5.806px 0px rgba(0, 0, 0, 0.01),
+        0px 1.649px 2.804px 0px rgba(0, 0, 0, 0);
+
+    p {
+        color: #3a4980;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    h6 {
+        color: #371a4c;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+    & + svg {
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+    }
+}

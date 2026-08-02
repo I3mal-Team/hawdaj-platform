@@ -1,0 +1,101 @@
+<div id="events-home">
+    <div class="event-second-bg">
+        <div class="container">
+            <div class="d-flex flex-column flex-wrap gap-1 align-items-center justify-content-center">
+                <h4 class="section-title text-center mb-0">
+                    {{'home.bestEventsInSaudia'|translate}}
+                </h4>
+                <p class=" sub-title col-lg-6 col-md-8 col-sm-11 col-12 sub-title text-center lh-base mt-1">
+                    {{'home.magic'|translate}}
+                </p>
+
+            </div>
+            <ng-container *ngIf="items?.length >0">
+                <div class="items-list mt-md-4 mt-3 d-none d-lg-block">
+                    <div class="row g-3">
+                        <div class="cards d-flex flex-row align-items-center justify-content-center">
+                            <div class="card d-flex align-items-center justify-content-center position-relative"
+                                (click)="displayContent(i)"
+                                *ngFor="let item of _PublicService.slicedData(items,5);let i =index"
+                                [class.active]="i === activeIndex">
+                                <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'closed'"
+                                    class="position-absolute closed py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                    {{ 'general.finished' | translate }}
+                                </span>
+                                <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'open'"
+                                    class="position-absolute open py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                    {{ 'open' | translate }}
+                                </span>
+                                <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'soon'"
+                                    class="position-absolute soon py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                    {{ 'comingSoon.comingSoon' | translate }}
+                                </span>
+
+                                <img ngOptimizedImage class="w-100 h-100" src="{{item?.image}}" [alt]="item?.title" />
+                                <button *ngIf="item?.id" class="explore-btn position-absolute"
+                                    (click)="showDetails(item)" role="button" [attr.title]="'general.explore'">
+                                    {{'general.explore'|translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="description d-flex flex-column align-items-center justify-content-center m-auto text-center my-4">
+                        <h4>{{items[activeIndex]?.title}}</h4>
+                        <p>{{items[activeIndex]?.description|stripHtml}}</p>
+                        <div class="rating d-flex align-items-center justify-content-center pb-2">
+                            <div class="img-container" *ngFor="let star of [].constructor(5); let i = index">
+                                <img [src]="i < rating ? 'assets/images/events/fav-star.svg' : 'assets/images/events/star.svg'"
+                                    alt="star">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-lg-none" [showNavigators]="false"
+                    [circular]="true" [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+                    <ng-template pTemplate="item" let-item>
+                        <div class="d-flex response justify-content-center">
+                            <div class="card d-flex align-items-center justify-content-center position-relative custom-card small-card mt-lg-3"
+                                (click)="showDetails(item)">
+                                <img class="w-100 h-100" ngOptimizedImage [src]="item?.image" width="350" height="250"
+                                    [alt]="item?.title">
+                                <div
+                                    class="card-img-overlay align-items-center text-white d-flex flex-column justify-content-center p-3">
+                                    <div class="card-content" *ngIf="item?.title!=null||item?.description!=null">
+                                        <h5 class="card-title">{{item?.title}}</h5>
+                                        <p class="card-text">{{item?.description|stripHtml}}</p>
+                                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'closed'"
+                                            class="position-absolute closed py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                            {{ 'general.finished' | translate }}
+                                        </span>
+                                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'open'"
+                                            class="position-absolute open py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                            {{ 'open' | translate }}
+                                        </span>
+                                        <span *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'soon'"
+                                            class="position-absolute soon py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+                                            {{ 'comingSoon.comingSoon' | translate }}
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+
+                <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center">
+                    <button type="button" [attr.aria-label]="'general.seeAll' | translate"
+                        [attr.title]="'general.seeAll' | translate" id="unique-button-id" role="button"
+                        class="new-button" [routerLink]="['/events']">
+                        <span class="hover-underline-animation">
+                            {{'general.seeAll'|translate}}
+                        </span>
+                    </button>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>

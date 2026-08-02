@@ -1,0 +1,97 @@
+<app-header></app-header>
+<div id="stores-page">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.stores'" [largeImage]="'assets/images-v2/pages/stores-list/banner/banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/stores-list/banner/banner-tabler.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div appLazyLoadSection class="d-flex align-items-center justify-content-center">
+        <div id="stores-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" (fieldChanged)="onFieldChanged($event)"
+                (formValues)="search($event)" (clearEvent)="clearSearch($event)"
+                [searchTitle]="'home.searchSrore'"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (fieldChanged)="onFieldChanged($event)"
+        (formValues)="search($event)" (clearEvent)="clearSearch($event)" [searchTitle]="'home.searchSrore'"
+        [searchSubtitle]="' '"></app-search-list-sm>
+    <!-- End search sm-->
+    <!-- 
+    <div>
+        <app-according-slider></app-according-slider>
+    </div> -->
+    <ng-container>
+        <!-- Start Tabs -->
+        <div appLazyLoadSection class="container section-space">
+            <app-tabs [items]="storesCategories" (selectedItemsChange)="onSelectedItemsChange($event)"
+                [enableAll]="true"></app-tabs>
+        </div>
+        <!-- End Tabs -->
+
+        <!--Start Stores List -->
+        <div appLazyLoadSection class="container m-auto">
+            <ng-container *ngIf="isLoadingStores; else noLoadingFeatureStores">
+                <app-skeleton [type]="'places-list'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingFeatureStores>
+                <ng-container
+                    *ngIf="regionId !=null ||( storeName !==null &&  storeName !==''&&  storeName !==undefined)">
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'titles.searchResult'|translate}}
+                        </h4>
+                    </div>
+                </ng-container>
+                <div class="row g-2 mx-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                    <div *ngFor="let store of storesList" class="col-lg-3 col-sm-6 col-12"
+                        style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                        <app-list-card [type]="'stores'" [item]="store"></app-list-card>
+                    </div>
+                    <ng-container *ngIf="storesList.length===0">
+                        <app-no-result [isWhite]="false"></app-no-result>
+                    </ng-container>
+                    <app-shared-pagination [itemsPageNumber]="storesPageNumber"
+                        [itemsListTotalCount]="storesListTotalCount" [itemsPageNumber]="storesPageNumber"
+                        [itemsPerPageCount]="storesPerPageCount"
+                        (pageChange)="changePage($event)"></app-shared-pagination>
+                </div>
+            </ng-template>
+        </div>
+        <!--End Stores List -->
+    </ng-container>
+
+    <!--Start Common Stores List -->
+    <div appLazyLoadSection
+        class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <h2 class="title mb-lg-5 mb-2">{{'stores.mostCommon'|translate}}</h2>
+        <app-list-slider [items]="this.topStoresList.slice(0, 5)" [link]="'/stores/'" (viewAllClicked)="handleViewAll()"
+            [type]="'stores'"></app-list-slider>
+    </div>
+    <!--End Common Stores List -->
+
+    <!-- Start Start Trip -->
+    <div appLazyLoadSection class="m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <app-start-trip></app-start-trip>
+    </div>
+    <!-- End Start Trip -->
+
+    <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        <style *ngIf="homeShowFooter">
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

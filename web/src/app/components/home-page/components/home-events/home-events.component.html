@@ -1,0 +1,80 @@
+<div class="position-relative" id="events">
+  <ng-container *ngIf="isLoadingEvents; else noLoadingEvents">
+    <app-skeleton [type]="'homeEvents'"></app-skeleton>
+  </ng-container>
+  <ng-template #noLoadingEvents>
+    <div class="background-pattern py-md-5 py-3">
+      <div class="w-100 z-idx px-md-5 px-4 text-white-color">
+        <h2 class="fw-bold text-sm-start text-center">
+          {{'homePage.bestEvents'|translate}}
+        </h2>
+        <hr>
+      </div>
+      <div class="row align-items-center justify-content-between m-0">
+        <div class="col-xl-6 col-lg-6 col-md-6 text-white-color p-md-5 p-3 pt-sm-4 pt-2">
+          <div>
+            <h6 *ngIf="currentEvent?.title" class="fs-4 fw-bold mb-2 text-sm-start text-center">
+              {{currentEvent?.title}}
+            </h6>
+            <p *ngIf="currentEvent?.description"
+              class="fs-8 fw-bold place-address-h mb-3 w-75 w-md-100 text-sm-start text-center">
+              {{currentEvent?.description|stripHtml}}
+            </p>
+          </div>
+          <div
+            class="d-flex flex-column align-items-start mt-lg-0 mt-md-2 mt-sm-0 mt-2 text-m-start text-center align-items-sm-start justify-content-center">
+            <p-rating class="m-sm-0 m-auto" *ngIf="currentEvent" [(ngModel)]="currentEvent.rat" [disabled]="true"
+              [cancel]="false"></p-rating>
+            <p class="mb-0 w-100 fw-bold fs-6-1 text-truncate mt-1 text-sm-start text-center">
+              <i class="fa-solid fa-location-dot"></i>
+              {{currentEvent?.address_name|| 'titles.saudiArabia'|translate}}
+            </p>
+          </div>
+          <div class="d-flex gap-3 mt-4 justify-content-sm-start justify-content-center">
+            <a class="rounded-pill bg-white-color text-dark-color shadow-sm event-btn d-flex justify-content-center align-items-center gap-2 text-nowrap"
+              [routerLink]="['/events/event-details/',currentEvent?.slug]">
+              {{'general.moreDetails'|translate}}
+              <i class="pi pi-angle-right"></i>
+            </a>
+            <a [routerLink]="['/events']"
+              class="rounded-pill event-btn see-all d-flex justify-content-center align-items-center gap-2 text-nowrap">
+              {{'general.seeAll'|translate}}
+              <i class="pi pi-angle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 position-relative">
+          <p-carousel [value]="events" [circular]="true" [autoplayInterval]="2000"
+            [responsiveOptions]="responsiveOptions" [numVisible]="2" [numScroll]="1" (onPage)="onEventChange($event)"
+            [showIndicators]="false">
+
+            <ng-template pTemplate="item" let-event>
+              <div class="position-relative slider-item pointer">
+                <div class="d-flex justify-content-between align-items-center position-absolute p-2 w-100">
+                  <a [href]="event?.address" target="_blank" class="address-icon z-idx" *ngIf="event?.address">
+                    <div class="map-icon-image">
+                      <div class="image-content">
+                        <img ngOptimizedImage [ngSrc]="'src/assets/newImages/icons/location.webp'" width="40"
+                          height="40" alt="location">
+                      </div>
+                    </div>
+                  </a>
+                  <span [class.d-none]="!event?.closed"
+                    class="closed py-1 px-2 rounded fs-6-1 me-auto">{{'general.finished'|translate}}</span>
+                </div>
+                <a [class.d-none]="!event?.video_url" (click)="openVideo(event)"
+                  class="play d-flex video-sm justify-content-center align-items-center position-absolute rounded-circle pointer">
+                  <i class="fas fa-caret-right fs-5 text-white-color"></i>
+                </a>
+                <div class="slide-img shadow z-idx" [class.slider-h]="currentEvent?.id==event?.id">
+                  <img ngOptimizedImage [ngSrc]="event?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                    width="320" height="360" [alt]="event?.title">
+                </div>
+              </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

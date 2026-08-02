@@ -1,0 +1,93 @@
+<div class="mt-4 profile-stories overflow-hidden" [ngClass]="getClass()">
+  <ng-container *ngIf="items?.length>0; else addNewStory">
+    <ng-container *ngIf="items?.length>7; else noSlider">
+      <p-carousel [value]="items" [numVisible]="7" [numScroll]="1" [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions">
+        <ng-template let-item pTemplate="item">
+          <ng-container *ngIf="!item?.isNew">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+              <div class="story-img rounded-circle position-relative" [class.active-story]="item?.status=='active'">
+                <a (click)="show(item)"
+                  class="overlay-img position-absolute d-flex justify-content-center align-items-center rounded-circle">
+                  <i class="pi pi-eye text-white-color"></i>
+                </a>
+                <img [src]="item.file" class="w-100 h-100 rounded-circle" alt="story"
+                  onerror="src='assets/images/not-found/no-img.svg'">
+                <!-- <p-image [src]="item.file" alt="Image" [preview]="true" [appendTo]="'body'"></p-image> -->
+              </div>
+              <strong class="mb-0 fs-6">
+                <ng-container *ngIf="item?.text&&item?.text !=='null' &&item?.text !==null; else elseDefault">
+                  {{item?.text}}
+                </ng-container>
+                <ng-template #elseDefault>
+                  {{'profile.story'|translate}}
+                </ng-template>
+              </strong>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="item.isNew">
+            <a class="d-flex flex-column justify-content-center align-items-center gap-2" (click)="uploadStory()">
+              <div class="story-img rounded-circle d-flex justify-content-center align-items-center">
+                <i class="pi pi-plus fs-2"></i>
+              </div>
+              <strong class="mb-0 6">
+                {{'general.new'|translate}}
+              </strong>
+            </a>
+          </ng-container>
+        </ng-template>
+      </p-carousel>
+    </ng-container>
+    <ng-template #noSlider>
+      <div class="d-flex gap-4">
+        <ng-container *ngFor="let item of items">
+          <ng-container *ngIf="!item.isNew">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+              <div class="story-img rounded-circle position-relative" [class.active-story]="item.status=='active'">
+                <a (click)="show(item)"
+                  class="overlay-img position-absolute d-flex justify-content-center align-items-center rounded-circle">
+                  <i class="pi pi-eye text-white-color"></i>
+                </a>
+                <img [src]="item.file" class="w-100 h-100 rounded-circle" alt="story"
+                  onerror="src='assets/images/not-found/no-img.svg'">
+                <!-- <p-image [src]="item.file" alt="Image" [preview]="true" [appendTo]="'body'"></p-image> -->
+              </div>
+              <strong class="mb-0 fs-6">
+                <ng-container *ngIf="item?.text&&item?.text !=='null' &&item?.text !==null; else elseDefault2">
+                  {{item?.text}}
+                  <!-- {{'profile.story'|translate}} -->
+                </ng-container>
+                <ng-template #elseDefault2>
+                  {{'profile.story'|translate}}
+                </ng-template>
+              </strong>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="item.isNew">
+            <a class="d-flex flex-column justify-content-center align-items-center gap-2" (click)="uploadStory()">
+              <div class="story-img rounded-circle d-flex justify-content-center align-items-center">
+                <i class="pi pi-plus fs-2"></i>
+              </div>
+              <strong class="mb-0 6">
+                {{'general.new'|translate}}
+              </strong>
+            </a>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-template>
+
+  </ng-container>
+  <ng-template #addNewStory>
+    <div>
+      <a class="d-flex flex-column justify-content-center align-items-center gap-2" (click)="uploadStory()">
+        <div class="story-img rounded-circle d-flex justify-content-center align-items-center">
+          <i class="pi pi-plus fs-2"></i>
+        </div>
+        <strong class="mb-0 6">
+          {{'general.new'|translate}}
+        </strong>
+      </a>
+    </div>
+  </ng-template>
+</div>

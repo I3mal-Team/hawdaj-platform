@@ -1,0 +1,8 @@
+<ng-container *ngIf="showSpinner; else showOutlet">
+  <div class="spinner custom-spinner d-flex justify-content-center align-items-center">
+    <img class="zoom-image" src="assets/images/logo/logo.png" width="150" alt="image" appLazyImg>
+  </div>
+</ng-container>
+<ng-template #showOutlet>
+  <router-outlet></router-outlet>
+</ng-template>

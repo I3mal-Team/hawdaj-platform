@@ -1,0 +1,81 @@
+.trip-email {
+  padding: 30px 50px 30px !important;
+  @media (max-width: 1024px) {
+    padding: 50px 30px !important;
+  }
+  background-image: url(../../../../../assets/images-v2/pages/save-trip/email/email-plane.webp);
+  background-repeat: no-repeat;
+  .close {
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    color: #6d6d6d;
+    border-radius: 10px;
+    border: 1px solid #d9d9d9;
+    position: absolute;
+  }
+  h5 {
+    color: #371a4c;
+    font-size: 2rem;
+    font-weight: 700;
+    @media (max-width: 1024px) {
+      font-size: 1.5rem;
+    }
+  }
+  .input {
+    position: relative;
+    background-color: white;
+    span {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      border: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+    }
+    label {
+      color: #101828;
+    }
+    input {
+      box-shadow: none !important;
+      outline: none !important;
+      border-color: #f2f7fa;
+      border-width: 2px;
+      padding: 1rem 40px;
+      height: 3.5rem;
+      border-radius: 1rem;
+      border: 0.5px solid rgba(163, 169, 194, 0.6);
+      background: #fff;
+      color: #3a4980;
+      &::placeholder {
+        color: #3a4980;
+      }
+      &:focus {
+        padding: 1rem 40px;
+      }
+    }
+  }
+  button {
+    padding: 10px 50px !important;
+    &:last-child {
+      outline: 1px solid var(--light-new-color) !important;
+      color: var(--light-new-color) !important;
+      border: none !important;
+    }
+    &:first-child {
+      background-color: var(--light-new-color) !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-inputtext {
+    color: #3a4980 !important;
+    &::placeholder {
+      color: #3a4980 !important;
+    }
+  }
+}

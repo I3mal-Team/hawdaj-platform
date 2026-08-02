@@ -1,0 +1,184 @@
+<div class="mt-0">
+    <app-header></app-header>
+</div>
+<div id="storeDetails">
+    <div class="container mb-4">
+        <div class="row gap-4 gap-lg-0 mx-0">
+            <div class="row gap-4 gap-lg-0 mx-0" style="margin-top:7rem">
+                <ng-container *ngIf="isLoadingStoreDetails; else noLoadingStoreDetails">
+                    <div class="d-none d-lg-block">
+                        <app-skeleton [type]="'place-details-v2'"></app-skeleton>
+                    </div>
+                    <div class="d-block d-lg-none">
+                        <app-skeleton [type]="'place-details-sm-v2'"></app-skeleton>
+                    </div>
+                </ng-container>
+                <ng-template #noLoadingStoreDetails>
+                    <div class="tabs col-lg-6 px-0 px-lg-3">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                            <div class="w-100">
+                                <div
+                                    class="d-flex justify-content-md-between justify-content-around align-items-start flex-wrap gap-3 mb-3">
+                                    <h5 class=" fw-bold fs-4-1 mb-lg-4">{{storeDetails?.title}}</h5>
+                                    <div class="d-flex align-items-center gap-3 details-icons">
+                                        <ng-container *ngIf="isUserLoggedin">
+                                            <ng-container *ngIf="isLoadingfavouritePlace; else favourite">
+                                                <app-skeleton [type]="'savePlace'"></app-skeleton>
+                                            </ng-container>
+                                            <ng-template #favourite>
+                                                <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                                                    (click)="addToFavorite(storeDetails)">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        [attr.fill]="storeDetails?.is_favorite ? 'red' : 'none'">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                            stroke-linejoin="round"></g>
+                                                        <g id="SVGRepo_iconCarrier">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                                d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                [attr.stroke]="storeDetails?.is_favorite ? 'red' : '#3A4980'">
+                                                            </path>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </ng-template>
+                                        </ng-container>
+                                        <app-share-social [fullUrl]="fullUrl"
+                                            [webSite]="storeDetails?.website"></app-share-social>
+                                        <ng-container *ngIf="isLoadingSaveStore; else elseViewAction1">
+                                            <app-skeleton [type]="'savePlace'"></app-skeleton>
+                                        </ng-container>
+                                        <ng-template #elseViewAction1>
+                                            <ng-container *ngIf="isUserLoggedin">
+                                                <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                                                    (click)="saveStore()">
+                                                    <svg viewBox="0 0 24 24" fill="none" width="21" height="21"
+                                                        [attr.fill]="storeDetails?.is_saved ? '#3A4980' : 'none'"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                            stroke-linejoin="round"></g>
+                                                        <g id="SVGRepo_iconCarrier">
+                                                            <path
+                                                                d="M12.89 5.87988H5.10999C3.39999 5.87988 2 7.27987 2 8.98987V20.3499C2 21.7999 3.04 22.4199 4.31 21.7099L8.23999 19.5199C8.65999 19.2899 9.34 19.2899 9.75 19.5199L13.68 21.7099C14.95 22.4199 15.99 21.7999 15.99 20.3499V8.98987C16 7.27987 14.6 5.87988 12.89 5.87988Z"
+                                                                stroke="#3A4980" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                            </path>
+                                                            <path
+                                                                d="M16 8.98987V20.3499C16 21.7999 14.96 22.4099 13.69 21.7099L9.76001 19.5199C9.34001 19.2899 8.65999 19.2899 8.23999 19.5199L4.31 21.7099C3.04 22.4099 2 21.7999 2 20.3499V8.98987C2 7.27987 3.39999 5.87988 5.10999 5.87988H12.89C14.6 5.87988 16 7.27987 16 8.98987Z"
+                                                                stroke="#3A4980" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                            </path>
+                                                            <path
+                                                                d="M22 5.10999V16.47C22 17.92 20.96 18.53 19.69 17.83L16 15.77V8.98999C16 7.27999 14.6 5.88 12.89 5.88H8V5.10999C8 3.39999 9.39999 2 11.11 2H18.89C20.6 2 22 3.39999 22 5.10999Z"
+                                                                stroke="#3A4980" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                            </path>
+                                                        </g>
+                                                    </svg>
+                                                    <!-- <i class="pi"
+                                                        [ngClass]="placeDetails.is_saved?'pi-bookmark-fill':'pi-bookmark'"></i> -->
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                        <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                                            (click)="onLocationTabClick()" target="_blank">
+                                            <svg width="22" height="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                </g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z"
+                                                        stroke="#3A4980" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                    <path
+                                                        d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z"
+                                                        stroke="#3A4980" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                        <!-- <div class="d-flex align-items-center flex-column justify-content-center gap-1">
+                        <i class="fas fa-file-import"></i>
+                        <a class="fw-500 fs-6-1 text-main-color">{{'general.sendToPhone'|translate}}</a>
+                      </div> -->
+                                        <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                                            [href]="storeDetails?.address" [class.d-none]="!storeDetails?.address"
+                                            target="_blank">
+                                            <svg fill="#3A4980" width="22" height="20" viewBox="0 0 1024 1024"
+                                                xmlns="http://www.w3.org/2000/svg" class="icon">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                </g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372zm198.4-588.1a32 32 0 0 0-24.5.5L414.9 415 296.4 686c-3.6 8.2-3.6 17.5 0 25.7 3.4 7.8 9.7 13.9 17.7 17 3.8 1.5 7.7 2.2 11.7 2.2 4.4 0 8.7-.9 12.8-2.7l271-118.6 118.5-271a32.06 32.06 0 0 0-17.7-42.7zM576.8 534.4l26.2 26.2-42.4 42.4-26.2-26.2L380 644.4 447.5 490 422 464.4l42.4-42.4 25.5 25.5L644.4 380l-67.6 154.4zM464.4 422L422 464.4l25.5 25.6 86.9 86.8 26.2 26.2 42.4-42.4-26.2-26.2-86.8-86.9z">
+                                                    </path>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <app-bread-crumb [locations]="locations"
+                                    [isLoadingPlaceDetails]="isLoadingStoreDetails"></app-bread-crumb>
+                            </div>
+                        </div>
+                        <ng-container>
+                            <div class="d-none d-lg-block" appLazyLoadSection>
+                                <app-tabs2 [placeDetails]="storeDetails" [tabsConfig]="tabs" [type]="'place'"
+                                    [markerPositions]="markerPositions"
+                                    [isLoadingReviews]="isLoadingReviews"></app-tabs2>
+                            </div>
+                            <div class="d-lg-none mt-3" appLazyLoadSection>
+                                <app-media-viewer [pageContent]="storeDetails"
+                                    [lang]="currentLanguage"></app-media-viewer>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="col-lg-6 px-0 px-md-2">
+                        <div class="d-none d-lg-block" appLazyLoadSection>
+                            <app-media-viewer [pageContent]="storeDetails" [lang]="currentLanguage"></app-media-viewer>
+                        </div>
+                        <div class="d-lg-none" appLazyLoadSection>
+                            <app-tabs2 [placeDetails]="storeDetails" [tabsConfig]="tabs" [type]="'place'"
+                                [markerPositions]="markerPositions"></app-tabs2>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div id="rating" class="section-space row align-items-center justify-content-between">
+            <div class="col-lg-4">
+                <app-rate-item [currentLoginInformation]="currentLoginInformation" [loading]="isLoadingBtn"
+                    [itemId]="id" (feedbackSubmitted)="sendFeedbackFromStore($event)"
+                    [type]="storeDetails?.type || moduleTypeRating">
+                </app-rate-item>
+            </div>
+            <div class="rate-site col-lg-6 d-none d-lg-block h-100">
+                <app-rate-site [item]="storeDetails" [isLoadingPlaceDetails]="isLoadingStoreDetails"></app-rate-site>
+            </div>
+        </div>
+    </div>
+    <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        <style *ngIf="homeShowFooter">
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

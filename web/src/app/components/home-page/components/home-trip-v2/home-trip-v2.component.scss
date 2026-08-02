@@ -1,0 +1,111 @@
+#ourTripsSection {
+  .home-trips {
+    background: url("../../../../../assets/images-v2/pages/Home/Our-trips-section/arab-web.webp");
+    height: 443px;
+    border-radius: 24px;
+    background-size: cover;
+    padding: 2rem;
+    overflow: hidden;
+    background-color: #80808099;
+
+    h2 {
+      font-size: 56px;
+      font-weight: 700;
+      color: #101828;
+      text-align: center;
+    }
+
+    p {
+      font-size: 24px;
+      color: black;
+    }
+
+    h2,
+    p {
+      z-index: 1;
+    }
+
+    .start-trip {
+      line-height: 1;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      align-items: center;
+      background-color: #7939a7;
+      color: var(--text-white-color) !important;
+      padding: 16px 50px;
+      border-radius: 8px;
+      font-size: 15px;
+      width: fit-content;
+      margin: auto;
+    }
+  }
+}
+
+.content {
+  z-index: 5;
+  width: 90%;
+  border-radius: 15px;
+  gap: 10px;
+  padding: 30px 25px 20px;
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.12) 12%,
+      rgba(255, 255, 255, 0.04) 50%,
+      rgba(255, 255, 255, 0.08) 83%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+}
+
+@media (max-width: 1024px) {
+  .home-trips {
+    // border-radius: 5px !important;
+    background: url("../../../../../assets/images-v2/pages/Home/Our-trips-section/arab-tablet.webp");
+    padding: 1rem 0.5rem !important;
+    background-position: -100px 0px !important;
+
+    h2 {
+      font-size: 25px !important;
+    }
+
+    p {
+      font-size: 16px !important;
+      line-height: 25px;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  #ourTripsSection {
+    .home-trips {
+      padding: 1rem 0.5rem !important;
+      background-position: 0 0px !important;
+
+      h2 {
+        font-size: 25px !important;
+      }
+
+      p {
+        font-size: 14px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        margin-bottom: 10px;
+      }
+
+      .start-trip {
+        min-width: auto !important;
+        // border-radius: 5px !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  #ourTripsSection {
+    .home-trips {
+      background: url("../../../../../assets/images-v2/pages/Home/Our-trips-section/arab-mobile.webp");
+    }
+  }
+}

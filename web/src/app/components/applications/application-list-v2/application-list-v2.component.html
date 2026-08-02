@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div id="apps">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.applications'"
+        [largeImage]="'assets/images-v2/pages/applications/banner/Application-banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/applications/banner/Application-banner-web.webp'"
+        [description1]="'applications.heroTitle'" [description2]="'applications.heroDescription'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start Tabs -->
+    <div class="container section-space">
+        <app-tabs [items]="applicationsCategories" (selectedItemsChange)="onSelectedItemsChange($event)"
+            [enableAll]="true"></app-tabs>
+    </div>
+    <!-- End Tabs -->
+
+    <!-- Start Applications List -->
+    <section id="Applications-list">
+        <div class="container">
+            <h2 class="fw-bold text-center">{{'titles.applications'|translate}}</h2>
+            <div class="row g-4 mt-1">
+                <ng-container *ngIf="isLoadingApplicationsList; else noLoadingApps">
+                    <app-skeleton type="apps"></app-skeleton>
+                </ng-container>
+                <ng-template #noLoadingApps>
+                    <ng-container *ngIf="applicationsList?.length > 0; else noPopularApplicationsList">
+                        <ng-container *ngFor="let app of applicationsList; let i = index">
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                                <app-application-card-v2 [item]="app"
+                                    [categoryIds]="applicationsCategoriesIds"></app-application-card-v2>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #noPopularApplicationsList>
+                        <app-no-result></app-no-result>
+                    </ng-template>
+                </ng-template>
+            </div>
+            <app-shared-pagination [itemsPageNumber]="appsPerPageCount" [itemsListTotalCount]="applicationsTotalCount"
+                [itemsPageNumber]="appsPageNumber" [itemsPerPageCount]="appsPerPageCount"
+                (pageChange)="changePage($event)"></app-shared-pagination>
+        </div>
+
+    </section>
+    <!-- End Applications List -->
+
+</div>
+<div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+    <style *ngIf="homeShowFooter">
+        #home {
+            padding-bottom: 0 !important;
+
+        }
+    </style>
+</div>

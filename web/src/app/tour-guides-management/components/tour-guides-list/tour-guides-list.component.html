@@ -1,0 +1,76 @@
+<app-header></app-header>
+<div id="tourGuides">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.tourGuides'"
+        [largeImage]="'assets/images-v2/pages/tour-guides-list/banner/banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/tour-guides-list/banner/banner-web.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div appLazyLoadSection class="d-flex align-items-center justify-content-center">
+        <div id="tourGuides-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" [title]="'searchForToursGuidesMob'"
+                (formValues)="search($event)" (clearEvent)="clearSearch($event)"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (formValues)="search($event)" (clearEvent)="clearSearch($event)"
+        [searchTitle]="'searchForToursGuidesMob'"></app-search-list-sm>
+    <!-- End search sm-->
+
+    <ng-container>
+        <!--Start Tour Guides List -->
+        <div appLazyLoadSection class="container section-space m-auto">
+            <ng-container *ngIf="isLoadingList; else noLoadingList">
+                <app-skeleton [type]="'places-list'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingList>
+                <ng-container
+                    *ngIf="(regionsItemsIds?.length > 0) || (languagesItemsIds?.length > 0) || (experienceValue != null) || (searchKeywords?.trim()); else allTourGuides">
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'titles.searchResult'|translate}}
+                        </h4>
+                    </div>
+                </ng-container>
+                <ng-template #allTourGuides>
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'tourGuide.AllTourGuides'|translate}}
+                        </h4>
+                    </div>
+                </ng-template>
+                <div class="row g-2 mx-0 mb-4 mb-md-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                    <div *ngFor="let store of itemsList" class="col-lg-3 col-sm-6 col-12"
+                        style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                        <app-tour-guide-card [item]="store"></app-tour-guide-card>
+                    </div>
+                    <ng-container *ngIf="itemsList.length===0">
+                        <app-no-result [isWhite]="false"></app-no-result>
+                    </ng-container>
+                    <app-shared-pagination [itemsPageNumber]="pageNumber" [itemsListTotalCount]="listTotalCount"
+                        [itemsPerPageCount]="PerPageCount" (pageChange)="changePage($event)"></app-shared-pagination>
+                </div>
+            </ng-template>
+        </div>
+        <!-- End Tour Guides List -->
+    </ng-container>
+
+    <div appLazyLoadSection>
+        <app-new-footer></app-new-footer>
+        <style>
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<!-- <p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast> -->

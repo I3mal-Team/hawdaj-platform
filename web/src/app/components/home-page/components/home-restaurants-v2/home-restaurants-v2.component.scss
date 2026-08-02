@@ -1,0 +1,185 @@
+.container {
+  .description {
+    width: 55%;
+
+    h4 {
+      color: #371a4c;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 42.56px;
+    }
+
+    p {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 31.92px;
+      font-weight: 500 !important;
+      color: #371a4c !important;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .sub-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #371a4c;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    p {
+      font-size: 16px !important;
+      font-weight: 400;
+      line-height: 25px !important;
+      color: #371a4c;
+    }
+  }
+}
+
+.cards {
+  width: 90%;
+  gap: 10px;
+  margin: auto;
+  height: 60vh;
+}
+
+.card {
+  background-color: #80808099;
+  position: relative;
+  width: 25%;
+  height: 70%;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: 0.3s;
+  zoom: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  @media (min-width: 2000px) {
+    height: 350px;
+  }
+  &.active {
+    width: 40%;
+    height: 100%;
+    @media (min-width: 2000px) {
+      height: 450px;
+    }
+    .explore-btn {
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+@media (max-width: 990px) {
+  .card {
+    position: relative;
+    width: 90%;
+    height: 350px;
+  }
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.explore-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 70px);
+  background-color: #7a3e9d;
+  /* Purple color for button */
+  color: white;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17.71px;
+  padding: 8px 70px;
+}
+
+.caption h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.caption p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+:host::ng-deep {
+  .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    background-color: gray;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background: var(--light-new-color);
+  }
+}
+
+@media (max-width: 1024px) {
+  .card {
+    &:after {
+      background-color: rgba(0, 0, 0, 0.238);
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.card {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.card-content {
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 65%;
+  background: rgba(174, 174, 174, 0.296);
+  border-radius: 15px;
+  align-items: center;
+  width: 95%;
+  padding: 10px;
+
+  h5 {
+    font-size: 25px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  p {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+}

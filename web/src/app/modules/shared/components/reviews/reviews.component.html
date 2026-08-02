@@ -1,0 +1,21 @@
+<ng-container *ngIf="reviews?.length>0; else noReviews">
+  <p-carousel [value]="reviews" [numVisible]="2" [numScroll]="1" [responsiveOptions]="responsiveOptions"
+    [showNavigators]="false" [autoplayInterval]="5000">
+    <ng-template let-item pTemplate="item" let-i="index">
+      <div class="global-card py-4 d-flex justify-content-center gap-2 flex-column mx-2 h-100" data-aos="fade-up"
+        [attr.data-aos-delay]="50+ i * 50">
+        <h5 class="text-center mb-1">{{item?.name}}</h5>
+        <p class="text-center mb-0">{{item?.rateText}}</p>
+        <div class="d-flex justify-content-center">
+          <p-rating [(ngModel)]="item.rate" [id]="'rating3'" [disabled]="true" [cancel]="false"></p-rating>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</ng-container>
+<ng-template #noReviews>
+  <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+    <p>{{'general.noData'|translate}}</p>
+  </div>
+</ng-template>

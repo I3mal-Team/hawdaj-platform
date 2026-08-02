@@ -1,0 +1,269 @@
+<app-header></app-header>
+<div id="restaurant-details">
+  <ng-container *ngIf="isLoading; else noLoading">
+    <app-skeleton [type]="'restaurantDetails'"></app-skeleton>
+  </ng-container>
+  <ng-template #noLoading>
+    <div id="hero-details" class="position-relative d-flex align-items-center">
+      <div class=" container">
+        <div class="row align-items-center">
+          <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-4">
+            <h1 class="fs-lg fw-bold w-75 w-md-100" data-aos="fade-right" data-aos-duration="500">
+              {{restaurantDetails?.title}}</h1>
+            <div class="w-75 w-md-100 text-muted-color rich-text" data-aos="fade-right" data-aos-duration="500"
+              data-aos-delay="200" [innerHTML]="restaurantDetails?.description | safeHtml"></div>
+            <p class="mb-1 d-flex align-items-baseline gap-2 text-truncate" data-aos="fade-right"
+              data-aos-duration="500" data-aos-delay="400">
+              <i class="fa fa-cutlery text-main-color"></i>
+              <ng-container *ngIf="restaurantDetails?.food_categories?.length>0; else noFoodCategory">
+                <ng-container *ngFor="let food of restaurantDetails?.food_categories;let i=index">
+                  <span>{{food?.name}}</span><span *ngIf="i<restaurantDetails?.food_categories?.length-1">,</span>
+                </ng-container>
+              </ng-container>
+              <ng-template #noFoodCategory>
+                {{'general.noFoodCategory'|translate}}
+              </ng-template>
+            </p>
+            <p class="mb-1 text-truncate" data-aos="fade-right" data-aos-duration="500" data-aos-delay="600">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-map-pin text-main-color">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg> {{restaurantDetails?.address_name||'titles.saudiArabia'| translate}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 w-75 w-md-100"
+              data-aos="fade-right" data-aos-duration="500" data-aos-delay="800">
+              <p class="mb-1 text-main-color d-flex align-items-baseline gap-1 text-truncate fw-bold">
+                <i class="pi pi-map text-main-color"></i>
+                <span class="fs-8">{{'general.showOnMap'|translate}} <strong class="fs-6-1">
+                    {{restaurantDetails?.distance}} {{'general.km'|translate}}</strong>
+                  {{'general.fromCentre'|translate}}</span>
+              </p>
+              <div class="d-flex gap-2 align-items-center">
+                <!-- <p-rating *ngIf="restaurantDetails" [(ngModel)]="restaurantDetails.rate" [id]="'rating3'"
+                  [disabled]="true" [cancel]="false"></p-rating> -->
+                <div>
+                  <p class="mb-0">
+                    <strong class="">({{restaurantDetails?.review}}) </strong>
+                    <strong>{{'general.reviews'|translate}}</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex gap-3 flex-wrap mt-5">
+              <button
+                class="btn btn-solid-main rounded-pill d-flex justify-content-center align-items-center gap-1 flex-nowrap"
+                (click)="viewMenu()" data-aos="fade-up" data-aos-duration="500" data-aos-delay="850">
+                <i class="pi pi-eye"></i>
+                {{'restaurants.viewMenu'|translate}}</button>
+              <a class="btn btn-outline-main rounded-pill d-flex justify-content-center align-items-center gap-1 flex-nowrap"
+                data-aos="fade-up" data-aos-duration="500" data-aos-delay="950"
+                (click)="downloadMenu(restaurantDetails?.menu_file)">
+                <i class="pi pi-download"></i>
+                {{'restaurants.downloadMenu'|translate}}
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6 col-11 m-auto order-md-2 order-1" data-aos="zoom-in-up" data-aos-duration="500">
+            <div class="container-img position-relative" [style.background]="'url(' +restaurantDetails?.image + ')'">
+              <img [src]="restaurantDetails?.image" alt="image" class="details-img w-100">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-3 flex-column px-2 py-4 all-social position-absolute shadow-sm"
+        *ngIf="restaurantDetails?.facebook_link&&restaurantDetails?.whatsapp&&restaurantDetails?.Instagram_link">
+        <a *ngIf="restaurantDetails?.facebook_link" [href]="restaurantDetails?.facebook_link" target="_blank"> <i
+            class="pi pi-facebook fs-4"></i></a>
+        <a *ngIf="restaurantDetails?.whatsapp" [href]="'https://wa.me/' + restaurantDetails?.whatsapp" target="_blank">
+          <i class="pi pi-whatsapp fs-4"></i></a>
+        <a *ngIf="restaurantDetails?.Instagram_link" [href]="restaurantDetails?.Instagram_link" target="_blank"> <i
+            class="pi pi-instagram fs-4"></i></a>
+        <!-- <a [href]="restaurantDetails?.instagram_link" target="_blank"> <i class="pi pi-youtube fs-4"></i></a> -->
+      </div>
+    </div>
+
+    <div class="offer">
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-lg-4 col-md-6 mb-3" data-aos="fade-right" data-aos-duration="600">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+              <div class="offer-icon d-flex justify-content-center align-items-center rounded-circle text-main-color">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-mobile-message"
+                  width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M11 3h10v8h-3l-4 2v-2h-3z" />
+                  <path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2" />
+                  <path d="M10 18v.01" />
+                </svg>
+              </div>
+              <h5 class="text-center fw-bold fs-4 mt-3 mb-2">{{'restaurants.easyOrder'|translate}}</h5>
+              <p class="text-muted-color mb-0 text-center">{{'restaurants.creatingOrder'|translate}}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-3" data-aos="fade-down" data-aos-duration="600">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+              <div class="offer-icon d-flex justify-content-center align-items-center rounded-circle text-main-color">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-truck-delivery" width="35"
+                  height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                  <path d="M3 9l4 0" />
+                </svg>
+              </div>
+              <h5 class="text-center fw-bold fs-4 mt-3 mb-2">{{'restaurants.fastedDelivery'|translate}}</h5>
+              <p class="text-muted-color mb-0 text-center">{{'restaurants.specialQuestions'|translate}}</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-3" data-aos="fade-left" data-aos-duration="600">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+              <div class="offer-icon d-flex justify-content-center align-items-center rounded-circle text-main-color">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-certificate" width="35"
+                  height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                  <path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" />
+                  <path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" />
+                  <path d="M6 9l12 0" />
+                  <path d="M6 12l3 0" />
+                  <path d="M6 15l2 0" />
+                </svg>
+              </div>
+              <h5 class="text-center fw-bold fs-4 mt-3 mb-2">{{'restaurants.bestQuality'|translate}}</h5>
+              <p class="text-muted-color mb-0 text-center">{{'restaurants.findingRestaurant'|translate}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="menu" class="mt-md-5 mt-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-10 col-lg-11">
+            <div class="mb-md-5 mb-3">
+              <h4 class="text-center mb-1 fw-bold fs-3 w-75 w-md-100 m-auto" data-aos="zoom-out"
+                data-aos-duration="500">
+                {{'restaurants.exploreMenu'|translate}}
+              </h4>
+              <div class="d-flex justify-content-center align-items-center gap-2 position-relative decor">
+                <hr>
+                <img src="assets/images/restaurants/flower-decor.webp" class="" alt="image">
+                <hr>
+
+              </div>
+            </div>
+            <div class="row g-0 justify-content-center">
+              <ng-container *ngIf="isLoadingMenus; else noLoadingMenu">
+                <app-skeleton [type]="'menu'"></app-skeleton>
+              </ng-container>
+              <ng-template #noLoadingMenu>
+                <ng-container *ngIf="paginatedMenus?.length>0; else noMenus">
+                  <ng-container *ngFor="let item of paginatedMenus;let i=index">
+                    <div class="col-md-4 col-sm-6" data-aos="zoom-in-up" [attr.data-aos-delay]="50+ i * 50">
+                      <div class="border-bottom p-4 h-100" [ngClass]="i%3==1?'menu-border':i%2==0?'menu-sm-border':''"
+                        [class.border-bottom-0]="i>paginatedMenus?.length-4"
+                        [class.border-end-0]="i==paginatedMenus?.length-1">
+                        <div [ngClass]="i%3==1?'d-block mb-3':'d-none'">
+                          <div class="d-flex justify-content-between gap-2">
+                            <h5 class="text-capitalize fw-bold mb-2 text-truncate fs-5-1">{{item?.title}}</h5>
+                            <strong class="text-secondary-color">{{item?.price}}{{'general.rsa'|translate}}</strong>
+                          </div>
+                          <p class="mb-1 text-muted-color  desc">
+                            {{item?.description | stripHtml}}
+                          </p>
+                        </div>
+                        <div class="position-relative">
+                          <img [src]="item?.image" alt="image" onerror="src='assets/images/not-found/no-img.svg'"
+                            class="w-100 menu-img shadow-sm">
+                          <span *ngIf="item?.isNew"
+                            class="position-absolute py-1 px-2 m-2 top-0 text-white-color new d-block rounded">{{'general.new'|translate}}</span>
+                        </div>
+                        <div [ngClass]="i%3==1?'d-none':'mt-3'">
+                          <div class="d-flex justify-content-between gap-2">
+                            <h5 class="text-capitalize fw-bold mb-2 text-truncate fs-5-1">{{item?.title}}</h5>
+                            <strong class="text-secondary-color">{{item?.price}}{{'general.rsa'|translate}}</strong>
+                          </div>
+                          <p class="mb-1 text-muted-color desc">
+                            {{item?.description | stripHtml}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noMenus>
+                  <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                    <p>{{'general.noData'|translate}}</p>
+                  </div>
+                </ng-template>
+              </ng-template>
+            </div>
+            <p-paginator *ngIf="menus?.length>0" [first]="1" [rows]="6" [totalRecords]="menus?.length"
+              (onPageChange)="onPageChangeMenus($event)"></p-paginator>
+            <div class="d-flex justify-content-center mt-4" *ngIf="menus?.length>menusTotalCount"
+              (click)="loadMoreMenus()">
+              <a class="py-2 px-4 loadMore fw-bold">{{'general.loadMore'|translate}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="offers" class="mt-4" *ngIf="offers">
+      <div class="container">
+        <div class="row align-items-center justify-content-around">
+          <div class="col-md-5 col-10">
+            <div class="container-img position-relative" data-aos="fade-right" data-aos-duration="700"
+              [style.background]="'url(' +offers?.image + ')'">
+              <div class="position-absolute offer-num overflow-hidden">
+                <img src="assets/images/restaurants/star.svg" alt="image">
+                <p
+                  class="mb-0 text-white-color offer-percentage position-absolute d-flex justify-content-center flex-column align-items-center w-100 fw-bold fs-5-2">
+                  <span>{{offers.discount}}%</span>
+                  {{'restaurants.offer'|translate}}
+                </p>
+              </div>
+              <img [src]="offers?.image" alt="image" onerror="src='assets/images/not-found/no-img.svg'"
+                class="offer-img w-100">
+            </div>
+          </div>
+          <div class="col-md-6 mt-md-0 mt-4">
+            <h1 class="fw-bold w-75 w-md-100 mb-3 text-md-start text-center" data-aos="fade-up" data-aos-duration="600">
+              <span class="special">{{'restaurants.ourSpecialOffer'|translate}}</span>
+              <!-- {{'restaurants.goingOn'|translate}} -->
+              {{offers?.title}}
+            </h1>
+            <div class="text-muted-color text-md-start text-center rich-text" data-aos="fade-up" data-aos-duration="600"
+              data-aos-delay="150" [innerHTML]="(offers?.description || '') | safeHtml"></div>
+            <div class="d-flex justify-content-md-start justify-content-center mt-5" data-aos="fade-up"
+              data-aos-duration="600" data-aos-delay="300">
+              <a class="moreDetails fw-bold" (click)="openOfferDetails()">{{'general.moreDetails'|translate}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+    <style *ngIf="homeShowFooter">
+      #home {
+        padding-bottom: 0 !important;
+
+      }
+    </style>
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

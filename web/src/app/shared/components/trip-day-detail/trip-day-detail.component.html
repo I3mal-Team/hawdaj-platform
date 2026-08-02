@@ -1,0 +1,83 @@
+<article [ngClass]="componentClasses()" *ngIf="dayData()">
+    <!-- Day Info Container (Header + Region) -->
+    <div class="trip-day-detail__info-container">
+        <!-- Day Header Section -->
+        <div class="trip-day-detail__header">
+            <!-- Day Number & Title -->
+            <div class="trip-day-detail__day-info">
+                <div class="trip-day-detail__day-badge">
+                    <span class="trip-day-detail__day-number">{{ dayData()?.dayNumber }}</span>
+                </div>
+                <h2 class="trip-day-detail__day-title">{{ dayData()?.dayTitle }}</h2>
+            </div>
+
+            <!-- Date & Places Count -->
+            <div class="trip-day-detail__meta">
+                {{ dayMetaInfo() }}
+            </div>
+        </div>
+
+        <!-- Region Information -->
+        <div class="trip-day-detail__region" *ngIf="config().showRegionInfo">
+            <h3 class="trip-day-detail__region-name">
+                {{ dayData()?.cityName || dayData()?.city?.name || dayData()?.regionName }}
+            </h3>
+            <p class="trip-day-detail__region-description">
+                {{ dayData()?.cityDescription || dayData()?.city?.description || dayData()?.regionDescription |
+                stripHtml }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Time Periods (Morning/Evening) -->
+    <div *ngIf="config().showPlaces">
+        <!-- Desktop Layout (> 1024px) -->
+        <div class="trip-day-detail__periods trip-day-detail__periods--desktop"
+            [class.trip-day-detail__periods--single]="isSinglePeriod()">
+            <!-- Morning Activities -->
+            <app-time-period-card *ngIf="dayData()?.morning" [data]="dayData()!.morning!"
+                [language]="getCurrentLanguage()" [showDelete]="canShowDelete()" [isFullWidth]="isSinglePeriod()"
+                (placeClick)="onPlaceClick($event)" (deletePlace)="onDeletePlace($event, 'morning')">
+            </app-time-period-card>
+
+            <!-- Evening Activities -->
+            <app-time-period-card *ngIf="dayData()?.evening" [data]="dayData()!.evening!"
+                [language]="getCurrentLanguage()" [showDelete]="canShowDelete()" [isFullWidth]="isSinglePeriod()"
+                (placeClick)="onPlaceClick($event)" (deletePlace)="onDeletePlace($event, 'evening')">
+            </app-time-period-card>
+        </div>
+
+        <!-- Mobile Tabs Layout (< 1024px) -->
+        <div class="trip-day-detail__periods trip-day-detail__periods--mobile">
+            <p-tabView [styleClass]="'trip-periods-tabs'" [activeIndex]="activeTabIndex()">
+                <!-- Morning Tab -->
+                <p-tabPanel *ngIf="dayData()?.morning">
+                    <ng-template pTemplate="header">
+                        <div class="d-flex align-items-center gap-2">
+                            <app-svg-icon name="sun-icon" />
+                            <span>{{ dayData()!.morning!.title }}</span>
+                        </div>
+                    </ng-template>
+                    <app-time-period-card [data]="dayData()!.morning!" [language]="getCurrentLanguage()"
+                        [showDelete]="canShowDelete()" [isFullWidth]="true" (placeClick)="onPlaceClick($event)"
+                        (deletePlace)="onDeletePlace($event, 'morning')">
+                    </app-time-period-card>
+                </p-tabPanel>
+
+                <!-- Evening Tab -->
+                <p-tabPanel *ngIf="dayData()?.evening">
+                    <ng-template pTemplate="header">
+                        <div class="d-flex align-items-center gap-2">
+                            <app-svg-icon name="moon-icon" />
+                            <span>{{ dayData()!.evening!.title }}</span>
+                        </div>
+                    </ng-template>
+                    <app-time-period-card [data]="dayData()!.evening!" [language]="getCurrentLanguage()"
+                        [showDelete]="canShowDelete()" [isFullWidth]="true" (placeClick)="onPlaceClick($event)"
+                        (deletePlace)="onDeletePlace($event, 'evening')">
+                    </app-time-period-card>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+</article>

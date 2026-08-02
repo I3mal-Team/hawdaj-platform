@@ -1,0 +1,89 @@
+<section #sliderContainerMainBg class="carousel" class="position-relative">
+  <div class="overlay position-absolute"></div>
+  <div class="row carsoul-container position-relative"
+    [ngStyle]="{'background-image':'url(' +items[activeIndex]?.image + ')'}">
+    <!-- <div>
+      <img   [src]="items[activeIndex]?.image"
+        class="position-absolute w-100 slide-img  slide-img-overlay d-lg-block d-none" width="1152" height="375"
+        [alt]="items[activeIndex]?.title">
+    </div>   -->
+    <div class="col-md-6 d-flex align-items-center">
+      <article class="content-list ps-md-5 ps-4 w-100">
+        <ng-container *ngFor="let item of items; let i = index; trackBy: trackByFn">
+          <ng-container *ngIf="i==activeIndex">
+            <figcaption class="d-flex flex-column place-content">
+              <div class="details">
+
+                <h2 class="title text-white-color fw-bold mb-3">
+                  {{ item?.title }}
+                </h2>
+                <h3 class="location-address fs-5 fw-bold">
+                  <i class="fa-solid fa-location-dot"></i> {{ item?.address_name }}
+                </h3>
+                <p class="description text-white-color">
+                  {{ item?.description | stripHtml }}
+                </p>
+              </div>
+              <div class="buttons d-flex gap-3">
+                <button class="btn" (click)="showDetails(item)">
+                  {{'general.moreDetails'|translate}} </button>
+                <button class="btn glass-button" [routerLink]="['/places']">
+                  {{'general.seeAll'|translate}}
+                </button>
+              </div>
+            </figcaption>
+          </ng-container>
+        </ng-container>
+        <nav class="arrows-btns d-flex justify-content-md-end gap-3 mt-md-5 mt-4 pt-md-4">
+          <button id="prev" class="d-flex justify-content-center align-items-center rounded-circle prev-arrow"
+            (click)="prev()" title="previous btn">
+            <i class="fa fa-angle-left scaleX-rtl"></i>
+          </button>
+          <button id="next" class="d-flex justify-content-center align-items-center rounded-circle" (click)="next()"
+            title="next btn">
+            <i class="fa fa-angle-right scaleX-rtl"></i>
+          </button>
+        </nav>
+      </article>
+    </div>
+    <div #sliderContainer class="col-md-6 d-flex align-items-end  pb-sm-5 pb-4">
+      <aside
+        class="thumbnail d-flex gap-md-3 gap-2 mt-md-0 mt-sm-4 mt-3 px-md-0 px-md-5 px-sm-4 px-3 py-md-0 py-sm-4 py-3 mx-auto">
+        <ng-container *ngFor="let item of items; let i = index; trackBy: trackByFn">
+          <div class="item-content item-{{i}} position-relative"
+            [ngStyle]="{'order': activeIndex > i ? (i + items?.length) : i}" [ngClass]="{'active': activeIndex === i}"
+            (click)="setActive(i)">
+
+
+            <a [href]="item?.address" target="_blank"
+              class="position-absolute address-icon p-2 z-idx  d-md-block d-none" *ngIf="item?.address">
+              <div class="map-icon-image">
+
+                <div class="image-content">
+                  <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/stores/icons/location.png" width="60"
+                    height="60" alt="Join Us Image">
+                </div>
+              </div>
+            </a>
+
+            <div #imageContainer>
+              <img class="w-100" [ngSrc]="item?.image" width="190" height="270" [alt]="item?.title" appResponsiveImage
+                [mobileWidth]="'77'" [mobileHeight]="'77'">
+            </div>
+            <div class="content d-md-block d-none text-white position-absolute">
+              <strong class="title d-block">
+                {{item?.title}}
+              </strong>
+              <span class="description d-block">
+                {{item?.description | stripHtml}}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </aside>
+    </div>
+  </div>
+  <ng-container *ngIf="autoPlay && enableTimeProgress">
+    <div class="time" [style.width]="timeProgressWidth"></div>
+  </ng-container>
+</section>

@@ -1,0 +1,74 @@
+.content-height {
+  max-height: 9rem;
+}
+
+.video-img {
+  max-height: 9rem;
+  object-fit: fill;
+}
+#video-slider {
+  .bg-main-color {
+    background-color: #8b008bb0 !important;
+  }
+}
+.play {
+  width: 45px;
+  height: 45px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.play-sm {
+  width: 35px;
+  height: 35px;
+  transform: none !important;
+}
+
+.videos-content {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px;
+}
+.overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0000005a;
+  border-radius: 10px;
+}
+.desc {
+  color: #cbcbcb;
+}
+
+:host:ng-deep {
+  .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    width: 5px !important;
+    height: 5px !important;
+    border-radius: 50% !important;
+    background-color: #b5b3b6;
+  }
+
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: var(--bg-main-color);
+  }
+}
+
+.rounded-s {
+  border-radius: 10px 0 0 10px;
+}
+
+.title2 {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+}
+
+.closed {
+  background-color: rgba(17, 17, 17, 0.463);
+  // color: #111;
+  // background-color: rgba(220, 53, 70, 0.256);
+  color: #fff;
+  // color: #dc3545;
+}

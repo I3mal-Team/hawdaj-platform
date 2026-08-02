@@ -1,0 +1,46 @@
+<section class="home-download" role="region" [attr.aria-label]="config.ariaLabel[currentLanguage()]">
+  <div class="home-download__container container">
+
+    <!-- CONTENT -->
+    <div class="home-download__content">
+      <div class="home-download__texts">
+        <h2 class="home-download__title" [attr.aria-level]="2">
+          {{ config.title[currentLanguage()] }}
+        </h2>
+
+        <p class="home-download__description">
+          {{ config.description[currentLanguage()] }}
+        </p>
+      </div>
+
+      <!-- STORES -->
+      <div class="home-download__stores" role="group">
+        <!-- GOOGLE PLAY -->
+        <a class="home-download__store" [href]="config.stores.googlePlay.href" target="_blank" rel="noopener"
+          [attr.aria-label]="config.stores.googlePlay.aria[currentLanguage()]">
+          <img ngOptimizedImage [appLazyLoadImage]="imageBaseUrl + '/' + config.stores.googlePlay.image"
+            [ngSrc]="imageBaseUrl + '/' + config.stores.googlePlay.image"
+            [alt]="config.stores.googlePlay.alt[currentLanguage()]" width="183" height="61" loading="lazy"
+            onerror="this.onerror=null; this.src=config.images.fallback;" />
+        </a>
+
+        <!-- FLOATING IMAGE (FULLY CONFIG-DRIVEN) -->
+        <div class="home-download__floating" aria-hidden="true">
+          <img ngOptimizedImage [appLazyLoadImage]="imageBaseUrl + '/' + config.floatingImage.image"
+            [ngSrc]="imageBaseUrl + '/' + config.floatingImage.image"
+            [alt]="config.floatingImage.alt[currentLanguage()]" width="360" height="720" loading="lazy"
+            onerror="this.onerror=null; this.src=config.images.fallback;" />
+        </div>
+
+        <!-- APP STORE -->
+        <a class="home-download__store" [href]="config.stores.appStore.href" target="_blank" rel="noopener"
+          [attr.aria-label]="config.stores.appStore.aria[currentLanguage()]">
+          <img ngOptimizedImage [appLazyLoadImage]="imageBaseUrl + '/' + config.stores.appStore.image"
+            [ngSrc]="imageBaseUrl + '/' + config.stores.appStore.image"
+            [alt]="config.stores.appStore.alt[currentLanguage()]" width="183" height="61" loading="lazy"
+            onerror="this.onerror=null; this.src=config.images.fallback;" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

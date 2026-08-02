@@ -1,0 +1,227 @@
+// Custom Styles
+#join-us-section {
+  background-color: transparent;
+  width: 100%;
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; // Space between images
+    align-items: center;
+    justify-content: center;
+
+    .image-card {
+      position: relative;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+      width: 285px;
+      height: 315px;
+      background-color: transparent; // Background color to match the design
+
+      &:hover {
+        transform: scale(1.05); // Slight zoom effect on hover
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0.4rem;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.8; // Slight dim effect on hover
+        }
+      }
+    }
+
+    @media only screen and (max-width: 991px) {
+      .image-card {
+        width: 230px;
+        height: 260px;
+      }
+    }
+
+    .positioned-image-card {
+      margin-top: -7.5rem;
+      margin-inline-start: -181px;
+      padding: 0.5rem;
+      box-shadow: none !important;
+      background-color: white;
+    }
+
+    @media only screen and (max-width: 991px) {
+      .image-card {
+        width: 230px;
+        height: 260px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    .image-card {
+      width: 205px;
+      height: 230px;
+    }
+  }
+
+  .text-section {
+    width: 540px !important;
+
+    .title-sec {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1.21;
+      color: #371a4c;
+    }
+
+    .description-sec {
+      line-height: 1.6;
+      color: 371A4C;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 21.3px;
+      color: #371a4c;
+      letter-spacing: -0.4px;
+    }
+  }
+
+  #features-list {
+    .feature-card {
+      background-color: #ffffff; // White background for cards
+      border: 1px solid #e9ecef; // Light border for cards
+      transition:
+        background-color 0.3s ease-in-out,
+        border 0.3s ease-in-out; // Transition for background and border
+      min-width: 65%;
+      max-width: 90%;
+      border-radius: 24px;
+
+      &:hover {
+        background-color: #101828; // Change background color on hover
+        border: 1px solid var(--light0-new-color); // Change border color on hover
+
+        .icon-box {
+          background-color: #ffffff; // Toggle icon box background to white
+
+          img {
+            filter: invert(1); // Invert image colors on hover
+          }
+        }
+
+        .title-card {
+          color: #ffffff; // Toggle title text color to white
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .description-card {
+          color: #ffffff; // Toggle description text color to white
+          font-size: 16px !important;
+        }
+      }
+
+      .icon-box {
+        background-color: #edf0f8; // Original icon box background color
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+        transition: background-color 0.3s ease-in-out; // Smooth transition for icon box background
+
+        img {
+          width: 70%;
+          height: 62%;
+          object-fit: fill;
+        }
+      }
+
+      .title-card {
+        font-size: 1.2rem;
+        color: #101828; // Original title color
+        font-weight: 600;
+        margin-bottom: 0;
+        transition: color 0.3s ease-in-out; // Smooth transition for title color
+      }
+
+      .description-card {
+        font-size: 1rem;
+        color: #3a4980; // Original description color
+        transition: color 0.3s ease-in-out; // Smooth transition for description color
+      }
+    }
+
+    @media only screen and (max-width: 512px) {
+      .feature-card {
+        width: 100%;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  #join-us-section {
+    .text-section {
+      text-align: center;
+
+      .features-list {
+        .feature-item {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #join-us-section {
+    .title {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  #join-us-section {
+    .title {
+      font-size: 40px !important;
+    }
+  }
+
+  .text-section {
+    .title-sec {
+      font-size: 20px !important;
+    }
+
+    .description-sec {
+      font-size: 20px !important;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  #join-us-section {
+    .title {
+      font-size: 30px !important;
+      font-weight: 600;
+    }
+  }
+
+  .text-section {
+    margin: auto;
+
+    .title-sec {
+      font-size: 16px !important;
+    }
+
+    .description-sec {
+      font-size: 16px !important;
+    }
+  }
+}

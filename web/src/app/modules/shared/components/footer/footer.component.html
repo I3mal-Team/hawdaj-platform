@@ -1,0 +1,88 @@
+<footer class="footer-bg pt-4 position-relative">
+  <div id="footer" class="pb-2 position-relative" [ngClass]="currentLanguage=='ar'?'footerRtl':'footerLtr'">
+    <div class="overlay-footer position-absolute"></div>
+    <div class="container position-relative">
+      <div class="row justify-content-between g-0">
+        <div class="col-lg-5 col-md-12 mb-lg-0 mb-4 pt-lg-0 pt-4">
+          <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+            <img ngOptimizedImage [ngSrc]="'assets/images/logo/logo.svg'" width="85" height="85" alt="logo Image">
+            <h4 class="text-white-color text-uppercase">{{'titles.hawdaj'|translate}}</h4>
+          </div>
+          <!-- <p class="mt-3 w-75 w-sm-100 text-white-color text-md-start text-center">
+            {{'footer.hawdajPlatform'|translate}}
+          </p> -->
+          <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3 all-social mt-4">
+            <a [href]="'https://www.facebook.com/Hawdaj7'" target="_blank" title="facebook"> <i
+                class="pi pi-facebook fs-4 text-white-color"></i></a>
+            <!-- <a [href]="'https://wa.me/' + ''" target="_blank"> <i class="pi pi-whatsapp fs-4 text-white-color"></i></a> -->
+            <a [href]="'https://www.instagram.com/hawdaj7/'" target="_blank" title="instagram"> <i
+                class="pi pi-instagram fs-4 text-white-color"></i></a>
+            <a [href]="'https://x.com/HawdaJ7'" target="_blank" title="twitter"> <i
+                class="pi pi-twitter fs-4 text-white-color"></i></a>
+            <a [href]="'https://www.linkedin.com/company/hawdaj7/?viewAsMember=true'" target="_blank" title="linkedin">
+              <i class="pi pi-linkedin fs-4 text-white-color"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-7 d-md-flex d-none">
+          <div class="row">
+            <div class="col-md-4 mb-md-0 mb-4" *ngIf="storesCategoriesList?.length>0">
+              <h4 class="text-white-color fs-5 fw-500 mb-3 text-capitalize">
+                {{'footer.stores'|translate}}
+              </h4>
+              <ul class="p-0">
+                <ng-container *ngFor="let storeCat of storesCategoriesList">
+                  <li class="mb-2">
+                    <a class="text-white-color fs-5-2" (click)="openStoresWithCategoryId(storeCat)"
+                      title="{{storeCat?.name}}">
+                      <span class="px-1">
+                        {{storeCat?.name}}
+                      </span>
+                    </a>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <div class="col-md-4 mb-md-0 mb-4" *ngIf="categoriesList?.length>0">
+              <h4 class="text-white-color fs-5 fw-500 mb-3">{{'footer.featuredPlaces'|translate}}</h4>
+              <ul class="p-0">
+                <ng-container *ngFor="let category of categoriesList">
+                  <li class="mb-2">
+                    <a class="text-white-color fs-5-2" (click)="openPlaceWithCategoryId(category)"
+                      title="{{category?.name}}">
+                      <span class="px-1">
+                        {{category?.name}}
+                      </span>
+                    </a>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <div class="col-md-4 mb-md-0 mb-4" *ngIf="restaurantCategories?.length>0">
+              <h4 class="text-white-color fs-5 fw-500 mb-3">{{'restaurants.mostCommon'|translate}}</h4>
+              <ul class="p-0">
+                <ng-container *ngFor="let category of restaurantCategories">
+                  <li class="mb-2">
+                    <a class="text-white-color fs-5-2" (click)="openRestaurantWithCategoryId(category)"
+                      title="{{category?.name}}">
+                      <span class="px-1">
+                        {{category?.name}}
+                      </span>
+                    </a>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="hr">
+      <div class="py-3 d-flex justify-content-md-between justify-content-center flex-wrap gap-2">
+        <p class="mb-0 text-white-color text-md-start text-center">{{'footer.allRight'|translate}}</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a class="text-white-color" title="terms">{{'footer.terms'|translate}}</a>
+          <a class="text-white-color" title="privacy">{{'footer.privacy'|translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

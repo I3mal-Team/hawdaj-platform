@@ -1,0 +1,74 @@
+<div class="property-upload__wrapper">
+  <div class="property-upload" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+    <input type="file" class="property-upload__input" [attr.accept]="accept" [attr.multiple]="multiple ? '' : null"
+      (change)="onFileBrowse($event)" (click)="onInputClick($event)" (keydown)="onInputKeyDown($event)" />
+
+    <div class="property-upload__icon">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+        focusable="false">
+        <path
+          d="M6.6665 13.3333L9.99984 10M9.99984 10L13.3332 13.3333M9.99984 10V17.5M16.6665 13.9524C17.6844 13.1117 18.3332 11.8399 18.3332 10.4167C18.3332 7.88536 16.2811 5.83333 13.7498 5.83333C13.5677 5.83333 13.3974 5.73833 13.3049 5.58145C12.2182 3.73736 10.2119 2.5 7.9165 2.5C4.46472 2.5 1.6665 5.29822 1.6665 8.75C1.6665 10.4718 2.36271 12.0309 3.48896 13.1613"
+          stroke="#475467" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+
+    <div class="property-upload__body">
+      <p class="property-upload__title">
+        {{ label || ('properties.upload.defaultTitle' | translate) }}
+      </p>
+      <p class="property-upload__subtitle">
+        {{ descriptionKey ? (descriptionKey | translate: descriptionParams) : '' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Images Grid -->
+  <ng-container *ngIf="hasImages()">
+    <div class="property-upload__images">
+      <div class="property-upload__image-item" *ngFor="let file of imageFiles(); trackBy: trackByFileId">
+        <div class="property-upload__image-pill">
+          <img [src]="file.previewUrl" [alt]="file.name" class="property-upload__image-thumb" />
+          <button type="button" class="property-upload__image-delete" (click)="onClear(file.id)"
+            [attr.aria-label]="'Delete image'">
+            <app-svg-icon name="delete-file"></app-svg-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- PDF List -->
+  <ng-container *ngIf="hasPdfs()">
+    <div class="property-upload__pdf-list">
+      <ng-container *ngFor="let file of pdfFiles(); trackBy: trackByFileId; let isLast = last; let i = index">
+        <div class="property-upload__pdf-item">
+          <div class="property-upload__pdf-icon">
+            <app-svg-icon name="pdf-icon"></app-svg-icon>
+          </div>
+          <div class="property-upload__pdf-content">
+            <div class="property-upload__pdf-name">{{ file.name }}</div>
+            <div class="property-upload__pdf-meta">
+              <ng-container *ngIf="getFileSize(file) as fileSize">
+                <span class="property-upload__pdf-size">{{ fileSize.value }} {{ fileSize.unit | translate }}</span>
+              </ng-container>
+              <span class="property-upload__pdf-dot">•</span>
+              <app-svg-icon name="complete" class="property-upload__pdf-status-icon"></app-svg-icon>
+              <span class="property-upload__pdf-status-text">{{ 'properties.upload.completed' | translate }}</span>
+            </div>
+          </div>
+          <div class="property-upload__pdf-actions">
+            <button type="button" class="property-upload__pdf-action-btn" (click)="onPreview(file)"
+              [attr.aria-label]="'View PDF'">
+              <app-svg-icon name="view"></app-svg-icon>
+            </button>
+            <button type="button" class="property-upload__pdf-action-btn" (click)="onClear(file.id)"
+              [attr.aria-label]="'Delete PDF'">
+              <app-svg-icon name="delete-file"></app-svg-icon>
+            </button>
+          </div>
+        </div>
+        <hr class="property-upload__pdf-separator" *ngIf="!isLast && pdfFiles().length > 1" />
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

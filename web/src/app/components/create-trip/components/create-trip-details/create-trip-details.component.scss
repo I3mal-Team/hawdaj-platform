@@ -1,0 +1,303 @@
+$primary-color: #7939a7;
+
+#create-trip-details {
+  .confirm-btn,
+  .cancel-btn {
+    padding: 10px 25px;
+    border-radius: 12px;
+    width: 210px;
+    @media (max-width: 767px) {
+      font-size: 16px;
+      padding: 10px 15px;
+      width: 180px;
+    }
+  }
+
+  .cancel-btn {
+    color: $primary-color;
+    border: 2px solid $primary-color;
+  }
+
+  .confirm-btn {
+    background-color: $primary-color;
+    color: var(--text-white-color);
+  }
+
+  .price-content,
+  .vehicletype-content {
+    background-color: transparent;
+    border-radius: 16px;
+    box-shadow: rgba(0, 0, 0, 0.0784313725) 0px 1px 8px 0px;
+    height: 124px !important;
+
+    h5 {
+      color: #000000 !important;
+      font-size: 24px !important;
+    }
+
+    p {
+      color: #3a4980 !important;
+      font-size: 16px !important;
+    }
+  }
+
+  .vehicletype-content {
+    height: 90px !important;
+
+    h5 {
+      color: #000000 !important;
+      font-size: 16px !important;
+    }
+
+    p {
+      color: #475467 !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .place-num-details {
+    box-shadow: rgba(0, 0, 0, 0.0784313725) 0px 1px 8px 0px;
+    width: 99% !important;
+    margin: 5px;
+    padding: 20px 15px;
+    border-radius: 24px;
+    margin-bottom: 15px;
+
+    .places-num {
+      h4 {
+        font-size: 18px !important;
+        color: #101828 !important;
+      }
+    }
+
+    h5 {
+      font-size: 16px;
+      color: #3a4980;
+    }
+  }
+
+  .trip-details-height {
+    // height: calc(100vh - 23rem);
+    // overflow: auto;
+    margin-top: 20px;
+
+    p:first-child {
+      text-align: center !important;
+      color: #101828 !important;
+      font-size: 24px !important;
+    }
+
+    .input-content {
+      label {
+        color: #151515;
+      }
+
+      input {
+        background-color: transparent !important;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.052);
+        position: relative;
+        margin: auto;
+        height: 3.2rem;
+        padding: 0 40px;
+        width: 100%;
+      }
+
+      img {
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0 10px;
+      }
+    }
+  }
+
+  .trip-details-vehicle-height {
+    // height: calc(100vh - 26rem);
+    overflow: auto;
+  }
+
+  .form-check-input {
+    background-color: transparent;
+    border: 2px solid #7939a7;
+    padding: 10px;
+    border-radius: 50%;
+
+    &:checked[type="checkbox"] {
+      background-color: $primary-color !important;
+      border-color: $primary-color !important;
+      --bs-form-check-bg-image: url(../../../../../assets/images-v2/create-trip/icon/Check.png);
+      background-size: 9px;
+      background-position-y: 6px;
+
+      @media (max-width: 1240px) {
+        background-position-y: center;
+        background-position: center;
+      }
+    }
+
+    &:checked[type="radio"] {
+      background-color: $primary-color !important;
+      border-color: $primary-color !important;
+      --bs-form-check-bg-image: url(../../../../../assets/images-v2/create-trip/icon/Check.png);
+      background-size: 9px;
+      background-position-y: 6px;
+
+      @media (max-width: 1240px) {
+        background-position-y: center;
+        background-position: center;
+      }
+    }
+  }
+
+  .mat-mdc-slider {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .mdc-slider__track {
+    transform: scaleY(1.2) !important;
+  }
+
+  .mdc-slider .mdc-slider__track {
+    top: 45%;
+  }
+
+  .mat-mdc-slider .mdc-slider__track--active {
+    background-color: #416e80 !important;
+  }
+
+  .mat-mdc-slider .mdc-slider__thumb-knob {
+    background-color: var(--bg-white-color) !important;
+    border-color: var(--bg-white-color) !important;
+    border-radius: 0 !important;
+    clip-path: polygon(0 0, 100% 0, 100% 76%, 51% 100%, 45% 100%, 0 76%) !important;
+  }
+
+  .mat-mdc-slider.mat-primary {
+    --mdc-slider-handle-color: $primary-color !important;
+    --mdc-slider-focus-handle-color: $primary-color !important;
+    --mdc-slider-hover-handle-color: $primary-color !important;
+    --mdc-slider-active-track-color: var(--light-new-color) !important;
+    --mdc-slider-inactive-track-color: $primary-color !important;
+    --mdc-slider-with-tick-marks-active-container-color: #fff;
+    --mdc-slider-with-tick-marks-inactive-container-color: $primary-color !important;
+    --mat-mdc-slider-ripple-color: $primary-color !important;
+    --mat-mdc-slider-hover-ripple-color: rgba(132, 84, 142, 0.05) !important;
+    --mat-mdc-slider-focus-ripple-color: rgba(132, 84, 142, 0.2) !important;
+  }
+
+  .counter {
+    min-width: 30px;
+    height: 30px;
+    background-color: #524c60;
+    cursor: pointer;
+  }
+
+  #vehicle-types {
+    .form-check-input {
+      &:checked[type="radio"] ~ label {
+        border: 2px solid #ffffff !important;
+
+        .vehicle-img {
+          display: none !important;
+        }
+
+        .d-none {
+          display: block !important;
+        }
+      }
+    }
+  }
+
+  .plan-content {
+    background: linear-gradient(180deg, rgba(234, 131, 255, 0.25) 0%, rgba(0, 99, 128, 0.25) 100%);
+    border-radius: 10px;
+
+    .plan-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      background-color: #ffffff1a;
+    }
+  }
+
+  .plane-card,
+  .car-card {
+    border-radius: 10px;
+
+    .vehicle-icon {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  .plane-card {
+    // background-color: #ffa16b;
+    .vehicle-icon {
+      // background-color: #ffb387a6;
+      background-color: #ffa16b;
+    }
+  }
+
+  .car-card {
+    // background-color: #248aaa;
+    .vehicle-icon {
+      background-color: #248aaa;
+      // background-color: #4990a799;
+    }
+  }
+
+  label {
+    .dots {
+      gap: 4px;
+      margin: 5px;
+
+      .active {
+        background-color: #7939a7;
+      }
+    }
+
+    span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #0000001a;
+
+      &.number {
+        border: 1px solid #d9d9d9;
+        color: black;
+        transition: color 0.3s;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+    }
+  }
+
+  label span.active {
+    background-color: #7939a7;
+    background-image: url(../../../../../assets/images-v2/create-trip/icon/check.svg);
+  }
+}
+
+@media (max-width: 576px) {
+  #create-trip-details {
+    .vehicle-icon {
+      width: 75px !important;
+      min-width: 75px;
+      height: 75px !important;
+    }
+
+    .vehicle-img {
+      width: 62px;
+    }
+
+    .check-img {
+      width: 50px !important;
+    }
+  }
+}

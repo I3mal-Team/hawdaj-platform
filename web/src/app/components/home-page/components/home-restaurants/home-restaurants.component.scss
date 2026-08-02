@@ -1,0 +1,59 @@
+#zad-slider {
+  .details-icon {
+    border-radius: 0 30px 30px 15px;
+    background-color: #8b008b;
+    padding: 7px 13px;
+  }
+
+  .resturant-img {
+    height: 180px;
+  }
+
+  .rest-map-location {
+    width: 40px;
+    height: 40px;
+    background-color: #0026ff3b;
+    border-radius: 0 20px;
+  }
+
+  .map-location {
+    left: 10px;
+    top: 10px;
+    background-color: var(--bg-main-color);
+    width: 30px;
+    height: 30px;
+  }
+
+  .arrow {
+    width: 30px;
+    height: 30px;
+    background-color: #fff !important;
+    border-radius: 5px !important;
+    border: 1px solid #e2a025 !important;
+  }
+
+  .right-arrow {
+    transform: scaleX(-1);
+  }
+}
+
+.arrows-btns {
+  button {
+    z-index: 1;
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: var(--text-white-color);
+    background-color: transparent;
+    &#prev {
+      background-color: #8b008b;
+    }
+    &#next {
+      background-color: #d847d8;
+    }
+    &.disabled {
+      pointer-events: none;
+      border: 1px solid #a2a8a5;
+    }
+  }
+}

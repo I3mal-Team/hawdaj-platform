@@ -1,0 +1,69 @@
+#quick-global-search {
+  border: 2px solid #6E3498 !important;
+  border-radius: 16px !important;
+  .overlay-search {
+    inset: 0;
+    background-color: #11111171;
+    z-index: 2;
+  }
+  .spinner-grow {
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--bg-main-color);
+  }
+  .last-input {
+    width: calc(100% - 4.5rem);
+  }
+  .search-icon,
+  .search-icon:focus {
+    min-width: 3.1rem;
+    height: 3.1rem;
+    background-color: #e66cffc2;
+  }
+}
+
+:host::ng-deep {
+  #quick-global-search {
+    .visited {
+      // box-shadow: 0px 0px 15px 10px #0000001a;
+      border-radius: 100px;
+    }
+
+    .p-dropdown-label.p-placeholder,
+    .form-control::placeholder {
+      color: #aaa9a9 !important;
+    }
+
+    timesicon {
+      svg {
+        background-image: url("../../../../../assets/images/icons/Close.svg") !important;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 1.3rem;
+        height: 1.2rem;
+        top: 10px;
+
+        path {
+          display: none !important;
+        }
+      }
+    }
+
+    .input-search-result {
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+    }
+
+    .p-dropdown .p-dropdown-trigger {
+      justify-content: flex-end;
+    }
+
+    .p-dropdown .p-dropdown-label {
+      height: 1.5rem;
+      padding: 0px !important;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

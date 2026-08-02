@@ -1,0 +1,41 @@
+<div class="trip-card" (click)="closeDropdown()">
+  <!-- Overlay -->
+  <div class="trip-card__overlay"></div>
+
+  <!-- Image Container -->
+  <div class="trip-card__image-container">
+    <img class="trip-card__image" [appLazyLoadImage]="item?.image" [ngSrc]="item?.image" [alt]="item?.name"
+      ngOptimizedImage width="200" height="150" (error)="onImageError($event)" />
+  </div>
+
+  <!-- Dropdown Menu (outside overflowed container) -->
+  <div class="trip-card__menu-wrapper">
+    <div class="trip-card__menu" (click)="toggleDropdown($event)" title="Open menu">
+      <app-svg-icon name="three-dots-icon" />
+      <ul class="trip-card__dropdown" [class.trip-card__dropdown--show]="collapse()">
+        <li class="trip-card__dropdown-item">
+          <button (click)="onDeleteClick()" aria-label="Delete trip">
+            <img src="assets/images-v2/pages/save-trip/icons/card/trash.svg" alt="delete" />
+            {{ 'general.delete' | translate }}
+          </button>
+        </li>
+        <li class="trip-card__dropdown-item">
+          <button (click)="exploreTrip()" aria-label="Explore trip">
+            <app-svg-icon name="discover-icon" />
+            {{ 'general.discover' | translate }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card Content -->
+  <div class="trip-card__content">
+    <h4 class="trip-card__content--title">{{ item?.name }}</h4>
+    <p class="trip-card__content--date">
+      <time [attr.datetime]="item?.start_date">{{ item?.start_date | date:'d MMM y':'':currentLanguage() }}</time>
+      -
+      <time [attr.datetime]="item?.end_date">{{ item?.end_date | date:'d MMM y':'':currentLanguage() }}</time>
+    </p>
+  </div>
+</div>

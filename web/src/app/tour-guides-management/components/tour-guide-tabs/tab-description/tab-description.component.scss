@@ -1,0 +1,46 @@
+.title {
+    color: #371a4c;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+}
+p {
+    &.description {
+        color: #3a4980;
+        font-size: 1rem !important;
+        font-weight: 400;
+        margin-bottom: 0;
+        line-height: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+}
+.details {
+    .review {
+        p {
+            color: #3a4980;
+            font-size: 0.875rem !important;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            background: #edf0f8;
+            @media (max-width: 550px) {
+                font-size: 0.75rem !important;
+            }
+        }
+    }
+    .rate {
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 0.875rem !important;
+        background: #fbf3ea;
+        color: #d48d3b;
+        font-weight: 600;
+        p {
+            margin-bottom: 0;
+        }
+    }
+}

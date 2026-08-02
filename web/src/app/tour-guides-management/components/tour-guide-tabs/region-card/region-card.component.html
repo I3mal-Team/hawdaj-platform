@@ -1,0 +1,20 @@
+<div class="img-container position-relative">
+    <img [appLazyLoadImage]="region?.image" ngSrc="{{region?.image }}" [alt]="region?.name" ngOptimizedImage width="500"
+        height="100" (error)="onImageError($event)">
+
+    <div class="content position-absolute d-flex align-items-center justify-content-between">
+        <p class="fw-bold text-white w-100 mb-0">
+            {{region?.name}}
+        </p>
+        <svg width="50" height="49" viewBox="0 0 50 49" fill="none" class="scaleX-rtl"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25.2655" cy="24.054" r="22.8382" transform="rotate(-179.488 25.2655 24.054)" stroke="white"
+                stroke-width="1.98593" />
+            <path d="M17.5391 24.1685L33.309 24.0507" stroke="white" stroke-width="1.98593" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M25.483 31.9965L33.309 24.0527L25.3652 16.2266" stroke="white" stroke-width="1.98593"
+                stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<section id="highlights-statistics" [class.ar-content]="currentLanguage=='ar'">
+  <div class="row justify-content-md-start justify-content-center">
+    <ng-container *ngFor="let item of statistics;let i=index">
+      <div class="col-md-4 col-sm-6">
+        <div class="statistic-item d-flex flex-column justify-content-center align-items-center gap-2 my-2"
+          [class.statistic-bg]="i<statistics?.length-1">
+          <h4 class="gradient-text mb-0">
+            <span class="statistic-item-title d-flex gap-1">
+              <span class="gradient-fast-level">
+                {{item?.count}}
+              </span>
+              <span class="gradient-fast-text">
+                {{item?.title}}
+              </span>
+            </span>
+          </h4>
+          <span class="item-value">
+            {{item?.content}}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+<div class="word position-relative d-flex align-items-center justify-content-center w-100 h-100"
+    (click)="downloadFile(word)">
+    <div class="word__overlay position-absolute w-100 h-100"></div>
+    <img [appLazyLoadImage]="'assets/images-v2/Attachments/word.webp'"
+        [ngSrc]="'assets/images-v2/Attachments/word.webp'" [alt]="'word'" ngOptimizedImage width="500" height="500">
+
+    <span class="word__download position-absolute">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" fill="none">
+            <path d="M99.9987 116.667V58.3334" stroke="white" stroke-width="11.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M125 91.6666L100 116.667L75 91.6666" stroke="white" stroke-width="11.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path d="M75 141.667H125" stroke="white" stroke-width="11.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            <path
+                d="M153.033 46.967C182.322 76.2563 182.322 123.744 153.033 153.033C123.743 182.322 76.2562 182.322 46.967 153.033C17.6777 123.744 17.6777 76.2562 46.967 46.967C76.2563 17.6777 123.744 17.6777 153.033 46.967"
+                stroke="white" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </span>
+</div>

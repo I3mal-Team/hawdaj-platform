@@ -1,0 +1,26 @@
+.reviews {
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    background: #edf0f8;
+    &__svg {
+        top: 10px;
+        width: fit-content;
+    }
+    &__user-review {
+        &__img-container {
+            overflow: hidden;
+            width: 3.75rem;
+            aspect-ratio: 1 / 1;
+            border-radius: 0.75rem;
+        }
+        &__title {
+            color: #371a4c;
+            font-size: 1.25rem;
+        }
+    }
+    &__description {
+        color: #371a4c;
+        font-size: 1rem;
+        line-height: 24px;
+    }
+}

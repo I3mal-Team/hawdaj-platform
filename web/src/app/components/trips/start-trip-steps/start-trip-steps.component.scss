@@ -1,0 +1,94 @@
+$primary-opacity: #ea83ff66;
+
+#trip-steps {
+  .start-now-btn {
+    background-color: var(--light-new-color) !important;
+    border-color:  var(--light-new-color) !important;
+  }
+  .row {
+    height: 64vh;
+    overflow: auto;
+  }
+
+  .tripLabel {
+    color: #777;
+  }
+
+  .form-control {
+    height: 3.1rem !important;
+  }
+
+  .calendar {
+    min-width: 39px;
+    width: 39px;
+    height: 39px;
+    background-color: var(--light-new-color) !important;
+    color: var(--text-white-color);
+  }
+
+  .light-card {
+    background-color: #ebecee;
+    border-radius: 5px;
+    padding: 1.5rem;
+    box-shadow: 0px 3px 15px 0px #0000001a;
+  }
+
+  .step-bg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .trip-bg {
+    background-image: url(../../../../assets/images/places/trip-bg-white.png);
+    background-repeat: no-repeat;
+    background-position: -100% 100%;
+    padding: 1.5rem;
+
+    &.top-bg {
+      background-position: -50% 0;
+    }
+  }
+
+  .dark-card {
+    background-color: #171929;
+    border-radius: 5px;
+    padding: 1.5rem;
+    color: var(--text-white-color);
+    box-shadow: 0px 3px 15px 0px #0000001a;
+
+    p {
+      opacity: 0.8;
+    }
+  }
+  p.desc {
+    font-size: 18px !important;
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+
+:host:ng-deep {
+  #trip-steps {
+    .p-calendar-w-btn .p-inputtext {
+      background-color: transparent !important;
+      border: 0 !important;
+      padding: 0;
+      height: fit-content;
+      color: var(--text-dark-color);
+    }
+
+    .p-datepicker-trigger {
+      height: auto;
+      padding: 0;
+      width: auto;
+      background-color: transparent;
+      border: 0;
+      color: var(--text-dark-color);
+    }
+
+    input:checked~label {
+      color: #e671ff !important;
+    }
+  }
+}

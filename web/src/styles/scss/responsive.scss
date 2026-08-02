@@ -1,0 +1,916 @@
+@media (min-width: 1300px) {
+}
+
+@media (max-width: 1329px) {
+  .scale-img {
+    width: 33rem !important;
+    height: 33rem !important;
+  }
+}
+
+@media (max-width: 1256px) {
+  .scale-img {
+    width: 30rem !important;
+    height: 30rem !important;
+  }
+}
+
+@media (max-width: 1147px) {
+  .scale-img {
+    width: 28rem !important;
+    height: 28rem !important;
+  }
+}
+
+@media (max-width: 1063px) {
+  .scale-img {
+    width: 26rem !important;
+    height: 26rem !important;
+  }
+}
+
+@media (max-width: 1010px) {
+  .scale-img {
+    width: 24rem !important;
+    height: 24rem !important;
+  }
+}
+
+@media (max-width: 927px) {
+  .scale-img {
+    width: 22.5rem !important;
+    height: 22.5rem !important;
+  }
+}
+
+@media (max-width: 878px) {
+  .scale-img {
+    width: 19.5rem !important;
+    height: 19.5rem !important;
+  }
+
+  .description-truncate {
+    height: 4.4rem !important;
+  }
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (max-width: 1200px) {
+  #places,
+  #places .carousel-item {
+    height: auto !important;
+    object-fit: cover !important;
+  }
+
+  #places .carousel-img {
+    height: 100% !important;
+  }
+
+  .hide-lg-start-trip {
+    display: none !important;
+  }
+
+  #in-saudi {
+    margin-top: 0rem !important;
+  }
+
+  #hero-section {
+    .slider-img1 {
+      height: 152px !important;
+    }
+
+    .slider-img2 {
+      height: 110px !important;
+    }
+
+    .slider-img3 {
+      height: 298px !important;
+    }
+
+    .all-slides {
+      .fs-5 {
+        font-size: 1.05rem !important;
+      }
+
+      .desc {
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+      }
+    }
+  }
+
+  #hero-trip {
+    min-height: auto !important;
+
+    .min-h {
+      min-height: auto !important;
+    }
+
+    .w-85 {
+      padding-top: 7rem !important;
+    }
+
+    .trip-info {
+      // padding-top: 5rem !important;
+    }
+  }
+
+  #search-result {
+    .search-content {
+      top: 0px !important;
+    }
+  }
+
+  #home {
+    #hero-section {
+      .title {
+        font-size: 2.1rem !important;
+        width: 80% !important;
+      }
+    }
+  }
+
+  #places-page {
+    #places {
+      height: calc(40vh + 4rem);
+
+      .carousel-item,
+      .carousel-item {
+        height: calc(40vh + 4rem);
+      }
+
+      .carousel-indicators {
+        bottom: 0.5rem !important;
+      }
+    }
+  }
+
+  .global-lg-card {
+    background-color: var(--bg-white-color);
+    border-radius: 20px;
+    box-shadow: 0px 3px 15px 0px #0000001a;
+    padding: 1rem;
+  }
+
+  #hero-section,
+  #stores #stores-hero-section,
+  #hero-events,
+  #hero-event,
+  #hero-restaurant,
+  #hero-details,
+  #stories {
+    min-height: auto !important;
+  }
+
+  #hero-restaurant .title {
+    font-size: 2.5rem !important;
+  }
+
+  #place-details,
+  #store-details {
+    .img-place {
+      height: 25vh !important;
+    }
+
+    .img-h {
+      height: 11.7vh !important;
+      // height: 18.5vh !important;
+    }
+  }
+
+  #footer {
+    padding-bottom: 4rem !important;
+  }
+}
+
+@media (max-width: 991px) {
+  #trips {
+    #hero-trip {
+      .content {
+        background-image: none !important;
+        // background-color: rgba(107, 87, 68, 0.54) !important;
+      }
+    }
+
+    #hero-trip,
+    .min-h {
+      min-height: 65vh;
+    }
+  }
+
+  #restaurants .title {
+    font-size: 2.7rem !important;
+  }
+
+  #footer {
+    padding-bottom: 4rem !important;
+    // background-image: url(../../assets/images/footer/footer-bg.svg) !important;
+    padding-top: 1.5rem !important;
+
+    .ps-md-5 {
+      padding: 0 !important;
+    }
+  }
+
+  #in-saudi {
+    .saudia-title {
+      font-size: calc(1.175rem + 1.5vw) !important;
+    }
+
+    .inSaudi-vector {
+      width: 137px !important;
+    }
+  }
+
+  #filter {
+    margin-top: 1rem !important;
+  }
+
+  .navbar-collapse {
+    background-color: #f9ddff;
+    color: #111 !important;
+    border-radius: 0 0 10px 10px;
+    padding: 10px 18px;
+    background-image: url(../../assets/images/header-bg.svg);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+
+    .nav-link {
+      color: #111 !important;
+      text-align: center;
+      margin: auto;
+
+      &.active {
+        background-color: var(--bg-white-color) !important;
+        // color: #fff !important;
+        // width: fit-content !important;
+        border-radius: 6px !important;
+        padding: 10px 25px;
+      }
+    }
+  }
+
+  .lang-flag,
+  .lang,
+  .dropdown-language .dropdown-toggle::after {
+    color: #111 !important;
+  }
+
+  .w-md-100 {
+    width: 100% !important;
+  }
+
+  .fs-lg {
+    font-size: 2.2rem !important;
+  }
+
+  .destinationContent {
+    // left: 25% !important;
+  }
+
+  .timeline:after {
+    left: -57px !important;
+  }
+
+  #hero-section,
+  #stores #stores-hero-section,
+  #hero-events,
+  #hero-event,
+  #hero-resturant,
+  #hero-details {
+    min-height: auto !important;
+  }
+
+  #in-saudi {
+    .saudi-image {
+      width: 150px !important;
+    }
+  }
+
+  #elezba {
+    padding: 5rem 0 !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .map-container .search-container {
+    top: 6% !important;
+    width: 55% !important;
+  }
+
+  #travelers {
+    padding-top: 2rem !important;
+  }
+
+  #start-trip {
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header-container {
+      width: 16rem !important;
+    }
+
+    .mat-horizontal-content-container {
+      width: calc(100% - 16rem) !important;
+    }
+  }
+
+  // .map-container .search-container {
+  //   top: 5% !important;
+  // }
+  #place-details,
+  #store-details {
+    .img-place {
+      height: 40vh !important;
+    }
+
+    .img-h {
+      height: 18.5vh !important;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+}
+
+@media (max-width: 768px) {
+  #footer,
+  .overlay-footer {
+    clip-path: none !important;
+    border-radius: 30px 30px 0 0 !important;
+  }
+
+  #in-saudi {
+    .saudi-content {
+      top: 35% !important;
+    }
+  }
+
+  #home #hero-section .title {
+    font-size: 1.5rem !important;
+  }
+
+  #hero-trip {
+    .trip-info {
+      padding-top: 1rem !important;
+    }
+  }
+
+  #save-trip {
+    .hero-img {
+      clip-path: none !important;
+    }
+  }
+
+  .w-sm-100 {
+    width: 100% !important;
+  }
+
+  .py-7 {
+    padding: 3rem 0 !important;
+  }
+
+  .flex-sm-wrap {
+    flex-wrap: wrap !important;
+  }
+
+  .fs-lg {
+    font-size: 1.5rem !important;
+  }
+
+  .elezba-img,
+  .travelersSwiper {
+    position: relative !important;
+  }
+
+  #saudi-opening {
+    .second-img {
+      right: -1.5rem;
+      bottom: -1.5rem;
+    }
+  }
+
+  .all-places-img {
+    img {
+      border-radius: 15px !important;
+    }
+  }
+
+  .elezba-info {
+    margin-top: -6rem !important;
+  }
+
+  .map-container .search-container {
+    width: calc(100% - 155px) !important;
+  }
+
+  #create-trip {
+    .mat-horizontal-content-container {
+      height: calc(100vh - 11rem) !important;
+    }
+  }
+
+  .sudiaOpening-info {
+    padding: 0 !important;
+  }
+
+  .scale-img {
+    scale: 1 !important;
+  }
+
+  .trip {
+    height: 100vh !important;
+  }
+
+  .start-now {
+    height: calc(100vh - 9rem) !important;
+  }
+
+  #start-trip {
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+      gap: 0 !important;
+    }
+
+    .mat-horizontal-stepper-wrapper {
+      flex-direction: column !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header-container {
+      height: 9rem !important;
+      width: 100% !important;
+      display: flex !important;
+      justify-content: center;
+    }
+
+    .mat-horizontal-content-container {
+      width: 100% !important;
+      padding-top: 0 !important;
+    }
+
+    #startYourTrip {
+      height: calc(97vh - 10rem) !important;
+    }
+
+    .content-h {
+      height: calc(90vh - 15rem) !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+      width: 100% !important;
+      height: 1px !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+      width: 100% !important;
+      height: 1px !important;
+      top: 50% !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+      width: 100% !important;
+      height: 1px !important;
+      top: 50% !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:last-child::after,
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:last-child .mat-step-label {
+      // top: 50% !important;
+      display: none !important;
+    }
+
+    // .mat-horizontal-stepper-header:first-child::after {
+    //   display: flex !important;
+    //   top: 50% !important;
+    // }
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after {
+      width: 100%;
+      height: 1px;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before {
+      display: none !important;
+    }
+
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+      min-width: 2rem !important;
+      height: 2rem !important;
+    }
+  }
+
+  #calender-container {
+    height: 100vh !important;
+  }
+
+  #date-range .p-datepicker-title {
+    .p-link {
+      width: 6rem !important;
+    }
+  }
+
+  #create-trip {
+    .map-height {
+      height: calc(100vh - 500px);
+    }
+  }
+
+  .stepper-ru {
+    #calender-container {
+      height: calc(100vh - 130px) !important;
+    }
+
+    .map-height {
+      height: calc(100vh - 520px) !important;
+    }
+  }
+
+  .trip-details-vehicle-height {
+    height: calc(100vh - 34rem) !important;
+  }
+
+  #trip-categories .all-categories {
+    height: calc(100vh - 41rem) !important;
+  }
+
+  #start-trip {
+    .mat-stepper-label-position-bottom .mat-horizontal-stepper-header::before {
+      top: 50% !important;
+    }
+  }
+
+  #videoPlayer {
+    height: 60vh !important;
+  }
+
+  #places-page {
+    #places {
+      height: calc(55vh + 4rem) !important;
+
+      .carousel-item,
+      .carousel-item {
+        height: calc(55vh + 4rem) !important;
+      }
+
+      .carousel-indicators {
+        bottom: 0.5rem !important;
+      }
+    }
+
+    #search {
+      margin-top: 0 !important;
+    }
+
+    .trip-bg {
+      padding: 1.1rem 0.7rem !important;
+    }
+  }
+
+  #places-details-sm {
+    .msg-form-sm {
+      .form-check-label {
+        font-size: 1rem !important;
+      }
+
+      .emojy {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.8rem !important;
+      }
+    }
+  }
+
+  #hero-event .image-container {
+    padding-top: 0 !important;
+  }
+
+  #restaurants {
+    .title {
+      font-size: 2.5rem !important;
+    }
+  }
+
+  #menu {
+    .menu-border {
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: 1px solid #eee !important;
+      padding-top: 0rem;
+    }
+
+    .border-bottom:nth-child(odd) {
+      border-right: 1px solid #eee !important;
+      border-left: 1px solid #eee !important;
+      border-bottom: 1px solid #eee !important;
+    }
+
+    .border-bottom:nth-child(even) {
+      border-right: 1px solid #eee !important;
+      border-left: none !important;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  #create-trip {
+    .trip-title {
+      width: 100% !important;
+    }
+
+    .mat-stepper-horizontal {
+      .mat-horizontal-stepper-wrapper {
+        flex-direction: column !important;
+      }
+
+      .mat-horizontal-stepper-header-container {
+        height: 11.3rem !important;
+        width: 100% !important;
+        display: flex !important;
+        padding-top: 5.5rem !important;
+        padding-left: 0 !important;
+        justify-content: space-between;
+      }
+
+      .mat-horizontal-stepper-header {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 16px !important;
+
+        .fs-5-1 {
+          font-size: 1rem !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 766px) {
+  #elezba {
+    margin-top: 0 !important;
+  }
+}
+
+@media (min-width: 766px) {
+  .flex-sm-no-wrap {
+    flex-wrap: nowrap !important;
+  }
+}
+
+@media (max-width: 600px) {
+}
+
+@media (max-width: 576px) {
+  #create-trip {
+    .mat-horizontal-stepper-header-container {
+      padding-top: 4.2rem !important;
+
+      .mat-step-label {
+        display: none !important;
+      }
+    }
+  }
+
+  .stepper-ru {
+    .all-categories {
+      height: calc(100vh - 44rem) !important;
+    }
+  }
+
+  .stepper-ru :not(#create-trip-details .trip-details-height) {
+    .mat-horizontal-stepper-header-container {
+      padding-top: 6.5rem !important;
+    }
+  }
+
+  #create-trip-details .trip-details-vehicle-height {
+    height: calc(100vh - 32rem) !important;
+  }
+
+  #video-slider {
+    .video-img {
+      height: 230px !important;
+    }
+
+    .closed-sm,
+    .video-sm {
+      display: none !important;
+    }
+  }
+
+  #start-trip {
+    ngb-datepicker-navigation-select > .form-select {
+      width: 5rem !important;
+      padding: 0px 2.5rem 0 0 !important;
+    }
+  }
+
+  #places-details-sm {
+    .msg-form-sm {
+      .form-check-label {
+        font-size: 0.9rem !important;
+      }
+
+      .emojy {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+
+  #recommendedPlaces {
+    .p-carousel-prev,
+    .p-carousel-next {
+      display: none !important;
+    }
+  }
+
+  #event-details {
+    .social-padding {
+      padding: 1.5rem !important;
+    }
+
+    .p-galleria-thumbnail-items-container {
+      height: 175px !important;
+    }
+
+    .p-galleria-thumbnails-left .p-galleria-content {
+      gap: 13px !important;
+    }
+
+    .thumbnail {
+      height: 3rem !important;
+    }
+
+    .preview-img {
+      height: 295px !important;
+    }
+
+    .content-header {
+      border-radius: 0 !important;
+    }
+
+    .content-header .p-inputtext {
+      // width: auto !important;
+      min-width: 11rem !important;
+      width: 100% !important;
+    }
+
+    .p-dropdown {
+      min-width: 86% !important;
+      width: 86% !important;
+    }
+
+    .social {
+      height: 4rem !important;
+      border-radius: 15px 15px 0 0 !important;
+
+      hr {
+        background-color: #fff !important;
+        opacity: 1;
+      }
+    }
+
+    .social-content:after,
+    .social-content:before {
+      display: none !important;
+    }
+  }
+
+  #restaurants {
+    .title {
+      font-size: 1.8rem !important;
+    }
+
+    .hero-img {
+      height: 300px !important;
+    }
+  }
+
+  #menu {
+    .menu-border {
+      border-right: none !important;
+      border-bottom: 1px solid #eee !important;
+    }
+
+    .border-bottom:nth-of-type(odd) {
+      // border-left: none !important;
+      border-bottom: 1px solid #eee !important;
+    }
+  }
+}
+
+@media (max-width: 567px) {
+  #home {
+    #hero-section {
+      .slider-item-sm {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  #home #in-saudi .slider-h:nth-of-type(1).slide-img {
+    height: 177px !important;
+    object-fit: fill !important;
+  }
+
+  #home #in-saudi .slick-track {
+    align-items: center !important;
+  }
+
+  #home #hero-section .title {
+    font-size: 1.1rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  .numAndDate {
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .fs-lg {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (max-width: 375px) {
+}
+
+@media (max-width: 320px) {
+}
+
+@media (min-width: 769px) and (max-width: 991px) {
+  #calender-container {
+    height: 100vh !important;
+  }
+
+  #create-trip {
+    .mat-horizontal-content-container {
+      height: 100vh !important;
+      overflow: auto;
+    }
+
+    .trip-details-container {
+      .mat-horizontal-stepper-header-container {
+        height: auto !important;
+      }
+    }
+  }
+
+  #create-trip-details .trip-details-vehicle-height {
+    height: calc(100vh - 39rem) !important;
+  }
+
+  #trip-categories .all-categories {
+    height: calc(100vh - 41rem) !important;
+  }
+
+  .container {
+    max-width: 840px !important;
+    max-width: 750px !important;
+  }
+
+  .bg-md-header {
+    background: #84548e4d !important;
+  }
+}
+
+@media (max-width: 576px) {
+  #share-button {
+    .fs-9 {
+      font-size: 0.9rem !important;
+    }
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .container {
+    max-width: 680px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 40px !important;
+    line-height: 45px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 30px !important;
+    line-height: 37px !important;
+  }
+}

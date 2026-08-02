@@ -1,0 +1,33 @@
+.testimonial {
+  background-color: #f3eded;
+  border-radius: 7px;
+  padding: 35px 10px 10px;
+  .quote {
+    background-color: #f3eded;
+    width: 55px;
+    height: 55px;
+    box-shadow: 0px 3px 5px 0px #0000000f;
+
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+:host::ng-deep {
+  .testimonial {
+    .p-carousel-next {
+      right: -10px;
+      background-color: var(--bg-main-color);
+      color: #fff;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .p-carousel-prev {
+      left: -10px;
+      background-color: var(--bg-main-color);
+      color: #fff;
+      border-radius: 50%;
+      position: absolute;
+    }
+  }
+}

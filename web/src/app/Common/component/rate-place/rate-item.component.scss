@@ -1,0 +1,101 @@
+.rate-place {
+    .overlay-search2 {
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        background-color: #11111157;
+        z-index: 2;
+        border-radius: 10px;
+    }
+    h4 {
+        color: #371a4c;
+        font-size: 4rem;
+        font-weight: 700;
+        @media (max-width: 1024px) {
+            font-size: 2rem;
+            text-align: center;
+        }
+    }
+    svg {
+        position: relative;
+        top: -12px;
+        right: 0;
+        @media (max-width: 1024px) {
+            top: -5px;
+            text-align: center;
+            width: 100%;
+        }
+    }
+    p {
+        color: #3a4980;
+        font-size: 1.5rem;
+        font-weight: 400;
+        @media (max-width: 1024px) {
+            font-size: 1rem;
+            text-align: center;
+        }
+    }
+    input,
+    textarea {
+        border-radius: 1rem;
+        border: 0.5px solid rgba(163, 169, 194, 0.5) !important;
+        display: flex;
+        color: #656565 !important;
+        background: #fff !important;
+        padding: 10px !important;
+        &::placeholder {
+            color: #656565 !important;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    }
+    .leaveMsg {
+        textarea {
+            min-height: 7rem;
+            resize: none;
+        }
+    }
+    .stars {
+        label {
+            cursor: pointer;
+        }
+        input {
+            &:checked {
+                ~ label {
+                    svg {
+                        fill: #ffd04f;
+                        path {
+                            stroke: #ffd04f;
+                        }
+                    }
+                }
+            }
+            &:not(:checked) {
+                ~ label {
+                    &:hover {
+                        svg {
+                            fill: #ffd04f;
+                            path {
+                                stroke: #ffd04f;
+                            }
+                        }
+                        ~ label {
+                            svg {
+                                fill: #ffd04f;
+                                path {
+                                    stroke: #ffd04f;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn-outline-light-new,
+    .btn-solid-main {
+        min-width: fit-content !important;
+    }
+}

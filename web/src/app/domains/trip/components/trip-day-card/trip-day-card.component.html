@@ -1,0 +1,114 @@
+<article class="trip-day-card" role="article" [attr.aria-labelledby]="'day-title-' + dayIndex">
+  <header class="trip-day-card__header" role="banner">
+    <div class="trip-day-card__header-number" aria-hidden="true">
+      <span class="trip-day-card__header-number-value">{{ dayIndex }}</span>
+    </div>
+    <div class="trip-day-card__header-info">
+      <h3 [id]="'day-title-' + dayIndex" class="trip-day-card__header-info-title">
+        {{ 'trip.day' | translate }} {{ dayIndex }}
+      </h3>
+      <time [attr.datetime]="dayData?.date" class="trip-day-card__header-info-date">
+        {{ getFormattedDate() }}
+      </time>
+    </div>
+  </header>
+
+  <ng-container *ngFor="let period of ['morning', 'evening'] as periodKeys">
+    <section class="trip-day-card__period" [class.trip-day-card__period--has-places]="hasPlaces(period)" role="region"
+      [attr.aria-labelledby]="period + '-title-' + dayIndex">
+
+      <header class="trip-day-card__period-header" (click)="togglePeriod(period)"
+        [attr.aria-expanded]="expandedPeriod() === period" [attr.aria-controls]="period + '-content-' + dayIndex"
+        role="button" tabindex="0" (keydown.enter)="togglePeriod(period)"
+        (keydown.space)="togglePeriod(period); $event.preventDefault()">
+
+        <div class="trip-day-card__period-header-title-wrapper">
+          <div class="trip-day-card__period-header-icon">
+            <img [src]="'assets/images-v2/pages/save-trip/icons/' + (period==='morning'?'sunrise':'sunset') + '.svg'"
+              [alt]="'trip.' + period | translate" width="24" height="24" loading="lazy">
+          </div>
+          <h4 [id]="period + '-title-' + dayIndex" class="trip-day-card__period-header-title-wrapper-title">
+            {{ getPeriodTranslationKey(period) | translate }}
+          </h4>
+        </div>
+
+        <div class="trip-day-card__period-header-meta">
+          <span class="trip-day-card__period-places-count" *ngIf="hasPlaces($any(period))">
+            {{ dayData[$any(period)].places.length }} {{ 'general.places' | translate | lowercase }}
+          </span>
+          <div class="trip-day-card__period-expand-icon" [class.expanded]="expandedPeriod() === period">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M12 5.5L8 9.5L4 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <div [id]="period + '-content-' + dayIndex" class="trip-day-card__period-content"
+        [class.show]="expandedPeriod() === period" role="region">
+
+        <p class="trip-day-card__period-content-description" *ngIf="dayData[$any(period)]?.description">
+          {{ dayData[$any(period)].description | stripHtml }}
+        </p>
+
+        <div class="trip-day-card__period-content-places" *ngIf="hasPlaces($any(period))">
+          <article *ngFor="let place of dayData[$any(period)].places; trackBy: trackByPlaceId"
+            class="trip-day-card__place-card" role="article" [attr.aria-labelledby]="'place-title-' + place.id">
+
+            <div class="trip-day-card__place-card-image-container">
+              <img [ngSrc]="place.image" [alt]="getLocalizedTitle(place)" width="300" height="200"
+                class="trip-day-card__place-card-image" (error)="onImageError($event, place)" loading="lazy"
+                priority="{{ dayIndex===1 ? 'true' : 'false' }}">
+
+              <div class="trip-day-card__place-card-image-container-actions" role="toolbar">
+                <button class="trip-day-card__place-card-action-btn map-btn" (click)="showPlaceOnMap(place, $event)"
+                  [attr.aria-label]="'general.showOnMap' | translate" type="button">
+                  <img src="assets/images-v2/pages/save-trip/icons/map-pin.svg" [alt]="'general.showOnMap' | translate"
+                    width="16" height="16">
+                </button>
+              </div>
+
+              <div class="trip-day-card__place-card-image-container-rating" *ngIf="place.rate > 0" aria-hidden="true">
+                <span class="trip-day-card__place-card-rating-star">⭐</span>
+                <span class="trip-day-card__place-card-rating-value">{{ place.rate | number:'1.1-1' }}</span>
+              </div>
+            </div>
+
+            <div class="trip-day-card__place-card-info">
+              <h5 [id]="'place-title-' + place.id" class="trip-day-card__place-card-title">
+                <a [routerLink]="['/places/details', place.slug]" (click)="navigateToPlace(place, $event)"
+                  class="trip-day-card__place-card-link">
+                  {{ getLocalizedTitle(place) }}
+                </a>
+              </h5>
+
+              <p class="trip-day-card__place-card-description" *ngIf="getLocalizedDescription(place)">
+                {{ (getLocalizedDescription(place) | stripHtml | slice:0:120) + ((getLocalizedDescription(place) |
+                stripHtml).length > 120 ? '...' : '') }}
+              </p>
+
+              <div class="trip-day-card__place-card-meta">
+                <span class="trip-day-card__place-card-meta-type" *ngIf="place.type">
+                  {{ place.type }}
+                </span>
+                <span class="trip-day-card__place-card-meta-distance" *ngIf="place.distance">
+                  {{ place.distance | number:'1.1-1' }} km
+                </span>
+              </div>
+
+              <div class="sr-only">
+                {{ 'general.rating' | translate }}: {{ place.rate }},
+                {{ 'general.reviews' | translate }}: {{ place.review }},
+                {{ 'general.distance' | translate }}: {{ place.distance | number:'1.1-1' }} km
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="trip-day-card__period-content-no-places" *ngIf="!hasPlaces($any(period))" role="status">
+          <p>{{ 'trip.no' + (period | titlecase) + 'Places' | translate }}</p>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</article>

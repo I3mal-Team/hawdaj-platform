@@ -1,0 +1,103 @@
+<section id="topDestination">
+  <div class="container mt-5">
+    <div class="row justify-content-center p-0 gap-3 d-none d-xxl-flex">
+      <div class="col-auto mb-lg-4 p-0">
+        <div class="card custom-card large-card position-relative" [routerLink]="['/places/details/'+items[0]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[0]?.image" width="350" height="250"
+            [alt]="items[0]?.title" onerror="this.src='assets/images/not-found/no-img.svg'">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+              <h5 class="card-title text-truncate">{{items[0]?.title}}</h5>
+              <p class="card-text">{{items[0]?.description|stripHtml}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card custom-card small-card mt-3" [routerLink]="['/places/details/'+items[1]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[1]?.image" width="350" height="250"
+            [alt]="items[1]?.title" onerror="this.src='assets/images/not-found/no-img.svg'">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+              <h5 class="card-title text-truncate">{{items[1]?.title}}</h5>
+              <p class="card-text">{{items[1]?.description|stripHtml}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-auto mb-lg-4 p-0">
+        <div class="card custom-card small-card" [routerLink]="['/places/details/'+items[2]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[2]?.image" width="350" height="250"
+            [alt]="items[2]?.title" onerror="this.src='assets/images/not-found/no-img.svg'">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+              <h5 class="card-title text-truncate">{{items[2]?.title}}</h5>
+              <p class="card-text">{{items[2]?.description|stripHtml}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card custom-card large-card mt-3" [routerLink]="['/places/details/'+items[3]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[3]?.image" width="350" height="250"
+            [alt]="items[3]?.title">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+
+              <h5 class="card-title text-truncate">{{items[3]?.title}}</h5>
+              <p class="card-text">{{items[3]?.description|stripHtml}}</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-auto  d-lg-grid d-md-flex gap-md-3 gap-lg-0 flex-row align-items-center mb-lg-4 p-0">
+        <div class="card custom-card large-card" [routerLink]="['/places/details/'+items[4]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[4]?.image" width="350" height="250"
+            [alt]="items[4]?.title" onerror="this.src='assets/images/not-found/no-img.svg'">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+              <h5 class="card-title text-truncate">{{items[4]?.title}}</h5>
+              <p class="card-text">{{items[4]?.description|stripHtml}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card custom-card small-card mt-lg-3" [routerLink]="['/places/details/'+items[5]?.slug]">
+          <img class="w-100 h-100" ngOptimizedImage [src]="items[5]?.image" width="350" height="250"
+            [alt]="items[5]?.title" onerror="this.src='assets/images/not-found/no-img.svg'">
+          <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+            <div class="card-content p-4 position-absolute">
+              <h5 class="card-title text-truncate">{{items[5]?.title}}</h5>
+              <p class="card-text">{{items[5]?.description|stripHtml}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-xxl-none" [showNavigators]="false"
+        [autoplayInterval]="4000" [circular]="true" [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+        <ng-template pTemplate="item" let-item>
+          <div class="d-flex justify-content-center">
+            <div class="card custom-card small-card mt-lg-3" [routerLink]="['/places/details/'+item?.slug]">
+              <img class="w-100 h-100" ngOptimizedImage [src]="item?.image" width="350" height="250" [alt]="item?.title"
+                onerror="this.src='assets/images/not-found/no-img.svg'">
+              <div class="card-img-overlay text-white d-flex flex-column justify-content-end p-3">
+                <div
+                  class="card-content text-center w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                  <h5 class="card-title fs-3">{{item?.title}}</h5>
+                  <p class="card-text">{{item?.description|stripHtml}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <div class=" d-flex justify-content-center mt-3"><button type="button" id="More" role="button-more"
+        class="new-button" tabindex="0" [routerLink]="['/places/']"> {{'general.seeAll'|translate}}
+      </button></div>
+  </div>
+</section>

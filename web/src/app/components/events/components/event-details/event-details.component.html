@@ -1,0 +1,269 @@
+<app-header></app-header>
+<div id="event-details">
+  <div id="hero-event" class="d-flex align-items-center">
+    <div class="container">
+      <div class="row min-h g-0 justify-content-center">
+        <div class="col-lg-7 d-flex align-items-center order-lg-1 order-2">
+          <div class="text-white-color">
+            <h4 class="w-75 w-sm-100 fw-bold mb-3">
+              {{ "eventDetails.heroTitle" | translate }}
+            </h4>
+            <p class="pe-4">
+              {{ eventDetails?.description | stripHtml }}
+            </p>
+            <a [routerLink]="['/events']" class="btn btn-all-event btn-solid-main d-flex align-items-center gap-2">
+              <i class="pi pi-th-large"></i>
+              {{ "events.allEvents" | translate }}
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-10 position-relative order-lg-2 order-1 mt-md-0">
+          <div class="image-container mb-5">
+            <ng-container *ngIf="isLoadingEvents; else noLoadingShots">
+              <app-skeleton [type]="'shots'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingShots>
+              <div class="row position-relative">
+                <div [ngClass]="shots?.length==1?'col-11':'col-6'">
+                  <img [src]="shots[0]?.file" class="w-100 object-fit-cover scaleX-rtl shadow-sm" alt="hero-img"
+                    onerror="src='assets/images/not-found/no-img.svg'" />
+                </div>
+                <div class="col-6" *ngIf="shots?.length>=2">
+                  <img [src]="shots[1]?.file" class="w-100 object-fit-cover scaleX-rtl shadow-sm" alt="hero-img"
+                    onerror="src='assets/images/not-found/no-img.svg'" />
+                </div>
+                <div *ngIf="shots?.length>=3" class="col-6 position-absolute img-shot3">
+                  <img [src]="shots[2]?.file" class="w-100 object-fit-cover scaleX-rtl shadow-sm" alt="hero-img"
+                    onerror="src='assets/images/not-found/no-img.svg'" />
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="content d-flex align-items-start position-relative">
+
+      <div class="social h-100 p-2 d-sm-flex d-none justify-content-center align-items-center position-absolute">
+        <div class="d-flex flex-column align-items-center gap-3 social-content"
+          *ngIf="eventDetails?.facebook||eventDetails?.whatsapp||eventDetails?.instagram">
+          <a [href]="eventDetails?.facebook" target="_blank" *ngIf="eventDetails?.facebook">
+            <i class="pi pi-facebook fs-4 text-white-color"></i></a>
+          <a [href]="'https://wa.me/' + eventDetails?.whatsapp" target="_blank" *ngIf="eventDetails?.whatsapp">
+            <i class="pi pi-whatsapp fs-4 text-white-color"></i>
+          </a>
+          <a [href]="eventDetails?.instagram" target="_blank" *ngIf="eventDetails?.instagram">
+            <i class="pi pi-instagram fs-4 text-white-color"></i></a>
+        </div>
+      </div>
+
+      <div class="h-100 w-100">
+        <div class="social w-100 p-3 d-sm-none d-flex justify-content-center align-items-center gap-3">
+          <hr class="w-100" />
+          <div class="d-flex align-items-center gap-3 social-content"
+            *ngIf="eventDetails?.facebook||eventDetails?.whatsapp||eventDetails?.instagram">
+            <a [href]="eventDetails?.facebook" target="_blank" *ngIf="eventDetails?.facebook">
+              <i class="pi pi-facebook fs-4 text-white-color"></i></a>
+            <a [href]="'https://wa.me/' + eventDetails?.whatsapp" target="_blank" *ngIf="eventDetails?.whatsapp">
+              <i class="pi pi-whatsapp fs-4 text-white-color"></i>
+            </a>
+            <a [href]="eventDetails?.instagram" target="_blank" *ngIf="eventDetails?.instagram">
+              <i class="pi pi-instagram fs-4 text-white-color"></i></a>
+          </div>
+          <hr class="w-100" />
+        </div>
+        <div class="d-flex justify-content-between content-header gap-2 w-100 flex-wrap social-padding">
+          <span class="p-input-icon-right d-block bg-transparent event-dropdown">
+            <p-dropdown id="drop-filter" [options]="eventsList" optionLabel="title" [filter]="true" #dropdown
+              (onChange)="recallNewEventDetails($event)" [filterPlaceholder]="'placeholder.search' | translate"
+              (onHide)="hide()" styleClass="border-0 bg-white-color" [virtualScroll]="true" [virtualScrollItemSize]="60"
+              filterBy="title" appendTo="body" [showClear]="false" scrollHeight="150px" [readonly]="isLoadingEvents"
+              [emptyMessage]="'general.noResultFound' | translate" [placeholder]="">
+
+              <!-- Template for selected item -->
+              <ng-template pTemplate="selectedItem">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                  <div>{{ dropdown.value ? dropdown.value.title : 'placeholder.chooseAnotherEvent' | translate }}</div>
+                  <!-- Clear Icon -->
+                  <i *ngIf="dropdown.value" class="pi pi-times ml-2 text-dark" style="cursor: pointer;"
+                    (click)="clearEvent(dropdown)"></i>
+                </div>
+              </ng-template>
+            </p-dropdown>
+
+            <!-- Loading Spinner -->
+            <ng-container *ngIf="isLoadingEvents">
+              <i class="pi pi-spin pi-spinner"></i>
+            </ng-container>
+          </span>
+
+          <div class="d-flex align-items-center gap-3 flex-wrap">
+            <span *ngIf="checkEventStatus(eventDetails?.date_from, eventDetails?.date_to) === 'closed'"
+              class="closed py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+              {{ 'general.finished' | translate }}
+            </span>
+            <span *ngIf="checkEventStatus(eventDetails?.date_from, eventDetails?.date_to) === 'open'"
+              class="open py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+              {{ 'open' | translate }}
+            </span>
+            <span *ngIf="checkEventStatus(eventDetails?.date_from, eventDetails?.date_to) === 'soon'"
+              class="soon py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">
+              {{ 'comingSoon.comingSoon' | translate }}
+            </span>
+
+            <a class="text-white-color d-flex align-items-center gap-2" (click)="share(eventDetails?.website)">
+              {{ "general.shareEvent" | translate }}
+              <i class="pi pi-share-alt"></i>
+            </a>
+            <p-rating [(ngModel)]="rate" [id]="'rating3'" [disabled]="true" [cancel]="false"></p-rating>
+          </div>
+        </div>
+        <div class="social-padding">
+          <div class="row align-items-center">
+            <div class="col-lg-7 mb-lg-0 mb-4">
+              <h6 class="fw-500">
+                {{ "eventDetails.withLargest" | translate }}
+              </h6>
+              <h3 class="fw-bold">
+                {{ "general.welcomeTo" | translate }} {{ eventDetails?.title }}
+              </h3>
+              <div class="rich-text" [innerHTML]="eventDetails?.description | safeHtml"></div>
+              <div class="mt-4" *ngIf="eventDetails?.ticket_link">
+                <a [href]="eventDetails?.ticket_link" target="_blank"
+                  class="btn btn-dark text-white-color d-flex align-items-center justify-content-center gap-2 w-content">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ticket" width="17"
+                    height="17" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 5l0 2" />
+                    <path d="M15 11l0 2" />
+                    <path d="M15 17l0 2" />
+                    <path
+                      d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
+                  </svg>
+                  {{ "general.bookTicket" | translate }}
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div>
+                <div class="position-relative h-100">
+                  <img [src]="eventDetails?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                    class="w-100 video-img" alt="image" />
+                  <a [class.d-none]="!eventDetails?.video_url" (click)="openVideo()"
+                    class="play d-flex justify-content-center align-items-center position-absolute rounded-circle pointer">
+                    <i class="fas fa-caret-right fs-4 text-white-color"></i>
+                  </a>
+                </div>
+                <div class="d-flex justify-content-end mt-2" [class.d-none]="!eventDetails?.video_url">
+                  <u>
+                    <a (click)="openVideo()">
+                      {{"general.watchReview" | translate}}
+                    </a>
+                  </u>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="shots?.length > 0">
+            <div class="mt-4" id="shots">
+              <h4 class="text-center fs-4-1 py-4" appLazyLoadSection (sectionInView)="contentSection = true">
+                {{ "eventDetails.someShots" | translate }}
+                <img src="assets/images/events/shots.svg" alt="shots" />
+              </h4>
+              <ng-container *ngIf="contentSection">
+
+                <ng-container *ngIf="shots?.length > 0; else noImagesForView">
+                  <ng-container *ngIf="shots?.length==1">
+                    <div>
+                      <img [src]="shots[0].file" class="w-100 object-fit-cover event-img shadow-sm" alt="event-img" />
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="shots?.length==2">
+                    <div class="row">
+                      <div class="col-sm-6 mb-sm-0 mb-3" *ngFor="let item of [3,3];let i=index">
+                        <img [src]="shots[i].file" class="w-100 object-fit-cover event-img shadow-sm" alt="event-img"
+                          onerror="src='assets/images/not-found/no-img.svg'" />
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="shots?.length==3">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-6 mb-md-0 mb-3" *ngFor="let item of [3,3,3];let i=index">
+                        <img [src]="shots[i].file" class="w-100 object-fit-cover event-img shadow-sm" alt="event-img"
+                          onerror="src='assets/images/not-found/no-img.svg'" />
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="shots?.length==4">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-6 mb-md-0 mb-3" *ngFor="let item of [3,3,3,3];let i=index">
+                        <img [src]="shots[i].file" class="w-100 object-fit-cover event-img shadow-sm" alt="event-img"
+                          onerror="src='assets/images/not-found/no-img.svg'" />
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="shots?.length>4">
+                    <p-galleria [value]="shots" [responsiveOptions]="shotsOptions"
+                      [containerStyle]="{ 'max-width': '100%' }" thumbnailsPosition="left" [numVisible]="4"
+                      [circular]="true" [showItemNavigators]="false">
+                      <ng-template pTemplate="item" let-item>
+                        <img [src]="item.file" onerror="src='assets/images/not-found/no-img.svg'"
+                          style="width: 100%; display: block" class="preview-img" />
+                      </ng-template>
+                      <ng-template pTemplate="thumbnail" let-item>
+                        <div class="grid grid-nogutter justify-content-center">
+                          <img [src]="item.file" onerror="src='assets/images/not-found/no-img.svg'"
+                            style="display: block" class="thumbnail w-100" />
+                        </div>
+                      </ng-template>
+                    </p-galleria>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noImagesForView>
+                  <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                    <img src="assets/images/not-found/no-img.svg" width="200px" alt="no-data" />
+                    <p>{{ "general.noGallery" | translate }}</p>
+                  </div>
+                </ng-template>
+
+              </ng-container>
+
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+    <div id="review-slider" appLazyLoadSection (sectionInView)="reviewSliderSection = true">
+      <ng-container *ngIf="reviewSliderSection">
+        <ng-container *ngIf="isLoadingTestimonialsData; else viewRating">
+        </ng-container>
+        <ng-template #viewRating>
+          <h2 class="text-center rateTitle my-5 fs-4-1">
+            {{ "eventDetails.someRatings" | translate }}
+          </h2>
+          <app-review-event-slider [dataArray]="testimonialsData" [parentId]="eventDetails?.id"
+            (emitServiceAddNew)="newRatingAdded($event)"></app-review-event-slider>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+  <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+    <style *ngIf="homeShowFooter">
+      #home {
+        padding-bottom: 0 !important;
+
+      }
+    </style>
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

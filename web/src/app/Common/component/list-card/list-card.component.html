@@ -1,0 +1,261 @@
+<div class="list-card col-lg-2 col-md-3 col-6"
+  [ngClass]="{'list-card--property': type === 'places' || type === 'stores' || type === 'events' || type === 'restaurant'}"
+  [routerLink]="getLinkByType(type)" (click)="closeDropdown()"
+  [ngStyle]="{'cursor': type !== 'trip' ? 'pointer' : 'default'}">
+  <div class="overlay"></div>
+  <div class="card-img-container">
+    <ng-container *ngIf="type!=='trip'">
+      <img class="card-img" [appLazyLoadImage]="item?.image" ngSrc="{{item?.image }}" [alt]="item?.title"
+        ngOptimizedImage width="300" height="200" (error)="onImageError(type, $event)">
+
+    </ng-container>
+    <ng-container *ngIf="type==='trip'">
+      <img class="card-img" [appLazyLoadImage]="item?.image" ngSrc="{{item?.image }}" [alt]="item?.title"
+        onerror="this.onerror=null; this.src='assets/images-v2/pages/no-result/place-no-result.png';" ngOptimizedImage
+        width="300" height="200">
+
+    </ng-container>
+    <ng-container *ngIf="type !=='stories'">
+      <div class="card-status d-flex align-items-center w-100"
+        [ngClass]="{'justify-content-between': type !== 'events' && type !== 'trip', 'justify-content-end': type === 'events' || type === 'trip'}">
+        <ng-container *ngIf="type !=='events'; else events">
+          <div class="no-back d-flex align-items-center gap-2 ">
+            <ng-container *ngIf="type==='stores'">
+              <a class="status text-white" [href]="item?.is_online?item?.website_link:item?.address" target="_blank"
+                *ngIf="item?.is_online?item?.website_link:item?.address" (click)="$event.stopPropagation();">
+                <svg xmlns=" http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M4.31039 6.527L6.40039 3.787C6.77839 3.291 7.36639 3 7.99039 3H16.0104C16.6344 3 17.2224 3.291 17.6004 3.787L19.6904 6.527C19.9564 6.875 20.1004 7.302 20.1004 7.74V19C20.1004 20.105 19.2054 21 18.1004 21H5.90039C4.79539 21 3.90039 20.105 3.90039 19V7.74C3.90039 7.302 4.04439 6.876 4.31039 6.527Z"
+                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M16 10C16 12.209 14.209 14 12 14C9.791 14 8 12.209 8 10" stroke="white" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M4.01953 7.06982H19.9795" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <ng-container *ngIf="item?.is_online else isOnline">
+                  <p class="fw-500 text-capitalize online-text mb-0">
+                    {{'stores.online'|translate}}
+                  </p>
+                </ng-container>
+                <ng-template #isOnline>
+                  <p class="fw-500 text-capitalize offline-text mb-0">
+                    {{'stores.offline'|translate}}
+                  </p>
+                </ng-template>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="type!=='trip' && type!=='stores'">
+              <div>
+                <div class="location">
+                  <a target="_blank" [href]="item?.address" (click)="$event.stopPropagation();"
+                    [title]="'general.location'|translate">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M13.1853 7.40788C13.8398 8.0624 13.8398 9.12358 13.1853 9.7781C12.5308 10.4326 11.4696 10.4326 10.8151 9.7781C10.1606 9.12358 10.1606 8.0624 10.8151 7.40788C11.4696 6.75336 12.5308 6.75336 13.1853 7.40788"
+                        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M17.4846 8.38V8.38C17.4846 9.87 16.8226 11.282 15.6786 12.236L13.8796 13.735C13.1626 14.333 12.6266 15.118 12.3316 16.004L11.9996 17L11.6676 16.004C11.3726 15.119 10.8366 14.333 10.1196 13.735L8.32065 12.236C7.17565 11.282 6.51465 9.87 6.51465 8.38V8.38V8.408C6.51465 4.986 9.34865 3 11.9996 3C14.6506 3 17.4846 4.986 17.4846 8.408"
+                        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M7 14.5981C4.591 15.2251 3 16.2881 3 17.5001C3 19.4331 7.029 21.0001 12 21.0001C16.971 21.0001 21 19.4331 21 17.5001C21 16.2881 19.409 15.2241 17 14.5981"
+                        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+                <ng-container *ngIf="(type ==='places') && isLogin && showFavourite">
+                  <ng-container *ngIf="item?.isLoadingFavourite; else favourite">
+                    <app-skeleton [type]="'favourite'"></app-skeleton>
+                  </ng-container>
+                  <ng-template #favourite>
+                    <div class="favourite" (click)="onFavouriteClick(item); $event.stopPropagation()">
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        [attr.fill]="item?.is_favorite ? 'red' : 'none'">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                        </g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+                            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            [attr.stroke]="item?.is_favorite ? 'red' : 'white'">
+                          </path>
+                        </g>
+                      </svg>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="type!=='trip'">
+
+            <div class="rate d-flex align-items-center text-white gap-1" [title]="'general.rate'|translate">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
+                <path
+                  d="M8.52447 0.463525C8.67415 0.00287008 9.32585 0.00287008 9.47553 0.463525L11.1329 5.56434C11.1998 5.77035 11.3918 5.90983 11.6084 5.90983H16.9717C17.4561 5.90983 17.6575 6.52964 17.2656 6.81434L12.9266 9.96681C12.7514 10.0941 12.678 10.3198 12.745 10.5258L14.4023 15.6266C14.552 16.0873 14.0248 16.4704 13.6329 16.1857L9.29389 13.0332C9.11865 12.9059 8.88135 12.9059 8.70611 13.0332L4.3671 16.1857C3.97524 16.4704 3.448 16.0873 3.59768 15.6266L5.25503 10.5258C5.32197 10.3198 5.24864 10.0941 5.07339 9.96681L0.734384 6.81434C0.342527 6.52964 0.543915 5.90983 1.02828 5.90983H6.39159C6.6082 5.90983 6.80018 5.77035 6.86712 5.56434L8.52447 0.463525Z"
+                  fill="#FFB649" />
+              </svg>
+              <div class="d-flex gap-1">
+                <p>{{item?.rate | number:'1.1-1'}}</p>
+                <p>({{item?.ratings?.length}})</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="type==='trip'">
+            <div class="open-menu d-flex align-items-center justify-content-end text-white gap-1" title="open-menu"
+              (click)="collapse = !collapse;addClickOutsideListener();$event.stopPropagation()">
+              <svg viewBox="0 0 24 24" width="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M12 12H12.01M12 6H12.01M12 18H12.01M13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM13 18C13 18.5523 12.5523 19 12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17C12.5523 17 13 17.4477 13 18ZM13 6C13 6.55228 12.5523 7 12 7C11.4477 7 11 6.55228 11 6C11 5.44772 11.4477 5 12 5C12.5523 5 13 5.44772 13 6Z"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+              </svg>
+              <ul class="dropdown-menu border-0 shadow p-3 mt-3" [class.show]="collapse">
+                <li class="nav-item mb-2">
+                  <a class="nav-link  w-100" (click)="collapse = !collapse" (click)="onDeleteClick()">
+                    <span class="d-flex align-items-center w-100 gap-1 p-2">
+                      <img src="assets/images-v2/pages/save-trip/icons/card/trash.svg" alt="trash" title="trash">
+                      <span class="user text-danger">{{'general.delete'|translate}}</span>
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a class="nav-link  w-100" (click)="collapse = !collapse" (click)="exploreTrip(item)">
+                    <span class="d-flex align-items-center w-100 gap-1 p-2">
+                      <svg viewBox="0 0 24 24" width="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16.982 8.99791C17.5399 7.7427 16.2573 6.46011 15.0021 7.01799L10.0018 9.24033C9.66249 9.39115 9.39115 9.66249 9.24033 10.0018L7.01798 15.0021C6.46011 16.2573 7.74269 17.5399 8.99791 16.982L13.9982 14.7597C14.3375 14.6089 14.6089 14.3375 14.7597 13.9982L16.982 8.99791ZM10.9898 10.9898L14.6264 9.37359L13.0102 13.0102L9.37359 14.6264L10.9898 10.9898Z"
+                            fill="#0F0F0F"></path>
+                          <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23ZM12 20.9869C7.03665 20.9869 3.01306 16.9633 3.01306 12C3.01306 7.03665 7.03665 3.01306 12 3.01306C16.9633 3.01306 20.9869 7.03665 20.9869 12C20.9869 16.9633 16.9633 20.9869 12 20.9869Z"
+                            fill="#0F0F0F"></path>
+                        </g>
+                      </svg>
+                      <span class="user">{{'general.discover'|translate}}</span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-template #events>
+          <div class=" status text-white d-flex flex-column align-items-center gap-1">
+            <ng-container *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'open'">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <circle cx="5" cy="5" r="5" fill="#32A071" />
+                </svg>
+                {{"open"|translate}}
+              </div>
+              <div class="date d-flex flex-column gap-2 align-items-center">
+                <p> {{ item?.date_from | date: 'd MMMM y':'':currentLanguage }}</p>
+                <p> {{ item?.date_to | date: 'd MMMM y':'':currentLanguage }}</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'soon'">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <circle cx="5" cy="5" r="5" fill="gray" />
+                </svg>
+                {{ 'comingSoon.comingSoon' | translate }}
+              </div>
+              <div class="date d-flex flex-column gap-2 align-items-center">
+                <p> {{ item?.date_from | date: 'd MMMM y':'':currentLanguage }}</p>
+                <p> {{ item?.date_to | date: 'd MMMM y':'':currentLanguage }}</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="checkEventStatus(item?.date_from, item?.date_to) === 'closed'">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <circle cx="5" cy="5" r="5" fill="#FF3A44" />
+                </svg>
+                {{"general.finished"|translate}}
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
+      </div>
+    </ng-container>
+    <div class="card-content d-flex flex-column align-items-center">
+      <ng-container *ngIf="type !== 'trip'; else trip">
+        <div class="card-title-wrapper" *ngIf="status; else titleOnly">
+          <h4 class="card-title-with-badge">{{ item?.title }}</h4>
+          <span [class]="getStatusInfo()?.class" [style]="getStatusInfo()?.style">
+            {{ getStatusInfo()?.text | translate }}
+          </span>
+        </div>
+        <ng-template #titleOnly>
+          <h4>{{ item?.title }}</h4>
+        </ng-template>
+      </ng-container>
+
+      <ng-template #trip>
+        <h4>{{ item?.name }}</h4>
+      </ng-template>
+
+      <ng-container *ngIf="type !=='stories' && type!=='trip'">
+        <p class="d-flex align-items-center gap-2">
+          <svg xmlns=" http://www.w3.org/2000/svg" width="14" height="20" viewBox="0 0 14 20" fill="none">
+            <path
+              d="M7 9.5C6.33696 9.5 5.70107 9.23661 5.23223 8.76777C4.76339 8.29893 4.5 7.66304 4.5 7C4.5 6.33696 4.76339 5.70107 5.23223 5.23223C5.70107 4.76339 6.33696 4.5 7 4.5C7.66304 4.5 8.29893 4.76339 8.76777 5.23223C9.23661 5.70107 9.5 6.33696 9.5 7C9.5 7.3283 9.43534 7.65339 9.3097 7.95671C9.18406 8.26002 8.99991 8.53562 8.76777 8.76777C8.53562 8.99991 8.26002 9.18406 7.95671 9.3097C7.65339 9.43534 7.3283 9.5 7 9.5ZM7 0C5.14348 0 3.36301 0.737498 2.05025 2.05025C0.737498 3.36301 0 5.14348 0 7C0 12.25 7 20 7 20C7 20 14 12.25 14 7C14 5.14348 13.2625 3.36301 11.9497 2.05025C10.637 0.737498 8.85652 0 7 0Z"
+              fill="white" />
+          </svg>
+          {{item?.address_name||'titles.saudiArabia'| translate}}
+        </p>
+      </ng-container>
+      <ng-container *ngIf="type =='stories'">
+        <p class="card-content__description">
+          {{item.description | stripHtml}}
+        </p>
+      </ng-container>
+      <ng-container *ngIf="type==='restaurant'&& item?.foodCategory">
+        <p class="mt-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+            <ellipse cx="14.6215" cy="6.37813" rx="5.03622" ry="3.60157" transform="rotate(-45 14.6215 6.37813)"
+              fill="white" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M6.39691 12.4819L1.43934 17.4395C0.853553 18.0253 0.853553 18.975 1.43934 19.5608V19.5608C2.02513 20.1466 2.97487 20.1466 3.56066 19.5608L8.51823 14.6033"
+              stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M11.8111 14.9326L16.4393 19.5608C17.0251 20.1466 17.9748 20.1466 18.5606 19.5608V19.5608C19.1464 18.9751 19.1464 18.0253 18.5606 17.4395L4.05371 2.93262"
+              stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M4.05372 2.93262L3.99072 2.99562L3.97808 3.00827C2.02994 4.95641 3.08279 9.16781 6.32969 12.4147L9.62223 15.7073C9.80976 15.8948 10.0641 16.0002 10.3293 16.0002C10.5946 16.0002 10.8489 15.8948 11.0364 15.7073L13.9324 12.8113"
+              fill="white" />
+            <path
+              d="M4.05372 2.93262L3.99072 2.99562L3.97808 3.00827C2.02994 4.95641 3.08279 9.16781 6.32969 12.4147L9.62223 15.7073C9.80976 15.8948 10.0641 16.0002 10.3293 16.0002C10.5946 16.0002 10.8489 15.8948 11.0364 15.7073L13.9324 12.8113"
+              stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          {{item?.foodCategory}}
+
+        </p>
+      </ng-container>
+      <ng-container *ngIf="type==='trip'">
+        <div class="d-flex gap-2 align-items-center justify-content-center">
+          <p class="mt-1">
+            <svg fill="#ffffff" width="21" height="21" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V7A3,3,0,0,0,19,4Zm1,15a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V12H20Zm0-9H4V7A1,1,0,0,1,5,6H7V7A1,1,0,0,0,9,7V6h6V7a1,1,0,0,0,2,0V6h2a1,1,0,0,1,1,1Z">
+                </path>
+              </g>
+            </svg>
+            <span>
+              {{item?.endTime |date : 'd MMMM y' : '' : currentLanguage}} - {{item?.startTime | date: 'd
+              MMMM y' : '' : currentLanguage}} </span>
+          </p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

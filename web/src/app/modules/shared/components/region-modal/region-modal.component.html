@@ -1,0 +1,51 @@
+<div id="regions">
+  <span class="p-input-icon-right w-100 mb-4">
+    <span class="p-input-icon-left w-100">
+      <i class="pi pi-search"></i>
+      <input pInputText class="form-control ps-5 search-input" type="text"
+        placeholder="{{'placeholder.search'|translate}}" #search (keyup)="filterRegion(search?.value)" />
+      <!-- (keyup)="handleSearch(search.value)" -->
+    </span>
+    <ng-container *ngIf="search.value && !isLoadingSearch">
+      <i (click)="clearSearchValue(search)" class="pi pi-times text-danger pointer px-2"></i>
+    </ng-container>
+    <ng-container *ngIf="isLoadingSearch">
+      <i class="pi pi-spin pi-spinner"></i>
+    </ng-container>
+  </span>
+  <div class="region">
+    <ng-container *ngIf="isLoadingRegions; else noLoading">
+      <ng-container *ngFor="let item of [4,5,6,7,7]">
+        <p-skeleton width="100%" height="2.5rem" styleClass="mb-3"></p-skeleton>
+      </ng-container>
+    </ng-container>
+    <ng-template #noLoading>
+      <ng-container *ngIf="searchRegions?.length>0; else noData">
+        <ng-container *ngFor="let item of searchRegions;let i=index">
+          <a class="d-flex justify-content-between align-items-center flex-wrap w-100 item mb-2"
+            [class.active]="data?item.id==data.id:''" (click)="selectState(item)">
+            <h6 class="fs-5-1 fw-500 mb-0 text-dark-color">{{item?.name}}</h6>
+            <ng-container *ngIf="data?item.id==data.id:false">
+              <img src="assets/images/icons/valid.svg" alt="valid" class="check">
+            </ng-container>
+          </a>
+        </ng-container>
+        <!-- <ng-container *ngIf="totalCount>states?.length||totalCount!=states?.length">
+          <div (click)="loadMore()"
+            class="d-flex justify-content-center align-items-center mt-4 btn btn-solid-main position-relative w-100 bottom-0 gap-2">
+            <a [class.opacity-50]="loadingMore" [class.disabled]="loadingMore">Load more</a>
+            <ng-container *ngIf="loadingMore">
+              <i class="pi pi-spin pi-spinner fs-4"></i>
+            </ng-container>
+          </div>
+        </ng-container> -->
+      </ng-container>
+      <ng-template #noData>
+        <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+          <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+          <p>{{'general.noData'|translate}}</p>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

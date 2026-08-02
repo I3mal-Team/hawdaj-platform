@@ -1,0 +1,64 @@
+.review-card {
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #cbcbcb3a;
+
+  &:hover {
+    border-color: #f2f4f7;
+    box-shadow: 0px 20px 70px 0px rgba(43, 77, 112, 0.05);
+    margin-top: -1.5rem;
+    transition: all 0.3s ease-in-out;
+
+    .description {
+      color: #000;
+    }
+  }
+
+  .user-img {
+    width: 3.5rem;
+    min-width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 10px;
+
+    img {
+      border-radius: 10px;
+      object-fit: cover;
+    }
+  }
+
+  .description {
+    color: #4e545f;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    font-size: 0.93rem;
+    height: 4.2rem;
+    // height: 3rem;
+  }
+
+  @media (max-width: 767px) {
+    .title {
+      font-size: 1.05rem;
+    }
+  }
+
+  @media (max-width: 567px) {
+    .title {
+      font-size: 1rem;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-rating-icon {
+    width: 1rem;
+    color: #e7e7e7;
+
+    &.p-rating-icon-active {
+      color: #feb60d;
+    }
+  }
+}

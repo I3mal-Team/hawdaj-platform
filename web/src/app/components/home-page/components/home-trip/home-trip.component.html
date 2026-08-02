@@ -1,0 +1,24 @@
+<section id="ourTripsSection">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-11">
+        <div class="row mt-4 mx-0 align-items-center px-md-5 px-2 home-trips position-relative">
+          <div class="trip-overlay position-absolute"></div>
+          <h2 class="text-white-color text-center fw-bold">
+            {{'homePage.ourTrips'|translate}}
+          </h2>
+          <p class="text-white-color text-center fs-5-1 m-auto mt-1 pb-3">
+            {{'homePage.travel'|translate}}
+          </p>
+          <div class="d-flex justify-content-center mt-4">
+            <a class="start-trip text-capitalize d-flex align-items-center justify-content-center gap-2 fs-5-1"
+              (click)="startTrip()">
+              {{'trip.startYourTrip'|translate}}
+              <i class="fas fa-plane scaleX-rtl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<ng-container *ngIf="getCeilValue()>1">
+    <div class="d-flex align-items-center justify-content-between mt-5">
+        <button (click)="changePage(-1)"
+            [ngStyle]="{'font-size': (this.currentLanguage === 'ru' ? '.75rem' : 'inherit')}"
+            [disabled]="this.itemsPageNumber <= 1">{{"general.prev"|translate}}</button>
+        <p class="m-0" [ngStyle]="{'font-size': (this.currentLanguage === 'ru' ? '.75rem' : 'inherit')}">
+            {{"general.page"|translate}} {{itemsPageNumber}} {{"saveTrip.from"|translate}} {{
+            getCeilValue() }}
+        </p>
+        <button (click)="changePage(1)"
+            [ngStyle]="{'font-size': (this.currentLanguage === 'ru' ? '.75rem' : 'inherit')}"
+            [disabled]="this.itemsPageNumber >= getCeilValue() ">{{"general.next"|translate}}</button>
+    </div>
+</ng-container>

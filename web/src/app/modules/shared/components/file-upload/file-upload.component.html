@@ -1,0 +1,76 @@
+<div class="upload w-100 d-flex flex-column align-items-start gap-3 position-relative">
+
+  <!-- Hidden file input (Only ONE) -->
+  <input #inputFile type="file" name="file" [accept]="accept" (change)="handleInputChange($event)" hidden />
+
+  <!-- When no file is selected -->
+  <ng-container *ngIf="!showFile">
+    <button type="button"
+      class="w-100 d-flex align-items-center justify-content-center flex-column rounded-3 border p-3"
+      (click)="inputFile.click()" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)">
+      <div class="d-flex align-items-center justify-content-center rounded-circle position-relative mb-2">
+        <img class="icon-upload-small hover d-block" src="assets/svg/icons/upload-small.svg" alt="Upload">
+        <ng-container *ngIf="isLoading">
+          <div class="loading-spinner"></div>
+        </ng-container>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <p class="text-primary fw-600">{{ name ?? ('general.dragAndDropFile' | translate) }}</p>
+      </div>
+
+      <p class="fw-400 text-black text-center mb-0">{{ 'general.orBrowseFiles' | translate }}</p>
+    </button>
+  </ng-container>
+
+
+  <!-- When file is selected -->
+  <ng-container *ngIf="showFile">
+    <div class="uploaded-file d-flex align-items-center justify-content-between w-100">
+
+      <!-- File Info -->
+      <div class="d-flex align-items-center gap-3">
+        <div class="preview d-flex align-items-center">
+          <ng-container *ngIf="type?.includes('image')">
+            <img class="preview-image rounded-2" width="45" height="45" [src]="imageSrc" [alt]="name">
+          </ng-container>
+          <ng-container *ngIf="type?.includes('image')">
+            <img class="preview-icon rounded-2" width="45" height="45" src="assets/svg/icons/file-preview.svg">
+          </ng-container>
+        </div>
+
+        <div class="d-flex flex-column align-items-start">
+          <p class="mb-0 text-black fw-500">{{ name }}</p>
+          <p class="mb-0 text-muted fw-400 fs-12">{{ imageSize }}</p>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex align-items-center gap-2">
+
+        <!-- Replace button -->
+        <button type="button" class="d-flex align-items-center justify-content-center gap-2 badge-info badge-btn"
+          (click)="inputFile.click()">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path ...></path>
+            </svg>
+          </span>
+          <span>{{ 'general.replace' | translate }}</span>
+        </button>
+
+        <!-- Remove button -->
+        <button type="button" class="d-flex align-items-center justify-content-center gap-2 badge-error badge-btn"
+          (click)="remove()">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path ...></path>
+            </svg>
+          </span>
+          <span>{{ 'general.remove' | translate }}</span>
+        </button>
+
+      </div>
+    </div>
+  </ng-container>
+</div>

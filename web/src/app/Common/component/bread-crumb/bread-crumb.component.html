@@ -1,0 +1,14 @@
+<div class="d-flex gap-2 align-items-center fs-6-1" appLazyLoadSection>
+    {{ 'titles.saudiArabia' | translate }}
+
+    <ng-container *ngFor="let location of locations">
+        <ng-container *ngIf="location">
+            <svg class="scaleX-rtl" width="8" height="13" viewBox="0 0 8 13" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.50876 11.4788L6.55069 6.52105L1.59298 1.47912" stroke="#A3A9C2" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>{{ location }}</span>
+        </ng-container>
+    </ng-container>
+</div>

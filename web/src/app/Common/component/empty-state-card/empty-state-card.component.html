@@ -1,0 +1,9 @@
+<div class="empty-state">
+  <img [src]="config.imageUrl" alt="noData" loading="lazy" appLazyLoadImage>
+  <p class="empty-state__message">
+    {{ config.message }}
+  </p>
+  <button *ngIf="config.hasButton" type="button" class="empty-state__button" (click)="action.emit()">
+    <span>{{ config.buttonText | translate }}</span>
+  </button>
+</div>

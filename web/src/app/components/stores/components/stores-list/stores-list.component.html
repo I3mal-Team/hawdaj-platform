@@ -1,0 +1,660 @@
+<app-header></app-header>
+<div id="stores">
+  <div id="stores-hero-section" #scrollTarget>
+    <div class="container">
+      <ng-container *ngIf="isLoadingStoresStats; else noLoadingStoresBtn">
+        <app-skeleton [type]="'stores-btn'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingStoresBtn>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <div class="online fw-500"><img src="assets/images/stores/online.svg" alt="online" class="pe-2">
+            <span class="fw-bold">{{storesStats?.total_onlines||0}}</span> {{'stores.onlineStores'|translate}}
+          </div>
+          <div class="offline fw-500"><img src="assets/images/stores/offline.svg" alt="offline" class="pe-2"><span
+              class="fw-bold">{{storesStats?.total_offlines||0}}</span>
+            {{'stores.offlineStores'|translate}}</div>
+        </div>
+      </ng-template>
+      <div class="mt-4">
+        <h1 class="text-capitalize text-center fs-3 fw-bold">
+          {{'stores.mostCommon'|translate}}
+        </h1>
+        <p class="text-grey-400 text-center w-50 w-md-100 m-auto px-xl-4">
+          {{'stores.oneOfMostCommon'|translate}}
+        </p>
+      </div>
+      <!-- Start Stores Categories -->
+      <div class="position-relative mt-4">
+        <ng-container *ngIf="isLoadingStoresCategories; else noStoresCategoryLoading">
+          <app-skeleton [type]="'stores-category'"></app-skeleton>
+        </ng-container>
+        <ng-template #noStoresCategoryLoading>
+          <ng-container *ngIf="storesCategories?.length>0; else noStoresCategory">
+            <ng-container *ngIf="true; else noCategorySlider">
+              <!-- <div class="carousel-wrapper position-relative"> -->
+              <!-- <a class="category-arrow category-arrow-left d-flex justify-content-center align-items-center">
+                <img src="assets/images/stores/left-arrow.svg" alt="left-arrow">
+              </a> -->
+              <p-tabView [scrollable]="true">
+                <p-tabPanel *ngFor="let item of storesCategories">
+                  <ng-template pTemplate="header">
+                    <div class="h-100">
+                      <div
+                        class="global-card h-100 d-flex flex-column align-items-center justify-content-center pointer position-relative tab-card"
+                        [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                        <div class="img-container">
+                          <img [src]="item?.icon" width="75" alt="storeType" class="rounded"
+                            onerror="src='assets/images/not-found/no-img.svg'">
+                        </div>
+                        <h5 class="fs-5-2 mb-0 fw-bold text-center mt-2">{{ item?.name }}</h5>
+                        <p class="text-muted-color mb-0 fs-8 text-center">{{ item?.description | stripHtml }}</p>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-tabPanel>
+              </p-tabView>
+              <!-- <p-carousel [value]="storesCategories" [numVisible]="6" [numScroll]="1" [circular]="true"
+                [responsiveOptions]="configCategories" [style]="{ 'width': '100%' }" [showIndicators]="false"
+                containerClass="global-card-container">
+                <ng-template pTemplate="item" let-item>
+                  <div class="p-2 h-100">
+                    <div
+                      class="global-card h-100 d-flex flex-column align-items-center justify-content-center pointer h-100"
+                      [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                      <div class="img-container">
+                        <img [src]="item?.icon" width="75" alt="storeType" class="rounded"
+                          onerror="src='assets/images/not-found/no-img.svg'">
+                      </div>
+                      <h5 class="fs-5-2 mb-0 fw-bold text-center mt-2">{{ item?.name }}</h5>
+                      <p class="text-muted-color mb-0 fs-8 text-center">{{ item?.description }}</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel> -->
+              <!-- <a class="category-arrow category-arrow-right d-flex justify-content-center align-items-center">
+                  <img src="assets/images/stores/right-arrow.svg" alt="right-arrow">
+                </a> -->
+              <!-- </div> -->
+            </ng-container>
+            <ng-template #noCategorySlider>
+              <div class="row justify-content-center gy-4 d-sm-flex d-none ">
+                <ng-container *ngFor="let item of storesCategories">
+                  <div class="col">
+                    <div class="global-card d-flex flex-column align-items-center justify-content-center pointer h-100"
+                      [class.active-category]="item?.isSelected" (click)="selectCategory(item)">
+                      <div class="img-container">
+                        <img [src]="item?.icon" width="75" alt="storeType"
+                          onerror="src='assets/images/not-found/no-img.svg'">
+                      </div>
+                      <h5 class="fs-5-2 fw-bold text-center mb-0 mt-2">{{item?.name}}</h5>
+                      <p class="text-muted-color mb-0 fs-8 text-center">{{item?.description | stripHtml}}</p>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-template>
+          </ng-container>
+          <ng-template #noStoresCategory>
+            <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+              <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+              <p>{{'general.noData'|translate}}</p>
+            </div>
+          </ng-template>
+          <div *ngIf="storesCategoriesIds?.length>0"
+            class="d-flex align-items-center justify-content-center gap-4 my-4 shadow-sm rounded py-sm-2 py-3 px-4 category-result rounded-pill w-content m-auto flex-wrap">
+            <div class="d-flex gap-2 flex-wrap align-items-center">
+              <h6 class="fw-bold mb-0">{{'stores.specificCategories'|translate}} :</h6>
+              <div class="d-flex gap-2 flex-wrap align-items-center">
+                <ng-container *ngFor="let item of selectedStoresCategories;let i=index">
+                  <span *ngIf="i>0 &&i<2">,</span>
+                  <span *ngIf="i<2">{{item?.name}}</span>
+                </ng-container>
+                <span class="num-badge d-flex justify-content-center align-items-center rounded-circle text-main-color"
+                  *ngIf="storesCategoriesIds?.length>=3">+{{storesCategoriesIds?.length-2}}</span>
+              </div>
+            </div>
+            <a class="reset text-white-color py-1 rounded-pill px-3"
+              (click)="resetCategories()">{{'general.reset'|translate}}</a>
+          </div>
+        </ng-template>
+      </div>
+      <!-- End Stores Categories -->
+
+      <!-- Start Stores Search -->
+      <div id="stores-search">
+        <div class="mt-md-5 mt-3">
+          <h4 class="text-capitalize text-center fs-4-1 fw-bold">
+            {{'stores.mostStores'|translate}}
+          </h4>
+          <div class="d-flex justify-content-center mb-3">
+            <img src="assets/images/stores/popularStore-vector.svg" alt="vector">
+          </div>
+          <p class="text-grey-400 text-center w-50 w-md-100 m-auto px-xl-4">
+            {{'stores.oneOfMostCommon'|translate}}
+          </p>
+        </div>
+        <form [formGroup]="searchForm" class="mt-4 search-bg p-2 position-relative rounded d-lg-block d-none"
+          (ngSubmit)="search()">
+          <div class="g-0 p-2 bg-white-color rounded row  all-controls">
+            <div class="col-3 border-end search-control align-items-center d-flex">
+              <div class="px-lg-3 px-2 pe-4 d-flex align-items-center">
+                <div class="d-flex align-items-center gap-lg-2">
+                  <div class="icon">
+                    <img src="assets/images/stores/icons/home.svg" alt="storeName" />
+                  </div>
+                  <div class="w-100">
+                    <span class="d-flex align-items-center gap-1 w-100">
+                      <input type="text" class="form-control p-0 h-auto bg-transparent border-0"
+                        formControlName="storeName" placeholder="{{'placeholder.storeName'|translate}}" pInputText
+                        #storeName (blur)="onChangeControl('storeName')">
+                      <ng-container *ngIf="storeName?.value">
+                        <i (click)="storeName.value='';searchForm.get('storeName')?.reset();clear('name')"
+                          class="pi pi-times pointer"></i>
+                      </ng-container>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 border-end search-control d-flex align-content-center ">
+              <div class="px-lg-3 px-2 d-flex align-items-center w-100">
+                <div class="d-flex align-items-center gap-lg-2 w-100">
+                  <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                    <img src="assets/images/stores/icons/map-pin.svg" alt="region" />
+                  </div>
+                  <div class="w-100">
+                    <span class="p-input-icon-right d-block">
+                      <p-dropdown [options]="regions" formControlName="region" optionLabel="name" [filter]="true"
+                        (onChange)="onChangeControl('region')" filterPlaceholder="{{'placeholder.search'|translate}}"
+                        styleClass="border-0" (onChange)="getCitiesByRegionId($event)" (onClear)="clear('region')"
+                        filterBy="name" appendTo="body" [showClear]="false" [readonly]="isLoadingRegions"
+                        scrollHeight="180px" [emptyMessage]="'general.noResultFound'|translate" placeholder="">
+
+                        <!-- Custom Selected Item Template -->
+                        <ng-template pTemplate="selectedItem">
+                          <div class="selected-item w-100 d-flex justify-content-between mt-1 align-items-center">
+                            <!-- Display region name or placeholder -->
+                            <div>{{ searchForm.value.region ? searchForm.value.region.name : ('placeholder.selectRegion'
+                              | translate) }}</div>
+
+                            <!-- Clear Icon (pi-times) -->
+                            <i *ngIf="searchForm.value.region" class="pi pi-times cursor-pointer"
+                              (click)="clearField('region')"></i>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+
+                      <!-- Spinner for loading state -->
+                      <ng-container *ngIf="isLoadingRegions">
+                        <i class="pi pi-spin pi-spinner mx-2"></i>
+                      </ng-container>
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 border-end search-control d-flex align-content-center">
+              <div class="px-lg-3 px-2 d-flex align-items-center w-100">
+                <div class="d-flex align-items-center gap-lg-2 w-100">
+                  <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                    <img src="assets/images/stores/icons/city.svg" alt="city" />
+                  </div>
+                  <div class="w-100">
+                    <span class="p-input-icon-right d-block bg-transparent"
+                      [class.disabled]="searchForm.value.region == null">
+                      <p-dropdown [options]="cities" formControlName="city" optionLabel="name" [filter]="true"
+                        filterPlaceholder="{{'placeholder.search' | translate}}" styleClass="border-0" filterBy="name"
+                        appendTo="body" [showClear]="false" (onClear)="clear('city')"
+                        [readonly]="isLoadingCities || isLoadingRegions || searchForm.value.region == null"
+                        scrollHeight="180px" [emptyMessage]="'general.noResultFound' | translate" placeholder="">
+
+                        <ng-template pTemplate="selectedItem">
+                          <div class="selected-item w-100 d-flex justify-content-between mt-1 align-items-center">
+                            <div>{{ searchForm.value.city ? searchForm.value.city.name : ('placeholder.selectCity' |
+                              translate) }}</div>
+                            <i *ngIf="searchForm.value.city" class="pi pi-times cursor-pointer"
+                              (click)="clearField('city')"></i>
+                          </div>
+                        </ng-template>
+                      </p-dropdown>
+
+                      <ng-container *ngIf="isLoadingCities">
+                        <i class="pi pi-spin pi-spinner mx-2"></i>
+                      </ng-container>
+                    </span>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 search-control d-flex align-content-center">
+              <div class="px-lg-3 px-2 d-flex align-items-center w-100">
+                <div class="d-flex align-items-center gap-lg-2 w-100">
+                  <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                    <img src="assets/images/stores/icons/type.svg" alt="type" />
+                  </div>
+                  <div class="w-100">
+                    <span class="p-input-icon-right  d-block">
+                      <p-dropdown [options]="storesTypes" formControlName="storeType" optionLabel="name" [filter]="true"
+                        (onChange)="onChangeControl('storeType')" filterPlaceholder="{{'placeholder.search'|translate}}"
+                        (onClear)="clear('type')" styleClass="border-0" filterBy="name" appendTo="body"
+                        [showClear]="true" scrollHeight="180px" [emptyMessage]="'general.noResultFound'|translate"
+                        placeholder="">
+                        <ng-template pTemplate="selectedItem">
+                          <div>
+                            <ng-container *ngIf="searchForm.value.storeType; else storeTypePlaceholder">
+                              {{searchForm.value.storeType.name|translate}}
+                            </ng-container>
+                            <ng-template #storeTypePlaceholder>
+                              {{'placeholder.selectType'|translate }}
+                            </ng-template>
+                          </div>
+                        </ng-template>
+                        <ng-template let-item pTemplate="item">
+                          <span>{{item.name|translate}}</span>
+                        </ng-template>
+                      </p-dropdown>
+                      <ng-container *ngIf="false">
+                        <i class="pi pi-spin pi-spinner mx-2"></i>
+                      </ng-container>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit"
+              class="border-0 d-flex align-items-center justify-content-center gap-2 position-absolute search-btn  text-white-color">
+              <i class="pi pi-search text-white-color scaleX-rtl"></i>
+              <span class="fw-bold  text-start">{{'placeholder.search'|translate}}</span>
+            </button>
+          </div>
+        </form>
+        <div id="search-sm" class="d-lg-none d-flex pt-4">
+          <div class="container">
+            <div class="d-flex align-items-center gap-3 search-sm-bg position-relative pointer"
+              (click)="displaySearch=true">
+              <div class="search-sm-icon d-flex justify-content-center align-items-center rounded-circle">
+                <i class="pi pi-search text-white-color"></i>
+              </div>
+              <div class="text-white-color">
+                <h5 class="fs-5-2">{{'stores.searchForStores'|translate}}</h5>
+                <p class="mb-0 fs-6-1 pe-3">{{'stores.searchBy'|translate}}</p>
+              </div>
+              <a class="search-sm-arrow position-absolute d-flex justify-content-center align-items-center rounded-circle"
+                (click)="displaySearch=true">
+                <i class="pi pi-angle-right text-white-color"></i>
+              </a>
+            </div>
+          </div>
+          <p-sidebar [(visible)]="displaySearch" position="bottom" [baseZIndex]="10000">
+            <div class="p-1 search-sm-content">
+              <a class="close-search mb-3 mt-1" (click)="displaySearch=false"></a>
+              <section id="search">
+                <form [formGroup]="searchForm" class="mx-2" (ngSubmit)="search()">
+                  <div class="rounded">
+                    <div class="search-control align-items-center d-flex p-2 mb-3 rounded h-auto">
+                      <div class="px-3 d-flex align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                          <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                            <img src="assets/images/stores/icons/home.svg" alt="storeName" />
+                          </div>
+                          <div class="w-100">
+                            <span class="w-100">
+                              <label for="storeName"
+                                class="d-block px-2 text-uppercase">{{'placeholder.storeName'|translate}}</label>
+                              <input type="text" class="form-control pt-0 h-auto bg-transparent border-0"
+                                formControlName="storeName" placeholder="{{'placeholder.storeName'|translate}}"
+                                pInputText #storeName (blur)="onChangeControl('storeName')">
+                              <ng-container *ngIf="storeName?.value">
+                                <i (click)="storeName.value='';searchForm.get('storeName')?.reset()"
+                                  class="pi pi-times pointer"></i>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="search-control d-flex align-content-center p-2 mb-3 rounded h-auto">
+                      <div class="px-3 d-flex align-items-center w-100">
+                        <div class="d-flex align-items-center gap-2 w-100">
+                          <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                            <img src="assets/images/stores/icons/map-pin.svg" alt="region" />
+                          </div>
+                          <div class="w-100">
+                            <label for="region"
+                              class="d-block px-2 text-uppercase">{{'labels.region'|translate}}</label>
+                            <span class="p-input-icon-right d-block">
+                              <p-dropdown [options]="regions" formControlName="region" optionLabel="name"
+                                [filter]="true" (onChange)="onChangeControl('region')"
+                                filterPlaceholder="{{'placeholder.search'|translate}}" styleClass="border-0"
+                                (onChange)="getCitiesByRegionId($event)" (onClear)="clear('region')" filterBy="name"
+                                appendTo="body" [showClear]="false" [readonly]="isLoadingRegions" scrollHeight="180px"
+                                [emptyMessage]="'general.noResultFound'|translate" placeholder="">
+
+                                <!-- Custom Selected Item Template -->
+                                <ng-template pTemplate="selectedItem">
+                                  <div
+                                    class="selected-item w-100 d-flex justify-content-between mt-1 align-items-center">
+                                    <!-- Display region name or placeholder -->
+                                    <div>{{ searchForm.value.region ? searchForm.value.region.name :
+                                      ('placeholder.selectRegion' | translate) }}</div>
+
+                                    <!-- Clear Icon (pi-times) -->
+                                    <i *ngIf="searchForm.value.region" class="pi pi-times cursor-pointer"
+                                      (click)="clearField('region')"></i>
+                                  </div>
+                                </ng-template>
+                              </p-dropdown>
+
+                              <!-- Spinner for loading state -->
+                              <ng-container *ngIf="isLoadingRegions">
+                                <i class="pi pi-spin pi-spinner mx-2"></i>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="search-control d-flex align-content-center p-2 mb-3 rounded h-auto">
+                      <div class="px-3 d-flex align-items-center w-100">
+                        <div class="d-flex align-items-center gap-2 w-100">
+                          <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                            <img src="assets/images/stores/icons/city.svg" alt="city" />
+                          </div>
+                          <div class="w-100">
+                            <label for="region" class="d-block px-2 text-uppercase">{{'labels.city'|translate}}</label>
+                            <span class="p-input-icon-right d-block bg-transparent"
+                              [class.disabled]="searchForm.value.region == null">
+                              <p-dropdown [options]="cities" formControlName="city" optionLabel="name" [filter]="true"
+                                filterPlaceholder="{{'placeholder.search' | translate}}" styleClass="border-0"
+                                filterBy="name" appendTo="body" [showClear]="false" (onClear)="clear('city')"
+                                [readonly]="isLoadingCities || isLoadingRegions || searchForm.value.region == null"
+                                scrollHeight="180px" [emptyMessage]="'general.noResultFound' | translate"
+                                placeholder="">
+
+                                <ng-template pTemplate="selectedItem">
+                                  <div
+                                    class="selected-item w-100 d-flex justify-content-between mt-1 align-items-center">
+                                    <div>{{ searchForm.value.city ? searchForm.value.city.name :
+                                      ('placeholder.selectCity' | translate) }}</div>
+                                    <i *ngIf="searchForm.value.city" class="pi pi-times cursor-pointer"
+                                      (click)="clearField('city')"></i>
+                                  </div>
+                                </ng-template>
+                              </p-dropdown>
+
+                              <ng-container *ngIf="isLoadingCities">
+                                <i class="pi pi-spin pi-spinner mx-2"></i>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="search-control d-flex align-content-center p-2 mb-3 rounded h-auto">
+                      <div class="px-3 d-flex align-items-center w-100">
+                        <div class="d-flex align-items-center gap-2 w-100">
+                          <div class="icon d-flex justify-content-center align-items-center rounded-circle">
+                            <img src="assets/images/stores/icons/type.svg" alt="type" />
+                          </div>
+                          <div class="w-100">
+                            <label for="region"
+                              class="d-block px-2 text-uppercase">{{'labels.storeType'|translate}}</label>
+                            <span class="p-input-icon-right  d-block">
+                              <p-dropdown [options]="storesTypes" formControlName="storeType" optionLabel="name"
+                                [filter]="true" (onChange)="onChangeControl('storeType')"
+                                filterPlaceholder="{{'placeholder.search'|translate}}" styleClass="border-0"
+                                filterBy="name" appendTo="body" [showClear]="true" scrollHeight="180px"
+                                [emptyMessage]="'general.noResultFound'|translate" placeholder="">
+                                <ng-template pTemplate="selectedItem">
+                                  <div>
+                                    <ng-container *ngIf="searchForm.value.storeType; else storeTypePlaceholder">
+                                      {{searchForm.value.storeType.name|translate}}
+                                    </ng-container>
+                                    <ng-template #storeTypePlaceholder>
+                                      {{'placeholder.selectType'|translate }}
+                                    </ng-template>
+                                  </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                  <span>{{item.name|translate}}</span>
+                                </ng-template>
+                              </p-dropdown>
+                              <ng-container *ngIf="false">
+                                <i class="pi pi-spin pi-spinner mx-2"></i>
+                              </ng-container>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit"
+                      class="border-0 d-flex align-items-center justify-content-center gap-2 search-btn w-100 mt-3 mb-2 text-white-color">
+                      <i class="pi pi-search text-white-color scaleX-rtl"></i>
+                      <span class="fw-bold  text-start">{{'placeholder.search'|translate}}</span>
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </p-sidebar>
+        </div>
+      </div>
+      <!-- End Stores Search -->
+
+    </div>
+  </div>
+  <!-- Start Popular Stores List -->
+  <div id="all-stores" class="pt-3" appLazyLoadSection (sectionInView)="storesAllStoresSection = true">
+    <ng-container *ngIf="storesAllStoresSection">
+      <div class="container">
+        <div class="d-flex align-items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-adjustments-horizontal fw-bold"
+            width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M4 6l8 0" />
+            <path d="M16 6l4 0" />
+            <path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M4 12l2 0" />
+            <path d="M10 12l10 0" />
+            <path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M4 18l11 0" />
+            <path d="M19 18l1 0" />
+          </svg>
+          <h6 class="fw-bold mb-0">
+            {{storesListTotalCount}} {{'stores.resultsFounded'|translate}}
+            <span class="text-muted-color fw-500">
+              {{'titles.saudiArabia'| translate}}
+            </span>
+          </h6>
+        </div>
+        <section class="popular-stores">
+          <div class="container mt-4">
+            <div class="row">
+              <ng-container *ngIf="isLoadingStores; else noLoadingFeaturePlaces">
+                <app-skeleton [type]="'stores'"></app-skeleton>
+              </ng-container>
+              <ng-template #noLoadingFeaturePlaces>
+                <ng-container *ngIf="storesList?.length>0; else noPopularStoresList">
+                  <ng-container *ngFor="let slide of storesList;let i=index">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+                      <div class="global-card p-0 position-relative pointer">
+                        <a class="position-absolute map-icon" [href]="slide.is_online?slide.website_link:slide.address"
+                          target="_blank" *ngIf="slide.is_online?slide.website_link:slide.address">
+                          <img class="rounded shadow-lg bg-type" [class.px-2]="slide?.is_online" width="40" height="40"
+                            [src]="slide?.is_online?'assets/images/stores/cart-basket.svg':'assets/images/stores/icons/location.png'"
+                            alt="map">
+                        </a>
+                        <img [src]="slide?.image" class="w-100 store-img" alt="img"
+                          [routerLink]="['/stores/'+slide.slug]" onerror="src='assets/images/not-found/no-img.svg'">
+                        <div class="p-3" [routerLink]="['/stores/'+slide.slug]">
+                          <h5 class="fs-5-1 text-truncate">
+                            {{slide?.title}}
+                          </h5>
+                          <div class="text-desc fs-6-1 fw-500 mb-2 d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p class="mb-0">
+                              {{slide?.address_name||'titles.saudiArabia'|translate}}
+                            </p>
+                          </div>
+                          <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+                            <p class="fw-500 mb-0 text-desc">
+                              ({{slide?.review}}) {{'general.review'|translate}}
+                            </p>
+                            <p-rating [(ngModel)]="slide.rate" [id]="'rating3'" [disabled]="true"
+                              [cancel]="false"></p-rating>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <ng-container *ngIf="slide?.is_online else isOnline">
+                              <p class="fw-500 text-capitalize online-text mb-0">
+                                {{'stores.online'|translate}}
+                              </p>
+                            </ng-container>
+                            <ng-template #isOnline>
+                              <p class="fw-500 text-capitalize offline-text mb-0">
+                                {{'stores.offline'|translate}}
+                              </p>
+                            </ng-template>
+
+                            <a [routerLink]="['/stores/'+slide.slug]"
+                              class="py-2 px-3 details-btn text-white-color d-flex align-items-center justify-content-center gap-2">{{'general.details'|translate}}
+                              <i class="pi pi-arrow-right scaleX-rtl"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noPopularStoresList>
+                  <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                    <p>{{'general.noData'|translate}}</p>
+                  </div>
+                </ng-template>
+              </ng-template>
+            </div>
+            <p-paginator #paginatorStoresList *ngIf="storesList?.length>0" [first]="1" [rows]="8"
+              (onPageChange)="onPageChangePopularStores($event)" [totalRecords]="storesListTotalCount"
+              [pageLinkSize]="3"></p-paginator>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+  </div>
+  <!-- End Popular Stores List -->
+
+  <!-- Start Top Stores -->
+  <div id="top-stores" appLazyLoadSection (sectionInView)="storesTopStoresSection = true">
+    <ng-container *ngIf="storesTopStoresSection" class="statisticsSection">
+
+      <div class="pt-md-5 pt-3 pb-4">
+        <div class="container">
+          <h4 class="text-capitalize text-center fs-4-1 fw-bold d-flex align-items-center justify-content-center gap-2">
+            {{'stores.topStores'|translate}} <img src="assets/images/stores/top-store.svg" alt="topStore">
+          </h4>
+          <div class="d-flex justify-content-center mb-3">
+            <img src="assets/images/stores/popularStore-vector.svg" alt="vector">
+          </div>
+          <p class="text-grey-400 text-center w-50 w-md-100 m-auto px-xl-4">
+            {{'stores.oneOfMostCommon'|translate}}
+          </p>
+
+          <section class="top-stores-list">
+            <div class="container mt-4">
+              <div class="row">
+                <ng-container *ngIf="isLoadingTopStores; else noLoadingTopPlaces">
+                  <app-skeleton [type]="'stores'"></app-skeleton>
+                </ng-container>
+                <ng-template #noLoadingTopPlaces>
+                  <ng-container *ngIf="storesList?.length>0; else noPopularStoresList">
+                    <ng-container *ngFor="let slide of topStoresList;let i=index">
+                      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+                        <div class="global-card p-0 position-relative pointer">
+                          <a class="position-absolute map-icon"
+                            [href]="slide.is_online?slide.website_link:slide.address" target="_blank"
+                            *ngIf="slide.is_online?slide.website_link:slide.address">
+                            <img class="rounded shadow-lg bg-type" [class.px-2]="slide?.is_online" width="40"
+                              height="40"
+                              [src]="slide?.is_online?'assets/images/stores/cart-basket.svg':'assets/images/stores/icons/location.png'"
+                              alt="map">
+                          </a>
+                          <img [src]="slide?.image" class="w-100 store-img" alt="img"
+                            [routerLink]="['/stores/'+slide.slug]" onerror="src='assets/images/not-found/no-img.svg'">
+                          <div class="p-3" [routerLink]="['/stores/'+slide.slug]">
+                            <h5 class="fs-5-1 text-truncate">
+                              {{slide?.title}}
+                            </h5>
+                            <div class="text-desc fs-6-1 fw-500 mb-2 d-flex align-items-center gap-1">
+                              <i class="fa-solid fa-location-dot"></i>
+                              <p class="mb-0">
+                                {{slide?.address_name||'titles.saudiArabia'|translate}}
+                              </p>
+                            </div>
+                            <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+                              <p class="fw-500 mb-0 text-desc">
+                                ({{slide?.review}}) {{'general.review'|translate}}
+                              </p>
+                              <p-rating [(ngModel)]="slide.rate" [id]="'rating3'" [disabled]="true"
+                                [cancel]="false"></p-rating>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <ng-container *ngIf="slide?.is_online else isOnline">
+                                <p class="fw-500 text-capitalize online-text mb-0">
+                                  {{'stores.online'|translate}}
+                                </p>
+                              </ng-container>
+                              <ng-template #isOnline>
+                                <p class="fw-500 text-capitalize offline-text mb-0">
+                                  {{'stores.offline'|translate}}
+                                </p>
+                              </ng-template>
+
+                              <a [routerLink]="['/stores/'+slide.slug]"
+                                class="py-2 px-3 details-btn text-white-color d-flex align-items-center justify-content-center gap-2">{{'general.details'|translate}}
+                                <i class="pi pi-arrow-right scaleX-rtl"></i>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #noPopularStoresList>
+                    <div
+                      class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                      <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                      <p>{{'general.noData'|translate}}</p>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </div>
+              <p-paginator #paginatorTopStoresList *ngIf="topStoresList?.length>0" [first]="1" [rows]="8"
+                (onPageChange)="onPageChangeTopMarkets($event)" [totalRecords]="topStoresListTotalCount"
+                [pageLinkSize]="3"></p-paginator>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        <style *ngIf="homeShowFooter">
+          #home {
+            padding-bottom: 0 !important;
+
+          }
+        </style>
+      </div>
+    </ng-container>
+    <!-- End Top Stores -->
+  </div>
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

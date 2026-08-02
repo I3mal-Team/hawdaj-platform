@@ -1,0 +1,43 @@
+#storiesDetails {
+    background-image: url("../../../../assets/images-v2/pages/place-details/background.png");
+    overflow: hidden;
+    #stories-search {
+        top: 26rem;
+        border-radius: 1.5rem;
+        background: url(../../../../assets/images-v2/pages/places-list/search/planes.png) no-repeat left;
+        box-shadow:
+            0px 20px 24px -4px rgba(121, 57, 167, 0.08),
+            0px 8px 8px -4px rgba(121, 57, 167, 0.03);
+    }
+    .section-space {
+        margin-top: 7rem !important;
+        @media (max-width: 1024px) {
+            margin-top: 2rem !important;
+        }
+    }
+    .title {
+        color: #101828;
+        font-size: 3.5rem;
+        font-weight: 700;
+        @media (max-width: 1024px) {
+            font-size: 2rem;
+        }
+        @media (max-width: 767px) {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px !important;
+        }
+    }
+}
+:host::ng-deep {
+    .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+        background-color: gray;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+        background: var(--light-new-color);
+    }
+}

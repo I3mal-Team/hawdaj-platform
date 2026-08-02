@@ -1,0 +1,52 @@
+<div class="offer">
+  <!-- <hr class="mt-0"> -->
+  <img [src]="offerDetails?.image" alt="image" class="offer-img w-100"
+    onerror="src='assets/images/not-found/no-img.svg'">
+  <div class="mt-3">
+    <h5>{{offerDetails?.title}}</h5>
+    <div class="text-muted-color mb-2 rich-text" [innerHTML]="offerDetails?.description | safeHtml"></div>
+    <div class=" d-flex gap-3 align-items-center mb-3">
+      <del class="text-danger fs-5-2">{{offerDetails?.price}} {{'general.rsa'|translate}}</del>
+      <!-- <i class="pi pi-arrow-right"></i> -->
+      <p class="text-main-color fs-5-2 mb-0 fw-bold">{{offerDetails?.price_after_discount}}
+        {{'general.rsa'|translate}}</p>
+    </div>
+    <div class="d-flex flex-wrap gap-3 abs">
+      <div class="mb-1 d-flex align-items-baseline gap-2 text-truncate">
+        <i class="pi pi-calendar text-main-color"></i>
+        <span>{{'labels.endDate'|translate}}</span>
+        <span class="fw-bold"> {{offerDetails?.from}}</span>
+      </div>
+      <div class="mb-1 d-flex align-items-baseline gap-2 text-truncate">
+        <i class="pi pi-calendar text-main-color"></i>
+        <span>{{'labels.endDate'|translate}}</span>
+        <span class="fw-bold"> {{offerDetails?.to}}</span>
+      </div>
+    </div>
+    <p class="mb-1 d-flex align-items-baseline gap-2 text-truncate">
+      <i class="fa fa-cutlery text-main-color"></i>
+      <ng-container *ngIf="offerDetails?.food_categories?.length>0; else noFoodCategory">
+        <ng-container *ngFor="let food of offerDetails?.food_categories;let i=index">
+          <span>{{food?.name}}</span><span *ngIf="i<offerDetails?.food_categories?.length-1">,</span>
+        </ng-container>
+      </ng-container>
+      <ng-template #noFoodCategory>
+        {{'general.noFoodCategory'|translate}}
+      </ng-template>
+    </p>
+    <p class="mb-1 text-truncate">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="feather feather-map-pin text-main-color">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg> {{offerDetails?.address_name||'titles.saudiArabia'| translate}}
+    </p>
+    <p class="mb-1 text-main-color d-flex align-items-baseline gap-1 text-truncate fw-bold">
+      <i class="pi pi-map text-main-color"></i>
+      <span class="fs-8">{{'general.showOnMap'|translate}} <strong class="fs-6-1">
+          {{offerDetails?.distance}} {{'general.km'|translate}}</strong>
+        {{'general.fromCentre'|translate}}</span>
+    </p>
+  </div>
+</div>

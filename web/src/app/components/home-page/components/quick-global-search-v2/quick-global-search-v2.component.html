@@ -1,0 +1,143 @@
+<div id="quick-global-search">
+    <!-- Start Form In Lg Screen -->
+    <form [formGroup]="searchForm" (ngSubmit)="search()" role="search" aria-label="search" class="d-lg-block d-none">
+        <div class="w-md-100 mx-auto position-relative shadow-sm">
+            <div class="overlay-search position-absolute rounded-pill d-flex justify-content-center"
+                *ngIf="isLoadingSearch">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <ng-container *ngFor="let item of [8,8,9,8]">
+                        <div class="spinner-grow" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="row search flex-nowrap m-0" style="width: 101.1%;">
+                <div class="d-flex align-items-center col-3 px-3 input-search-result border-end"
+                    [class.visited]="nameFocus">
+                    <img src="assets/images-v2/pages/Home/quick-search/new-search-icon.webp" alt="">
+                    <div class="ps-2">
+                        <label for="name" class="label-form fw-bold text-capitalize mb-1">
+                            {{'labels.placeName'|translate}}
+                        </label>
+                        <span class="d-flex align-items-center gap-1 w-100">
+                            <input type="text" class="form-control p-0 h-auto bg-transparent border-0 w-100"
+                                (blur)="onChangeControl('name');nameFocus=false" formControlName="name" #name
+                                (focus)="nameFocus=true;focusRegion=false;focusCity=false"
+                                placeholder="{{'placeholder.name'|translate}}" pInputText>
+                            <ng-container *ngIf="name?.value">
+                                <a (click)="name.value='';searchForm.get('name')?.reset()">
+                                    <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/icons/close.svg"
+                                        width="20px" alt="Close">
+                                </a>
+                            </ng-container>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center col-4 px-4 input-search-result border-end"
+                    [class.visited]="focusRegion">
+                    <img src="assets/images-v2/pages/Home/quick-search/new-area-icon.webp" alt="">
+
+                    <div class="w-100 me-2">
+                        <label for="region" class="label-form fw-bold text-capitalize mb-1">
+                            {{'labels.region'|translate}}
+                        </label>
+                        <span class="p-input-icon-right d-block">
+                            <p-dropdown [options]="regions" formControlName="region" optionLabel="name" [filter]="true"
+                                dropdownIcon="fas fa-caret-down text-muted" [autofocusFilter]="false"
+                                panelStyleClass="dropdown-new-panel" (onFocus)="focusRegion=true"
+                                (onHide)="focusRegion=false" (onChange)="onChangeControl('region')"
+                                filterPlaceholder="{{'placeholder.search'|translate}}" styleClass="border-0"
+                                (onChange)="getCitiesByRegionId($event)" filterBy="name" appendTo="body"
+                                [readonly]="isLoadingRegions" scrollHeight="180px"
+                                [emptyMessage]="'general.noResultFound'|translate" placeholder="">
+
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2">
+                                        <div class="value text-truncate" [class.active]="searchForm.value.region?.name">
+                                            <span>
+                                                {{
+                                                searchForm.value.region?searchForm.value.region.name:'placeholder.selectRegion'|translate
+                                                }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="searchForm.value.region">
+                                        <i class="pi pi-times" (click)="clearSelectedRegion($event)"></i>
+                                    </ng-container>
+                                </ng-template>
+
+                                <ng-template let-item pTemplate="item">
+                                    <div class="item d-flex gap-2 align-items-center">
+                                        <span class="location-dot d-flex justify-content-center align-items-center"> <i
+                                                class="fa-solid fa-location-dot"></i>
+                                        </span>
+                                        <span>{{item?.name}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                            <ng-container *ngIf="isLoadingRegions">
+                                <i class="pi pi-spin pi-spinner mx-4"></i>
+                            </ng-container>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center col-4 ps-4 input-search-result" [class.visited]="focusCity">
+                    <img src="assets/images-v2/pages/Home/quick-search/new-location-icon.webp" alt="">
+                    <div class="d-flex gap-xl-4 me-2 w-100">
+                        <div class="last-input">
+                            <label for="city" class="label-form fw-bold text-capitalize mb-1">
+                                {{'labels.city'|translate}}
+                            </label>
+                            <span class="p-input-icon-right d-block bg-transparent w-100"
+                                [class.disabled]="searchForm.value.region==null">
+                                <p-dropdown [options]="cities" formControlName="city" optionLabel="name" [filter]="true"
+                                    dropdownIcon="fas fa-caret-down text-muted
+                                " [autofocusFilter]="false" filterPlaceholder="{{'placeholder.search'|translate}}"
+                                    styleClass="border-0" (onFocus)="focusCity=true" (onHide)="focusCity=false"
+                                    filterBy="name" appendTo="body"
+                                    [readonly]="isLoadingCities || isLoadingRegions|| searchForm.value.region==null"
+                                    scrollHeight="180px" [emptyMessage]="'general.noResultFound'|translate"
+                                    panelStyleClass="dropdown-new-panel" placeholder="">
+                                    <ng-template pTemplate="selectedItem">
+                                        <div class="flex align-items-center gap-2">
+                                            <div class="value text-truncate"
+                                                [class.active]="searchForm.value.city?.name">{{ searchForm.value.city?
+                                                searchForm.value.city.name:'placeholder.selectCity'|translate }}
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        <div class="item d-flex gap-2 align-items-center">
+                                            <span class="location-dot d-flex justify-content-center align-items-center">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                            </span>
+                                            <span>{{item?.name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+                                <ng-container *ngIf="searchForm.value.city">
+                                    <i class="pi pi-times" (click)="clearSelectedCity($event)"></i>
+                                </ng-container>
+                                <ng-container *ngIf="isLoadingCities">
+                                    <i class="pi pi-spin pi-spinner mx-3"></i>
+                                </ng-container>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit"
+                    class=" col-1 btn border-0 my-auto ms-2 search-icon rounded-circle d-flex justify-content-center align-items-center text-white-color w-auto ">
+                    <i class="pi pi-search text-white-color"></i>
+                </button>
+            </div>
+
+        </div>
+    </form>
+    <!-- End Form In Lg Screen -->
+    <!-- Start Form In Md + Sm Screens -->
+    <div class="d-lg-none d-block">
+        <quick-global-search-mobile></quick-global-search-mobile>
+    </div>
+    <!-- End Form In Lg Screen -->
+</div>

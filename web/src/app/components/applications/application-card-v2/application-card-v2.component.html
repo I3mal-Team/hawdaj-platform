@@ -1,0 +1,54 @@
+<div class="app-card d-flex flex-column gap-3 align-items-center justify-content-center">
+    <div class="d-flex flex-column gap-2 align-items-center justify-content-center">
+        <ng-container *ngIf="item?.category?.name">
+            <span
+                class="p-1 px-2 text-black border border-secondary rounded opacity-75 fw">{{item?.category?.name}}</span>
+        </ng-container>
+        <div class="app-card__image-container position-relative d-flex align-items-center">
+            <img class="app-card__background" src="assets/images-v2/pages/applications/card/phone.png" alt="phone">
+            <div class="app-card__logo position-absolute start-50 translate-middle-x overflow-hidden">
+                <img ngOptimizedImage class="w-100 h-100" [ngSrc]="item?.image" width="62" height="62"
+                    [alt]="item?.title">
+            </div>
+        </div>
+    </div>
+    <div class="app-card__content d-flex align-items-center justify-content-center flex-column text-center">
+        <h4 class="app-card__title fw-bold">{{ item?.title }}</h4>
+        <p class="app-card__description">{{ item?.description | stripHtml }}</p>
+        <div *ngIf="item?.type">
+            <div
+                class="app-card__actions d-flex flex-wrap gap-2 align-items-center justify-content-md-start justify-content-sm-center justify-content-center pt-md-3 pt-2">
+                <ng-container *ngIf="item?.type === 'app'">
+                    <div class="app-card__store-links d-flex gap-2 align-items-center flex-xl-nowrap flex-wrap">
+                        <ng-container
+                            *ngIf="item?.ios_link&&(categoryIds?.includes(2)||!categoryIds?.includes(1)||categoryIds?.length==0)">
+                            <div class="app-card__store">
+                                <a [href]="item?.ios_link" target="_blank" rel="noopener noreferrer">
+                                    <img class="app-card__store-image"
+                                        src="assets/images-v2/pages/applications/card/App-store.png" alt="App Store"
+                                        loading="lazy">
+                                </a>
+                            </div>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="item?.android_link &&(categoryIds?.includes(1)||!categoryIds?.includes(2)||categoryIds?.length==0)">
+                            <div class="app-card__store">
+                                <a [href]="item?.android_link" target="_blank" rel="noopener noreferrer">
+                                    <img class="app-card__store-image"
+                                        src="assets/images-v2/pages/applications/card/google-play.png" alt="Google Play"
+                                        loading="lazy">
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="item?.type === 'web'">
+                    <a class="app-card__details-btn btn btn-outline-dark" [href]="item?.link" target="_blank">
+                        {{ 'general.moreDetails' | translate }}
+                    </a>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+#scroll {
+  position: fixed;
+  right: 30px;
+  // bottom: 40px;
+  bottom: 68px;
+  z-index: 555;
+  .scroll-arrow {
+    width: 65px;
+    height: 65px;
+    background-color: var(--bg-main-color);
+    border-radius: 50%;
+    .pi {
+      color: #ffff;
+    }
+  }
+}
+.camel-hover {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+  z-index: 1;
+  // background: linear-gradient(
+  //   130deg,
+  //   #af71ff 1.83%,
+  //   #c83ec2 41.17%,
+  //   #898ce1 74.54%,
+  //   #b15bc2 91.38%
+  // );
+  background: linear-gradient(
+    130deg,
+    #371A4C  1.83%,
+    #371A4C 90%,
+    
+  );
+  // background-color: #bc61cf !important;
+  // position: relative;
+}
+// .camel-svg {
+//   width: 60px;
+//   height: 60px;
+//   margin-top: -2.3rem;
+//   background-color: #bc61cf !important;
+//   // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+// }
+.camel-content:hover .startTrip {
+  transition: all 0.5s ease;
+  transform: translateX(0%) !important;
+  display: flex;
+  width: auto !important;
+  min-width: auto !important;
+  margin-right: -15px;
+  display: block !important;
+}
+.camel-content:hover .gif-icon {
+  display: none !important;
+}
+.startTrip {
+  position: relative;
+  margin-right: -51px;
+  z-index: 0;
+  text-wrap: nowrap;
+  width: 0 !important;
+  min-width: 0 !important;
+  transition: all 0.5s ease;
+
+  border-color: #bc61cf !important;
+}
+.camel-hover:after,
+.camel-hover:before {
+  content: "";
+  position: absolute;
+  min-width: 100%;
+  height: 100%;
+  background-color: #bc61cf;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.7;
+}
+.camel-hover:before {
+  animation: pluses 2s ease-out infinite;
+}
+.camel-hover:after {
+  animation: pluses 2s 1s ease-out infinite;
+}
+@keyframes pluses {
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+@keyframes arrow {
+  100% {
+    transform: translateY(-5px);
+  }
+}
+.shadow-sm {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
+
+#progress {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  place-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+  cursor: pointer;
+  .pi {
+    color: #7939a7;
+    // animation: arrow 1s ease-out infinite;
+  }
+}
+#progress-button {
+  display: block;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  background-color: var(--bg-white-color);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 1200px) { 
+  .camel-content{
+    display: none !important;
+  }
+}

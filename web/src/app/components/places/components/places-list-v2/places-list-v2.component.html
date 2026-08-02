@@ -1,0 +1,94 @@
+<app-header></app-header>
+<div id="places-page">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.places'"
+        [largeImage]="'assets/images-v2/pages/places-list/banner/places-list-banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/places-list/banner/places-list-banner-tablet.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div class="d-flex align-items-center justify-content-center">
+        <div id="places-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" (fieldChanged)="onFieldChanged($event)"
+                (formValues)="search($event)" (clearEvent)="clearSearch($event)"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (fieldChanged)="onFieldChanged($event)"
+        (formValues)="search($event)" (clearEvent)="clearSearch($event)"></app-search-list-sm>
+    <!-- End search sm-->
+
+    <ng-container>
+        <!-- Start Tabs -->
+        <div class="container section-space">
+            <app-tabs [items]="categories" (selectedItemsChange)="onSelectedItemsChange($event)"
+                [enableAll]="true"></app-tabs>
+        </div>
+        <!-- End Tabs -->
+
+        <!--Start Places List -->
+        <div class="container m-auto">
+            <ng-container *ngIf="isLoadingPlaces; else noLoadingFeaturePlaces">
+                <app-skeleton [type]="'places-list'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingFeaturePlaces>
+                <ng-container
+                    *ngIf="regionId !=null ||( placeName !==null &&  placeName !==''&&  placeName !==undefined)">
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'titles.searchResult'|translate}}
+                        </h4>
+                    </div>
+                </ng-container>
+                <div class="row g-2 mx-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                    <div *ngFor="let place of placesList" class="col-lg-3 col-sm-6 col-12"
+                        style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                        <app-list-card [type]="'places'" [item]="place" (favouriteClicked)="addToFavorite(place)"
+                            [isLoadingFavourite]="isLoadingFavourite"></app-list-card>
+                    </div>
+                    <ng-container *ngIf="placesList.length===0">
+                        <app-no-result [isWhite]="false"></app-no-result>
+                    </ng-container>
+                    <app-shared-pagination [itemsPageNumber]="placesPageNumber"
+                        [itemsListTotalCount]="placesListTotalCount" [itemsPageNumber]="placesPageNumber"
+                        [itemsPerPageCount]="placesPerPageCount"
+                        (pageChange)="changePage($event)"></app-shared-pagination>
+                </div>
+            </ng-template>
+        </div>
+        <!--End Places List -->
+    </ng-container>
+
+    <!--Start Common places List -->
+    <div class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <h2 class="title mb-lg-5 mb-2">{{'places.commonPlaces'|translate}}</h2>
+        <app-list-slider [items]="this.visitedPlacesList.slice(0, 5)" [link]="'/places/details/'"
+            (viewAllClicked)="handleViewAll()" [type]="'places'" (favouriteClicked)="addToFavorite($event)"
+            [isLoadingFavourite]="isLoadingFavourite"></app-list-slider>
+    </div>
+    <!--End Common places List -->
+
+    <!--Start Trip -->
+    <div class="container-md trip-container section-space g-0">
+        <app-places-start-trip></app-places-start-trip>
+    </div>
+    <!--End Start Trip -->
+
+    <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        <style *ngIf="homeShowFooter">
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

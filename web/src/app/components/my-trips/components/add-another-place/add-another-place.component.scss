@@ -1,0 +1,70 @@
+.suggestedPlaces {
+  max-height: 240px !important;
+  min-height: 200px !important;
+  padding-right: 10px;
+  overflow: auto;
+  &::-webkit-scrollbar-thumb {
+    background: var(--bg-main-color);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    max-height: 80% !important;
+  }
+}
+.p-input-icon-left > .p-inputtext {
+  border-radius: 8px !important;
+  height: 3.1rem !important;
+}
+.service {
+  background: #84548e0d;
+  border-radius: 12px;
+  padding: 10px 20px;
+  min-height: 3.2rem;
+}
+.price {
+  color: var(--light-new-color);
+}
+.loading-more {
+  background: linear-gradient(331deg, #eadeec 0%, rgba(215, 230, 240, 0) 100%);
+  backdrop-filter: blur(11px);
+  border-radius: 5px;
+}
+.check {
+  width: 20px;
+}
+.active {
+  background-color: #e571ff1c;
+}
+.search-input {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(140, 149, 163, 0.41) !important;
+  border-radius: var(--main-border-radius-shape);
+  height: 50px;
+}
+
+.action {
+  padding: 7px 10px !important;
+  margin: 0 !important;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+.add-btn {
+  background: #84548e44;
+}
+.remove-btn {
+  background-color: #e5555530;
+  color: #e55555;
+}
+:host::ng-deep {
+  .p-dropdown,
+  .p-inputtext {
+    height: 50px !important;
+    background-color: #fff !important;
+    overflow: hidden;
+    line-height: 1;
+  }
+}
+.border-red {
+  border-radius: 5px !important;
+}

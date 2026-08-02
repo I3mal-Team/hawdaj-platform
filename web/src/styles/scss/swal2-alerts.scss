@@ -1,0 +1,17 @@
+.swal2-styled.swal2-confirm {
+  border: 1px solid var(--text-main-color) !important;
+  background-color: var(--bg-main-color) !important;
+  color: var(--text-white-color) !important;
+  padding: 1rem 3rem !important;
+}
+
+.swal2-styled.swal2-confirm:hover {
+  border: 1px solid var(--text-main-color) !important;
+  background-color: var(--bg-white-color) !important;
+  color: var(--text-main-color) !important;
+}
+.swal2-container.swal2-bottom,
+.swal2-container.swal2-center,
+.swal2-container.swal2-top {
+  z-index: 8888 !important;
+}

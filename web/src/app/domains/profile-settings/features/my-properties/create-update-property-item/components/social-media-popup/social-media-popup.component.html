@@ -1,0 +1,66 @@
+<form class="social-media-popup" [formGroup]="socialMediaForm" (ngSubmit)="onSubmit()">
+  <div class="social-media-popup__wrapper">
+    <div class="social-media-popup__group">
+      <label class="social-media-popup__label" for="platform">
+        {{ 'properties.socialMedia.platform' | translate }}
+      </label>
+      <div class="social-media-popup__control social-media-popup__control--dropdown">
+        <p-dropdown
+          id="platform"
+          formControlName="platform"
+          [options]="data.platforms"
+          optionLabel="name"
+          [placeholder]="'properties.socialMedia.selectPlatform' | translate"
+          class="social-media-popup__dropdown"
+        >
+          <ng-template let-option pTemplate="item">
+            {{ option.name | translate }}
+          </ng-template>
+          <ng-template let-option pTemplate="selectedItem">
+            <span *ngIf="option">{{ option.name | translate }}</span>
+            <span *ngIf="!option">{{ 'properties.socialMedia.selectPlatform' | translate }}</span>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <p class="social-media-popup__error" *ngIf="shouldShowError('platform')">
+        {{ getErrorMessage('platform') | translate }}
+      </p>
+    </div>
+
+    <div class="social-media-popup__group">
+      <label class="social-media-popup__label" for="link">
+        {{ 'properties.socialMedia.link' | translate }}
+      </label>
+      <div class="social-media-popup__control">
+        <input
+          id="link"
+          [type]="isWhatsApp() ? 'text' : 'url'"
+          class="social-media-popup__input"
+          [placeholder]="isWhatsApp() ? ('properties.socialMedia.enterWhatsappLink' | translate) : ('properties.socialMedia.enterLink' | translate)"
+          formControlName="link"
+        />
+      </div>
+      <p class="social-media-popup__error" *ngIf="shouldShowError('link')">
+        {{ getErrorMessage('link') | translate }}
+      </p>
+    </div>
+
+    <div class="social-media-popup__actions">
+      <button
+        type="button"
+        class="social-media-popup__cancel"
+        (click)="onCancel()"
+      >
+        {{ 'general.cancel' | translate }}
+      </button>
+      <button
+        type="submit"
+        class="social-media-popup__submit"
+        [disabled]="socialMediaForm.invalid || isSubmitting()"
+      >
+        {{ isSubmitting() ? ('general.saving' | translate) : ('general.save' | translate) }}
+      </button>
+    </div>
+  </div>
+</form>
+

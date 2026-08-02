@@ -1,0 +1,23 @@
+<section class="hero-section">
+    <div class="container-fluid h-100">
+        <div class=" section-divs-grid d-flex justify-content-center align-items-center h-100 w-100 pt-5 pb-md-5 pb-3">
+            <div class="main-texts d-flex flex-column justify-content-between align-items-center">
+                <div class="content text-center d-flex flex-column m-auto align-items-center justify-content-center">
+                    <h3 class="hero-section-title">
+                        {{'general.explore'|translate}}
+                    </h3>
+                    <p class="description">
+                        {{'home.discoverAll'|translate}}
+                    </p>
+                </div>
+                <div class="book-explore">
+                    <button aria-label="Explore all options" class="trip-button d-flex gap-2" (click)="startTrip()">
+                        <img NgOptimizedImage src="assets/images/icons/startup 1.svg" alt="img">
+                        <span class="button__text flex-grow-1 text-capitalize fw-bold text-truncate">{{'makeYourTrip'
+                            | translate}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

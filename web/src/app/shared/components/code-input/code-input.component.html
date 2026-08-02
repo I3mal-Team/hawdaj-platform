@@ -1,0 +1,8 @@
+<div id="otp-container" class="d-flex flex-row align-items-center w-100 justify-content-center flex-wrap">
+  <div *ngFor="let num of inputs; let i = index" class="col p-2">
+    <input #inputRefs class="form-control input-style" [ngStyle]="{'background-color': bgColor,'border-color':borderColor}"
+      [ngClass]="{'focus-style': focusedIndex === i, 'normal-style': focusedIndex !== i}" type="text"
+      [attr.id]="'input' + num" maxlength="1" (keyup)="onCodeChanged(i, $event)" (focus)="focusedIndex = i"
+      (blur)="focusedIndex = -1" [attr.tabindex]="i + 1">
+  </div>
+</div>

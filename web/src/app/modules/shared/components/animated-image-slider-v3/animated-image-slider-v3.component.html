@@ -1,0 +1,57 @@
+<section class="carousel">
+  <div class=" carsoul-container position-relative">
+    <div class="d-flex align-items-end pb-sm-5 pb-4">
+      <div
+        class="thumbnail d-flex align-items-end gap-md-3 gap-2 mt-md-0 mt-sm-4 mt-3  py-md-0 py-sm-4 py-3 mx-auto position-relative">
+        <ng-container *ngFor="let item of items; let i = index; trackBy: trackByFn">
+          <div class="item-content position-relative" [ngClass]="{'active': activeIndex === i}" (click)="setActive(i)">
+            <a [href]="item?.address" target="_blank" class="position-absolute address-icon p-2 z-idx d-none"
+              *ngIf="item?.address">
+              <div class="map-icon-image">
+                <img NgOptimizedImage width="40" height="40" appLazyLoad ngSrc="assets/newImages/icons/location.webp"
+                  priority="high" fetchpriority="high" alt="Map Data">
+              </div>
+            </a>
+            <h5 class="position-absolute carsoul-title text-white-color p-2 w-100 text-center">{{item?.title}}</h5>
+            <div class="overlay position-absolute d-none" (click)="showDetails(item)"></div>
+
+
+
+
+            <div class="image-content h-100" #imageContainer>
+              <img class="w-100 h-100" src="{{item?.image}}" onerror="this.src='assets/newImages/not-found/no-img.svg'"
+                width="260" height="340" alt="Join Us Image">
+            </div>
+
+
+            <div class="position-absolute text-white-color slider-content d-none px-2" (click)="showDetails(item)">
+              <h6 class="fs-5 fw-bold"> {{item?.title}}</h6>
+              <p class="mb-0 desc">
+                <i class="fa-solid fa-location-dot"></i>
+                {{item?.address_name|| item?.address|| 'titles.saudiArabia'|translate}}
+              </p>
+            </div>
+          </div>
+
+          <div *ngIf="activeIndex==i" class="content-info position-absolute">
+            <h4 class="fw-bold text-truncate">{{item?.title}}</h4>
+            <p class="desc fs-5-2 desc2">{{item?.description|stripHtml}}</p>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <button id="prev" class="d-flex justify-content-center align-items-center  arrow position-absolute mx-2"
+        (click)="prev()">
+        <i class="fa fa-angle-left scaleX-rtl"></i>
+      </button>
+      <button id="next" class="d-flex justify-content-center align-items-center  position-absolute arrow mx-2"
+        (click)="next()" [class.disabled]="activeIndex==items?.length-1">
+        <i class="fa fa-angle-right scaleX-rtl"></i>
+      </button>
+    </div>
+  </div>
+  <ng-container *ngIf="autoPlay && enableTimeProgress">
+    <div class="time" [style.width]="timeProgressWidth"></div>
+  </ng-container>
+</section>

@@ -1,0 +1,44 @@
+<section id="newsLetter" class="mt-md-5 mt-3">
+  <div class="container p-4">
+    <div class="global-card p-5 px-sm-5 px-4 position-relative">
+      <div class="overlay-search position-absolute rounded-4 d-flex justify-content-center" *ngIf="isLoadingBtn">
+        <div class="d-flex justify-content-center align-items-center gap-2">
+          <ng-container *ngFor="let item of [8,8,9,8]">
+            <div class="spinner-grow" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <h3 class="text-center fw-bold text-capitalize">
+            {{'stories.newsletter'|translate}}
+          </h3>
+          <p class="text-center text-muted-color">
+            {{'footer.subscribe'|translate}}
+          </p>
+          <div>
+            <form [formGroup]="emailForm" class="mt-4" (ngSubmit)="submit()">
+              <div class="d-sm-flex flex-sm-nowrap flex-wrap gap-3 justify-content-center">
+                <input type="email" class="form-control border bg-white-color"
+                  placeholder="{{'placeholder.email'|translate}}"
+                  (input)="publicService.clearValidationErrors(emailFormControls?.email)" formControlName="email">
+                <button [disabled]="isLoadingBtn" type="submit"
+                  class="text-white-color d-flex justify-content-center align-items-center gap-2 send px-4 py-3 border-0 mt-sm-0 mt-3 m-auto">
+                  <ng-container *ngIf="false; else send">
+                    <i class="pi pi-spin pi-spinner text-white-color"></i>
+                  </ng-container>
+                  <ng-template #send>
+                    <i class="pi pi-send"></i>
+                  </ng-template>
+                  {{'general.send'|translate}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

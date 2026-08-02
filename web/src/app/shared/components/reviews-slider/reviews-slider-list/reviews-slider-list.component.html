@@ -1,0 +1,30 @@
+<div class="reviews-list mt-4 d-flex flex-column gap-3">
+    <h5 class="reviews-list__title fw-bold text-break">
+        {{'general.reviews'|translate}}
+    </h5>
+
+    <ng-container *ngFor="let review of getDisplayedRatings()">
+        <app-reviews-slider-card [review]="review"></app-reviews-slider-card>
+    </ng-container>
+
+    <ng-container *ngIf="entityDetails?.ratings?.length > ratingsPerPage">
+        <div class="reviews-list__btns d-flex justify-content-between">
+            <button class="border-0 outline-0" (click)="changeRatingPage('prev')" [class.disabled]="startIndex === 0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl" width="25" height="24" viewBox="0 0 25 24"
+                    fill="none">
+                    <path d="M14.0508 16L10.0508 12L14.0508 8" stroke="#3A4980" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+
+            <button class="border-0 outline-0" (click)="changeRatingPage('next')"
+                [class.disabled]="startIndex + ratingsPerPage >= entityDetails?.ratings?.length">
+                <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl" width="25" height="24" viewBox="0 0 25 24"
+                    fill="none">
+                    <path d="M10.0508 16L14.0508 12L10.0508 8" stroke="#3A4980" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </ng-container>
+</div>

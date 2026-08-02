@@ -1,0 +1,38 @@
+.close-btn {
+  z-index: 66;
+  // right: 0;
+  left: 10px;
+  top: 10px;
+  width: 30px;
+}
+:host::ng-deep {
+  #chartdiv {
+    height: 65vh;
+    direction: ltr;
+    & > div > div {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  // .chart-rtl {
+  .am5-tooltip-container > div {
+    //   position: absolute;
+    // width: 81px;
+    // height: 1px;
+    // overflow: hidden;
+    // clip: rect(50px, 1px, 1px, 1px) !important;
+    // pointer-events: none;
+  }
+  // }
+}
+// :host::ng-deep {
+canvas {
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+// }

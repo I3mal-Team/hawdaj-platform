@@ -1,0 +1,140 @@
+:host {
+  display: block;
+}
+
+.social-media-popup {
+  width: 100%;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    color: #101828;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  &__control {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 3.5rem;
+    padding: 1rem;
+    justify-content: space-between;
+    border-radius: 1rem;
+    border: 0.5px solid rgba(163, 169, 194, 0.5);
+    background: #fff;
+    position: relative;
+
+    &--dropdown {
+      padding: 0;
+      border: none;
+      background: transparent;
+      height: auto;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #3a4980;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #3a4980;
+      font-weight: 400;
+    }
+  }
+
+  &__dropdown {
+    width: 100%;
+  }
+
+  &__error {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #d92d20;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  &__cancel,
+  &__submit {
+    padding: 0.75rem 2rem;
+    border-radius: 0.75rem;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  &__cancel {
+    background: #f4f4f4;
+    color: #666;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__submit {
+    background: #3a4980;
+    color: #fff;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .social-media-popup__dropdown .p-dropdown {
+    width: 100%;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  .social-media-popup__dropdown .p-dropdown-label {
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #3a4980;
+  }
+
+  .social-media-popup__dropdown .p-dropdown-trigger {
+    width: 24px;
+    height: 24px;
+  }
+}
+

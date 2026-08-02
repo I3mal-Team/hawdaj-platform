@@ -1,0 +1,68 @@
+.event-card {
+  transition: all 0.4s ease;
+  border-radius: 20px;
+
+  .closed {
+    right: 0;
+  }
+
+  .event-img {
+    height: 330px;
+    border-radius: 20px;
+    object-fit: fill;
+  }
+
+  .event-content {
+    bottom: 0;
+    color: white;
+    background-color: #795548d1;
+    border-radius: 20px;
+
+    .description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.6;
+      margin-top: 5px;
+    }
+
+    .event-title {
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+    }
+  }
+
+  .btn-details {
+    width: 40px;
+    height: 40px;
+    background-color: var(--new-color);
+    border: 5px solid var(--bg-white-color);
+    right: -1rem;
+    bottom: -0.8rem;
+  }
+
+  &:hover {
+    transition: all 0.4s ease;
+
+    .event-content {
+      height: 100%;
+
+      .description {
+        white-space: wrap;
+        margin-top: 10px;
+      }
+
+      .event-title {
+        display: block !important;
+      }
+    }
+
+    .closed {
+      display: none;
+    }
+  }
+}

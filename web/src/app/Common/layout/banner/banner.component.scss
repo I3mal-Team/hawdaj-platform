@@ -1,0 +1,19 @@
+.banner {
+    background-color: rgba(128, 128, 128, 0.488);
+    height: 500px;
+    &__title {
+        font-size: 5rem;
+        @media (max-width: 1024px) {
+            font-size: 3rem;
+        }
+    }
+    p {
+        font-size: 1.125rem;
+        @media (max-width: 1024px) {
+            font-size: 1rem;
+        }
+        @media (max-width: 767px) {
+            font-size: 0.8rem;
+        }
+    }
+}

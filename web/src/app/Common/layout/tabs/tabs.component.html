@@ -1,0 +1,67 @@
+<div class="categories position-relative" #list>
+    <ng-container *ngIf="items.length === 0;">
+        <app-skeleton [type]="'list-categories'"></app-skeleton>
+    </ng-container>
+    <div class="categories__list d-flex align-items-center gap-1" #listContainer>
+        <ng-container>
+            <div *ngFor="let item of items" class="categories__item">
+                <div class="categories__content pointer" (click)="selectItem(item)">
+                    <p class="categories__name text-center text-nowrap p-2" #placeItem
+                        [ngClass]="{'categories__name--active': isSelected(item)}">
+                        {{ item.name }}
+                    </p>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div class="align-items-center justify-content-between" [ngClass]="[currentLanguage === 'ar' ? 'd-flex' : 'd-block']">
+    <div class="d-flex gap-1 my-2">
+        <button class="categories__button categories__button--next mt-1 scaleX-rtl" aria-label="Scroll right"
+            #previousBtn (click)="currentLanguage === 'ar' ? scrollRight(listContainer) : scrollLeft(listContainer)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                <path d="M14.0508 16L10.0508 12L14.0508 8" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+        </button>
+        <button class="categories__button categories__button--back mt-1 scaleX-rtl" aria-label="Scroll left" #nextBtn
+            (click)="currentLanguage === 'ar' ? scrollLeft(listContainer) : scrollRight(listContainer)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                <path d="M10.0508 16L14.0508 12L10.0508 8" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+        </button>
+    </div>
+    <div *ngIf="selectedItems?.length > 0 && selectedItems?.[0]?.id!==0"
+        class="category-result d-flex align-items-center justify-content-center gap-4 my-4 shadow-sm py-sm-2 py-3 px-4 w-content m-auto flex-wrap">
+        <div class="category-result__content d-flex gap-2 flex-wrap align-items-center">
+            <h6 class="category-result__title fw-bold mb-0">{{ 'stores.specificCategories' | translate }} :</h6>
+            <div class="category-result__items d-none d-md-flex gap-2 flex-wrap align-items-center">
+                <ng-container *ngFor="let item of selectedItems; let i = index">
+                    <span *ngIf="i > 0 && i < 2">,</span>
+                    <span *ngIf="i < 2">{{ item?.name }}</span>
+                </ng-container>
+
+                <span
+                    class="category-result__badge num-badge d-flex justify-content-center align-items-center rounded-circle text-main-color"
+                    *ngIf="selectedItems?.length >= 3">+{{ selectedItems?.length - 2 }}</span>
+            </div>
+            <div class="category-result__items d-flex d-md-none gap-2 flex-wrap align-items-center"
+                [ngStyle]="{'display': currentLanguage === 'ru' ? 'none' : 'flex'}">
+                <ng-container *ngFor="let item of selectedItems; let i = index">
+                    <span *ngIf="i < 1">{{ item?.name }}</span>
+                </ng-container>
+
+                <span
+                    class="category-result__badge num-badge d-flex justify-content-center align-items-center rounded-circle text-main-color"
+                    *ngIf="selectedItems?.length >= 2">+{{ selectedItems?.length - 1 }}</span>
+            </div>
+        </div>
+        <a class="category-result__reset reset text-white-color py-1 rounded-pill px-3" (click)="resetCategories()">{{
+            'primeng.clear' | translate }}</a>
+    </div>
+</div>
+
+<ng-container *ngIf="items.length === 0">
+    <app-skeleton [type]="'list-selectedItems'"></app-skeleton>
+</ng-container>

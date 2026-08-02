@@ -1,0 +1,43 @@
+<div class="container offer p-md-5 p-3 d-flex flex-column">
+  <div class=" row align-items-center justify-content-center justify-content-md-between gap-5 gap-lg-0">
+    <div class="col-md-6 m-auto text-center"
+      [ngClass]="{'text-lg-end': currentLanguage === 'ar', 'text-lg-start': currentLanguage !== 'ar'}">
+      <h2>
+        {{title}}
+      </h2>
+      <div class="d-flex flex-column align-items-center align-items-lg-start justify-content-center">
+        <h3 class="w-100">
+          {{"general.offer" | translate}}
+        </h3>
+        <svg width="178" height="20" class="mx-5" viewBox="0 0 178 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 2C59.3147 6.62222 118.333 7.51111 177 5.02222C122.44 8.57778 67.88 12.8444 13.672 18C66.7067 15.3333 119.976 14.8 173.011 16.9333"
+            stroke="#7939A7" stroke-width="3" />
+        </svg>
+      </div>
+    </div>
+    <div class="img-container position-relative col-md-6 m-auto px-0">
+      <div class="offer arrow position-absolute d-flex flex-column justify-content-center"
+        [ngStyle]="currentLanguage === 'ar' ? {'right': '-250px'} : {'left': '-250px'}">
+        <p class="text-truncate">
+          {{title}}
+        </p><svg width=" 72" class="scaleX-rtl position-relative"
+          [ngStyle]="currentLanguage === 'ar' ? {'right': '80px'} : {'left': '80px'}" height="56" viewBox="0 0 72 56"
+          fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M3.27472 2.51869C8.2207 28.8496 38.5967 41.6393 70.3076 44.5473C70.8522 44.5981 71.2437 44.9826 71.1784 45.4061C71.1132 45.8297 70.6189 46.1341 70.0743 46.0834C37.475 43.0953 6.39141 29.8098 1.30741 2.74117C1.22711 2.31959 1.60354 1.9273 2.14808 1.86484C2.6901 1.80238 3.19442 2.09516 3.27472 2.51869Z"
+            fill="#3A4980" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M68.5822 45.2602C67.1719 44.4581 65.3877 43.4666 65.1895 43.3495C59.8169 40.1759 55.3653 36.5243 51.4456 32.2402C51.1269 31.8928 51.2324 31.4088 51.679 31.1609C52.1257 30.913 52.748 30.995 53.0667 31.3424C56.8659 35.4977 61.1819 39.0401 66.3939 42.118C66.6976 42.2975 70.7101 44.5244 71.478 45.0221C71.7942 45.2251 71.892 45.4164 71.9095 45.4632C72.0149 45.7091 71.9522 45.9024 71.8669 46.0429C71.769 46.201 71.5257 46.4313 71.0539 46.5484C70.5596 46.6694 69.4604 46.7241 69.1844 46.7553C65.0213 47.2354 60.3212 47.4891 56.0427 48.4104C51.9625 49.2886 48.2612 50.7758 45.8874 53.7561C45.5988 54.1192 44.984 54.2304 44.5173 54.006C44.0505 53.7815 43.9074 53.3034 44.196 52.9403C46.8509 49.6087 50.9513 47.9009 55.5109 46.9192C59.7642 46.0038 64.4216 45.7267 68.5822 45.2602Z"
+            fill="#3A4980" />
+        </svg>
+      </div>
+      <img class="w-100 h-100" [appLazyLoadImage]="imgSrc" ngSrc="{{ imgSrc }}"
+        onerror="this.onerror=null; this.src='assets/newImages/not-found/no-img.svg';" [alt]="title" ngOptimizedImage
+        width="300" height="200">
+    </div>
+  </div>
+  <button class="btn btn-solid-main mx-auto mt-3" (click)="openDetails()">
+    {{'general.moreDetails' | translate}}
+  </button>
+</div>

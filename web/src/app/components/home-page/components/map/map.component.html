@@ -1,0 +1,368 @@
+<div>
+  <p-sidebar [(visible)]="explore" #sidebar position="bottom" [dismissible]="false" [baseZIndex]="10000" id="map"
+    [ngClass]="isTogglePlaces||resultsDataList?.length==0?'togglePlace':'notTogglePlace'">
+    <!-- (clickOutside)="collapsedMenu == true ? collapsedMenu = false : collapsedMenu = false" -->
+    <div class="position-absolute p-3 top-0 map-header  w-100 ">
+      <div class="d-flex justify-content-between align-items-start w-100 gap-3">
+        <div>
+          <div class="search-container shadow-lg position-relative" [class.input-w]=" showInputSearch">
+            <i class="pi pi-search fs-5-1 position-absolute pointer" (click)="showInputSearch=!showInputSearch"></i>
+            <ng-container *ngIf="searchMapInput?.value &&showInputSearch==true">
+              <i class="pi pi-times text-danger position-absolute pointer" (click)="clearSearch($event)"></i>
+            </ng-container>
+
+            <input type="text" id="searchMapInput" #searchMapInput
+              class="form-control form-control-search-map rounded-start-0 border-start-0  bg-white-color"
+              [class.bg-light-input]="showInputSearch==false&&searchMapInput?.value"
+              [ngClass]="showInputSearch?'input-padding':''" [(ngModel)]="searchValue"
+              placeholder="{{'placeholder.search'|translate}}" pInputText (keyup.enter)="onSearchMap($event)">
+          </div>
+          <div>
+            <div class="custom-bottom-toggle-places-slider overflow-hidden mt-2"
+              [class.border-green]="!isTogglePlaces&&resultsDataList?.length>=0">
+              <a (click)="isTogglePlaces=!isTogglePlaces">
+                <img src="assets/images/icons/Sight-Seeing.svg" alt="Sight" appLazyImg> </a>
+            </div>
+            <div class="custom-bottom-toggle-places-slider overflow-hidden mt-2" [class.border-green]="true"
+              [class.satellite-w]="selectSatellite" (click)="selectSatellite=!selectSatellite">
+              <a (click)="showSatellite=!showSatellite">
+                <img src="assets/images/icons/map1.png" alt="Sight" *ngIf="!showSatellite" appLazyImg>
+                <img src="assets/images/icons/map3.png" alt="Sight" *ngIf="showSatellite" appLazyImg> </a>
+            </div>
+            <div class="mode overflow-hidden mt-2 d-flex justify-content-center align-items-center"
+              [ngClass]="isLight?'bg-dark-color':'bg-white-color'">
+              <a (click)="isLight=!isLight">
+                <i class="fas fa-moon fs-5 text-white-color" *ngIf="isLight"></i>
+                <i class="pi pi-sun text-warning fs-5" *ngIf="!isLight"></i>
+              </a>
+            </div>
+          </div>
+          <!-- <div class="btn-mode mt-2" [class.darkmode]="isLight">
+            <div class="btn__indicator" (click)="isLight=!isLight">
+              <div class="btn__icon-container pointer">
+                <i class="fas fa-moon fs-8 text-white-color" *ngIf="isLight"></i>
+                <i class="pi pi-sun text-warning fs-8" *ngIf="!isLight"></i>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="d-flex align-items-center justify-content-end gap-md-4 gap-2">
+          <div class="d-lg-flex d-none flex-wrap align-items-center gap-3 ">
+            <ng-container *ngFor="let item of tabs">
+              <span
+                class="rounded-pill tab-name tab-name-{{item?.value}} d-flex justify-content-center align-items-center gap-1 position-relative pointer text-capitalize"
+                [class.active-name-tab]="item.isActive" (click)="item.isActive=!item.isActive;selectView()">
+                <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+                  *ngIf="isLoading||isLoadingFilter">
+                  <div class="d-flex justify-content-center align-items-center gap-2 ">
+                    <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+                  </div>
+                </div>
+                <i *ngIf="item?.value=='place'" class="pi pi-building"></i>
+                <i *ngIf="item?.value=='store'" class="fas fa-store"></i>
+                <i *ngIf="item?.value=='event'" class="pi pi-ticket"></i>
+                <i *ngIf="item?.value=='zad'" class="fas fa-cutlery"></i>
+                {{item?.name |translate}}
+              </span>
+            </ng-container>
+          </div>
+          <div class="d-lg-none d-flex align-items-center gap-sm-3 gap-2">
+            <div class="dropdown">
+              <!-- [attr.aria-expanded]="!collapsedMenu" (click)="collapsedMenu = !collapsedMenu" -->
+              <a class="dropdown-toggle rounded-pill tab-name tab-name-more position-relative py-2" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                [class.active-more-tab]="tabsView.includes('stores') || this.tabsView.includes('events') || this.tabsView.includes('zads')">
+                <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+                  *ngIf="isLoading||isLoadingFilter">
+                  <div class="d-flex justify-content-center align-items-center gap-2 ">
+                    <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+                  </div>
+                </div>
+                <i class="pi pi-align-center"></i>
+                <span class="more"> {{'general.more'|translate}}</span>
+                <i class="pi pi pi-angle-down"></i>
+              </a>
+              <!-- [class.show]="collapsedMenu" -->
+              <ul class="dropdown-menu border-0 mt-3 shadow p-3">
+                <ng-container *ngFor="let item of tabs;let i=index">
+                  <span *ngIf="i!=0"
+                    class="rounded-pill tab-name tab-name-{{item?.value}} d-flex justify-content-start w-100 align-items-center gap-1 position-relative pointer text-truncate text-capitalize"
+                    [class.mb-2]="i<tabs?.length-1" [class.active-name-tab]="item.isActive"
+                    (click)="item.isActive=!item.isActive;selectView()">
+                    <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+                      *ngIf="isLoading||isLoadingFilter">
+                      <div class="d-flex justify-content-center align-items-center gap-2 ">
+                        <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center gap-1 w-100 text-capitalize">
+                      <div>
+                        <i *ngIf="item?.value=='place'" class="pi pi-building"></i>
+                        <i *ngIf="item?.value=='store'" class="fas fa-store"></i>
+                        <i *ngIf="item?.value=='event'" class="pi pi-ticket"></i>
+                        <i *ngIf="item?.value=='zad'" class="fas fa-cutlery"></i>
+                        {{item?.name |translate}}
+                      </div>
+                      <i *ngIf="item?.isActive" class="pointer" class="pi pi-times"></i>
+                    </div>
+                  </span>
+                </ng-container>
+              </ul>
+            </div>
+            <span
+              class="rounded-pill tab-name tab-name-{{tabs[0]?.value}} d-flex justify-content-center align-items-center gap-1 position-relative pointer text-capitalize"
+              [class.active-name-tab]="tabs[0].isActive" (click)="tabs[0].isActive=!tabs[0].isActive;selectView()">
+              <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+                *ngIf="isLoading||isLoadingFilter">
+                <div class="d-flex justify-content-center align-items-center gap-2 ">
+                  <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+                </div>
+              </div>
+              <i class="pi pi-building"></i>
+              {{tabs[0]?.name |translate}}
+            </span>
+          </div>
+          <a (click)="close()"
+            class="btn bg-danger text-white-color rounded-circle close-btn d-flex justify-content-center align-items-center">
+            <i class="pi pi-times"></i>
+          </a>
+        </div>
+      </div>
+      <div class="d-none tabs-sm d-flex flex-wrap justify-content-end align-items-center gap-3">
+        <div class="dropdown">
+          <a class="dropdown-toggle rounded-pill tab-name tab-name-more position-relative py-2" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false" [class.active-more-tab]="tabsView.includes('stores') || this.tabsView.includes('events') ||
+            this.tabsView.includes('zads')">
+            <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center text-capitalize"
+              *ngIf="isLoading||isLoadingFilter">
+              <div class="d-flex justify-content-center align-items-center gap-2 ">
+                <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+              </div>
+            </div>
+            <i class="pi pi-align-center"></i>
+            {{'general.more'|translate}}
+            <i class="pi pi pi-angle-down"></i>
+          </a>
+
+          <ul class="dropdown-menu border-0 mt-3 shadow p-3">
+            <ng-container *ngFor="let item of tabs;let i=index">
+              <span *ngIf="i!=0"
+                class="rounded-pill tab-name tab-name-{{item?.value}} d-flex justify-content-start w-100 align-items-center gap-1 position-relative pointer text-truncate"
+                [class.mb-2]="i<tabs?.length-1" [class.active-name-tab]="item.isActive"
+                (click)="item.isActive=!item.isActive;selectView()">
+                <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+                  *ngIf="isLoading||isLoadingFilter">
+                  <div class="d-flex justify-content-center align-items-center gap-2 ">
+                    <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center gap-1 w-100">
+                  <div>
+                    <i *ngIf="item?.value=='place'" class="pi pi-building"></i>
+                    <i *ngIf="item?.value=='store'" class="fas fa-store"></i>
+                    <i *ngIf="item?.value=='event'" class="pi pi-ticket"></i>
+                    <i *ngIf="item?.value=='zad'" class="fas fa-cutlery"></i>
+                    {{item?.name|translate}}
+                  </div>
+                  <i *ngIf="item?.isActive" class="pointer" class="pi pi-times"></i>
+                </div>
+              </span>
+            </ng-container>
+          </ul>
+        </div>
+
+        <span
+          class="rounded-pill tab-name tab-name-{{tabs[0]?.value}} d-flex justify-content-center align-items-center gap-1 position-relative pointer"
+          [class.active-name-tab]="tabs[0].isActive" (click)="tabs[0].isActive=!tabs[0].isActive;selectView()">
+          <div class="overlay-tab position-absolute rounded-pill d-flex justify-content-center"
+            *ngIf="isLoading||isLoadingFilter">
+            <div class="d-flex justify-content-center align-items-center gap-2 ">
+              <i class="pi pi-spin pi-spinner fs-8 text-white-color"></i>
+            </div>
+          </div>
+          <i class="pi pi-building"></i>
+          {{tabs[0]?.name |translate}}
+        </span>
+      </div>
+    </div>
+    <ng-container *ngIf="isLoading; else noLoading">
+      <p-skeleton width="100%" height="100%" styleClass="default-skeleton"></p-skeleton>
+      <!-- <app-skeleton [type]="'map'"></app-skeleton> -->
+    </ng-container>
+    <ng-template #noLoading>
+      <div class="map-container">
+        <google-map #map id="map" width="100%" height="100%" [center]="center" (zoomChanged)="getMorePlaces()"
+          [translate]="'ru'" [zoom]="zoom"
+          [options]="{styles:isLight? '':darkMode, mapTypeId:showSatellite? 'satellite':''}"
+          (mapClick)="onMapClick($event);">
+          <ng-container *ngFor="let markerPosition of markerPositions">
+            <ng-container
+              *ngIf="markerPosition?.lat &&markerPosition?.lat!=0&&markerPosition?.lng &&markerPosition?.lng!=0">
+              <map-marker #marker="mapMarker" [position]="markerPosition"
+                (mapClick)="openInfoWindow(marker,markerPosition)"
+                [icon]="markerPosition?.icon || 'assets/images/icons/location2.svg'">
+              </map-marker>
+              <map-info-window>
+                <div class="info-window-card w-100">
+                  <img [src]="selecedMarker?.thumbil_image" onerror="src='assets/images/not-found/no-img.svg'"
+                    class="info-window-img w-100" alt="Location Image" appLazyImg>
+                  <div class="info-window-content p-3 w-100">
+                    <h5 class="info-window-title mb-2 text-main-color">
+                      {{selecedMarker?.title || ''}}
+                    </h5>
+                    <p class="info-window-description mb-0">
+                      {{selecedMarker?.location_name ||''}}
+                    </p>
+                    <div class="mt-2 d-flex justify-content-between align-items-center">
+                      <p class="text-muted-color mb-0 d-flex gap-2">
+                        <i class="fas fa-star"></i>
+                        {{selecedMarker?.rate}} ({{selecedMarker?.review}} {{'general.review' | translate}})
+                      </p>
+                      <a class="arrow bg-main-color d-flex justify-content-center align-items-center"
+                        (click)="goToDetails(selecedMarker)">
+                        <i class="pi pi-angle-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </map-info-window>
+            </ng-container>
+          </ng-container>
+        </google-map>
+
+        <ng-container *ngIf="resultsDataList?.length > 0 && !isTogglePlaces">
+          <div class="custom-bottom-div overflow-hidden px-2">
+            <p-carousel [value]="resultsDataList" [numVisible]="4" [numScroll]="1" [circular]="true"
+              [responsiveOptions]="mapResultDataConfig" [style]="{ 'width': '100%' }" [showIndicators]="false"
+              containerClass="global-card-container">
+
+              <ng-template pTemplate="item" let-item>
+                <div class="p-2">
+                  <div class="global-card p-0 dir-rtl pointer overflow-hidden h-100 position-relative"
+                    (click)="isLoadingFilter ? '' : goToDetails(item)">
+                    <div class="overlay-card position-absolute d-flex justify-content-center" *ngIf="isLoadingFilter">
+                      <div class="d-flex justify-content-center align-items-center gap-2">
+                        <i class="pi pi-spin pi-spinner fs-2 text-white-color"></i>
+                      </div>
+                    </div>
+                    <div class="position-absolute region fs-8 d-flex gap-2">
+                      <span *ngIf="item?.rate" class="rate-btn fs-8 d-flex gap-1 align-item-center">
+                        <img src="assets/images/icons/star.svg" alt="star" width="15" height="15">
+                        {{'general.bestChoice'| translate }}
+                      </span>
+                      <span *ngIf="item?.region" class="region-btn fs-8">{{ item?.region?.name }}</span>
+                    </div>
+                    <div class="overflow-hidden img-container">
+                      <img [src]="item?.image" alt="img" appLazyImg class="w-100 slide-img"
+                        onerror="src='assets/images/not-found/no-img.svg'">
+                    </div>
+                    <div class="py-2 px-3 m-0 {{ item?.type }}">
+                      <h6 class="mb-1 fw-bold text-truncate">{{ item?.title }}</h6>
+                      <div class="d-flex justify-content-between align-items-center gap-1">
+                        <p class="mb-0 desc fs-8 text-truncate">
+                          <i class="fa-solid fa-location-dot pe-1"></i>
+                          {{ item?.address_name || 'titles.saudiArabia' | translate }}
+                        </p>
+                        <a (click)="goToDetails(item)">
+                          <i class="pi pi-angle-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+            </p-carousel>
+          </div>
+        </ng-container>
+
+      </div>
+    </ng-template>
+  </p-sidebar>
+
+  <p-sidebar [(visible)]="openSidebar" id="sidebar-content"
+    [position]="openSidebarFromTop?'bottom':  currentLanguage=='ar'?'left':'right'" [dismissible]="true"
+    [baseZIndex]="10000">
+    <a class="close-location position-absolute bg-white-color d-flex justify-content-center align-items-center"
+      (click)="closeSidebar()"><i class="fas fa-caret-right scaleX-rtl"></i></a>
+    <a class="close-sidebar position-absolute bg-white-color justify-content-center align-items-center d-none shadow-sm"
+      (click)="closeSidebar()"><i class="pi pi-times scaleX-rtl"></i></a>
+    <div class=" location-details">
+      <img [src]="selecedMarker?.thumbil_image" class="w-100 location-image" alt="image" appLazyImg>
+      <div class="p-3 pb-0">
+        <h5 class="info-window-title mb-2 text-main-color">
+          {{selecedMarker?.title || ''}}
+        </h5>
+        <p class="text-muted-color mb-1 d-flex align-items-center gap-2 text-capitalize type-{{selecedMarker?.type}}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category-2" width="20" height="20"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 4h6v6h-6z" />
+            <path d="M4 14h6v6h-6z" />
+            <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          </svg>
+          {{selecedMarker?.type_name}}
+        </p>
+        <p class="info-window-description mb-0 d-flex gap-2 align-items-baseline">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>
+            {{selecedMarker?.address || 'titles.saudiArabia'|translate}}
+          </span>
+        </p>
+        <div class="mt-2 d-flex justify-content-between align-items-center">
+          <p class="text-muted-color mb-0 d-flex gap-2">
+            <i class="fas fa-star"></i>
+            {{selecedMarker?.rate}} ({{selecedMarker?.review}} {{'general.review' | translate}})
+          </p>
+        </div>
+      </div>
+      <hr>
+      <div class="d-flex align-items-center gap-3 details-icons mt-3 px-3">
+        <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer" (click)="share()">
+          <i class="pi pi-share-alt"></i>
+          <a class="fw-500 fs-6-1 text-main-color">{{'general.share'|translate}}</a>
+        </div>
+        <ng-container *ngIf="isLoadingSaveLocation; else elseTemplate">
+          <div class="d-flex flex-column justify-content-center">
+            <div>
+              <p-skeleton size="2.5rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton>
+            </div>
+            <div>
+              <p-skeleton width="2.5rem" height="1rem" styleClass="default-skeleton mt-2"></p-skeleton>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+            (click)="saveLocation()">
+            <i class="pi pi-bookmark"></i>
+            <a class="fw-500 fs-6-1 text-main-color">{{'general.save'|translate}}</a>
+          </div>
+        </ng-template>
+        <!-- <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer" (click)="goToLocation()">
+          <i class="fas fa-location-dot"></i>
+          <a class="fw-500 fs-6-1 text-main-color">{{'general.location'|translate}}</a>
+        </a> -->
+        <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer" target="_blank"
+          [class.d-none]="!selecedMarker?.address_location" [href]="selecedMarker?.address_location">
+          <i class="pi pi-directions-alt"></i>
+          <a class="fw-500 fs-6-1 text-main-color">{{'general.directions'|translate}}</a>
+        </a>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-center py-3 gap-1">
+        <ng-container *ngFor="let item of [4,4,4,4,4]">
+          <i class="pi pi-circle-fill text-muted-color"></i>
+        </ng-container>
+
+      </div>
+      <a class="btn btn-solid-main bg-main-color d-flex justify-content-center align-items-center my-3 mx-sm-5 mx-4 type-bg type-bg-{{selecedMarker?.type}}"
+        (click)="goToDetails(selecedMarker)">
+        {{"general.moreDetails"|translate}}
+        <!-- <i class="pi pi-angle-right"></i> -->
+      </a>
+    </div>
+  </p-sidebar>
+</div>

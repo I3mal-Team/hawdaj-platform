@@ -1,0 +1,118 @@
+#newsLetter {
+    .container {
+        background: linear-gradient(72deg, #532772, #532772),
+            radial-gradient(147% 107.13% at 50% 50%, rgba(0, 0, 0, 0) 21.5%, #532772 99.99%, #ffffff 100%);
+        background-blend-mode: overlay;
+        background-repeat: no-repeat;
+        border-radius: 38.4px;
+        margin-bottom: 80px;
+        max-width: 80% important;
+    }
+
+    .global-card {
+        box-shadow: none;
+    }
+
+    .send {
+        border-radius: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+        left: 10px;
+        background: #7939a7;
+        padding: 15px 48px;
+
+        &:dir(ltr) {
+            right: 10px;
+            left: initial !important;
+        }
+    }
+
+    .overlay-search {
+        inset: 0;
+        background-color: #11111171;
+        z-index: 2;
+    }
+
+    .spinner-grow {
+        width: 0.7rem;
+        height: 0.7rem;
+        background-color: var(--bg-main-color);
+    }
+
+    h3 {
+        background: radial-gradient(30% 100% at 50% 50%, #ffffff 81.5%, rgba(255, 255, 255, 0.4) 100%);
+        -webkit-background-clip: text !important;
+        background-clip: text;
+        color: transparent !important;
+    }
+
+    p {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    input {
+        padding: 20px;
+        width: 100%;
+        height: 100%;
+        font-size: 24px;
+
+        &::placeholder {
+            font-size: 24px;
+        }
+    }
+}
+
+@media (max-width: 1240px) {
+    p {
+        font-size: 16px !important;
+        line-height: 25px !important;
+    }
+
+    input {
+        padding: 15px !important;
+        font-size: 16px !important;
+
+        &::placeholder {
+            font-size: 16px !important;
+        }
+    }
+
+    button {
+        padding: 10px 48px !important;
+    }
+}
+
+@media (max-width: 1240px) {
+    .container {
+        border-radius: 0 !important;
+        margin-bottom: 0 !important;
+        max-width: 100% !important;
+    }
+
+    p {
+        font-size: 16px !important;
+        line-height: 25px !important;
+    }
+
+    input {
+        padding: 15px !important;
+        font-size: 16px !important;
+
+        &::placeholder {
+            font-size: 16px !important;
+        }
+    }
+
+    button {
+        border-radius: 10px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        position: absolute !important;
+        left: 5px !important;
+        background: #7939a7 !important;
+        font-size: 14px !important;
+        padding: 10px 20px !important;
+    }
+}

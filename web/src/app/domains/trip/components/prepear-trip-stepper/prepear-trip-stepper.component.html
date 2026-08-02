@@ -1,0 +1,252 @@
+<div id="prepear-trip-stepper" class="h-100">
+  <div class="d-flex justify-content-end">
+    <a class="close-modal d-flex justify-content-center align-items-center" (click)="close()">
+      <i class="pi pi-times text-dark-color"></i>
+    </a>
+  </div>
+
+  <!-- Is Ready Trip -->
+  <ng-container *ngIf="isTripReady; else tripNotReady">
+    <div class="trip-ready h-100">
+      <div class="container m-0 h-100 ps-0">
+        <div class="d-flex justify-content-center align-items-center flex-column text-white-color h-100 gap-2">
+          <div class="pointer-none">
+            <img class="trip" src="assets/images-v2/create-trip/trip-ready/start.png" appLazyLoadImage width="450"
+              alt="start-trip" aria-label="start-trip">
+          </div>
+          <div>
+            <div>
+              <div class="position-relative p-3 trip-ready-content text-center">
+                <h5 class="text-white-color fs-2">
+                  {{'trip.tripIsReady'|translate}}
+                </h5>
+                <p class="text-white-color">
+                  {{'trip.happyTrip'|translate}}
+                </p>
+                <button class="btn confirm-btn text-white-color w-content mt-4" (click)="startNow()">
+                  {{'general.startNow'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Trip Steps -->
+  <ng-template #tripNotReady>
+    <div class="h-100">
+      <mat-horizontal-stepper labelPosition="bottom" #stepper [linear]="true" class="trip-stepper"
+        [class.stepper-ru]="currentLanguage=='ru'"
+        [class.hide-stepper-header]="isTripInProceedStage || stepper?.selectedIndex==0">
+        <ng-template matStepperIcon="number">
+          <div class="custom-step-icon">
+            <div class="circle"></div>
+          </div>
+        </ng-template>
+
+        <ng-template matStepperIcon="edit">
+          <img src="assets/images-v2/create-trip/icon/Tick.svg" appLazyLoadImage alt="Tick" aria-label="Tick">
+        </ng-template>
+
+        <mat-step [stepControl]="dateForm">
+          <ng-template matStepLabel>
+            <h5 class=" text-start fs-5-1 mb-0 text-truncate">
+              {{'trip.startEndDate'|translate}}
+            </h5>
+          </ng-template>
+
+          <div class="px-sm-4 px-2">
+            <div class="overlay position-absolute"></div>
+            <div class="position-relative step-content">
+              <section class="section-content">
+                <datepicker-range (nextStep)="nextStep(stepper,$event)"></datepicker-range>
+              </section>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step [stepControl]="startAreaForm">
+          <ng-template matStepLabel>
+            <h5 class=" text-start fs-5-1 mb-0 text-truncate">
+              {{'trip.startArea'|translate}}
+            </h5>
+          </ng-template>
+          <div class="map-bg p-md-4 p-2">
+            <div class="scrollable-content">
+              <section class="section-content mt-3">
+                <div class="map">
+                  <geo-saudi-region-map [defaultCityColor]="'#7c7c7c'" [selectedCityColor]="'#B56030'"
+                    (emitCityAreaData)="startRegionAreaData($event)"></geo-saudi-region-map>
+                </div>
+                <div class="content d-flex flex-column align-items-center justify-content-center  mt-3">
+                  <h4>{{'labels.selectStartTrip'|translate}}</h4>
+                  <div class="input-content position-relative w-100 text-center mt-2" [class.has-value]="!!startArea">
+                    <img src="assets/images-v2/create-trip/icon/location.svg" appLazyLoadImage alt="location"
+                      aria-label="location" class="position-absolute">
+                    <input type="text" [value]="!startArea ? ('placeholder.region' | translate) : (region1|translate)"
+                      aria-label="startArea" readonly>
+                  </div>
+                </div>
+                <div class=" d-flex justify-content-center gap-3 mt-md-4 mt-3">
+
+                  <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+                    (click)="back(stepper)">
+                    <img src="assets/images-v2/create-trip/icon/colored-arrow.svg"
+                      [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}" alt="Arrows"
+                      aria-label="Arrows" [ngClass]="{'text-truncate': currentLanguage === 'ru'}">
+                    {{'general.prev'|translate}}
+                  </button>
+                  <button
+                    class="btn confirm-btn d-flex justify-content-center align-items-center gap-2 flex-row-reverse"
+                    (click)="next(stepper)" [ngClass]="{'text-truncate': currentLanguage === 'ru'}">
+                    <img src="assets/images-v2/create-trip/icon/Arrows.svg" appLazyLoadImage class="scaleX-rtl"
+                      alt="Arrows" aria-label="Arrows">
+                    {{'general.next'|translate}}
+
+
+                  </button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step [stepControl]="endAreaForm">
+          <ng-template matStepLabel>
+            <h5 class=" text-start fs-5-1 mb-0 text-truncate">
+              {{'trip.endArea'|translate}}
+            </h5>
+          </ng-template>
+          <div class="map-bg p-md-4 p-2">
+            <div class="scrollable-content">
+              <section class="section-content mt-3">
+                <div class="map">
+                  <geo-saudi-region-map [defaultCityColor]="'#7c7c7c'" [selectedCityColor]="'#E97939'"
+                    (emitCityAreaData)="endRegionAreaData($event)"></geo-saudi-region-map>
+                </div>
+                <div class="content d-flex flex-column align-items-center justify-content-center mt-3">
+                  <h4>{{'labels.selectEndTrip'|translate}}</h4>
+                  <div class="input-content position-relative w-100 text-center mt-2" [class.has-value]="!!endArea">
+                    <img src="assets/images-v2/create-trip/icon/location.svg" appLazyLoadImage alt="location"
+                      aria-label="location" class="position-absolute">
+                    <input type="text" [value]="!endArea ? ('placeholder.region' | translate) : (region2|translate)"
+                      aria-label="end-area" readonly>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center gap-3 mt-md-4 mt-3">
+                  <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+                    (click)="back(stepper)" aria-label="cancel-btn">
+                    <img src="assets/images-v2/create-trip/icon/colored-arrow.svg" appLazyLoadImage alt="Arrows"
+                      [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}"
+                      aria-label="Arrows">
+                    {{'general.prev'|translate}}
+                  </button>
+                  <button
+                    class="btn confirm-btn d-flex justify-content-center align-items-center gap-2 flex-row-reverse"
+                    (click)="next(stepper)" aria-label="confirm-btn">
+                    <img src="assets/images-v2/create-trip/icon/Arrows.svg" appLazyLoadImage class="scaleX-rtl"
+                      alt="Arrows" aria-label="Arrows">
+                    {{'general.next'|translate}}
+
+                  </button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>
+            <h5 class=" text-start fs-5-1 mb-0 text-truncate">
+              {{'trip.tripDetails'|translate}}
+            </h5>
+          </ng-template>
+          <div class="trip-details">
+            <div class="scrollable-content">
+              <div class="trip-details-container">
+                <create-trip-details [totalDays]="totalNumOfDays" (getTripDetails)="getTripDetails($event,stepper)"
+                  (backToPreviousStep)="back(stepper)"></create-trip-details>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>
+            <h5 class=" text-start fs-5-1 mb-0 text-truncate">
+              {{'trip.tripCategories'|translate}}
+            </h5>
+          </ng-template>
+
+          <!-- Trip In Proceed Stage -->
+          <ng-container *ngIf="isTripInProceedStage; else noTripInProceedStage">
+            <div class="trip-in-proceed">
+              <div class="container h-100">
+                <div class="row justify-content-center h-100">
+                  <div
+                    class="col-xl-5 col-lg-6 col-md-10 d-flex justify-content-center flex-column justify-content-center align-items-center gap-2">
+                    <img class="trip" src="assets/images-v2/create-trip/trip-ready/start.png" alt="proceed"
+                      appLazyLoadImage aria-label="proceed" width="450">
+                    <ng-container *ngIf="!errorMessage; else tripErrorState">
+                      <h5 class="text-white-color text-center">
+                        {{'createTrip.tripInProceedStage'|translate}}
+                      </h5>
+                      <img src="assets/images-v2/create-trip/icon/loader.gif" appLazyLoadImage alt="loader"
+                        aria-label="loader">
+                      <p class="text-muted-color text-center">
+                        {{'createTrip.pleaseWait'|translate}}
+                      </p>
+                    </ng-container>
+                    <ng-template #tripErrorState>
+                      <h5 class="text-white-color text-center">
+                        {{ 'general.errorOccur' | translate }}
+                      </h5>
+                      <p class="text-muted-color text-center">
+                        {{ errorMessage || ('general.errorOccurred' | translate) }}
+                      </p>
+                      <button class="btn confirm-btn d-flex justify-content-center align-items-center gap-2"
+                        type="button" (click)="restartPreparation(stepper)">
+                        {{ 'general.reload' | translate }}
+                      </button>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Trip Category -->
+          <ng-template #noTripInProceedStage>
+            <div class="trip-categories p-sm-4 p-3">
+              <div class="scrollable-content mt-3">
+                <section class="section-content">
+                  <trip-categories (selectedCategory)="selectedCategory($event)"></trip-categories>
+                </section>
+                <div class="d-flex justify-content-center gap-3 mt-md-4 mt-3">
+                  <button class="btn cancel-btn d-flex justify-content-center align-items-center gap-2"
+                    [ngClass]="{'text-truncate': currentLanguage === 'ru'}" (click)="back(stepper)">
+                    <img src="assets/images-v2/create-trip/icon/colored-arrow.svg"
+                      [ngStyle]="{'transform': currentLanguage !== 'ar' ? 'scaleX(-1)' : 'scaleX(1)'}" appLazyLoadImage
+                      alt="Arrows">
+                    {{'general.prev'|translate}}
+                  </button>
+
+                  <button
+                    class="btn confirm-btn d-flex justify-content-center align-items-center gap-2 flex-row-reverse"
+                    (click)="confirm()" [ngClass]="{'text-truncate': currentLanguage === 'ru'}">
+                    <img src="assets/images-v2/create-trip/icon/Arrows.svg" appLazyLoadImage class="scaleX-rtl"
+                      alt="Arrows" aria-label="Arrows">
+                    {{'general.next'|translate}}
+
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </ng-template>
+</div>

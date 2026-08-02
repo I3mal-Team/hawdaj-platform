@@ -1,0 +1,72 @@
+<div id="destination">
+  <div class="d-xl-block d-none">
+    <ng-container *ngIf="isLoadingDestination; else noLoading">
+      <app-skeleton [type]="'topDestination'"></app-skeleton>
+    </ng-container>
+    <ng-template #noLoading>
+      <ng-container *ngIf="destinationSlider?.length>0; else noPlaces">
+      </ng-container>
+      <ng-template #noPlaces>
+        <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+
+          <div class="image-content">
+            <img NgOptimizedImage [src]="'assets/newImages/not-found/no-data.svg'" width="200" height="200"
+              [alt]="'no-data'">
+          </div>
+          <p>{{'general.noDataFound'|translate}}</p>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+
+  <div class="d-xl-none d-block">
+    <ng-container *ngIf="isLoadingDestination; else noLoading2">
+      <app-skeleton [type]="'topDestination-md'"></app-skeleton>
+    </ng-container>
+    <ng-template #noLoading2>
+      <p-galleria [value]="destinationSlider" [responsiveOptions]="destinationSliderOptions"
+        [containerStyle]="{'max-width': '100%'}" thumbnailsPosition="bottom" [numVisible]="4" [circular]="true"
+        [showItemNavigators]="false">
+        <ng-template pTemplate="item" let-slide>
+          <div class="position-relative carsoul-item w-100 m-3 mx-lg-5 mx-3 overflow-hidden">
+            <a [href]="slide?.address" target="_blank" class="position-absolute address-icon p-2 z-idx d-block"
+              *ngIf="slide?.address">
+              <!-- <div class="map-icon-image">
+
+                <div class="image-content">
+                  <img NgOptimizedImage [src]="'assets/newImages/icons/location.webp'" width="40" height="40"
+                    alt="location">
+                </div>
+              </div> -->
+            </a>
+
+            <div class="image-content">
+              <img class="w-100 slide-img shadow-sm" NgOptimizedImage [src]="slide?.image" width="502" height="250"
+                [alt]="slide?.title">
+            </div>
+            <h5 class="position-absolute carsoul-title text-white-color p-2 w-100 text-center d-none">
+              {{slide?.title}}
+            </h5>
+            <div class="overlay position-absolute" (click)="showDetails(slide)"></div>
+            <div class="position-absolute text-white-color slider-content px-2" (click)="showDetails(slide)">
+              <h6 class="fs-5 fw-bold"> {{slide?.title}}</h6>
+              <p class="mb-0 desc">
+                <i class="fa-solid fa-location-dot"></i>
+                {{slide?.address_name|| 'titles.saudiArabia'|translate}}
+              </p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-slide>
+          <div class="grid grid-nogutter justify-content-center">
+
+            <div class="image-content">
+              <img class="thumbnail w-100 rounded" style="display: block;" NgOptimizedImage [src]="slide?.image" width="
+                1152" height="250" [alt]="'Image'+slide?.id">
+            </div>
+          </div>
+        </ng-template>
+      </p-galleria>
+    </ng-template>
+  </div>
+</div>

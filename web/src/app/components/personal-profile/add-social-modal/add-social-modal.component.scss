@@ -1,0 +1,50 @@
+:host::ng-deep {
+  .add-social {
+    .p-dropdown {
+      background: var(--bg-input-color);
+      border-color: var(--bg-input-color);
+      width: 100%;
+    }
+  }
+}
+
+.btn-solid-main {
+  background-color: var(--light-new-color) !important;
+  border-color: var(--light-new-color) !important;
+}
+
+.bg-linkedin {
+  background: #0a66c2;
+}
+
+.bg-youtube {
+  background: #fe0000;
+}
+
+.bg-twitter {
+  background: #000000;
+}
+
+.personal-website {
+  background-color: #6c757d;
+}
+
+.bg-color-face {
+  background: #0e8df2;
+}
+
+.bg-color-instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+.bg-color-tiktok {
+  background-color: #111;
+}
+
+.icon-social-settings {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

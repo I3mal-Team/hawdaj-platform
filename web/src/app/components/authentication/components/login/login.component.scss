@@ -1,0 +1,52 @@
+.bg-form {
+  background-color: #84548e1f;
+  width: inherit;
+  border-radius: var(--border-modal-radius) 0 0 var(--border-modal-radius);
+}
+
+.form-content {
+  max-height: 80vh;
+  // max-height: calc(100vh - 11rem) !important;
+  padding: 0.5rem;
+  overflow: auto;
+}
+@media (max-width: 567px) {
+  .form-content {
+    max-height: 58vh;
+  }
+}
+.orLogIn {
+  &::after {
+    position: absolute;
+    content: "";
+    border: 0.5px solid #6d6d6d61;
+    width: 30%;
+    right: 0;
+    top: 50%;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    border: 0.5px solid #6d6d6d61;
+    width: 30%;
+    left: 0;
+    top: 50%;
+  }
+}
+.form-logo {
+  width: 5rem !important;
+}
+.title {
+  z-index: 3;
+}
+.icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+}
+.close {
+  width: 30px;
+  height: 30px;
+  background-color: #d9d9d9;
+  color: #6d6d6d;
+}

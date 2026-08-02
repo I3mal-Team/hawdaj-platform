@@ -1,0 +1,108 @@
+.auth-form {
+  background-image: url(../../../../../assets/images-v2/popups/verification-otp/bg.png);
+  background-position: 100px;
+
+  &__banner {
+    &__bg-form {
+      width: inherit;
+      border-radius: var(--border-modal-radius) 0 0 var(--border-modal-radius);
+
+      &__banner-img-container {
+        position: relative;
+
+        &__content {
+          position: absolute;
+          padding: 10px;
+          top: 15%;
+          left: 4%;
+          background-color: #ffffff26;
+          width: 92%;
+          text-align: center;
+          border-radius: 16px;
+
+          h3 {
+            color: #53177e;
+            font-weight: 600;
+            font-size: 35px;
+          }
+
+          p {
+            color: #575757;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1290px) {
+      display: none !important;
+    }
+  }
+
+  &__form {
+    &__close {
+      width: 30px;
+      height: 30px;
+      color: #6d6d6d;
+      border-radius: 10px;
+      border: 1px solid #d9d9d9;
+      position: relative;
+      top: -4px;
+    }
+
+    &__form-container {
+      position: relative;
+      top: 25%;
+
+      &__form-content {
+        max-height: 80vh;
+        padding: 0.75rem;
+        overflow: auto;
+        @media (max-width: 1240px) {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+        @media (max-width: 567px) {
+          max-height: 58vh;
+        }
+      }
+
+      &__form-logo {
+        width: 5rem !important;
+      }
+
+      h4 {
+        color: #371a4c;
+        font-size: 30px;
+      }
+
+      p {
+        font-size: 16px;
+        color: #667085 !important;
+      }
+    }
+
+    @media (max-width: 1290px) {
+      width: 100% !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  .otp-code {
+    width: 70%;
+
+    & > span {
+      display: flex;
+      justify-content: center;
+    }
+
+    input {
+      width: 3.6rem !important;
+      height: 3.5rem !important;
+      background-color: #84548e1f !important;
+      font-size: 1.6rem !important;
+      font-weight: bold !important;
+    }
+  }
+}

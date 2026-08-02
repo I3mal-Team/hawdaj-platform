@@ -1,0 +1,85 @@
+<app-header></app-header>
+<div id="events-page">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.events'"
+        [largeImage]="'assets/images-v2/pages/events-list/banner/events-banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/events-list/banner/events-banner-tablet.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div appLazyLoadSection class="d-flex align-items-center justify-content-center">
+        <div id="events-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" (formValues)="search($event)"
+                [searchTitle]="'home.searchEvent'"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (formValues)="search($event)" [searchTitle]="'home.searchEvent'"
+        [searchSubtitle]="' '"></app-search-list-sm>
+    <!-- End search sm-->
+
+    <ng-container>
+        <!--Start Events List -->
+        <div appLazyLoadSection class="container m-auto section-space">
+
+            <ng-container *ngIf="isLoadingEvents; else noLoadingFeatureEvents">
+                <app-skeleton [type]="'places-list'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingFeatureEvents>
+                <ng-container
+                    *ngIf="( eventsKeyword !==null &&  eventsKeyword !==''&&  eventsKeyword !==undefined|| addressType !==null &&  addressType !==''&&  addressType !==undefined || dateRange !==null &&  dateRange !==''&&  dateRange !==undefined);else allEvents">
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'titles.searchResult'|translate}}
+                        </h4>
+                    </div>
+                </ng-container>
+                <ng-template #allEvents>
+                    <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                        <h4 class="title">
+                            {{'events.allEvents'|translate}}
+                        </h4>
+                    </div>
+                </ng-template>
+                <div class="row g-2 mx-0" style="margin-left: -0.5rem; margin-right: -0.5rem;">
+                    <div *ngFor="let event of eventsList" class="col-lg-3 col-sm-6 col-12"
+                        style="padding-left: 0.3rem; padding-right: 0.3rem;">
+                        <app-list-card [type]="'events'" [item]="event"></app-list-card>
+                    </div>
+                    <ng-container *ngIf="eventsList.length===0">
+                        <app-no-result [isWhite]="false"></app-no-result>
+                    </ng-container>
+                    <app-shared-pagination [itemsPageNumber]="page" [itemsListTotalCount]="eventsTotalCount"
+                        [itemsPerPageCount]="perPage" (pageChange)="changePage($event)"></app-shared-pagination>
+                </div>
+            </ng-template>
+        </div>
+        <!--End Events List -->
+    </ng-container>
+
+    <!--Start Common Events List -->
+    <div appLazyLoadSection
+        class="container m-auto mb-4 mb-md-0 d-flex align-items-center justify-content-center flex-column section-space">
+        <app-list-slider [items]="this.eventsList.slice(0, 5)" [link]="'/events/event-details/'"
+            (viewAllClicked)="handleViewAll()" [type]="'events'"></app-list-slider>
+    </div>
+    <!--End Common Stores List -->
+
+    <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        <style *ngIf="homeShowFooter">
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

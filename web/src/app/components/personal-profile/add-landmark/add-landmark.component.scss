@@ -1,0 +1,61 @@
+.add {
+  width: 140px;
+  height: 140px;
+  color: #8b008b;
+}
+.landmark-container {
+  min-height: 100%;
+}
+.landmark-content {
+  width: 130px;
+  height: 130px !important;
+  border-radius: 10px;
+  z-index: 1;
+}
+.landmark-overlay {
+  inset: 0;
+  height: 100px;
+  border-radius: 10px;
+  z-index: -1;
+}
+.landmark-overlay-place {
+  background-color: #ff6534;
+}
+.place {
+  color: #ff6534;
+}
+
+.landmark-overlay-store {
+  background-color: #2aa5ad;
+}
+.store {
+  color: #2aa5ad;
+}
+
+.landmark-overlay-story {
+  background-color: #ec00ec;
+}
+.story {
+  color: #ec00ec;
+}
+
+.landmark-overlay-zad {
+  background-color: #3eb9ff;
+}
+.zad {
+  color: #3eb9ff;
+}
+
+.landmark-overlay-event {
+  background-color: #ff67ff;
+}
+.event {
+  color: #ff67ff;
+}
+
+.landmark-overlay-trip {
+  background-color: #14d661;
+}
+.trip {
+  color: #14d661;
+}

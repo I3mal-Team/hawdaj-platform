@@ -1,0 +1,80 @@
+<section class="d-flex flex-column align-items-center justify-content-center">
+        <div class="cards position-relative d-lg-flex d-none">
+                <div class="img-container position-absolute" [routerLink]="['/stores/'+items[0]?.slug]">
+                        <img ngOptimizedImage [src]="items[0]?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                [alt]="items[0]?.title">
+                </div>
+                <div class="img-container position-absolute" [routerLink]="['/stores/'+items[1]?.slug]">
+                        <img ngOptimizedImage [src]="items[1]?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                [alt]="items[1]?.title">
+                </div>
+                <div class="img-container position-absolute" [routerLink]="['/stores/'+items[2]?.slug]">
+                        <img ngOptimizedImage [src]="items[2]?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                [alt]="items[2]?.title">
+                </div>
+                <div class="img-container position-absolute" [routerLink]="['/stores/'+items[3]?.slug]">
+                        <img ngOptimizedImage [src]="items[3]?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                [alt]="items[3]?.title">
+                </div>
+                <div class="img-container position-absolute" [routerLink]="['/stores/'+items[4]?.slug]">
+                        <img ngOptimizedImage [src]="items[4]?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                [alt]="items[4]?.title">
+                </div>
+        </div>
+        <div class="d-lg-none ">
+                <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-lg-none" [showNavigators]="false"
+                        [autoplayInterval]="4000" [circular]="true" [showIndicators]="true"
+                        [responsiveOptions]="responsiveOptions">
+                        <ng-template pTemplate="item" let-item class="row gap-2">
+                                <!-- <div class="item" [routerLink]="['/stores/'+item?.slug]">
+                                        <img [src]="item?.image"
+                                                onerror="this.src='assets/images/not-found/no-img.svg'" ngOptimizedImage
+                                                alt="{{item?.value}}">
+                                        <p class="m-auto text-center position-absolute">{{item?.value}}</p>
+                                </div> -->
+                                <div class="global-card bg-white p-0 position-relative pointer">
+                                        <a class="position-absolute map-icon"
+                                                [href]="item.is_online?item.website_link:item.address" target="_blank"
+                                                *ngIf="item.is_online?item.website_link:item.address">
+                                                <img class="rounded shadow-lg bg-type" [class.px-2]="item?.is_online"
+                                                        width="40" height="40"
+                                                        [src]="item?.is_online?'assets/images/stores/cart-basket.svg':'assets/images/stores/icons/location.png'"
+                                                        alt="map">
+                                        </a>
+                                        <div class="item" [routerLink]="['/stores/'+item?.slug]">
+                                                <img [src]="item?.image"
+                                                        onerror="this.src='assets/images/not-found/no-img.svg'"
+                                                        ngOptimizedImage alt="{{item?.value}}">
+                                                <p class="m-auto text-center position-absolute">{{item?.value}}</p>
+                                        </div>
+                                        <div class="content">
+                                                <h5 style="color: white">{{item?.title}}</h5>
+                                                <div class="d-flex flex-row justify-content-between"
+                                                        style="width: 90%;">
+                                                        <p-rating [(ngModel)]="item.rate" [id]="'rating3'"
+                                                                [disabled]="true" [cancel]="false"></p-rating>
+                                                        <ng-container *ngIf="item?.is_online else isOnline">
+                                                                <p class="fw-500 text-capitalize online-text mb-0">
+                                                                        {{'stores.online'|translate}}
+                                                                </p>
+                                                        </ng-container>
+                                                        <ng-template #isOnline>
+                                                                <p class="fw-500 text-capitalize offline-text mb-0">
+                                                                        {{'stores.offline'|translate}}
+                                                                </p>
+                                                        </ng-template>
+
+                                                </div>
+                                        </div>
+                                </div>
+                        </ng-template>
+                </p-carousel>
+        </div>
+        <button type="button" [attr.aria-label]="'general.seeAll' | translate"
+                [attr.title]="'general.seeAll' | translate" id="unique-button-id" role="button"
+                [routerLink]="['/stores/']" class="new-button mt-4">
+                <span class="hover-underline-animation">
+                        {{'general.seeAll'|translate}}
+                </span>
+        </button>
+</section>

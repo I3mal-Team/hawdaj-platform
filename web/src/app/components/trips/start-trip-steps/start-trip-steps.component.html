@@ -1,0 +1,209 @@
+<div id="trip-steps">
+  <ng-container *ngIf="currentStep==1">
+    <div class="row justify-content-center step-bg g-0">
+      <div class="col-lg-5 col-md-6 order-md-1 order-2 trip-bg">
+        <div class="light-card  h-100 d-flex justify-content-center flex-column w-90 w-md-100">
+          <h4 class="fw-bold">{{tripSteps[0]?.title}}</h4>
+          <p class="desc mt-1">{{tripSteps[0]?.titleDescription}}
+          </p>
+          <p class="fs-5-1 tripLabel">{{'labels.startDateAndEndDate'|translate}}</p>
+          <div class="">
+            <div class="d-flex align-items-center gap-3">
+              <div class="calendar d-flex justify-content-center align-items-center rounded-circle">
+                <i class="pi pi-calendar"></i>
+              </div>
+              <div class="w-100">
+                <label for="startDate" class="fs-8 text-capitalize label-form text-muted-color">
+                  {{'labels.startDate'|translate}}</label>
+                <p class="mb-0 d-flex justify-content-between align-items-center fw-500">
+                  <span>2023/4/12</span>
+                  <i class="pi pi-angle-down"></i>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="d-flex align-items-center gap-3">
+              <div class="calendar d-flex justify-content-center align-items-center rounded-circle">
+                <i class="pi pi-calendar"></i>
+              </div>
+              <div class="w-100">
+                <label for="endDate"
+                  class="fs-8 text-capitalize label-form text-muted-color">{{'labels.endDate'|translate}}</label>
+                <p class="mb-0 d-flex justify-content-between align-items-center fw-500">
+                  <span>2023/5/22</span>
+                  <i class="pi pi-angle-down"></i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 order-md-2 order-1">
+        <div class="h-100 d-flex flex-column align-items-center">
+          <img [src]="tripSteps[0]?.img" alt="img1" class="w-75 w-sm-100">
+          <p class="desc mb-0">{{tripSteps[0]?.description}}</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="currentStep==2">
+    <div class="row justify-content-center g-0">
+      <div class="col-lg-6 col-md-6 ">
+        <div class="h-100 d-flex flex-column align-items-center">
+          <img [src]="tripSteps[1]?.img" alt="img1" class="w-75 w-sm-100">
+          <p class="desc mb-0">{{tripSteps[1]?.description}}</p>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-6 order-md-2 order-1 trip-bg">
+        <div class="dark-card  h-100 d-flex justify-content-center flex-column  w-90 w-md-100">
+          <h4 class="fw-bold">{{tripSteps[1]?.title}}</h4>
+          <p class="fs-5-1 mt-1">{{tripSteps[1]?.titleDescription}}
+          </p>
+          <p class="fs-5-1 mt-2">{{'labels.selectStartTrip'|translate}}</p>
+          <div class="mt-3">
+            <div
+              class="mb-0 d-flex justify-content-between align-items-center text-white fw-500 form-control bg-third-color border-0 py-2">
+              <span>{{tripSteps[1]?.startArea}}</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="currentStep==3">
+    <div class="row justify-content-center g-0">
+      <div class=" col-lg-5 col-md-6 order-md-1 order-2 trip-bg top-bg">
+        <div class="light-card  h-100 d-flex justify-content-center flex-column  w-90 w-md-100">
+          <h4 class="fw-bold">{{tripSteps[2]?.title}}</h4>
+          <p class="desc mt-1">{{tripSteps[2]?.titleDescription}}
+          </p>
+          <p class="fs-5-1 mt-2">{{'labels.selectEndTrip'|translate}}</p>
+          <div class="mt-2">
+            <div
+              class="mb-0 d-flex justify-content-between text-white align-items-center fw-500 form-control bg-third-color border-0 py-2">
+              <span>{{tripSteps[2]?.endArea}}</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 order-md-2 order-1">
+        <div class="h-100 d-flex flex-column align-items-center">
+          <img [src]="tripSteps[2]?.img" alt="img1" class="w-75 w-sm-100">
+          <p class="desc mb-0">
+            {{tripSteps[2]?.description}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="currentStep==4">
+    <div class="row justify-content-center g-0">
+      <div class="col-lg-6 col-md-6">
+        <div class="h-100 d-flex flex-column align-items-center">
+          <img [src]="tripSteps[3]?.img" alt="img1" class="w-75 w-sm-100">
+          <p class="desc mb-0">{{tripSteps[3]?.description}}</p>
+        </div>
+      </div>
+      <div class=" col-lg-5 col-md-6 trip-bg">
+        <div class="dark-card  h-100 d-flex justify-content-center flex-column  w-90 w-md-100">
+          <h4 class="fw-bold">{{tripSteps[3]?.title}}</h4>
+          <p class="fs-5-1 mt-1">{{tripSteps[3]?.titleDescription}}
+          </p>
+          <div class="mt-1">
+            <label for="number" class="mb-2">
+              {{'labels.numberOfPlaces'|translate}}
+            </label>
+            <div
+              class="mb-0 d-flex justify-content-between align-items-center fw-500 form-control bg-third-color border-0 py-2 text-white">
+              <span>4</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <label for="number" class="mb-2 text-truncate">
+              {{'labels.numberOfPlacesPerDay'|translate}}
+            </label>
+            <div
+              class="mb-0 d-flex justify-content-between align-items-center fw-500 form-control bg-third-color border-0 py-2 text-white">
+              <span>6</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="form-check d-flex justify-content-between p-0">
+              <label class="form-check-label" for="highPrice">
+                {{'labels.highPrice'|translate}}
+              </label>
+              <input class="form-check-input" type="radio" name="price" id="highPrice" value="option1" checked hidden
+                [disabled]="true">
+              <label class="form-check-label" for="highPrice">
+                <i class="pi pi-check-circle fs-5-1"></i>
+              </label>
+            </div>
+            <div class="form-check d-flex justify-content-between mt-2 p-0">
+              <label class="form-check-label" for="freePrice">
+                {{'labels.freePrice'|translate}}
+              </label>
+              <input class="form-check-input" type="radio" name="price" id="freePrice" value="option2" hidden
+                [disabled]="true">
+              <label class="form-check-label" for="freePrice">
+                <i class="pi pi-check-circle fs-5-1"></i>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="currentStep==5">
+    <div class="row justify-content-center g-0">
+      <div class=" col-lg-5 col-md-6 order-md-1 order-2 trip-bg top-bg">
+        <div class="light-card h-100 d-flex justify-content-center flex-column">
+          <h4 class="fw-bold">{{tripSteps[4]?.title}}</h4>
+          <p class="desc mt-1">
+            {{tripSteps[4]?.titleDescription}}
+          </p>
+          <div class="mt-2">
+            <div
+              class="mb-0 d-flex justify-content-between align-items-center fw-500 form-control bg-third-color border-0 py-2 text-white">
+              <span>{{tripSteps[4]?.category}}</span>
+              <i class="pi pi-angle-down"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 order-md-2 order-1">
+        <div class="h-100 d-flex flex-column align-items-center">
+          <img [src]="tripSteps[4]?.img" alt="img1" class="w-75 w-sm-100">
+          <p class="desc mb-0">
+            {{tripSteps[4]?.description}}</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="d-flex justify-content-end gap-3 mt-3">
+    <button *ngIf="currentStep>1" class="btn btn-outline-main d-flex justify-content-center align-items-center gap-2"
+      (click)="back()">
+      <i class="pi pi-arrow-left scaleX-rtl"></i>
+      {{'general.back'|translate}}
+    </button>
+    <button *ngIf="currentStep<=4" class="btn btn-solid-main d-flex justify-content-center align-items-center gap-2"
+      (click)="next()">
+      {{'general.next'|translate}}
+      <i class="pi pi-arrow-right scaleX-rtl"></i>
+    </button>
+    <button *ngIf="currentStep==5"
+      class="btn btn-solid-main start-now-btn d-flex justify-content-center align-items-center gap-2"
+      (click)="startTrip()">
+      {{'trip.startYourTrip'|translate}}
+      <i class="fas fa-plane scaleX-rtl"></i>
+    </button>
+  </div>
+</div>

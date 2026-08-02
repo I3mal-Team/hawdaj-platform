@@ -1,0 +1,9 @@
+<div class="error-state">
+  <img [src]="config.imageUrl" alt="error" loading="lazy" appLazyLoadImage>
+  <p class="error-state__message">
+    {{ config.message }}
+  </p>
+  <button type="button" class="error-state__button" (click)="retry()">
+    <span>{{ retryLabel | translate }}</span>
+  </button>
+</div>

@@ -1,0 +1,132 @@
+.auth-form {
+    background-image: url(../../../../../assets/images-v2/popups/login/bg.png);
+    background-position: 100px;
+
+    &__banner {
+        &__bg-form {
+            width: inherit;
+            border-radius: var(--border-modal-radius) 0 0 var(--border-modal-radius);
+
+            &__login-img-container {
+                position: relative;
+
+                &__content {
+                    position: absolute;
+                    padding: 10px;
+                    top: 15%;
+                    left: 4%;
+                    background-color: #ffffff26;
+                    width: 92%;
+                    text-align: center;
+                    border-radius: 16px;
+
+                    h3 {
+                        color: #53177e;
+                        font-weight: 600;
+                        font-size: 35px;
+                    }
+
+                    p {
+                        color: #575757;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 1290px) {
+            display: none !important;
+        }
+    }
+
+    &__form {
+        &__close {
+            width: 30px;
+            height: 30px;
+            color: #6d6d6d;
+            border-radius: 10px;
+            border: 1px solid #d9d9d9;
+            position: relative;
+            top: -4px;
+        }
+
+        @media (max-width: 1290px) {
+            width: 100% !important;
+        }
+    }
+
+    &__form-content {
+        max-height: 80vh;
+        padding-top: 25px;
+        overflow: auto;
+
+        label {
+            color: #101828;
+        }
+
+        .p-inputgroup {
+            height: 48px;
+
+            &.border-red {
+                height: 50px;
+            }
+
+            input {
+                height: 48px !important;
+
+                &::placeholder {
+                    color: #3a4980 !important;
+                }
+            }
+        }
+
+        &__form-logo {
+            width: 5rem !important;
+        }
+
+        @media (max-width: 1320px) {
+            margin-right: 0px !important;
+            margin-left: 0px !important;
+        }
+        @media (min-width: 555px) and (max-width: 1320px) {
+            padding: 20px;
+        }
+    }
+
+    &__or-log-in {
+        &::after {
+            position: absolute;
+            content: "";
+            border: 0.5px solid #6d6d6d61;
+            width: 30%;
+            right: 0;
+            top: 50%;
+        }
+
+        &::before {
+            position: absolute;
+            content: "";
+            border: 0.5px solid #6d6d6d61;
+            width: 30%;
+            left: 0;
+            top: 50%;
+        }
+    }
+
+    &__login {
+        color: #371a4c;
+        font-size: 25px;
+    }
+}
+
+:host::ng-deep .p-password-input {
+    height: 48px !important;
+    padding-right: 0 !important;
+    background-color: transparent !important;
+    &::placeholder {
+        color: #3a4980 !important;
+    }
+}
+.register {
+    color: black;
+}

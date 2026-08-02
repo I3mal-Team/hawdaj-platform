@@ -1,0 +1,98 @@
+<div id="trip-categories">
+  <div class="container p-0 px-1">
+    <div class="row mx-0 align-items-center">
+      <div>
+        <!-- <div class="p-inputgroup">
+          <span class="p-inputgroup-addon border-0 bg-transparent">
+            <i class="pi pi-search fs-5-1"></i></span>
+          <input type="text" class="form-control border-0 bg-transparent h-100 px-1" #search
+            (keyup)="filterCategory(search?.value)" autocomplete="cc-name"
+            placeholder="{{'placeholder.search'|translate}}" pInputText>
+          <span class="p-inputgroup-addon border-0 bg-transparent px-1">
+            <ng-container *ngIf="search.value">
+              <i (click)="clearSearchValue(search)" class="pi pi-times text-danger cursor-pointer"></i>
+            </ng-container>
+          </span>
+        </div> -->
+        <div class="row align-items-center justify-content-betweeen">
+          <p class="fs-6 mb-0 text-start sub-title text-white-color mt-3 col-lg-8">
+            {{'createTrip.selectCategory'|translate}}
+          </p>
+          <div class="btns d-flex gap-1 col-lg-4 col-12 align-items-center justify-content-end mt-3">
+            <ng-container *ngIf="categoriesIds?.length>0">
+              <button class="cancel-btn" (click)="resetCategory()">
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#7939a7">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <title>ionicons-v5-l</title>
+                    <line x1="368" y1="368" x2="144" y2="144"
+                      style="fill:none;stroke:#7939a7;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px">
+                    </line>
+                    <line x1="368" y1="144" x2="144" y2="368"
+                      style="fill:none;stroke:#7939a7;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px">
+                    </line>
+                  </g>
+                </svg> </button>
+            </ng-container>
+            <button class="btn btn-solid-main" (click)="selectAll()">
+              {{'general.selectAll'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-sm-4 mt-3 mb-3">
+      <div class="container p-0">
+        <div class="w-100">
+          <div class="row g-2">
+            <ng-container *ngIf="isLoadingCategories; else noLoadingCategories">
+              <div class="row">
+                <ng-container *ngFor="let item of [3,3,3,3,4,7]">
+                  <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                    <p-skeleton width="100%" height="9rem" styleClass="default-skeleton"></p-skeleton>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-template #noLoadingCategories>
+              <ng-container *ngIf="searchCategories?.length>0; else noCategoryFound">
+                <ng-container *ngFor=" let item of searchCategories">
+                  <div class="col-md-3 col-sm-6 col-6 mb-2">
+                    <category-card [item]="item" (cardEmit)="selectCategory()"></category-card>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-template #noCategoryFound>
+                <ng-container *ngIf="isSearchCategories; else noSearchData">
+                  <div class="py-4 d-flex justify-content-center align-items-center gap-3 flex-column">
+                    <div class="row justify-content-center">
+                      <div class="col-lg-6 col-md-8 col-7">
+                        <img src="assets/images/not-found/no-search.svg" class="w-100" alt="no-data">
+                      </div>
+                    </div>
+                    <p>
+                      {{'general.noSearchResult'|translate}}
+                    </p>
+                  </div>
+                </ng-container>
+                <ng-template #noSearchData>
+                  <div class="d-flex justify-content-center align-items-center flex-column gap-2">
+                    <div class="row justify-content-center">
+                      <div class="col-lg-6 col-md-8 col-11">
+                        <img src="assets/images/not-found/no-data.svg" alt="no-data" class="w-100">
+                      </div>
+                    </div>
+                    <p>
+                      {{'general.noCategories'|translate}}
+                    </p>
+                  </div>
+                </ng-template>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

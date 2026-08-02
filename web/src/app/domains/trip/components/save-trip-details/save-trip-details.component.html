@@ -1,0 +1,212 @@
+<ng-container *ngIf="!notShowPage">
+    <div id="save-trip-details" class="save-trip">
+
+        <!-- Banner (Always Visible) -->
+        <app-banner-2 [title]="'saveTrip.enjoyTrip' | translate"
+            [largeImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'">
+        </app-banner-2>
+
+        <!-- Loading State (First Time or Regenerating) -->
+        <ng-container *ngIf="isLoading() || isRegenerating(); else tripContent">
+            <app-skeleton [type]="'trip-full-page'"></app-skeleton>
+        </ng-container>
+
+        <!-- Trip Content -->
+        <ng-template #tripContent>
+            <div class="save-trip__content">
+                <div class="save-trip__cards save-trip__cards--desktop">
+                    <section class="save-trip__card">
+                        <div class="save-trip__info-grid"
+                            [ngClass]="{'save-trip__info-grid--ltr': currentLanguage() !== 'ar'}">
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                    aria-label="location">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'trip.startArea' | translate}}</h4>
+                                    <p class="save-trip__info-value">{{preparedTripData()?.start_region?.name}}</p>
+                                </div>
+                            </div>
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                    aria-label="location">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'trip.endArea' | translate}}</h4>
+                                    <p class="save-trip__info-value">{{preparedTripData()?.end_region?.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="tripDaysData()?.length > 0">
+                            <div class="save-trip__actions">
+                                <button class="save-trip__button save-trip__button--primary"
+                                    (click)="openSaveTripModal()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/save.svg" alt="save" loading="lazy"
+                                        aria-label="save">
+                                    {{'general.save' | translate}}
+                                </button>
+                                <button class="save-trip__button save-trip__button--secondary"
+                                    [class.save-trip__button--force-flex]="currentLanguage() !== 'ru'"
+                                    (click)="regenerateTrip()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/new.svg" alt="new"
+                                        aria-label="new">
+                                    {{'general.regenerate' | translate}}
+                                </button>
+                            </div>
+                        </ng-container>
+                    </section>
+
+                    <section class="save-trip__card">
+                        <div class="save-trip__info-grid"
+                            [ngClass]="{'save-trip__info-grid--ltr': currentLanguage() !== 'ar'}">
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                    aria-label="calendar">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'saveTrip.startDate' | translate}}</h4>
+                                    <p class="save-trip__info-value">
+                                        {{preparedTripData()?.start_date | date: 'd MMM y':'':currentLanguage()}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                    aria-label="calendar">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'saveTrip.endDate' | translate}}</h4>
+                                    <p class="save-trip__info-value">
+                                        {{preparedTripData()?.end_date | date: 'd MMM y':'':currentLanguage()}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="tripDaysData()?.length > 0">
+                            <div class="save-trip__actions">
+                                <button class="save-trip__button save-trip__button--primary" (click)="addToCalendar()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/calender1.svg" alt="calendar"
+                                        aria-label="calendar">
+                                    {{'general.addToCalender' | translate}}
+                                </button>
+                                <button class="save-trip__button save-trip__button--secondary" (click)="emailTripTo()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/email.svg" alt="email"
+                                        aria-label="email">
+                                    {{'general.email' | translate}}
+                                </button>
+                            </div>
+                        </ng-container>
+                    </section>
+                </div>
+
+                <div class="save-trip__cards save-trip__cards--mobile">
+                    <section class="save-trip__card save-trip__card--stacked">
+                        <div class="save-trip__info-grid save-trip__info-grid--stacked"
+                            [ngClass]="{'save-trip__info-grid--ltr': currentLanguage() !== 'ar'}">
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                    aria-label="location">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'trip.startArea' | translate}}</h4>
+                                    <p class="save-trip__info-value">{{preparedTripData()?.start_region?.name}}</p>
+                                </div>
+                            </div>
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                    aria-label="location">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'trip.endArea' | translate}}</h4>
+                                    <p class="save-trip__info-value">{{preparedTripData()?.end_region?.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="save-trip__info-grid save-trip__info-grid--stacked"
+                            [ngClass]="{'save-trip__info-grid--ltr': currentLanguage() !== 'ar'}">
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                    aria-label="calendar">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'saveTrip.startDate' | translate}}</h4>
+                                    <p class="save-trip__info-value">
+                                        {{preparedTripData()?.start_date | date: 'd MMM y':'':currentLanguage()}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="save-trip__info-item">
+                                <img class="save-trip__info-icon"
+                                    src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                    aria-label="calendar">
+                                <div class="save-trip__info-content">
+                                    <h4 class="save-trip__info-title">{{'saveTrip.endDate' | translate}}</h4>
+                                    <p class="save-trip__info-value">
+                                        {{preparedTripData()?.end_date | date: 'd MMM y':'':currentLanguage()}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="save-trip__card save-trip__card--actions">
+                        <ng-container *ngIf="tripDaysData()?.length > 0">
+                            <div class="save-trip__actions save-trip__actions--mobile">
+                                <button class="save-trip__button save-trip__button--primary"
+                                    (click)="openSaveTripModal()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/save.svg" alt="save" loading="lazy"
+                                        aria-label="save">
+                                    {{'general.save' | translate}}
+                                </button>
+                                <button class="save-trip__button save-trip__button--secondary"
+                                    [class.save-trip__button--force-flex]="currentLanguage() !== 'ru'"
+                                    (click)="regenerateTrip()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/new.svg" alt="new"
+                                        aria-label="new">
+                                    {{'general.regenerate' | translate}}
+                                </button>
+                            </div>
+                            <div class="save-trip__actions save-trip__actions--mobile">
+                                <button class="save-trip__button save-trip__button--primary" (click)="addToCalendar()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/calender1.svg" alt="calendar"
+                                        aria-label="calendar">
+                                    {{'general.addToCalender' | translate}}
+                                </button>
+                                <button class="save-trip__button save-trip__button--secondary" (click)="emailTripTo()">
+                                    <img src="assets/images-v2/pages/save-trip/icons/email.svg" alt="email"
+                                        aria-label="email">
+                                    {{'general.email' | translate}}
+                                </button>
+                            </div>
+                        </ng-container>
+                    </section>
+                </div>
+            </div>
+
+            <div class="save-trip__plan">
+                <app-trip-header [headerConfig]="tripHeaderConfig()" (downloadPdf)="downloadPDF()"
+                    (mapClick)="showTripOnMap()" (saveTrip)="openSaveTripModal()">
+                </app-trip-header>
+
+                <div class="save-trip__days">
+                    <ng-container *ngFor="let day of tripDaysData(); let i = index; trackBy: trackByDayIndex">
+                        <app-trip-day-detail [data]="day"
+                            [dayConfig]="{ showPlaces: true, showRegionInfo: true, isRtl: currentLanguage() === 'ar' }"
+                            (placeClick)="onPlaceClick($event)"
+                            (deletePlace)="onDeletePlace($event.place, $event.dayNumber, $event.periodType)">
+                        </app-trip-day-detail>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-template>
+        <!-- End Trip Content -->
+
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!notShowPage">
+    <app-new-footer></app-new-footer>
+</ng-container>
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>

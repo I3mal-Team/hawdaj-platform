@@ -1,0 +1,28 @@
+ @angular/google-maps:
+   install=> npm i @angular/google-maps
+   uninstall=> npm uninstall @angular/google-maps
+   site link => https://www.npmjs.com/package/@angular/google-maps
+
+  ---------------------------------------------------------------------------
+ @amcharts:
+   install=> npm install @amcharts/amcharts5 @amcharts/amcharts4-geodata
+   uninstall=> npm uninstall @amcharts/amcharts5 @amcharts/amcharts4-geodata
+   site link => https://www.amcharts.com/demos/rotate-globe-to-a-selected-country
+ ---------------------------------------------------------------------------
+@angular/fire firebase@9.16.0:
+install =>npm install @angular/fire firebase@9.16.0 --legacy-peer-deps --force
+ uninstall=> npm uninstall @angular/fire firebase@9.16.0 --legacy-peer-deps --force
+
+--------------------------------------------------------------
+Aos: (Compatible Version 2.3.4)
+   install=> npm install aos@2.3.4
+            npm i --save-dev @types/aos
+
+   uninstall=> npm uninstall npm install aos
+   site link =>https://michalsnik.github.io/aos/
+angular.json =>{
+ style=> "./node_modules/aos/dist/aos.css",
+  js=> "node_modules/aos/dist/aos.js"
+}
+
+--------------------------

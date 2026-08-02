@@ -1,0 +1,71 @@
+<div class="location-picker">
+  <div class="location-picker__header">
+    <h3 class="location-picker__title">
+      {{ 'properties.locationPicker.title' | translate }}
+    </h3>
+    <p class="location-picker__subtitle">
+      {{ 'properties.locationPicker.subtitle' | translate }}
+    </p>
+  </div>
+
+  <div class="location-picker__search">
+    <input
+      type="text"
+      class="location-picker__input"
+      [(ngModel)]="searchValue"
+      [placeholder]="'properties.locationPicker.searchPlaceholder' | translate"
+      (keyup.enter)="searchLocation()"
+    />
+    <button
+      type="button"
+      class="location-picker__search-btn"
+      (click)="searchLocation()"
+    >
+      {{ 'properties.locationPicker.search' | translate }}
+    </button>
+  </div>
+
+  <div class="location-picker__map">
+    <google-map
+      #map
+      [center]="center"
+      [zoom]="zoom"
+      width="100%"
+      height="100%"
+      (mapClick)="onMapClick($event)"
+    >
+      <map-marker
+        *ngIf="markerPosition"
+        [position]="markerPosition"
+      ></map-marker>
+    </google-map>
+  </div>
+
+  <div class="location-picker__footer">
+    <button
+      type="button"
+      class="location-picker__btn location-picker__btn--cancel"
+      (click)="cancel()"
+    >
+      {{ 'properties.locationPicker.cancel' | translate }}
+    </button>
+    <button
+      type="button"
+      class="location-picker__btn location-picker__btn--confirm"
+      (click)="confirmSelection()"
+      [disabled]="!markerPosition"
+    >
+      {{ 'properties.locationPicker.confirm' | translate }}
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+// Start statistic Section
+#highlights-statistics {
+  .statistic-item {
+    .statistic-item-title {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--new-color);
+    }
+    // .gradient-text {
+    //   background: linear-gradient(
+    //     90deg,
+    //     #8b008b 0%,
+    //     #7367ff 49.6%,
+    //     #ff69ff 100%
+    //   );
+    //   background-clip: text; /* Standard property */
+    //   -webkit-background-clip: text; /* Vendor-prefixed property for WebKit browsers */
+    //   color: transparent;
+    // }
+    &.statistic-bg {
+      background-image: url(../../../../../assets/images/home/statistic/statistic-bg.svg);
+      background-repeat: no-repeat;
+      background-position: right;
+    }
+  }
+
+  .item-value {
+    color: #696969;
+    font-size: 18px;
+  }
+}
+// End Offices statistic Section
+.ar-content {
+  .statistic-bg {
+    background-position: left !important;
+  }
+}
+@media (max-width: 991px) {
+  .statistic-item-title {
+    font-size: 35px !important;
+  }
+}
+@media (max-width: 778px) {
+  .statistic-bg {
+    background-image: none !important;
+  }
+  .statistic-item-title {
+    font-size: 30px !important;
+  }
+}

@@ -1,0 +1,110 @@
+<div class="mt-4" #locationTab>
+    <p-tabView appLazyLoadSection>
+        <ng-container>
+            <p-tabPanel *ngFor="let tab of tabsConfig">
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center justify-content-center flex-column gap-1">
+                        <img [src]="tab?.icon" [alt]="tab?.title"> <span class="fw-500">{{tab?.title|translate}}</span>
+                    </div>
+                </ng-template>
+                <ng-container *ngIf="tab?.type==='description'">
+                    <div class="row mt-3">
+                        <div>
+                            <div>
+                                <app-tab-description [item]="tourGuideDetails"></app-tab-description>
+                                <ng-container *ngIf="isLoadingReviews;else reviews">
+                                    <hr class="mt-4">
+                                    <h5 class="title">
+                                        {{'general.reviews'|translate}}
+                                    </h5>
+                                    <app-skeleton [type]="'reviews'"></app-skeleton>
+                                </ng-container>
+                                <ng-template #reviews>
+                                    <ng-container *ngIf="tourGuideDetails?.ratings?.length>0">
+                                        <hr class="mt-4">
+                                        <div class="mt-4 d-flex flex-column gap-3">
+                                            <h5 class="title">
+                                                {{'general.reviews'|translate}}
+                                            </h5>
+                                            <ng-container *ngFor="let review of getDisplayedRatings()">
+                                                <app-review [review]="review"></app-review>
+                                            </ng-container>
+                                            <ng-container *ngIf="tourGuideDetails?.ratings?.length > ratingsPerPage">
+                                                <div class="btns d-flex justify-content-between">
+                                                    <button (click)="prevRatingPage()"
+                                                        [class.disabled]="currentRatingPage === 0">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl"
+                                                            width="25" height="24" viewBox="0 0 25 24" fill="none">
+                                                            <path d="M14.0508 16L10.0508 12L14.0508 8" stroke="#3A4980"
+                                                                stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <button (click)="nextRatingPage()"
+                                                        [class.disabled]="currentRatingPage >= tourGuideDetails.ratings.length / ratingsPerPage - 1">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl"
+                                                            width="25" height="24" viewBox="0 0 25 24" fill="none">
+                                                            <path d="M10.0508 16L14.0508 12L10.0508 8" stroke="#3A4980"
+                                                                stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+
+                                                    </button>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="tab?.type==='language'">
+                    <div class="row justify-content-around">
+                        <div class="col-sm-6 mb-5" *ngFor="let language of tourGuideDetails?.languages">
+                            <app-language-card [item]="language"></app-language-card>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="tab?.type === 'location' && tourGuideDetails?.regions?.length > 0">
+                    <div class="mt-md-5 mt-3 d-flex flex-column gap-3">
+                        <ng-container *ngFor="let region of getDisplayedRegions()">
+                            <app-region-card [region]="region"></app-region-card>
+                        </ng-container>
+
+                        <ng-container *ngIf="tourGuideDetails?.regions?.length > RegionsPerPage">
+                            <div class="btns d-flex justify-content-between">
+                                <button (click)="prevRegionsPage()" [class.disabled]="currentRegionsPage === 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl" width="25" height="24"
+                                        viewBox="0 0 25 24" fill="none">
+                                        <path d="M14.0508 16L10.0508 12L14.0508 8" stroke="#3A4980" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+
+                                <button (click)="nextRegionsPage()"
+                                    [class.disabled]="currentRegionsPage >= tourGuideDetails?.regions?.length / RegionsPerPage - 1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="scaleX-rtl" width="25" height="24"
+                                        viewBox="0 0 25 24" fill="none">
+                                        <path d="M10.0508 16L14.0508 12L10.0508 8" stroke="#3A4980" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="tab?.type==='ai'">
+                    <app-chat [title]="tourGuideDetails?.name"
+                        [profileImage]="'assets/images-v2/pages/place-details/arab-man.jpg'"
+                        [chatImg]="'assets/images-v2/pages/tour-guide-details/tour-guide.png'"
+                        [commingSoonImage]="'assets/images-v2/pages/tour-guide-details/tour-guide.png'"></app-chat>
+                </ng-container>
+            </p-tabPanel>
+        </ng-container>
+
+    </p-tabView>
+</div>

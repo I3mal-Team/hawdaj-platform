@@ -1,0 +1,19 @@
+#apps {
+    padding-bottom: 3rem;
+    .section-space {
+        margin-top: 5rem !important;
+        @media (max-width: 1024px) {
+            margin-top: 2rem !important;
+        }
+    }
+
+    #Applications-list {
+        h2 {
+            font-size: 3.5rem;
+            color: #101828;
+            @media (max-width: 1024px) {
+                font-size: 3rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+.spinner {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../assets/images/events/hero-bg-event-details.svg);
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+  // background-color: var(--bg-main-color);
+  z-index: 8888889999999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.zoom-image {
+  animation: zoom 3000ms infinite;
+  -webkit-animation: zoom 3000ms infinite;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1.3);
+  }
+
+  25% {
+    transform: scale(1.6);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+
+  75% {
+    transform: scale(1.6);
+  }
+
+  100% {
+    transform: scale(1.3);
+  }
+}

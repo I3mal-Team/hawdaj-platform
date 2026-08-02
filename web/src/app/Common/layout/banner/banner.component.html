@@ -1,0 +1,18 @@
+<div appLazyLoadSection class="banner d-flex align-items-center justify-content-center p-relative">
+    <picture class="h-100 w-100">
+        <source [attr.srcset]="smallImage" media="(max-width: 430px)">
+        <img [appLazyLoadImage]="largeImage" alt="Banner Image" class="h-100 w-100" ngOptimizedImage width="100%"
+            height="100%">
+    </picture>
+    <div class="banner__content position-absolute start-50 translate-middle-x d-flex flex-column gap-2 mt-5">
+        <h1 class="banner__title text-white fw-bold text-center mb-2">{{ title | translate
+            }}
+        </h1>
+        <ng-container *ngIf="description1">
+            <p class="text-center text-white mb-0">{{ description1 | translate}}</p>
+        </ng-container>
+        <ng-container *ngIf="description2">
+            <p class="text-center text-white">{{ description2 | translate }}</p>
+        </ng-container>
+    </div>
+</div>

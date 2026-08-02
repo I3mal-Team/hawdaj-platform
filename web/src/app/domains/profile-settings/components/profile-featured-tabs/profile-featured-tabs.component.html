@@ -1,0 +1,17 @@
+<div class="profile-featured-tabs" role="tablist" aria-label="Profile Featured Tabs">
+  <div class="tabs" [class.tabs--loading]="isLoadingItems()">
+    <ng-container *ngFor="let tab of tabs; trackBy: trackByTabId">
+      <div class="tabs__tab" [class.tabs__tab--active]="selectedTab()?.id === tab.id"
+        [class.tabs__tab--disabled]="isLoadingItems()" (click)="selectTab(tab)" role="tab"
+        [attr.aria-selected]="selectedTab()?.id === tab.id" tabindex="0" (keydown.enter)="selectTab(tab)"
+        (keydown.space)="selectTab(tab); $event.preventDefault()">
+        <p>{{ getTabTitle(tab) }}</p>
+
+        <!-- Loader -->
+        <ng-container *ngIf="isLoadingItems() && selectedTab()?.id === tab.id">
+          <span class="tabs__tab__loader" aria-hidden="true"></span>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>

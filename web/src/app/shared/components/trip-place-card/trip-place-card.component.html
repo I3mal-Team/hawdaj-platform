@@ -1,0 +1,32 @@
+<div class="trip-card">
+  <div class="card-img-container" (click)="onCardClick()">
+    <img class="card-img" [src]="place?.image" onerror="this.src='assets/images/not-found/no-img.svg'"
+      alt="{{getPlaceName()}}">
+    <div class="d-flex card-status align-items-center justify-content-between w-100">
+      <div class="d-flex align-items-center gap-2 right-side">
+        <div class="d-flex align-items-center gap-1 ju rate">
+          <img src="assets/images-v2/pages/save-trip/icons/card/star.svg" alt="star">
+          <p>{{place?.rate || 0}} ({{place?.review || 0}})</p>
+        </div>
+        <a class="location" target="_blank" href="https://www.google.com/maps/search/?api=1&query={{place?.address}}"
+          (click)="$event.stopPropagation()">
+          <img src="assets/images-v2/pages/save-trip/icons/card/card-location-2.svg" alt="location">
+        </a>
+      </div>
+      <ng-container *ngIf="showDelete">
+        <div class="left-side">
+          <div class="delete" (click)="onDeleteClick($event)">
+            <img src="assets/images-v2/pages/save-trip/icons/card/trash.svg" alt="trash">
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="card-content">
+      <h4>{{getPlaceName()}}</h4>
+      <p>
+        <img src="assets/images-v2/pages/save-trip/icons/card/card-location.svg" alt="location">
+        {{getPlaceAddress() | translate}}
+      </p>
+    </div>
+  </div>
+</div>

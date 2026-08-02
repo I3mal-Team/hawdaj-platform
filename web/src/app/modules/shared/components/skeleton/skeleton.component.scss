@@ -1,0 +1,71 @@
+:host::ng-deep {
+  .p-skeleton {
+    background-color: gray !important;
+  }
+  .default-skeleton.p-skeleton {
+    background-color: rgba(128, 128, 128, 0.39) !important;
+  }
+  .default-skeleton-2.p-skeleton {
+    background-color: rgba(128, 128, 128, 0.39) !important;
+  }
+  .list-card-skeleton {
+    border-radius: 16px !important;
+  }
+}
+
+:host::ng-deep {
+  .list-categories {
+    .p-skeleton {
+      max-width: 1250px;
+      overflow: hidden;
+    }
+  }
+}
+img {
+  background-color: red;
+}
+.large-card {
+  height: 600px;
+  /* ارتفاع البطاقة الكبيرة */
+}
+
+.small-card {
+  height: 430px;
+  /* ارتفاع البطاقة الصغيرة */
+}
+.custom-card {
+  border-radius: 24px;
+  overflow: hidden;
+  outline: 0 !important;
+}
+.skeleton-loading {
+  background-color: rgb(128, 128, 128); /* لون خلفية أغمق للتحميل */
+  background-image: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.6) 25%,
+    rgba(192, 192, 192, 0.6) 50%,
+    rgba(128, 128, 128, 0.6) 75%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-animation 1.5s infinite linear;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Ensure images take up the full width and height */
+.skeleton-loading img {
+  opacity: 0; /* إخفاء الصورة الحقيقية أثناء التحميل */
+}
+
+.skeleton-loaded img {
+  opacity: 1; /* إظهار الصورة الحقيقية بعد التحميل */
+  background: none; /* إزالة تأثير الـ skeleton */
+}

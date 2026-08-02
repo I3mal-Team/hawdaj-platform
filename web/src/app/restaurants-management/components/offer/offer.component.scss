@@ -1,0 +1,54 @@
+.offer {
+    padding: 3.125rem !important;
+    @media (max-width: 1024px) {
+        padding: 2rem;
+    }
+    .offer {
+        width: 320px;
+    }
+    .arrow {
+        p {
+            font-size: 2rem;
+            color: #3a4980;
+        }
+        @media (max-width: 1024px) {
+            display: none !important;
+        }
+    }
+    h2 {
+        font-size: 3rem;
+        color: #3a4980;
+        @media (max-width: 1024px) {
+            font-size: 2rem;
+        }
+        @media (max-width: 767px) {
+            font-size: 1.5rem;
+        }
+    }
+    h3 {
+        font-size: 6.5rem;
+        color: #3a4980;
+        @media (max-width: 1024px) {
+            font-size: 4rem;
+        }
+        @media (max-width: 767px) {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+    }
+    .img-container {
+        width: 400px;
+        height: 250px;
+        background-color: transparent;
+        border-radius: 10px;
+        background-color: rgba(128, 128, 128, 0.304);
+
+        img {
+            border-radius: 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    }
+    button {
+        padding: 13px 58px;
+    }
+}

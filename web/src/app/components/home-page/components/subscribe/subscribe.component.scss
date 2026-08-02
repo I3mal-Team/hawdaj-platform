@@ -1,0 +1,29 @@
+#newsLetter {
+  .container {
+    background-image: url(../../../../../assets/newImages/homepage/subscribe-bg.svg);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+  }
+
+  .global-card {
+    background: #f8b0f830;
+    box-shadow: none;
+  }
+
+  .send {
+    background-color: #8b008b;
+    border-radius: 10px;
+  }
+
+  .overlay-search {
+    inset: 0;
+    background-color: #11111171;
+    z-index: 2;
+  }
+
+  .spinner-grow {
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--bg-main-color);
+  }
+}

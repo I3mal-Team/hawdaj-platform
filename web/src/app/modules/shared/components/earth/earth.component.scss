@@ -1,0 +1,60 @@
+.close-btn {
+  z-index: 66;
+  // right: 0;
+  left: 10px;
+  top: 10px;
+  width: 30px;
+}
+.earth {
+  .title {
+    background-image: url(../../../../../assets/newImages/homepage/vectorTitle.svg);
+    background-repeat: no-repeat;
+  }
+}
+:host::ng-deep {
+  #chartdiv {
+    width: 100%;
+    height: 300px;
+    min-height: 300px !important;
+    direction: ltr;
+    pointer-events: none !important;
+    z-index: 3;
+  }
+
+
+}
+// :host::ng-deep {
+canvas {
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
+// }
+.earth {
+  .overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000af;
+    // background-color: #000000bf;
+    z-index: 0;
+  }
+  .visitors {
+    background-image: url(../../../../../assets/newImages/places/dummy/place-bg1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // background-color: #8b008b12;
+    // border-radius: 15px;
+  }
+  .bg-visitors-content {
+    background-color: #8b008b90;
+    // border-radius: 15px 0 0 15px;
+  }
+  .service-count {
+    border-bottom: 8px solid var(--bg-white-color);
+    border-radius: 6px;
+    padding-bottom: 10px;
+  }
+}

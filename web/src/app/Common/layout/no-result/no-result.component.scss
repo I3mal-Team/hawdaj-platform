@@ -1,0 +1,16 @@
+.section-space {
+    margin-top: 7rem !important;
+    @media (max-width: 1024px) {
+        margin-top: 2rem !important;
+    }
+}
+.white {
+    margin-top: 2rem !important;
+
+    img {
+        filter: invert(1) grayscale(1);
+    }
+    p {
+        color: white;
+    }
+}

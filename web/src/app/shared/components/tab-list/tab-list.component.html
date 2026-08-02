@@ -1,0 +1,34 @@
+<div class="tab-list" [ngClass]="config().customClass">
+  <div class="tab-list__container">
+    <button
+      *ngFor="let tab of tabs(); trackBy: trackByTabId"
+      type="button"
+      class="tab-list__item"
+      [class.tab-list__item--active]="tab.active"
+      [class.tab-list__item--disabled]="tab.disabled"
+      [disabled]="tab.disabled"
+      (click)="onTabClick(tab)"
+      [attr.aria-label]="tab.label"
+      [attr.aria-selected]="tab.active">
+      
+      <!-- Icon -->
+      <app-svg-icon
+        *ngIf="config().showIcons && tab.icon"
+        [name]="tab.icon"
+        class="tab-list__icon">
+      </app-svg-icon>
+
+      <!-- Label -->
+      <span class="tab-list__label">{{ tab.label | translate }}</span>
+
+      <!-- Badge -->
+      <span *ngIf="tab.badge && tab.badge > 0" class="tab-list__badge">
+        {{ tab.badge }}
+      </span>
+    </button>
+  </div>
+</div>
+
+
+
+

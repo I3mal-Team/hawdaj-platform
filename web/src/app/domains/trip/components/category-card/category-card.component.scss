@@ -1,0 +1,83 @@
+.category-card {
+  // box-shadow: 0px 4px 50px 0px #00000026;
+  background: #ffffff3d;
+  border-radius: 15px;
+  padding: 1rem;
+  &.selected-card {
+    border: 2px solid #642b6f;
+    background-color: white;
+  }
+  .icon-container {
+    width: 100px;
+    height: 100px;
+    background-color: #0063802e;
+    .category-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+    }
+  }
+}
+@media (max-width: 576px) {
+  .category-card {
+    padding: 0.6rem;
+    .icon-container {
+      width: 70px;
+      height: 70px;
+      .category-icon {
+        width: 33px;
+        height: 33px;
+      }
+    }
+    .name {
+      font-size: 1.05rem !important;
+    }
+  }
+}
+.category-card {
+  background-color: transparent;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.0784313725) 0px 1px 8px 0px;
+  height: 90px !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &.selected-card {
+    border: 2px solid #7939a7;
+    background-color: rgba(121, 57, 167, 0.05);
+    box-shadow: 0px 2px 12px rgba(121, 57, 167, 0.2);
+  }
+
+  .form-check-input {
+    background-color: transparent;
+    border: 2px solid #7939a7;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    &:checked[type="checkbox"] {
+      background-color: #7939a7 !important;
+      border-color: #7939a7 !important;
+      --bs-form-check-bg-image: url(../../../../../assets/images-v2/create-trip/icon/Check.png);
+      background-size: 9px;
+      background-position-y: 6px;
+      @media (max-width: 1240px) {
+        background-position-y: center;
+        background-position: center;
+      }
+    }
+  }
+  h5 {
+    color: #000000 !important;
+    font-size: 16px !important;
+    transition: all 0.3s ease;
+    @media (max-width: 1024px) {
+      font-size: 13px !important;
+    }
+  }
+
+  &.selected-card h5 {
+    color: #7939a7 !important;
+    font-weight: 600 !important;
+  }
+}

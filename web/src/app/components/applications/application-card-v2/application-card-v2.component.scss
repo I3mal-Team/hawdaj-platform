@@ -1,0 +1,33 @@
+.app-card {
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0px 0px 16px 0px #00000014;
+
+    &__title {
+        font-size: 2rem;
+        color: #371a4c;
+        @media (max-width: 1024px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__description {
+        font-size: 16px !important;
+        color: #3a4980;
+        line-height: 1.1rem;
+        @media (max-width: 1024px) {
+            font-size: 0.8rem;
+        }
+    }
+
+    &__logo {
+        width: 65px;
+        height: 65px;
+        border-radius: 16px;
+    }
+    &__store-image {
+        @media (max-width: 1024px) {
+            width: 110px;
+        }
+    }
+}

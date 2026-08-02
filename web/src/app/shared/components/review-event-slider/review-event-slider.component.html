@@ -1,0 +1,23 @@
+<div id="review-event">
+  <div class="row align-items-center justify-content-center">
+    <ng-container *ngIf="dataArray?.length>0; else noReviews">
+      <div class="col-12">
+        <app-reviews-carousel [items]="dataArray"></app-reviews-carousel>
+      </div>
+    </ng-container>
+    <ng-template #noReviews>
+      <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+        <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+        <p>{{'general.noData'|translate}}</p>
+      </div>
+    </ng-template>
+
+    <div class="d-flex justify-content-center mt-4">
+      <a class="leaveReview text-capitalize d-flex align-items-center justify-content-center gap-2 fs-5-1"
+        (click)="leaveReview()">
+        {{'general.leaveReview'|translate}}
+        <i class="fas fa-hand-point-right scaleX-rtl"></i>
+      </a>
+    </div>
+  </div>
+</div>

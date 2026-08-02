@@ -1,0 +1,107 @@
+<div class="media-view-container mb-4 d-flex align-items-center" #mediaView appDisableScroll>
+  <ng-container *ngIf="pageContent?.galleries?.length>0">
+
+    <div *ngFor="let media of pageContent?.galleries;let i = index" class="media-view-container__media-container h-100"
+      #mediaViewContainer>
+      <ng-container [ngSwitch]="media?.mime_type">
+
+        <ng-container *ngSwitchCase="FileType.IMAGE">
+          <img class="w-100 h-100" [src]="sanitizeUrl(media?.file)" [alt]=" media[i]?.title"
+            onerror="this.src='assets/images-v2/pages/no-result/no-result.png';" />
+        </ng-container>
+        <ng-container *ngSwitchCase="FileType.EXCEL">
+          <app-excel-view [excel]="sanitizeUrl(media?.file)"></app-excel-view>
+        </ng-container>
+        <ng-container *ngSwitchCase="FileType.WORD">
+          <app-word-view [word]="sanitizeUrl(media?.file)"></app-word-view>
+        </ng-container>
+        <ng-container *ngSwitchCase="FileType.PDF">
+          <app-pdf-view [pdf]="sanitizeUrl(media?.file)"></app-pdf-view>
+        </ng-container>
+        <ng-container *ngSwitchCase="FileType.VIDEO">
+          <app-video-view [video]="media" [config]="videoConfig"></app-video-view>
+        </ng-container>
+      </ng-container>
+    </div>
+
+  </ng-container>
+  <ng-container *ngIf="pageContent && !pageContent?.galleries?.length">
+    <img class="w-100 h-100" [src]="pageContent?.image" [alt]=" pageContent?.title " loading="lazy"
+      onerror="this.onerror=null; this.src='assets/images-v2/pages/no-result/no-result.png';" ngOptimizedImage
+      width="300" height="200" priority="low" />
+  </ng-container>
+</div>
+<div class="slider position-relative">
+  <div class="slider__media-view position-relative w-100">
+    <div class="slider__media-view__media-slider position-relative d-flex m-auto" appDisableScroll #mediaSlider>
+      <div class="slider__media-view__media-slider__media-container"
+        *ngFor="let attachment of pageContent?.galleries; let i = index"
+        [ngClass]="{'active': currentIndex === i, 'video':attachment?.mime_type==FileType.VIDEO}">
+        <ng-container [ngSwitch]="attachment?.mime_type">
+
+          <ng-container *ngSwitchCase="FileType.IMAGE">
+            <img class="w-100 h-100" #media (click)="changeMedia(i)"
+              [appLazyLoadImage]="''+sanitizeUrl(attachment?.file)" [ngSrc]="sanitizeUrl(attachment?.file)"
+              (error)="handleImageError($event)" [alt]=" pageContent[i]?.title" ngOptimizedImage width="500"
+              height="800" priority="low">
+          </ng-container>
+          <ng-container *ngSwitchCase="FileType.EXCEL">
+            <img class="w-100 h-100 bg-white" #media (click)="changeMedia(i)"
+              [appLazyLoadImage]="'assets/images-v2/Attachments/excel.webp'"
+              [ngSrc]="'assets/images-v2/Attachments/excel.webp'" [alt]="pageContent[i]?.title || 'excel'"
+              ngOptimizedImage width="500" height="800" priority="low">
+          </ng-container>
+          <ng-container *ngSwitchCase="FileType.WORD">
+            <img class="w-100 h-100 bg-white" #media (click)="changeMedia(i)"
+              [appLazyLoadImage]="'assets/images-v2/Attachments/word.webp'"
+              [ngSrc]="'assets/images-v2/Attachments/word.webp'" [alt]="pageContent[i]?.title || 'word'"
+              ngOptimizedImage priority="low">
+          </ng-container>
+          <ng-container *ngSwitchCase="FileType.PDF">
+            <img class="w-100 h-100" #media (click)="changeMedia(i)"
+              [appLazyLoadImage]="'assets/images-v2/Attachments/pdf.webp'"
+              [ngSrc]="'assets/images-v2/Attachments/pdf.webp'" [alt]="pageContent[i]?.title || 'pdf'" ngOptimizedImage
+              width="500" height="800" priority="low">
+          </ng-container>
+          <ng-container *ngSwitchCase="FileType.VIDEO">
+            <div class="d-flex align-items-center justify-content-center position-relative w-100 h-100"
+              (click)="changeMedia(i)">
+              <div
+                class="pause-icon d-flex align-items-center justify-content-center position-absolute bg-white rounded-circle">
+                <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0.287109 1.49003V17.49C0.287059 17.668 0.334484 17.8427 0.424491 17.9962C0.514498 18.1497 0.643826 18.2763 0.799134 18.3632C0.954441 18.45 1.1301 18.4938 1.30799 18.4901C1.48589 18.4864 1.65956 18.4353 1.81111 18.342L14.8111 10.342C14.9567 10.2526 15.077 10.1273 15.1604 9.97812C15.2438 9.82896 15.2876 9.66092 15.2876 9.49003C15.2876 9.31914 15.2438 9.15109 15.1604 9.00194C15.077 8.85279 14.9567 8.7275 14.8111 8.63803L1.81111 0.638028C1.65956 0.544793 1.48589 0.49368 1.30799 0.489964C1.1301 0.486248 0.954441 0.530063 0.799134 0.616889C0.643826 0.703714 0.514498 0.830405 0.424491 0.983891C0.334484 1.13738 0.287059 1.3121 0.287109 1.49003Z"
+                    fill="black" />
+                </svg>
+
+              </div>
+              <img #media src="assets/images/logo/logo-white.png" (error)="handleImageError($event)" [alt]="'logo'">
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <ng-container
+    *ngIf="(lang !== 'ar' && currentIndex > 0 && showButtons) || (lang === 'ar' && currentIndex < pageContent?.galleries?.length - 1 && showButtons)">
+    <button class="slider__slider-btn position-absolute border-0 back" [id]="lang === 'ar' ? 'nextBtn' : 'backBtn'"
+      (click)="backOrNext(lang === 'ar' ? 'next' : 'back')"
+      [attr.name]="lang === 'ar' ? ('general.next'|translate) : ('general.prev'|translate)"
+      [attr.aria-label]="lang === 'ar' ? ('general.next'|translate) : ('general.prev'|translate)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+        <path d="M14 16.5417L10 12.5417L14 8.54175" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg> </button>
+  </ng-container>
+  <ng-container
+    *ngIf="(lang !== 'ar' && currentIndex < pageContent?.galleries?.length - 1 && showButtons) || (lang === 'ar' && currentIndex > 0 && showButtons)">
+    <button class="slider__slider-btn position-absolute border-0 next" [id]="lang === 'ar' ? ('general.prev'|translate): ('general.next'|translate)
+        " (click)="backOrNext(lang === 'ar' ? 'back' : 'next')" [attr.name]="lang === 'ar' ? ('general.prev'|translate): ('general.next'|translate)
+            " [attr.aria-label]="lang === 'ar' ? ('general.prev'|translate): ('general.next'|translate)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+        <path d="M10 16.5417L14 12.5417L10 8.54175" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg> </button>
+  </ng-container>
+</div>

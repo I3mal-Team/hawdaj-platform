@@ -1,0 +1,86 @@
+@import "./styles/scss/variables.scss";
+@import "./styles/scss/colors-classes.scss";
+@import "./styles/scss/scrollbar.scss";
+@import "./styles/scss/global-rules.scss";
+@import "./styles/scss/buttons.scss";
+@import "./styles/scss/form-field.scss";
+@import "./styles/scss/primeng/p-form-field.scss";
+@import "./styles/scss/primeng/p-select.scss";
+@import "./styles/scss/primeng/p-dialog.scss";
+@import "./styles/scss/swal2-alerts.scss";
+@import "./styles/scss/primeng/p-toast.scss";
+@import "primeicons/primeicons.css";
+@import "./styles/scss/responsive.scss";
+// @import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&family=Reenie+Beanie&family=Tajawal:wght@400;500;700;800;900&display=swap");
+
+@font-face {
+  font-family: "SaudiWeb";
+  src:
+    url("assets/font/SaudiWeb-Regular.woff2") format("woff2"),
+    url("assets/font/SaudiWeb-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SaudiWeb";
+  src:
+    url("assets/font/SaudiWeb-Bold.woff2") format("woff2"),
+    url("assets/font/SaudiWeb-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+[dir="rtl"] {
+  // @import "~bootstrap/dist/css/bootstrap.min.css";
+  @import "./styles/scss/style-rtl/prime-ng-rtl/prime-ng-rtl-icons.scss";
+  @import "./styles/scss/style-rtl/prime-ng-rtl/prime-ng-rtl.scss";
+  @import "./styles/scss/style-rtl/cust-style-rtl.scss";
+  @import "./styles/scss/style-rtl/form-filed-rtl.scss";
+
+  body {
+    font-family: "SaudiWeb", sans-serif !important;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  // font-family: "Montserrat", sans-serif;
+  font-family: "SaudiWeb", sans-serif !important;
+}
+[dir="ltr"] {
+  body {
+    // font-family: "Montserrat", sans-serif;
+    font-family: "SaudiWeb", sans-serif !important;
+  }
+}
+.scaleX-ltr {
+  transform: scaleX(-1);
+}
+/* Importing Bootstrap SCSS file. */
+.pac-container {
+  z-index: 1000555555000 !important;
+  border-radius: 10px !important;
+  padding: 0 7px !important;
+  margin-top: 5px;
+}
+.cdk-overlay-container {
+  z-index: 1000000 !important;
+}
+
+/* Rich-text descriptions rendered via [innerHTML] + the safeHtml pipe.
+   The stored markup brings its own <p>/<ul> spacing, so trim the outer edges
+   to keep the block flush with the layout it sits in. */
+.rich-text {
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

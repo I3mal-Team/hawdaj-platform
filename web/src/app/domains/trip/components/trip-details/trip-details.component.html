@@ -1,0 +1,190 @@
+<ng-container *ngIf="!notShowPage">
+  <!-- Full Page Loading -->
+  <ng-container *ngIf="isLoading(); else pageContent">
+    <app-skeleton [type]="'trip-full-page'"></app-skeleton>
+  </ng-container>
+
+  <!-- Page Content -->
+  <ng-template #pageContent>
+    <div id="trip-details" class="trip-details">
+
+      <app-banner-2 [title]="'saveTrip.enjoyTrip' | translate"
+        [largeImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'">
+      </app-banner-2>
+
+      <div class="trip-details__content">
+        <div class="trip-details__cards trip-details__cards--desktop">
+          <section class="trip-details__card">
+            <div class="trip-details__info-grid"
+              [ngClass]="{'trip-details__info-grid--ltr': currentLanguage() !== 'ar'}">
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/location.svg"
+                  alt="location" aria-label="location">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'trip.startArea' | translate}}</h4>
+                  <p class="trip-details__info-value">{{tripData()?.start_region?.name}}</p>
+                </div>
+              </div>
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/location.svg"
+                  alt="location" aria-label="location">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'trip.endArea' | translate}}</h4>
+                  <p class="trip-details__info-value">{{tripData()?.end_region?.name}}</p>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngIf="tripDaysData()?.length > 0">
+              <ng-container *ngIf="currentLoginInformation && currentLoginInformation.id === tripData()?.user_id">
+                <div class="trip-details__actions">
+                  <div class="row gap-3 align-items-center justify-content-center">
+                    <app-share-social [fullUrl]="fullUrl" [isButton]="true"></app-share-social>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </section>
+
+          <section class="trip-details__card">
+            <div class="trip-details__info-grid"
+              [ngClass]="{'trip-details__info-grid--ltr': currentLanguage() !== 'ar'}">
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/calender2.svg"
+                  alt="calendar" aria-label="calendar">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'saveTrip.startDate' | translate}}</h4>
+                  <p class="trip-details__info-value">
+                    {{tripData()?.start_date | date: 'd MMM y':'':currentLanguage()}}
+                  </p>
+                </div>
+              </div>
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/calender2.svg"
+                  alt="calendar" aria-label="calendar">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'saveTrip.endDate' | translate}}</h4>
+                  <p class="trip-details__info-value">
+                    {{tripData()?.end_date | date: 'd MMM y':'':currentLanguage()}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="currentLoginInformation && currentLoginInformation.id === tripData()?.user_id">
+              <div class="trip-details__actions">
+                <div class="row gap-3 align-items-center justify-content-center">
+                  <button class="col-md-5 col-12 d-flex justify-content-center gap-1" (click)="deleteTrip()">
+                    <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M6 5H18M9 5V5C10.5769 3.16026 13.4231 3.16026 15 5V5M9 20H15C16.1046 20 17 19.1046 17 18V9C17 8.44772 16.5523 8 16 8H8C7.44772 8 7 8.44772 7 9V18C7 19.1046 7.89543 20 9 20Z"
+                          stroke="#7939a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                    {{'general.deleteMyTrip' | translate}}
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </section>
+        </div>
+
+        <div class="trip-details__cards trip-details__cards--mobile">
+          <section class="trip-details__card trip-details__card--stacked">
+            <div class="trip-details__info-grid trip-details__info-grid--stacked"
+              [ngClass]="{'trip-details__info-grid--ltr': currentLanguage() !== 'ar'}">
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/location.svg"
+                  alt="location" aria-label="location">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'trip.startArea' | translate}}</h4>
+                  <p class="trip-details__info-value">{{tripData()?.start_region?.name}}</p>
+                </div>
+              </div>
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/location.svg"
+                  alt="location" aria-label="location">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'trip.endArea' | translate}}</h4>
+                  <p class="trip-details__info-value">{{tripData()?.end_region?.name}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="trip-details__info-grid trip-details__info-grid--stacked"
+              [ngClass]="{'trip-details__info-grid--ltr': currentLanguage() !== 'ar'}">
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/calender2.svg"
+                  alt="calendar" aria-label="calendar">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'saveTrip.startDate' | translate}}</h4>
+                  <p class="trip-details__info-value">
+                    {{tripData()?.start_date | date: 'd MMM y':'':currentLanguage()}}
+                  </p>
+                </div>
+              </div>
+              <div class="trip-details__info-item">
+                <img class="trip-details__info-icon" src="assets/images-v2/pages/save-trip/icons/calender2.svg"
+                  alt="calendar" aria-label="calendar">
+                <div class="trip-details__info-content">
+                  <h4 class="trip-details__info-title">{{'saveTrip.endDate' | translate}}</h4>
+                  <p class="trip-details__info-value">
+                    {{tripData()?.end_date | date: 'd MMM y':'':currentLanguage()}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="trip-details__card trip-details__card--actions mobile" *ngIf="tripDaysData()?.length > 0">
+            <ng-container *ngIf="currentLoginInformation && currentLoginInformation.id === tripData()?.user_id">
+              <div class="trip-details__actions trip-details__actions--mobile">
+                <div class="d-flex flex-row gap-3 flex-wrap gap-1 align-items-center justify-content-center">
+                  <app-share-social [fullUrl]="fullUrl" [isButton]="true"></app-share-social>
+                  <button class="col-md-5 col-12 d-flex justify-content-center gap-1" (click)="deleteTrip()">
+                    <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M6 5H18M9 5V5C10.5769 3.16026 13.4231 3.16026 15 5V5M9 20H15C16.1046 20 17 19.1046 17 18V9C17 8.44772 16.5523 8 16 8H8C7.44772 8 7 8.44772 7 9V18C7 19.1046 7.89543 20 9 20Z"
+                          stroke="#7939a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                    {{'general.deleteMyTrip' | translate}}
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #shareOnlyMobile>
+              <div class="trip-details__actions trip-details__actions--mobile">
+                <div class="d-flex flex-row gap-3 flex-wrap gap-1 align-items-center justify-content-center">
+                  <app-share-social [fullUrl]="fullUrl" [isButton]="true"></app-share-social>
+                </div>
+              </div>
+            </ng-template>
+          </section>
+        </div>
+      </div>
+
+      <div class="trip-details__plan">
+        <app-trip-header [headerConfig]="tripHeaderConfig()" (downloadPdf)="downloadPDF()" (mapClick)="showTripOnMap()">
+        </app-trip-header>
+
+        <div class="trip-details__days">
+          <ng-container *ngFor="let day of tripDaysData(); let i = index; trackBy: trackByDayIndex">
+            <app-trip-day-detail [data]="day"
+              [dayConfig]="{ showPlaces: true, showRegionInfo: true, isRtl: currentLanguage() === 'ar' }"
+              [enableDelete]="false" (placeClick)="onPlaceClick($event)">
+            </app-trip-day-detail>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+</ng-container>
+
+<app-new-footer></app-new-footer>
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>

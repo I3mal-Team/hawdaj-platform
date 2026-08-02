@@ -1,0 +1,198 @@
+.pe-4 {
+  padding-left: 1.5rem !important;
+  padding-right: initial !important;
+}
+
+// PRIME NG
+.p-input-icon-right > .p-inputtext {
+  padding-left: 2.5rem !important;
+  padding-right: 11px !important;
+}
+
+.p-input-icon-right > i:last-of-type {
+  left: 0.75rem !important;
+  right: inherit !important;
+}
+.p-component,
+.p-inputtext {
+  font-family: "SaudiWeb", sans-serif !important;
+
+  &:dir(rtl) {
+    font-family: "SaudiWeb", sans-serif !important;
+  }
+}
+.mat-stepper-horizontal,
+.mat-step-label {
+  &:dir(rtl) {
+    font-family: "SaudiWeb", sans-serif !important;
+  }
+}
+
+.p-input-icon-left > i:first-of-type {
+  right: 0.75rem;
+  left: initial !important;
+}
+
+.p-input-icon-left > .p-inputtext {
+  padding-right: 2.5rem;
+  padding-left: inherit !important;
+}
+
+.p-inputgroup-addon:first-child {
+  border-radius: 0 6px 6px 0;
+  border-right: 1px solid #ced4da;
+  border-left: none;
+}
+
+.p-inputgroup input:last-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.p-password-mask > div {
+  .pi-eye {
+    left: 0.75rem !important;
+    right: inherit !important;
+  }
+}
+
+.required {
+  &:after {
+    margin-right: 3px !important;
+    margin-left: inherit !important;
+  }
+}
+
+.p-multiselect-panel {
+  .p-multiselect-items .p-multiselect-item .p-checkbox,
+  .p-multiselect-header .p-checkbox {
+    margin-left: 0.5rem !important;
+    margin-right: inherit !important;
+  }
+}
+
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+  margin-left: 0.5rem !important;
+  margin-right: inherit !important;
+}
+
+p-multiselect.p-multiselect-clearable .p-multiselect-label-container,
+p-treeselect.p-treeselect-clearable .p-treeselect-label-container {
+  padding-left: 1.75rem !important;
+  padding-right: initial !important;
+}
+
+.select-loading.p-input-icon-right > i:last-of-type {
+  left: 2.5rem !important;
+  right: inherit !important;
+}
+
+.select-loading.pe-4.p-input-icon-right > i:last-of-type {
+  left: 4rem !important;
+  right: inherit !important;
+}
+
+.p-button .p-button-icon-left {
+  margin-left: 0.5rem;
+  margin-right: inherit !important;
+}
+
+.p-dropdown .p-dropdown-label {
+  padding: 10px 12px 10px 0px !important;
+}
+
+p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon,
+p-multiselect.p-multiselect-clearable .p-multiselect-clear-icon,
+.p-dropdown .p-dropdown-clear-icon {
+  // left: -1.2rem !important;
+  left: 2rem !important;
+  right: inherit !important;
+}
+
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+  margin-left: -0.75rem !important;
+  margin-right: initial !important;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  text-align: right !important;
+  direction: rtl !important;
+}
+.p-multiselect.p-multiselect-chip .p-multiselect-token .p-multiselect-panel .p-multiselect-header .p-multiselect-close {
+  margin-right: 0.5rem !important;
+  margin-left: initial !important;
+}
+
+.p-tree .p-tree-container .p-treenode .p-treenode-content .p-checkbox,
+.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  margin-right: initial !important;
+  margin-left: 0.5rem !important;
+}
+.p-calendar .p-button {
+  border-right: 0 !important;
+  border-left: 1px solid #ced4da !important;
+  border-radius: 6px 0 0 6px !important;
+}
+.p-calendar-w-btn .p-inputtext {
+  border-left: 0 !important;
+  border-right: 1px solid #ced4da !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+
+#filter-selections {
+  .p-inputgroup-addon {
+    border-left: none !important;
+    border-right: 1px solid #ced4da !important;
+  }
+
+  .p-dropdown .p-dropdown-trigger {
+    border-right: initial !important;
+    border-left: 1px solid #ced4da !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+}
+
+.p-inputnumber-buttons-stacked .p-inputnumber-input {
+  border-radius: 0 6px 6px 0;
+}
+.p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-up {
+  border-radius: 6px 0px 0 0px;
+}
+.p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-down {
+  border-radius: 0px 0px 0 6px;
+}
+
+.right-input {
+  border-right: 0 !important;
+  border-left: 1px solid #ced4da !important;
+  border-radius: 6px 0 0 6px !important;
+}
+.input-remove-right-border {
+  border-left: 0 !important;
+  border-right: 1px solid #ced4da !important;
+}
+.input-remove-left-border {
+  border-left: 0 !important;
+  border-right: 1px solid #ced4da !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+.p-checkbox-label {
+  margin-right: 0.5rem !important;
+  margin-left: inherit !important;
+}
+
+.border-right-0 {
+  border-left: 0 !important;
+  border-right: inherit !important;
+}
+.rounded-0 {
+  border-radius: 0 !important;
+}
+.agent-performance {
+  .p-calendar-w-btn .p-inputtext,
+  .p-calendar .p-button {
+    border: 0 !important;
+  }
+}

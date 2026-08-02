@@ -1,0 +1,393 @@
+<div id="tour-guide-info">
+  <ng-container *ngIf="isLoadingData; else elseViewData">
+    <div class="d-flex justify-content-center mt-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseViewData>
+    <ng-container *ngIf="tourGuideData">
+      <div class="content-form-data d-flex justify-content-between flex-wrap gap-3 mt-md-4 mt-3">
+        <div class="basic-data flex-wrap">
+          <div class="image">
+            <app-tour-guide-image [src]="tourGuideData?.image" [name]="tourGuideData?.name"></app-tour-guide-image>
+          </div>
+          <div class="other-data d-flex flex-column justify-content-between flex-wrap">
+            <div class="mb-md-4 mb-0">
+              <ng-container *ngIf="tourGuideData?.name">
+                <h4 class="name d-flex align-items-center gap-2 flex-wrap">
+                  <i class="pi pi-file-edit scaleX-rtl fs-5" aria-hidden="true"></i>
+                  <span class="fs-4 fw-bold">
+                    {{tourGuideData?.name}}
+                  </span>
+                  <span class="fs-5-2 fw-500">
+                    ({{tourGuideData?.nickName}})
+                  </span>
+                </h4>
+              </ng-container>
+              <ng-container *ngIf="tourGuideData?.phone">
+                <div class="phone-number d-flex align-items-center gap-2 flex-wrap">
+                  <i class="pi pi-phone scaleX-rtl fs-5" aria-hidden="true"></i>
+                  <a href="tel:{{tourGuideData?.phone}}" dir="ltr" class="number fw-bold text-decoration-underline"
+                    aria-label="Call this number">
+                    {{tourGuideData?.phone}}
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+
+            <ng-container *ngIf="tourGuideData?.languages?.length > 0">
+              <div id="languages" calss="mt-md-5 mt-3">
+                <h5 class="line-before fs-5-1 fw-bold">
+                  {{'myLanguages' | translate}}
+                </h5>
+                <div class="languages-list d-flex gap-2 flex-wrap align-items-center mt-3">
+                  <ng-container *ngFor="let item of tourGuideData?.languages">
+                    <div class="language-item bg-light-new-color text-white px-3 py-1 rounded">
+                      {{item?.name}}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="socialList?.length >0">
+              <div class="social mt-md-4 mt-3">
+                <h5 class="line-before fs-5-1 fw-bold">
+                  {{'mySocials' | translate}}
+                </h5>
+                <div class="social-icons mt-2">
+                  <!-- Facebook -->
+                  <ng-container *ngIf="tourGuideData?.social?.facebook">
+                    <a [href]="tourGuideData?.social?.facebook" target="_blank" class="icon facebook"
+                      aria-label="Facebook" title="Follow us on Facebook">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </ng-container>
+                  <!-- Twitter (X) -->
+                  <ng-container *ngIf="tourGuideData?.social?.twitter">
+                    <a [href]="tourGuideData?.social?.twitter" target="_blank" class="icon twitter" aria-label="Twitter"
+                      title="Follow us on Twitter">
+                      <i class="fab fa-x-twitter"></i>
+                    </a>
+                  </ng-container>
+                  <!-- Youtube -->
+                  <ng-container *ngIf="tourGuideData?.social?.youtube">
+                    <a [href]="tourGuideData?.social?.youtube" target="_blank" class="icon bg-danger"
+                      aria-label="Youtube" title="Follow us on Youtube">
+                      <i class="fab fa-youtube"></i>
+                    </a>
+                  </ng-container>
+                  <!-- LinkedIn -->
+                  <ng-container *ngIf="tourGuideData?.social?.linkedin">
+                    <a [href]="tourGuideData?.social?.linkedin" target="_blank" class="icon linkedin"
+                      aria-label="LinkedIn" title="Connect with us on LinkedIn">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </ng-container>
+                  <!-- Instagram -->
+                  <ng-container *ngIf="tourGuideData?.social?.instagram">
+                    <a [href]="tourGuideData?.social?.instagram" target="_blank" class="icon instagram"
+                      aria-label="Instagram" title="Follow us on Instagram">
+                      <i class="fab fa-instagram"></i>
+                    </a>
+                  </ng-container>
+                  <!-- Personal Website -->
+                  <ng-container *ngIf="tourGuideData?.social?.personal_account">
+                    <a [href]="tourGuideData?.social?.personal_account" target="_blank" class="icon personal-website"
+                      aria-label="Personal Website" title="Visit my personal website">
+                      <i class="fas fa-user"></i>
+                    </a>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="shortcut-items">
+          <div class="verified-box">
+            <img ngOptimizedImage [ngSrc]="'assets/images/icons/verifiedIcon.webp'" width="50" height="50"
+              class="verified-icon" alt="'Verified Icon" onerror="src='assets/images/not-found/no-img.svg'">
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="data-fields gap-3 mt-md-4 mt-3">
+      <div id="profile-tabs">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs px-0" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="my-data-tab" data-bs-toggle="tab" data-bs-target="#my-data"
+              type="button" role="tab" aria-controls="my-data" aria-selected="true">
+              {{'myData' | translate}}
+            </button>
+          </li>
+          <!-- <li class="nav-item" role="presentation">
+          <button class="nav-link" id="certificates-tab" data-bs-toggle="tab" data-bs-target="#certificates"
+            type="button" role="tab" aria-controls="certificates" aria-selected="false">
+            {{'certificates' | translate}}
+          </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button"
+            role="tab" aria-controls="reviews" aria-selected="false">
+            {{'general.reviews' | translate}}
+          </button>
+        </li> -->
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content mt-3" id="myTabContent">
+          <!-- My Data Tab -->
+          <div class="tab-pane fade show active" id="my-data" role="tabpanel" aria-labelledby="my-data-tab">
+            <form [formGroup]="infoForm" id="modal-form" aria-label="profile-form" (ngSubmit)="submit()"
+              class="p-md-4 p-2">
+              <div class="mb-3">
+                <div class="row g-3">
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="">
+                      <label for="name" class="mb-2" [class.required]="!isFormReadOnly">
+                        {{'labels.name'|translate}}
+                      </label>
+                      <input type="text" class="form-control" formControlName="name" autocomplete="cc-name" [min]="0"
+                        (input)="publicService?.clearValidationErrors(formControls?.name)"
+                        placeholder="{{'placeholder.name'|translate}}" [readOnly]="isFormReadOnly"
+                        [class.prevent-click]="isFormReadOnly"
+                        [class.border-red]="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                          <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                          <ng-container *ngIf="formControls?.name?.errors?.['minlength']">
+                            <span class="text-danger fs-8 d-block">
+                              {{'validations.length'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="">
+                      <label for="nickName" class="mb-2" [class.required]="false">
+                        {{'labels.nickName'|translate}}
+                      </label>
+                      <input type="text" class="form-control" formControlName="nickName" autocomplete="cc-name"
+                        [min]="0" (input)="publicService?.clearValidationErrors(formControls?.nickName)"
+                        placeholder="{{'labels.nickName'|translate}}" [readOnly]="isFormReadOnly"
+                        [class.prevent-click]="isFormReadOnly"
+                        [class.border-red]="formControls?.nickName?.invalid && (formControls?.nickName?.dirty || formControls?.nickName?.touched)">
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.nickName?.invalid && (formControls?.nickName?.dirty || formControls?.nickName?.touched)">
+                          <ng-container *ngIf="formControls?.nickName?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                          <ng-container *ngIf="formControls?.nickName?.errors?.['minlength']">
+                            <span class="text-danger fs-8 d-block">
+                              {{'validations.length'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Description -->
+                  <div class="col-12">
+                    <label for="description" class="mb-2" [class.required]="!isFormReadOnly">
+                      {{'labels.description'|translate}}
+                    </label>
+                    <textarea id="description" rows="4" class="form-control textarea" formControlName="description"
+                      [readOnly]="isFormReadOnly" minlength="50" maxlength="1000"
+                      [class.border-red]="formControls?.description?.invalid && (formControls?.description?.dirty || formControls?.description?.touched)"></textarea>
+                    <div class="mt-2">
+                      <ng-container
+                        *ngIf="formControls?.description?.invalid && (formControls?.description?.dirty || formControls?.description?.touched)">
+                        <ng-container *ngIf="formControls?.description?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container
+                          *ngIf="formControls?.description?.errors?.['minlength'] || formControls?.description?.errors?.['maxlength']">
+                          <span class="text-danger fs-8 d-block">
+                            {{'validations.tourGuideDescLength'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <!-- Languages -->
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="">
+                      <label for="languages" class="mb-2" [class.required]="true">
+                        {{'labels.languages'|translate}}
+                      </label>
+                      <span class="p-input-icon-right d-block">
+                        <p-multiSelect appendTo="body" [options]="languagesItems" formControlName="languages"
+                          styleClass="border-0 bg-white-color"
+                          filterPlaceHolder="{{ 'placeholder.search' | translate }}"
+                          dropdownIcon="fas fa-caret-down text-muted" panelStyleClass="dropdown-new-panel"
+                          display="chip" [readonly]="false" [virtualScroll]="true" [showClear]="false"
+                          [autofocusFilter]="false" [virtualScrollItemSize]="38" scrollHeight="150px"
+                          placeholder="{{ 'placeholder.selectLanguage' | translate }}"
+                          [emptyMessage]="'general.noResultFound'|translate" styleClass="border-0"
+                          [showToggleAll]="false" optionLabel="name" aria-label="Language Filter">
+                        </p-multiSelect>
+                      </span>
+
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.languages?.invalid && (formControls?.languages?.dirty || formControls?.languages?.touched)">
+                          <ng-container *ngIf="formControls?.languages?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Regions -->
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <div class="">
+                      <label for="regions" class="mb-2" [class.required]="true">
+                        {{'labels.regions'|translate}}
+                      </label>
+                      <span class="p-input-icon-right d-block">
+                        <p-multiSelect appendTo="body" [options]="regionsItems" formControlName="regions"
+                          styleClass="border-0 bg-white-color"
+                          filterPlaceHolder="{{ 'placeholder.search' | translate }}"
+                          dropdownIcon="fas fa-caret-down text-muted" panelStyleClass="dropdown-new-panel"
+                          display="chip" [readonly]="false" [virtualScroll]="true" [showClear]="false"
+                          [autofocusFilter]="false" [virtualScrollItemSize]="38" scrollHeight="150px"
+                          placeholder="{{'placeholder.selectRegion' | translate }}"
+                          [emptyMessage]="'general.noResultFound'|translate" styleClass="border-0"
+                          [showToggleAll]="false" optionLabel="name" aria-label="Region Filter">
+                        </p-multiSelect>
+                      </span>
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.regions?.invalid && (formControls?.regions?.dirty || formControls?.regions?.touched)">
+                          <ng-container *ngIf="formControls?.regions?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Experience -->
+                  <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label for="experience" class="mb-2" [class.required]="!isFormReadOnly">
+                      {{ 'placeholder.experience' | translate }}
+                    </label>
+                    <input type="number" id="experience" class="form-control" min="0" formControlName="experience"
+                      autocomplete="cc-name" [min]="0"
+                      (input)="publicService?.clearValidationErrors(formControls?.experience)"
+                      placeholder="{{'placeholder.experience'|translate}}" [readOnly]="isFormReadOnly"
+                      [class.prevent-click]="isFormReadOnly"
+                      [class.border-red]="formControls?.experience?.invalid && (formControls?.experience?.dirty || formControls?.experience?.touched)">
+                    <div class="mt-2">
+                      <ng-container
+                        *ngIf="formControls?.experience?.invalid && (formControls?.experience?.dirty || formControls?.experience?.touched)">
+                        <ng-container *ngIf="formControls?.experience?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <!-- Phone Number -->
+                  <!-- <div class="col-xl-6 col-lg-6 col-md-6">
+                    <label for="phoneNumber" class="mb-2" [class.required]="!isFormReadOnly">
+                      {{'labels.phoneNumber'|translate}}
+                    </label>
+                    <input type="number" class="form-control" [readOnly]="isFormReadOnly"
+                      [class.border-red]="formControls?.phoneNumber?.invalid && (formControls?.phoneNumber?.dirty || formControls?.phoneNumber?.touched)"
+                      [class.prevent-click]="isFormReadOnly" formControlName="phoneNumber" autocomplete="cc-name"
+                      [min]="0" (input)="publicService?.clearValidationErrors(formControls?.phoneNumber)"
+                      placeholder="{{'placeholder.phoneNumber'|translate}}">
+                    <div class="mt-2">
+                      <ng-container
+                        *ngIf="formControls?.phoneNumber?.invalid && (formControls?.phoneNumber?.dirty || formControls?.phoneNumber?.touched)">
+                        <ng-container *ngIf="formControls?.phoneNumber?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.phoneNumber?.errors?.['pattern']">
+                          <span class="text-danger fs-8 d-block">
+                            {{'validations.phoneNotCorrect'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+
+              <!-- Start Social -->
+              <ng-container *ngIf="!isRsest">
+                <app-social-links [items]="socialList" [type]="'tourGuide'"
+                  (changeSocialLinksHandler)="getSocialLinks($event)"></app-social-links>
+              </ng-container>
+              <!-- End Social -->
+
+              <div class="d-flex justify-content-end align-items-center flex-wrap gap-2">
+                <button type="submit" class="btn btn-solid-light-new d-flex align-items-center gap-2">
+                  <svg width="22" height="20" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0.6875 20.9375H24.3125V22.625H0.6875V20.9375ZM20.4312 6.59375C21.1062 5.91875 21.1062 4.90625 20.4312 4.23125L17.3937 1.19375C16.7188 0.51875 15.7063 0.51875 15.0312 1.19375L2.375 13.85V19.25H7.775L20.4312 6.59375ZM16.2125 2.375L19.25 5.4125L16.7188 7.94375L13.6812 4.90625L16.2125 2.375ZM4.0625 17.5625V14.525L12.5 6.0875L15.5375 9.125L7.1 17.5625H4.0625Z"
+                      fill="#FFF" />
+                  </svg>
+                  <span>
+                    {{'general.save'|translate}}
+                  </span>
+                </button>
+
+                <button type="button" class="btn btn-outline-light-new d-flex align-items-center gap-2"
+                  (click)="cancel()">
+                  <i class="pi pi-times-circle"></i>
+                  <span>
+                    {{'general.cancel'|translate}}
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Certificates Tab -->
+          <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="certificates-tab">
+            Certificates Tab
+          </div>
+
+          <!-- Reviews Tab -->
+          <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+            Reviews Tab
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+
+
+<app-overlay-loading></app-overlay-loading>
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>

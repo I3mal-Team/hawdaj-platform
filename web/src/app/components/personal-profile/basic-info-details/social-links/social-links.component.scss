@@ -1,0 +1,83 @@
+.add-social-links {
+
+  .social {
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+
+  .social-link {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+  }
+
+  .icon-social-settings {
+    width: 25px;
+    min-width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .delete-icon {
+    color: red;
+    background-color: #ff00001c;
+    padding: 0.5rem;
+  }
+
+  .edit-icon {
+    background-color: #eaeaea;
+    color: #2c2c2c;
+    padding: 0.5rem;
+  }
+
+  .bg-linkedin {
+    background: #0a66c2;
+  }
+
+  .bg-youtube {
+    background: #fe0000;
+  }
+
+  .bg-twitter {
+    background: #000000;
+  }
+
+  .bg-color-face {
+    background: #0e8df2;
+  }
+
+  .personal-website {
+    background-color: #6c757d;
+  }
+
+  .bg-color-tiktok {
+    background-color: #111;
+  }
+
+  .bg-color-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  }
+}
+
+.btn-solid-main {
+  background-color: #a2553a !important;
+  border-color: #a2553a !important;
+}
+
+.text-main-color {
+  color: var(--light-new-color) !important;
+}
+
+.text-wrap-ellipsis {
+  display: inline-block;         /* Allow the anchor to respect max-width */
+  max-width: 100%;               /* Ensure the text doesn't overflow beyond its container */
+  white-space: normal;           /* Allow text to wrap onto multiple lines */
+  word-break: break-word;        /* Break long unbroken words onto multiple lines */
+  overflow-wrap: break-word;     /* Ensure text wraps properly in all browsers */
+}
+

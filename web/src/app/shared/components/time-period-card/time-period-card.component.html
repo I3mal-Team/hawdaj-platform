@@ -1,0 +1,72 @@
+<ng-container *ngIf="periodData()">
+  <div class="time-period-card" [class.time-period-card--full-width]="isFullWidthLayout()">
+
+    <!-- Period Header -->
+    <div class="time-period-card__header">
+      <div class="time-period-card__icon">
+        <ng-container *ngIf="periodData()!.type === 'morning'">
+          <app-svg-icon name="sun-icon" />
+        </ng-container>
+        <ng-container *ngIf="periodData()!.type === 'evening'">
+          <app-svg-icon name="moon-icon" />
+        </ng-container>
+      </div>
+      <h3 class="time-period-card__title">{{ periodData()!.title }}</h3>
+    </div>
+
+    <!-- Period Description -->
+    <ng-container *ngIf="periodData()!.description">
+      <p class="time-period-card__description">
+        {{ periodData()!.description | stripHtml }}
+      </p>
+    </ng-container>
+
+    <!-- Places Cards Grid -->
+    <div class="row cards gap-2 mx-0">
+      <div *ngFor="let place of periodData()!.places; trackBy: trackByPlaceId"
+        class="col-6 col-lg-2 col-md-3 trip-card">
+
+        <div class="card-img-container" (click)="onPlaceClick(place)">
+          <img class="card-img" [src]="place?.imageUrl" onerror="this.src='assets/images/not-found/no-img.svg'"
+            [alt]="getPlaceName(place)">
+
+          <div class="d-flex card-status align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center gap-2 right-side">
+              <!-- Rating -->
+              <div class="d-flex align-items-center gap-1 ju rate">
+                <img src="assets/images-v2/pages/save-trip/icons/card/star.svg" alt="star">
+                <p class="mb-0">{{ place?.rating || 0 }} ({{ place?.reviewsCount || 0 }})</p>
+              </div>
+
+              <!-- Location Link -->
+              <a class="location" target="_blank" [href]="getPlaceMapLink(place)" (click)="$event.stopPropagation()">
+                <app-svg-icon name="location-icon" />
+              </a>
+            </div>
+
+            <!-- Delete Button (if enabled) -->
+            <ng-container *ngIf="showDelete">
+              <div class="left-side">
+                <div class="delete" (click)="onDeletePlace(place, $event)">
+                  <img src="assets/images-v2/pages/save-trip/icons/card/trash.svg" alt="trash">
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- Card Content -->
+          <div class="card-content">
+            <div class="card-content-header">
+              <h4 class="card-content-title">{{ getPlaceName(place) }}</h4>
+              <span class="place-type-badge">{{ getPlaceType(place) }}</span>
+            </div>
+            <p class="card-content-description mb-0">
+              <img src="assets/images-v2/pages/save-trip/icons/card/card-location.svg" alt="location">
+              {{ getPlaceAddress(place) | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

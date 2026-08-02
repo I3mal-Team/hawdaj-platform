@@ -1,0 +1,176 @@
+.trip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    width: 100%;
+    flex-wrap: wrap;
+    &--rtl {
+        direction: rtl;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* ---------- Title ---------- */
+    &__title {
+        color: var(--Main-800, #371a4c);
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+
+        @media (max-width: 1024px) {
+            font-size: 1.75rem;
+        }
+
+        @media (max-width: 767px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* ---------- Date ---------- */
+    &__date {
+        color: #717680;
+        font-family: var(--font-family, "Expo Arabic"), sans-serif;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.4;
+
+        @media (max-width: 767px) {
+            font-size: 1rem;
+        }
+    }
+
+    /* ---------- Actions Section ---------- */
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+
+        @media (max-width: 767px) {
+            gap: 0.5rem;
+        }
+    }
+
+    /* ---------- Action Button ---------- */
+    &__action-btn {
+        display: flex;
+        height: 2.75rem;
+        padding: 0.5rem 1.5rem;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.75rem;
+        border: 1px solid #7939a7;
+        background: transparent;
+        color: #7939a7;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+
+        font-family: var(--font-family, "Expo Arabic"), sans-serif;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+
+        &:hover {
+            background: #7939a7;
+            color: #fff;
+
+            ::ng-deep app-download-pdf-icon svg path,
+            ::ng-deep app-map-pin-heart-icon svg path {
+                stroke: #fff;
+            }
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        &:focus-visible {
+            outline: 2px solid #7939a7;
+            outline-offset: 2px;
+        }
+
+        /* Variant: Download Button */
+        &--download {
+            // Specific styles for download button if needed
+        }
+
+        /* Variant: Map Button */
+        &--map {
+            padding: 0.5rem 0.75rem;
+            min-width: 2.75rem;
+
+            @media (max-width: 767px) {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            height: 2.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    /* ---------- Action Text ---------- */
+    &__action-text {
+        display: inline-block;
+
+        /* Screen Reader Only Variant */
+        &--sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        @media (max-width: 767px) {
+            font-size: 0.875rem;
+        }
+    }
+
+    /* ---------- Responsive Layout ---------- */
+    @media (max-width: 767px) {
+        gap: 1rem;
+
+        &__info {
+            align-items: center;
+            text-align: center;
+        }
+
+        &__title {
+            text-align: center;
+        }
+
+        &__actions {
+            justify-content: center;
+        }
+    }
+}
+
+/* ---------- LTR Support ---------- */
+[dir="ltr"] .trip-header {
+    direction: ltr;
+
+    &__info {
+        align-items: flex-start;
+    }
+
+    &__title {
+        text-align: left;
+    }
+}

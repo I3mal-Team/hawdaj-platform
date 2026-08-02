@@ -1,0 +1,667 @@
+<nav #navbar *appResponsiveIfNotStandalone="'desktop'"
+  class="navbar navbar-expand-lg position-fixed w-100 d-xl-block d-none" [ngClass]="{'collapse':collapse}"
+  [ngClass]="{'headerBg': pageNotIn(['home','applications',  'trips', 'coming-soon',  'events', 'restaurants','stores', 'tourGuides','stories', 'profile'])}"
+  [ngClass]="{'new-header-bg': pageIn(['place-details','store-details','events-details','tourGuideDetails','searchResult', 'restaurant-details','story-details',  'trips'])}"
+  (clickOutside)="collapsedMenu = collapsedMenu ? false : collapsedMenu"
+  [class.dark-nav]="pageIn([ 'events', 'restaurant-details','story-details', 'stories','stores', 'searchResult'])">
+  <div class="container px-0">
+    <!-- Logo Link -->
+    <a class="navbar-brand m-0" routerLink="/home" title="logo" aria-label="Home">
+      <ng-container *ngIf="pageIn(['searchResult']); else WhiteLogo">
+        <img src="assets/images/logo/dark-logo.svg" alt="logo" class="logo h-100" appLazyImg width="78" height="78">
+      </ng-container>
+      <ng-template #WhiteLogo>
+        <ng-container>
+          <img src="assets/images/logo/logo-white.png" alt="logo" class="logo h-100" appLazyImg width="78" height="78">
+        </ng-container>
+
+      </ng-template>
+    </a>
+    <!-- Toggle Button for Mobile View -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      [attr.aria-expanded]="!collapsedMenu" (click)="collapsedMenu = !collapsedMenu" aria-label="Toggle navigation">
+      <div class="menu-icon d-flex justify-content-between flex-column align-items-end">
+        <span class="line"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+    </button>
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse m-auto" id="navbarSupportedContent" [class.show]="collapsedMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']"
+            routerLinkActive="active2" (click)="collapsedMenu = false" [class.active2]="page=='home'"
+            title="home">{{'nav.home'|translate}} </a>
+        </li>
+
+        <li class="nav-item dropdown mega-dropdown d-lg-flex d-none"
+          (clickOutside)="collapse = collapse ? false : collapse">
+          <a class="nav-link dropdown-toggle text-white-color d-flex align-items-center gap-2" id="megaDropdownMenu"
+            [class.active2]="pageIn(['places', 'place-details'])" title="places" aria-haspopup="true"
+            [attr.aria-expanded]="collapse">
+            <span [routerLink]="['/{{publicService.getCurrentLanguage()}}/places']">
+              {{'nav.place'|translate}}
+            </span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"
+              (click)="collapse = !collapse" [ngStyle]="{ 'transform': collapse ? 'rotate(180deg)' : 'rotate(0deg)' }"
+              style="transition: transform 0.3s ease;">
+              <path d="M1.09961 1L5.09961 5L9.09961 1" stroke="#F3ECF9" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+
+
+          </a>
+          <!-- <div class="dropdown-menu mega-menu-visit border-0 w-100 shadow p-0" [class.show]="collapse">
+            <app-invite-to-visit *ngIf="collapse" (openPlaceHandler)="openPlace()"></app-invite-to-visit>
+          </div> -->
+        </li>
+
+        <li class="nav-item d-lg-none d-flex">
+          <a class="nav-link d-flex align-items-center gap-2"
+            [routerLink]="['/{{publicService.getCurrentLanguage()}}/places']" routerLinkActive="active2"
+            title="places"><span
+              [routerLink]="['/' + publicService.getCurrentLanguage(), 'places']">{{'nav.place'|translate}}</span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"
+              (click)="collapse = !collapse" [ngStyle]="{ 'transform': collapse ? 'rotate(180deg)' : 'rotate(0deg)' }"
+              style="transition: transform 0.3s ease;">
+              <path d="M1.09961 1L5.09961 5L9.09961 1" stroke="#F3ECF9" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/{{this.publicService.getCurrentLanguage()}}/stores']" routerLinkActive="active2"
+            title="stores">{{'nav.stores'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/{{publicService.getCurrentLanguage()}}/restaurants']" title="restaurants"
+            routerLinkActive="active2">{{'nav.zad'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/{{publicService.getCurrentLanguage()}}/stories']" title="stories"
+            routerLinkActive="active2">{{'nav.swalefs'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/{{publicService.getCurrentLanguage()}}/events']" title="events"
+            routerLinkActive="active2">{{'nav.events'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'applications']" title="applications"
+            routerLinkActive="active2">{{'nav.applications'|translate}}</a>
+        </li>
+      </ul>
+      <!-- User Info or Login Button -->
+      <div class="d-flex align-items-center gap-4 py-lg-0 py-3">
+        <ng-container *ngIf="isUserLoggedin; else loginNow">
+          <app-user-info></app-user-info>
+        </ng-container>
+        <ng-template #loginNow>
+          <button
+            class="btn {{page=='applications'?'btn-outline-new':'btn-solid-main login'}} py-2 d-flex justify-content-center gap-2"
+            (click)="login()" aria-label="Login">
+            {{'form.login'|translate}}
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24" height="24"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+              <path d="M21 12h-13l3 -3" />
+              <path d="M11 15l-3 -3" />
+            </svg>
+          </button>
+        </ng-template>
+        <ng-container *ngIf="page=='applications'; else elseNewSelector">
+          <app-change-language-selector></app-change-language-selector>
+        </ng-container>
+        <ng-template #elseNewSelector>
+          <app-change-language-selector></app-change-language-selector>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Navbar -->
+<nav #navbar *appResponsiveIfNotStandalone="'mobile'" class="d-xl-none d-block navbar2 position-absolute w-100"
+  [ngClass]="{'headerBg': pageNotIn(['home', 'stores','places', 'trips', 'coming-soon'])}"
+  [class.dark-nav]="pageIn(['place-details',  'store-details','tourGuides', 'events-details','tourGuideDetails','events', 'restaurant-details','story-details', 'stories', 'searchResult'])"
+  [ngClass]="pageIn(['place-details', 'store-details','events-details','tourGuideDetails']) ? 'd-md-block d-none bg-md-header' : ''">
+  <div class=" container d-flex h-100">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <a class="menu-icon d-flex justify-content-between flex-column" (click)="displayMenu = true"
+        title="toggle navigation" aria-label="Toggle Menu">
+        <span class="line"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </a>
+      <app-change-language-selector></app-change-language-selector>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar for Mobile Navigation -->
+<!-- <div id="header-sidebar">
+  <p-sidebar [(visible)]="displayMenu" [position]="currentLanguage=='ar'?'right':'left'" [baseZIndex]="33331">
+    <div class="position-relative sidebar-menu-nav">
+      <div class="overlay position-absolute"></div>
+      <div class="sidebar-menu text-white-color d-flex flex-column justify-content-center">
+        <div class="d-flex justify-content-start logo-img mb-3 pointer" (click)="displayMenu = false"
+          [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']">
+          <img src="assets/images/logo/logo.svg" alt="logo" class="logo h-100" appLazyImg width="78" height="78">
+        </div>
+        <div class="d-flex justify-content-between gap-2">
+          <ng-container *ngIf="isUserLoggedin; else elseLogin">
+            <div class="d-flex align-items-center flex-column justify-content-between w-100">
+              <a class="rounded-circle profile-img d-block shadow-sm position-relative" title="profile">
+                <img [src]="currentLoginInformation?.PersonalData?.photo"
+                  [alt]="currentLoginInformation?.PersonalData?.full_name || 'Profile Image'"
+                  onerror="src='assets/images/not-found/no-img.svg'" loading="lazy" class="w-100 h-100 rounded-circle">
+              </a>
+              <a class="d-flex justify-content-center align-items-center w-100 gap-2" (click)="displayMenu = false"
+                [routerLink]="['/' + publicService.getCurrentLanguage(), 'Profile']" title="Profile"
+                aria-label="View Profile">
+                <i class="fas fa-info-circle"></i>
+                <span>{{'nav.profile'|translate}}</span>
+              </a>
+              <div class="mt-2 text-truncate fw-semibold w-100 text-center">
+                {{currentLoginInformation?.PersonalData?.full_name||''}}
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #elseLogin>
+            <div class="nav-item">
+              <a class="nav-link d-flex gap-2 fw-bold" (click)="displayMenu = false"
+                (click)="login();displayMenu = false" title="login">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24"
+                  height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M21 12h-13l3 -3" />
+                  <path d="M11 15l-3 -3" />
+                </svg>
+                {{'form.login'|translate}}
+              </a>
+            </div>
+          </ng-template>
+          <a [class.position-absolute]="isUserLoggedin"
+            class="close d-flex justify-content-center align-items-center bg-white-color rounded text-danger"
+            (click)="displayMenu=false" title="close menu" aria-label="Close Menu">
+            <i class="pi pi-times"></i>
+          </a>
+        </div>
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3 p-3" role="menu">
+        <li class="nav-item" role="none">
+          <a class="nav-link d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']" routerLinkActive="active3" role="menuitem"
+            title="home" aria-label="Go to Home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="20" height="20"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+            {{'nav.home'|translate}}
+          </a>
+        </li>
+        <ng-container *ngIf="isUserLoggedin">
+          <li class="nav-item" role="none">
+            <a class="nav-link d-flex gap-2 text-danger fw-bold" (click)="logOut();displayMenu = false" role="menuitem"
+              title="logout" aria-label="Log Out">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout scaleX-rtl" width="20"
+                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                <path d="M9 12h12l-3 -3" />
+                <path d="M18 15l3 -3" />
+              </svg>
+              {{'general.logout'|translate}}
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </p-sidebar>
+</div> -->
+
+<!-- Mobile Bottom Navbar -->
+<nav #navbar *appResponsiveIfNotStandalone="'desktop'"
+  class="navbar navbar-expand-lg position-fixed w-100 d-xl-block d-none"
+  [ngClass]="(page!='applications'&&page!='home'&&page!='places'&&page=='events'&&page=='stories'&&page=='stores'&&page!='coming-soon'&&page!='restaurants'&&page!='tourGuides'&&page!='restaurant-details'&&page!='searchResult'&&page!='profile')?'headerBg':''"
+  [ngClass]="page=='trips'||page=='restaurant-details'||page=='events-details'||page=='tourGuideDetails'||page=='story-details'||page=='place-details'||page=='store-details'||page=='searchResult'?'new-header-bg':''"
+  (clickOutside)="collapsedMenu == true ? collapsedMenu = false :''"
+  [class.dark-nav]="page=='restaurant-details'||page=='story-details'">
+  <div class="container px-0">
+    <a class="navbar-brand m-0" title="logo">
+      <ng-container>
+        <img src="assets/images/logo/logo-white.png" alt="logo" class="logo h-100" appLazyImg width="78" height="78">
+      </ng-container>
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      [attr.aria-expanded]="!collapsedMenu" (click)="collapsedMenu = !collapsedMenu" aria-label="Toggle navigation">
+      <div class="menu-icon d-flex justify-content-between flex-column align-items-end">
+        <span class="line"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+    </button>
+    <div class="collapse navbar-collapse m-auto" id="navbarSupportedContent" [class.show]="collapsedMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']"
+            routerLinkActive="active2" (click)="collapsedMenu = false" [class.active2]="page=='home'"
+            [title]="'titles.home'|translate">{{'nav.home'|translate}}</a>
+        </li>
+        <li class="nav-item dropdown mega-dropdown d-lg-flexd-none"
+          (clickOutside)="collapse == true ? (collapse = false) : ''">
+          <a class="nav-link dropdown-toggle text-white-color d-flex align-items-center gap-2 " id="megaDropdownMenu"
+            [class.active2]="page=='places'||page=='place-details'" [title]="'titles.places'|translate"><span
+              [routerLink]="['/' + publicService.getCurrentLanguage(), 'places']">
+              {{'nav.place'|translate}}
+            </span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"
+              (click)="collapse = !collapse" [ngStyle]="{ 'transform': collapse ? 'rotate(180deg)' : 'rotate(0deg)' }"
+              style="transition: transform 0.3s ease;">
+              <path d="M1.09961 1L5.09961 5L9.09961 1" stroke="#F3ECF9" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+
+
+          </a>
+          <div class="dropdown-menu mega-menu-visit border-0 w-100 shadow p-0" [class.show]="collapse">
+            <app-invite-to-visit *ngIf="collapse" (openPlaceHandler)="openPlace();"></app-invite-to-visit>
+          </div>
+        </li>
+        <li class="nav-item d-lg-none d-flex">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'places']" routerLinkActive="active2"
+            [title]="'titles.places'|translate">{{'nav.place'|translate}}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'stores']" routerLinkActive="active2"
+            [title]="'titles.stores'|translate">{{'nav.stores'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'restaurants']"
+            [title]="'homePage.restaurants'|translate" routerLinkActive="active2">{{'nav.zad'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'stories']" [title]="'titles.swalefs'|translate"
+            routerLinkActive="active2">{{'nav.swalefs'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'events']" [title]="'titles.events'|translate"
+            routerLinkActive="active2">{{'nav.events'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapsedMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'applications']"
+            [title]="'titles.applications'|translate" routerLinkActive="active2">{{'nav.applications'|translate}}</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-4 py-lg-0 py-3">
+        <ng-container *ngIf="isUserLoggedin; else loginNow">
+          <app-user-info></app-user-info>
+        </ng-container>
+        <ng-template #loginNow>
+          <button
+            class="btn {{page=='applications'?'btn-outline-new':'btn-solid-main login'}} py-2 d-flex justify-content-center gap-2"
+            (click)="login()">
+            {{'form.login'|translate}}
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24" height="24"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+              <path d="M21 12h-13l3 -3" />
+              <path d="M11 15l-3 -3" />
+            </svg>
+          </button>
+        </ng-template>
+        <ng-container *ngIf="page=='applications'; else elseNewSelector">
+          <app-change-language-selector></app-change-language-selector>
+        </ng-container>
+        <ng-template #elseNewSelector>
+          <app-change-language-selector></app-change-language-selector>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<nav #navbar *appResponsiveIfNotStandalone="'mobile'" class="d-xl-none d-block navbar position-absolute w-100  "
+  [ngClass]="{'headerBg': pageNotIn(['home', 'applications','coming-soon',  'events','tourGuides', 'restaurants', 'stories', 'profile'])}"
+  [ngClass]="{'new-header-bg': pageIn(['place-details','store-details','events-details','tourGuideDetails','searchResult', 'restaurant-details', 'story-details','stories', 'events',  'trips'])}">
+  <div class="container d-flex h-100">
+    <div class="d-flex justify-content-between align-items-center w-100">
+      <a class="menu-icon d-flex justify-content-between flex-column" (click)="displayMenu = true" title="toggle">
+        <span class="line"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </a>
+      <!-- Logo Link -->
+      <a class="navbar-brand m-0" routerLink="/home" title="logo" aria-label="Home">
+        <ng-container *ngIf="pageIn(['events', 'restaurant-details', 'searchResult']); else WhiteLogo">
+          <!-- <img src="assets/images/logo/dark-logo.svg" alt="logo" class="logo h-100" appLazyImg width="78" height="78"> -->
+          <img src="assets/images/logo/logo-white.png" alt="logo" class="logo h-100" appLazyImg width="78">
+        </ng-container>
+        <ng-template #WhiteLogo>
+          <ng-container>
+            <img src="assets/images/logo/logo-white.png" alt="logo" class="logo h-100" appLazyImg width="78">
+            <!-- <img src="assets/images/logo/dark-logo.svg" alt="logo" class="logo h-100" appLazyImg width="78" height="78"> -->
+          </ng-container>
+
+        </ng-template>
+      </a>
+      <app-change-language-selector></app-change-language-selector>
+    </div>
+  </div>
+</nav>
+<div id="header-sidebar">
+  <p-sidebar [(visible)]="displayMenu" [position]="currentLanguage=='ar'?'right':'left'" [baseZIndex]="33331">
+    <div class="position-relative sidebar-menu-nav">
+      <div class="overlay position-absolute"></div>
+      <div class="sidebar-menu text-white-color d-flex flex-column justify-content-center mt-5">
+        <div class="d-flex justify-content-center logo-img mb-3 pointer" (click)="displayMenu = false"
+          [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']">
+          <img src="assets/images/logo/logo-white.png" width="120" height="120" alt="logo" class="logo h-100"
+            appLazyImg>
+        </div>
+
+      </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3 p-3 pb-4">
+        <li>
+          <div class="d-flex justify-content-between gap-2">
+            <ng-container *ngIf="isUserLoggedin; else elseLogin">
+              <div class="profile-card p-3 rounded d-flex align-items-center flex-column justify-content-between w-100">
+                <a class="rounded-circle profile-img d-block shadow-sm position-relative" title="profile">
+                  <img [src]="currentLoginInformation?.PersonalData?.photo" [alt]="'name'"
+                    onerror="src='assets/images/not-found/no-img.svg'" loading="lazy"
+                    class="w-100 h-100 rounded-circle">
+                </a>
+
+                <div class="mt-2 text-truncate fw-semibold w-100 text-center">
+                  {{currentLoginInformation?.PersonalData?.full_name||''}}
+                </div>
+                <a class="d-flex justify-content-center align-items-center w-100 gap-2 mt-1"
+                  (click)="displayMenu = false" [routerLink]="['/' + publicService.getCurrentLanguage(), 'Profile']"
+                  title="Profile">
+                  <!-- <i class="fas fa-info-circle"></i> -->
+                  <svg width="20" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M12.5 6.25C12.9142 6.25 13.25 5.91421 13.25 5.5C13.25 5.08579 12.9142 4.75 12.5 4.75V6.25ZM20.25 12.5C20.25 12.0858 19.9142 11.75 19.5 11.75C19.0858 11.75 18.75 12.0858 18.75 12.5H20.25ZM19.5 6.25C19.9142 6.25 20.25 5.91421 20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75V6.25ZM15.412 4.75C14.9978 4.75 14.662 5.08579 14.662 5.5C14.662 5.91421 14.9978 6.25 15.412 6.25V4.75ZM20.25 5.5C20.25 5.08579 19.9142 4.75 19.5 4.75C19.0858 4.75 18.75 5.08579 18.75 5.5H20.25ZM18.75 9.641C18.75 10.0552 19.0858 10.391 19.5 10.391C19.9142 10.391 20.25 10.0552 20.25 9.641H18.75ZM20.0303 6.03033C20.3232 5.73744 20.3232 5.26256 20.0303 4.96967C19.7374 4.67678 19.2626 4.67678 18.9697 4.96967L20.0303 6.03033ZM11.9697 11.9697C11.6768 12.2626 11.6768 12.7374 11.9697 13.0303C12.2626 13.3232 12.7374 13.3232 13.0303 13.0303L11.9697 11.9697ZM12.5 4.75H9.5V6.25H12.5V4.75ZM9.5 4.75C6.87665 4.75 4.75 6.87665 4.75 9.5H6.25C6.25 7.70507 7.70507 6.25 9.5 6.25V4.75ZM4.75 9.5V15.5H6.25V9.5H4.75ZM4.75 15.5C4.75 18.1234 6.87665 20.25 9.5 20.25V18.75C7.70507 18.75 6.25 17.2949 6.25 15.5H4.75ZM9.5 20.25H15.5V18.75H9.5V20.25ZM15.5 20.25C18.1234 20.25 20.25 18.1234 20.25 15.5H18.75C18.75 17.2949 17.2949 18.75 15.5 18.75V20.25ZM20.25 15.5V12.5H18.75V15.5H20.25ZM19.5 4.75H15.412V6.25H19.5V4.75ZM18.75 5.5V9.641H20.25V5.5H18.75ZM18.9697 4.96967L11.9697 11.9697L13.0303 13.0303L20.0303 6.03033L18.9697 4.96967Z"
+                        fill="#ffffff"></path>
+                    </g>
+                  </svg>
+                  <span>{{'nav.profile'|translate}}</span>
+                </a>
+              </div>
+            </ng-container>
+            <ng-template #elseLogin>
+              <div class="nav-item ">
+                <a class="nav-link d-flex gap-2 fw-bold login" (click)="displayMenu = false"
+                  (click)="login();displayMenu = false" title="login">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M15 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                    <path d="M21 12h-13l3 -3" />
+                    <path d="M11 15l-3 -3" />
+                  </svg>
+                  {{'form.login'|translate}}
+                </a>
+              </div>
+            </ng-template>
+            <a [class.position-absolute]="isUserLoggedin"
+              class="close d-flex justify-content-center align-items-center bg-white-color rounded text-danger"
+              (click)="displayMenu=false;" title="close">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M13 16.25C12.9015 16.2505 12.8038 16.2312 12.7128 16.1935C12.6218 16.1557 12.5393 16.1001 12.47 16.03C12.3296 15.8894 12.2507 15.6987 12.2507 15.5C12.2507 15.3012 12.3296 15.1106 12.47 14.97L15.47 11.97L12.47 8.96999C12.3999 8.82472 12.3784 8.6607 12.4089 8.50227C12.4393 8.34385 12.5201 8.19947 12.6391 8.09056C12.7581 7.98165 12.909 7.91402 13.0695 7.89771C13.23 7.88139 13.3915 7.91726 13.53 7.99999L17.03 11.5C17.1705 11.6406 17.2494 11.8312 17.2494 12.03C17.2494 12.2287 17.1705 12.4194 17.03 12.56L13.53 16C13.4633 16.0756 13.3819 16.1367 13.2908 16.1797C13.1997 16.2227 13.1007 16.2466 13 16.25Z"
+                    fill="#000000"></path>
+                  <path
+                    d="M7.5 16.25C7.30706 16.2352 7.12757 16.1455 7 16C6.87702 15.8625 6.80902 15.6845 6.80902 15.5C6.80902 15.3155 6.87702 15.1375 7 15L10 12L7 8.99998C6.93316 8.86003 6.91135 8.70279 6.93758 8.54993C6.96381 8.39707 7.03678 8.2561 7.14645 8.14643C7.25612 8.03676 7.39709 7.96379 7.54995 7.93756C7.70282 7.91133 7.86005 7.93314 8 7.99998L11.5 11.5C11.6405 11.6406 11.7193 11.8312 11.7193 12.03C11.7193 12.2287 11.6405 12.4194 11.5 12.56L8 16C7.87243 16.1455 7.69295 16.2352 7.5 16.25Z"
+                    fill="#000000"></path>
+                </g>
+              </svg>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']" routerLinkActive="active3" title="home">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="20" height="20"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+              <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+              <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+            </svg>
+            {{'nav.home'|translate}}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'places']" routerLinkActive="active3"
+            title="places">
+            <svg xmlns=" http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-current-location" width="20"
+              height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+              <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+              <path d="M12 2l0 2" />
+              <path d="M12 20l0 2" />
+              <path d="M20 12l2 0" />
+              <path d="M2 12l2 0" />
+            </svg>
+            {{'nav.place'|translate}}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'stores']" routerLinkActive="active3"
+            [title]="'titles.stores'|translate">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-circus" width="20"
+              height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 11h16" />
+              <path d="M12 6.5c0 1 -5 4.5 -8 4.5" />
+              <path d="M12 6.5c0 1 5 4.5 8 4.5" />
+              <path d="M6 11c-.333 5.333 -1 8.667 -2 10h4c1 0 4 -4 4 -9v-1" />
+              <path d="M18 11c.333 5.333 1 8.667 2 10h-4c-1 0 -4 -4 -4 -9v-1" />
+              <path d="M12 7v-4l2 1h-2" />
+            </svg>
+            {{'nav.stores'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'restaurants']" routerLinkActive="active3"
+            title="restaurants">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-pavilion" width="20"
+              height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 21h7v-3a2 2 0 0 1 4 0v3h7" />
+              <path d="M6 21l0 -9" />
+              <path d="M18 21l0 -9" />
+              <path d="M6 12h12a3 3 0 0 0 3 -3a9 8 0 0 1 -9 -6a9 8 0 0 1 -9 6a3 3 0 0 0 3 3" />
+            </svg>
+            {{'nav.zad'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link  d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'stories']" routerLinkActive="active3"
+            title="stories">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-article" width="20" height="20"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+              <path d="M7 8h10" />
+              <path d="M7 12h10" />
+              <path d="M7 16h10" />
+            </svg>
+            {{'nav.swalefs'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex gap-2" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'events']" routerLinkActive="active3"
+            title="events">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-timeline-event-text" width="20"
+              height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 20m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M10 20h-6" />
+              <path d="M14 20h6" />
+              <path d="M12 15l-2 -2h-3a1 1 0 0 1 -1 -1v-8a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-3l-2 2z" />
+              <path d="M9 6h6" />
+              <path d="M9 9h3" />
+            </svg>
+            {{'nav.events'|translate}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex gap-2 align-items-center" (click)="displayMenu = false"
+            [routerLink]="['/' + publicService.getCurrentLanguage(), 'applications']" routerLinkActive="active3"
+            title="events">
+            <i class="pi pi-th-large" style="font-size: 15px;"></i>
+            {{'nav.applications'|translate}}</a>
+        </li>
+        <ng-container *ngIf=" isUserLoggedin">
+          <li class="nav-item">
+            <a class="nav-link d-flex gap-2 align-items-center" (click)="displayMenu = false"
+              [routerLink]="['/' + publicService.getCurrentLanguage(), 'tour-guides']" routerLinkActive="active3"
+              title="tour guide">
+              <i class="pi pi-user" style="font-size: 15px;"></i>
+              {{'titles.tourGuides'|translate}}</a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="isUserLoggedin">
+          <li class="nav-item">
+            <a class="nav-link d-flex gap-2" (click)="displayMenu = false" [routerLink]="'/trips/list'"
+              routerLinkActive="active3" title="trips">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-suitcase" width="20"
+                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <rect x="7" y="3" width="10" height="18" rx="2" />
+                <path d="M10 7h4v4h-4z" />
+              </svg>
+              {{'nav.myTrips'|translate}}</a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="isUserLoggedin">
+          <li class="nav-item">
+            <a class="nav-link logout d-flex gap-2 text-danger fw-bold d-flex justify-content-between"
+              (click)="logOut();displayMenu = false" title="logout">
+              <p>{{'general.logout'|translate}}</p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout scaleX-rtl" width="20"
+                height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                <path d="M9 12h12l-3 -3" />
+                <path d="M18 15l3 -3" />
+              </svg>
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+
+  </p-sidebar>
+</div>
+<!-- Mobile Bottom Navbar -->
+<nav #navbar *appResponsiveIfNotStandalone="'mobile'"
+  class="d-xl-none d-flex position-fixed w-100 bottom-0 bg-white-color navbar3 shadow-lg">
+  <ul class="gap-2 d-flex justify-content-evenly w-100 p-0">
+    <li class=" nav-item">
+      <a class="nav-link" [routerLink]="['/' + publicService.getCurrentLanguage(), 'home']" routerLinkActive="active2"
+        (click)="collapsedMenu = false" title="home">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="35" height="35"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+        </svg>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/' + publicService.getCurrentLanguage(), 'places']" routerLinkActive="active2"
+        title="places">
+        <svg xmlns=" http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-current-location" width="35"
+          height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+          <path d="M12 2l0 2" />
+          <path d="M12 20l0 2" />
+          <path d="M20 12l2 0" />
+          <path d="M2 12l2 0" />
+        </svg>
+      </a>
+    </li>
+    <li class="nav-item d-xl-none d-flex position-relative">
+      <a class="nav-link camel-svg d-flex justify-content-center align-items-center rounded-circle"
+        (click)="startTrip()" title="start trip">
+        <img src="assets/images/camel.gif" width="55px" height="55px" alt="image" appLazyImg>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="collapsedMenu = false; explore()">
+        <img src="assets/images/icons/saudi.svg" alt="saudi" class="saudi" appLazyImg>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="collapsedMenu = false"
+        [routerLink]="['/' + publicService.getCurrentLanguage(), 'stores']" routerLinkActive="active">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-circus" width="35"
+          height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 11h16" />
+          <path d="M12 6.5c0 1 -5 4.5 -8 4.5" />
+          <path d="M12 6.5c0 1 5 4.5 8 4.5" />
+          <path d="M6 11c-.333 5.333 -1 8.667 -2 10h4c1 0 4 -4 4 -9v-1" />
+          <path d="M18 11c.333 5.333 1 8.667 2 10h-4c-1 0 -4 -4 -4 -9v-1" />
+          <path d="M12 7v-4l2 1h-2" />
+        </svg>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<app-map *ngIf="showMap"></app-map>
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
+<p-confirmDialog [style]="{ width: '450px' }" aria-label="Confirmation Dialog"></p-confirmDialog>

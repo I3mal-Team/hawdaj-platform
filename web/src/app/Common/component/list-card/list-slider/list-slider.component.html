@@ -1,0 +1,66 @@
+<div class="gallery mx-auto">
+    <ng-container *ngIf="items.length > 0;else noItems">
+        <div class="gallery-web">
+            <div class="gallery-container position-relative">
+                <div *ngFor="let item of items; let i = index" class="d-flex align-items-center h-100">
+                    <img [appLazyLoadImage]="item?.image" ngSrc="{{item?.image }}" [alt]="'Image ' + (i + 1)"
+                        [ngClass]="getClass(i)" (click)="onImageClick(i)" ngOptimizedImage width="100" height="100">
+
+                </div>
+                <p [ngClass]="{'ltr': currentLanguage !=='ar'}">
+                    <a [routerLink]="[link, items[currentIndex]?.slug]">{{"general.discover"|translate}}</a>
+                </p>
+            </div>
+            <div class="content d-flex align-items-center justify-content-center flex-column mt-4 mx-auto">
+                <h2>{{items[currentIndex]?.title}}</h2>
+                <ng-container *ngIf="items[currentIndex]?.address_name">
+                    <p class="mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                            <path
+                                d="M12.5 11.5C11.837 11.5 11.2011 11.2366 10.7322 10.7678C10.2634 10.2989 10 9.66304 10 9C10 8.33696 10.2634 7.70107 10.7322 7.23223C11.2011 6.76339 11.837 6.5 12.5 6.5C13.163 6.5 13.7989 6.76339 14.2678 7.23223C14.7366 7.70107 15 8.33696 15 9C15 9.3283 14.9353 9.65339 14.8097 9.95671C14.6841 10.26 14.4999 10.5356 14.2678 10.7678C14.0356 10.9999 13.76 11.1841 13.4567 11.3097C13.1534 11.4353 12.8283 11.5 12.5 11.5ZM12.5 2C10.6435 2 8.86301 2.7375 7.55025 4.05025C6.2375 5.36301 5.5 7.14348 5.5 9C5.5 14.25 12.5 22 12.5 22C12.5 22 19.5 14.25 19.5 9C19.5 7.14348 18.7625 5.36301 17.4497 4.05025C16.137 2.7375 14.3565 2 12.5 2Z"
+                                fill="#3A4980" />
+                        </svg>{{items[currentIndex]?.address_name}}
+                    </p>
+                </ng-container>
+                <ng-container *ngIf="type==='restaurant'">
+                    <h3 class="text-center">{{items[currentIndex]?.description | stripHtml}}</h3>
+                </ng-container>
+                <div class="rate d-flex">
+                    <div class="img-container" *ngFor="let star of [].constructor(5); let i = index">
+                        <svg *ngIf="i < items[currentIndex]?.rate" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M7.73112 20.833C7.22404 21.0977 6.6106 21.0511 6.14933 20.7129C5.68807 20.3746 5.45921 19.8035 5.55921 19.2404L6.36855 14.6014L2.96113 11.3361C2.54463 10.9389 2.39199 10.3385 2.56823 9.79059C2.74446 9.24271 3.21852 8.84388 3.78847 8.764L8.51945 8.08772L10.6553 3.82694C10.9086 3.31595 11.4296 2.99268 11.9999 2.99268C12.5702 2.99268 13.0912 3.31595 13.3445 3.82694L15.4803 8.08772L20.2113 8.764C20.7813 8.84388 21.2553 9.24271 21.4316 9.79059C21.6078 10.3385 21.4552 10.9389 21.0387 11.3361L17.6312 14.6014L18.4406 19.2414C18.5406 19.8045 18.3117 20.3756 17.8505 20.7139C17.3892 21.0521 16.7757 21.0987 16.2687 20.834L11.9999 18.6281L7.73112 20.833Z"
+                                fill="#FFD04F" stroke="#FFD04F" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <svg *ngIf="i >= items[currentIndex]?.rate" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M7.73112 20.833C7.22404 21.0977 6.6106 21.0511 6.14933 20.7129C5.68807 20.3746 5.45921 19.8035 5.55921 19.2404L6.36855 14.6014L2.96113 11.3361C2.54463 10.9389 2.39199 10.3385 2.56823 9.79059C2.74446 9.24271 3.21852 8.84388 3.78847 8.764L8.51945 8.08772L10.6553 3.82694C10.9086 3.31595 11.4296 2.99268 11.9999 2.99268C12.5702 2.99268 13.0912 3.31595 13.3445 3.82694L15.4803 8.08772L20.2113 8.764C20.7813 8.84388 21.2553 9.24271 21.4316 9.79059C21.6078 10.3385 21.4552 10.9389 21.0387 11.3361L17.6312 14.6014L18.4406 19.2414C18.5406 19.8045 18.3117 20.3756 17.8505 20.7139C17.3892 21.0521 16.7757 21.0987 16.2687 20.834L11.9999 18.6281L7.73112 20.833Z"
+                                stroke="#AEAEAE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="gallery-mobile">
+            <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" [showNavigators]="false" [circular]="true"
+                [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+                <ng-template pTemplate="item" let-item>
+                    <div class="mobile-card" [ngStyle]="{'direction':currentLanguage === 'ar' ? 'rtl' : 'ltr'}">
+                        <app-list-card [type]="type" [item]="item" (favouriteClicked)="addToFavourite(item)"
+                            [isLoadingFavourite]="isLoadingFavourite"></app-list-card>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+        <div class="mt-3 d-flex flex-column align-items-center">
+            <button class="view-all btn-solid-main" (click)="viewAll()"> {{'general.viewAll'|translate}}</button>
+        </div>
+    </ng-container>
+    <ng-template #noItems>
+        <app-skeleton [type]="'list-slider'"></app-skeleton>
+    </ng-template>
+</div>

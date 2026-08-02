@@ -1,0 +1,115 @@
+#according {
+    .according {
+        margin-top: 10rem;
+        .attachment-container {
+            border-radius: 24px;
+            height: 602px;
+            overflow: hidden;
+            transition: 0.5s;
+            &:first-child {
+                z-index: 1;
+                button.next {
+                    right: 50%;
+                    transform: translateX(50%);
+                }
+            }
+            &:nth-child(2) {
+                right: 100px;
+                z-index: 3;
+            }
+            &:nth-child(3) {
+                right: 200px;
+                z-index: 2;
+            }
+            &:nth-child(4) {
+                right: 300px;
+                z-index: 1;
+            }
+            button.next {
+                opacity: 1;
+                bottom: 10px;
+                right: 12.5%;
+                transition: 1s;
+            }
+            &.ar {
+                &:first-child {
+                    button.next {
+                        left: 50%;
+                        right: initial;
+                        transform: translateX(-50%) !important;
+                    }
+                }
+                &:nth-child(2) {
+                    position: absolute !important;
+                    left: 33.333333%;
+                    right: initial;
+                }
+                &:nth-child(3) {
+                    right: initial;
+                    position: absolute !important;
+                    left: 16.67%;
+                }
+                &:nth-child(4) {
+                    left: 300px;
+                    right: initial;
+                    position: absolute !important;
+                    left: 0;
+                }
+                button.next {
+                    left: 12.5%;
+                    right: initial;
+                }
+            }
+
+            &.active {
+                z-index: 4;
+                img {
+                    animation: fadeInEffect 1s ease-in-out forwards;
+                }
+                button.next {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+            }
+            .content {
+                top: 0px;
+                animation: fadeInEffect 1s ease-in-out forwards;
+                padding: 30px;
+                .location {
+                    padding: 10px 20px;
+                    width: fit-content;
+                    min-width: 150px;
+                    border-radius: 1.5rem;
+                    background: linear-gradient(94deg, rgba(255, 255, 255, 0.84) -100%, rgba(255, 255, 255, 0) 100%);
+                    box-shadow: -5px -5px 250px 0px rgba(255, 255, 255, 0.02) inset;
+                    backdrop-filter: blur(6.400000095367432px);
+                }
+                .title {
+                    p {
+                        font-size: 64px;
+                        line-height: 4.2rem;
+                        width: 400px;
+                    }
+                }
+                .visit {
+                    width: fit-content;
+                    padding-inline: 40px;
+                }
+            }
+            &:not(:first-child) {
+                .content {
+                    padding-left: 120px;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
+@keyframes fadeInEffect {
+    0% {
+        opacity: 0.75;
+    }
+    100% {
+        opacity: 1;
+    }
+}

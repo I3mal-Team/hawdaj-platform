@@ -1,0 +1,53 @@
+<div class="p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h5 class="fw-bold mb-0">{{'saveTrip.saveTrip'|translate}}</h5>
+    <a class="close rounded-circle d-flex justify-content-center align-items-center" (click)="close()"><i
+        class="pi pi-times"></i></a>
+  </div>
+  <form [formGroup]="saveTripForm" class="my-4">
+    <label for="" class="mb-2 fw-bold">{{'placeholder.tripTitle'|translate}}</label>
+    <input type="text" class="form-control" placeholder="{{'labels.enterTitle'|translate}}"
+      (input)="publicService.clearValidationErrors(formControls?.title)" formControlName="title" pInputText
+      [class.border-red]="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+    <div class="mt-2">
+      <ng-container
+        *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+        <ng-container
+          *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+          <ng-container *ngIf="formControls?.title?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field'|translate}}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="formControls?.title?.errors?.['minlength']">
+            <span class="text-danger fs-8 d-block lh-base">
+              {{'validations.titleLength'|translate}}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="formControls?.title?.errors?.['pattern']">
+            <span class="text-danger fs-8 d-block lh-base">
+              {{'validations.acceptLetters'|translate}}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="formControls?.title?.errors?.['noLeadingSpace']">
+            <span class="text-danger fs-8 d-block lh-base">
+              {{'validations.noLeadingSpace'|translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+  <div class="d-flex justify-content-end gap-2 pt-2">
+    <button class="btn btn-outline-main" (click)="close()" [disabled]="isLoading">{{'general.cancel'|translate}}</button>
+    <button class="btn btn-solid-main bg-danger border-0" (click)="save()" [disabled]="isLoading">
+      <ng-container *ngIf="!isLoading; else loadingSpinner">
+        {{'general.save'|translate}}
+      </ng-container>
+      <ng-template #loadingSpinner>
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <span>{{'general.save'|translate}}...</span>
+      </ng-template>
+    </button>
+  </div>
+</div>

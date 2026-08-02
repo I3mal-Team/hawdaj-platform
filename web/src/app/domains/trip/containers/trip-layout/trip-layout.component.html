@@ -1,0 +1,27 @@
+<header class="trip-layout__header" role="banner" *ngIf="!hideHeaderFooter()">
+  <app-header></app-header>
+</header>
+
+<main id="trip-layout" class="trip-layout" [class.trip-layout--ar]="currentLanguage() === 'ar'" role="main">
+  <section #outletContainer class="trip-layout__content">
+    <router-outlet></router-outlet>
+  </section>
+
+  <!-- Lazy footer -->
+  <div appLazyLoadSection (sectionInView)="onSectionInView()" class="trip-layout__footer-section" *ngIf="!hideHeaderFooter()">
+    <app-new-footer *ngIf="homeShowFooter()" class="trip-layout__footer"></app-new-footer>
+    <style *ngIf="homeShowFooter()">
+      #home {
+        padding-bottom: 0 !important;
+      }
+    </style>
+  </div>
+</main>
+
+<app-scroll-top class="trip-layout__scrolltop"></app-scroll-top>
+<app-overlay-loading class="trip-layout__overlay"></app-overlay-loading>
+
+<p-toast class="trip-layout__toast" position="top-center" [showTransitionOptions]="'0'"
+  [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="trip-layout__toast" position="top-center" key="search" hideTransitionOptions
+  [baseZIndex]="5000000"></p-toast>

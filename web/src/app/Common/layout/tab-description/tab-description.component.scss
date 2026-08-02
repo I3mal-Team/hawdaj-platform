@@ -1,0 +1,159 @@
+.card-container {
+  .title {
+    color: #371a4c;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+  }
+
+  .description {
+    color: #3a4980;
+    font-size: 1rem !important;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .address-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+
+    .ui-icon {
+      flex: 0 0 auto; // منع shrink على Android
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 25px;
+      height: 24px;
+    }
+  }
+
+  .details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+
+    .review-stats {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
+
+      .review {
+        p {
+          color: #3a4980;
+          font-size: 0.875rem !important;
+          font-weight: 700;
+          padding: 0.5rem 1rem;
+          border-radius: 1rem;
+          background: #edf0f8;
+          margin-bottom: 0;
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          min-width: 0; // منع overflow على iOS
+
+          .ui-icon-small {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 17px;
+            height: 16px;
+          }
+
+          @media (max-width: 550px) {
+            font-size: 0.75rem !important;
+          }
+        }
+      }
+
+      .rate {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 0.875rem !important;
+        background: #fbf3ea;
+        color: #d48d3b;
+        font-weight: 600;
+
+        p {
+          margin-bottom: 0;
+        }
+
+        .ui-icon-small {
+          flex: 0 0 auto;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 17px;
+          height: 16px;
+        }
+      }
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.25rem;
+
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto; // مهم جداً لـ Android
+
+        .ui-icon-social {
+          width: 32px;
+          height: 32px;
+          flex: 0 0 auto;
+        }
+      }
+    }
+  }
+
+  .ticket-button {
+    margin-top: 1rem;
+
+    .btn-solid-main {
+      background-color: #371a4c;
+      color: white;
+      padding: 0.5rem 2.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      .ui-icon-button {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 17px;
+        height: 17px;
+      }
+    }
+  }
+}
+
+p {
+  margin: 0 !important;
+}

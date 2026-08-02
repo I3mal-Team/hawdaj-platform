@@ -1,0 +1,198 @@
+.container {
+    .description {
+        width: 55%;
+
+        h4 {
+            color: #371a4c;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 42.56px;
+        }
+
+        p {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 31.92px;
+            font-weight: 500 !important;
+            color: #371a4c !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .sub-title {
+        font-size: 24px;
+        font-weight: 500;
+        color: #371a4c;
+    }
+    @media (max-width: 1024px) {
+        p {
+            font-size: 16px !important;
+            font-weight: 400;
+            line-height: 25px !important;
+            color: #371a4c;
+        }
+    }
+}
+.container {
+    .description {
+        width: 55%;
+
+        h4 {
+            color: #371a4c;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 42.56px;
+        }
+
+        p {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 31.92px;
+            font-weight: 500 !important;
+            color: #371a4c !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .sub-title {
+        font-size: 24px;
+        font-weight: 500;
+        color: #371a4c;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        p {
+            font-size: 16px !important;
+            font-weight: 400;
+            line-height: 25px !important;
+            color: #371a4c;
+        }
+    }
+}
+
+.cards {
+    width: 90%;
+    gap: 10px;
+    margin: auto;
+    height: 500px;
+    .card {
+        background-color: #3333333b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 12.875rem;
+        height: 20rem;
+        outline: 0 !important;
+        border-radius: 24px;
+        overflow: hidden;
+        transition: 0.3s;
+        zoom: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        @media (min-width: 2000px) {
+            height: 350px;
+        }
+        &.active {
+            width: 21.875rem;
+            height: 30rem;
+            .card-content {
+                display: block;
+            }
+            @media (min-width: 2000px) {
+                height: 450px;
+            }
+            .explore-btn {
+                transform: translate(-50%, 0);
+            }
+        }
+        .card-content {
+            position: absolute;
+            bottom: 5px;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12.71532917022705px);
+            width: 95%;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            h4 {
+                color: #fff;
+                font-size: 1.5rem !important;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.277);
+                @media (max-width: 767px) {
+                    font-size: 1rem !important;
+                }
+            }
+        }
+    }
+}
+.card-content-sm {
+    position: absolute;
+    bottom: 5px;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12.71532917022705px);
+    width: 95%;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    h4 {
+        color: #fff;
+        font-size: 1.5rem !important;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.277);
+        @media (max-width: 767px) {
+            font-size: 1rem !important;
+        }
+    }
+}
+
+@media (max-width: 990px) {
+    .card {
+        border-radius: 1rem;
+        overflow: hidden;
+        position: relative;
+        width: 90%;
+        height: 350px;
+    }
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+:host::ng-deep {
+    .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+        background-color: gray;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+        background: var(--light-new-color);
+    }
+}

@@ -1,0 +1,40 @@
+#otp-container {
+  direction: ltr !important;
+  .input-style {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    gap: 10px;
+    outline: none;
+    border-radius: 12px;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #f1f3f5;
+  }
+
+  .focus-style {
+    border: 1px solid #111928 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-3 {
+    width: 3rem !important;
+  }
+  .col-sm-2 {
+    width: 3rem !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .col-3 {
+    width: 2.6rem !important;
+  }
+  .col-sm-2 {
+    width: 2.6rem !important;
+  }
+}

@@ -1,0 +1,210 @@
+.close-btn {
+  z-index: 66;
+  right: 25px;
+  top: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+:host::ng-deep {
+  .p-sidebar-bottom {
+    height: 85vh;
+    border-radius: 30px 30px 0 0 !important;
+    overflow: hidden;
+  }
+}
+
+// Start Map Style
+:host::ng-deep {
+  // .gm-style-iw-chr {
+  //   position: absolute;
+  //   display: flex;
+  //   justify-content: flex-start;
+  //   width: 100%;
+  // }
+  // .gm-ui-hover-effect {
+  //   background-color: rgba(132, 84, 142, 0.3607843137) !important;
+  //   border-radius: 50% !important;
+  //   margin: 1rem !important;
+  //   width: 2rem !important;
+  //   height: 2rem !important;
+  //   display: flex !important;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+
+  // .gm-style-mtc,
+  // .satellite {
+  //   display: none !important;
+  // }
+
+  // .gm-svpc,
+  // .gm-fullscreen-control,
+  // .gmnoprint > div {
+  //   border-radius: 8px !important;
+  // }
+
+  // .gm-svpc {
+  //   bottom: 0px !important;
+  //   top: 22px !important;
+  // }
+
+  // .gm-fullscreen-control {
+  //   left: 1rem !important;
+  //   right: inherit !important;
+  // }
+
+  // .gm-fullscreen-control,
+  // .gm-style-mtc {
+  //   top: 12px !important;
+  // }
+
+  // .gm-style .gm-style-iw-c {
+  //   max-width: 300px !important;
+  //   max-height: max-content !important;
+  //   min-width: 50px !important;
+  //   min-height: 50px !important;
+  //   height: inherit !important;
+  //   width: inherit !important;
+  //   padding: 0 !important;
+  //   border-radius: 25px !important;
+  // }
+
+  // .gm-style .gm-style-iw-d {
+  //   overflow: hidden !important;
+  // }
+
+  // .gm-style .gm-style-iw-tc::after {
+  //   background: #f1eef8 !important;
+  // }
+  .gm-fullscreen-control {
+    top: 70px !important;
+  }
+  .gm-style-iw-chr {
+    position: absolute;
+    top: -8px;
+    left: 30px;
+    width: 10px;
+    font-size: 15px;
+    color: #3a4980 !important;
+  }
+  .not-arabic .gm-style-iw-chr {
+    left: auto;
+    right: 30px;
+  }
+  .gm-ui-hover-effect {
+    span {
+      width: 19px !important;
+      height: 19px !important;
+    }
+  }
+  .gm-style-iw {
+    padding: 0;
+    border-radius: 16px !important;
+  }
+  .gm-style-iw-d {
+    padding: 7px !important;
+    padding-top: 3px !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    width: 176px;
+  }
+  // .info-window-card {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: flex-start !important;
+  //   justify-content: center;
+  //   border-radius: 20px !important;
+  //   // background-color: #f1eef8;
+
+  //   .info-window-img {
+  //     height: 290px !important;
+  //     object-fit: cover;
+  //   }
+
+  //   .info-window-content {
+  //     // display: flex;
+  //     // flex-direction: column;
+  //     // align-items: center;
+  //     // justify-content: center;
+
+  //     background: linear-gradient(
+  //       180deg,
+  //       hsla(0, 0%, 100%, 0),
+  //       hsla(0, 0%, 100%, 0.72) 38.02%,
+  //       hsla(0, 0%, 100%, 0.9) 55.21%,
+  //       #fff 70.31%,
+  //       #fff
+  //     );
+  //     bottom: 0;
+  //     left: 0;
+  //     padding: 3rem 1rem 1rem;
+  //     position: absolute;
+  //     width: 100%;
+  //     z-index: 3;
+
+  //     .info-window-title {
+  //     }
+
+  //     .info-window-description {
+  //     }
+  //   }
+  // }
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  /* Adjust as needed */
+  height: 100%;
+
+  /* Adjust as needed */
+  .search-container {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 40%;
+
+    .p-inputgroup-addon {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      height: 45px !important;
+    }
+
+    .pi-search {
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+    }
+
+    .pi-times {
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px;
+      right: 0;
+    }
+
+    .form-control-search-map {
+      text-indent: initial;
+      height: 45px !important;
+      border-radius: 10px !important;
+      padding: 10px 2.5rem;
+    }
+  }
+
+  .arrow {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: var(--text-white-color);
+    cursor: pointer;
+  }
+
+  .fa-star {
+    color: rgb(255, 202, 0);
+  }
+}
+
+// End Map Style

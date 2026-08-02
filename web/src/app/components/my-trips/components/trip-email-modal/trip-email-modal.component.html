@@ -1,0 +1,129 @@
+<div class="trip-email p-4">
+  <a class="close d-flex justify-content-center align-items-center" (click)="close()"><i class="pi pi-times"></i></a>
+  <div class="d-flex justify-content-center align-items-center">
+    <h5 class="fw-bold mb-0">{{'saveTrip.sendTo'|translate}}</h5>
+  </div>
+  <form [formGroup]="emailForm" class="my-4">
+    <div class="mb-3">
+      <label for="" class="mb-2 required my-2 fw-bold">{{'labels.name'|translate}}</label>
+      <div class="input">
+        <input type="text" class="form-control" placeholder="{{'placeholder.name'|translate}}"
+          (input)="publicService.clearValidationErrors(formControls?.name)" formControlName="name" pInputText
+          [class.border-red]="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 20.0001C5 17.5001 7 15.6001 9.4 15.6001H14.5C17 15.6001 18.9 17.6001 18.9 20.0001"
+              stroke="#3A4980" stroke-width="1.4824" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M15 5.2C16.7 6.9 16.7 9.6 15 11.2C13.3 12.8 10.6 12.9 8.99999 11.2C7.39999 9.5 7.29999 6.8 8.99999 5.2C10.7 3.6 13.3 3.6 15 5.2"
+              stroke="#3A4980" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </div>
+      <div class="mt-2">
+        <ng-container *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+          <ng-container
+            *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+            <ng-container *ngIf="formControls?.name?.errors?.['required']">
+              <span class="text-danger fs-8">
+                {{'validations.required_field'|translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="formControls?.name?.errors?.['minlength']">
+              <span class="text-danger fs-8 d-block lh-base">
+                {{'validations.length'|translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="formControls?.name?.errors?.['pattern']">
+              <span class="text-danger fs-8 d-block lh-base">
+                {{'validations.acceptLetters'|translate}}
+              </span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="mb-2 required my-2 fw-bold">{{'labels.enterTitle'|translate}}</label>
+      <div class="input">
+
+        <input type="text" class="form-control" placeholder="{{'placeholder.tripTitle'|translate}}"
+          (input)="publicService.clearValidationErrors(formControls?.title)" formControlName="title" pInputText
+          [class.border-red]="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M14 10L10 9.99997" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M7 10.0001L6 9.99995" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M6 13.5L14 13.5" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M14 6.50005L10 6.49995" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M7 6.50005L6 6.49995" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <rect x="1" y="1" width="18" height="18" rx="5" stroke="#3A4980" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </span>
+      </div>
+      <div class="mt-2">
+        <ng-container
+          *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+          <ng-container
+            *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+            <ng-container *ngIf="formControls?.title?.errors?.['required']">
+              <span class="text-danger fs-8">
+                {{'validations.required_field'|translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="formControls?.title?.errors?.['minlength']">
+              <span class="text-danger fs-8 d-block lh-base">
+                {{'validations.titleLength'|translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="formControls?.title?.errors?.['pattern']">
+              <span class="text-danger fs-8 d-block lh-base">
+                {{'validations.titleAcceptLetters'|translate}}
+              </span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="" class="mb-2 required my-2 fw-bold">
+        {{'labels.enterEmail'|translate}}
+      </label>
+      <div class="input">
+        <input type="email" class="form-control" placeholder="{{'placeholder.email'|translate}}"
+          (input)="publicService.clearValidationErrors(formControls?.email)" formControlName="email" pInputText
+          [class.border-red]="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+        <span class="p-inputgroup-addon bg-transparent"><img appLazyLoadImage
+            src="assets/images-v2/popups/forget-password/icons/email.png" alt="email"></span>
+      </div>
+      <div class="mt-2">
+        <ng-container
+          *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+          <ng-container
+            *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+            <ng-container *ngIf="formControls?.email?.errors?.['required']">
+              <span class="text-danger fs-8">
+                {{'validations.emailRequired'|translate}}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+              <span class="text-danger fs-8 d-block lh-base">
+                {{'validations.emailNotValid'|translate}}
+              </span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+  <div class="d-flex justify-content-center gap-2 pt-2">
+    <button class="btn btn-solid-main bg-danger border-0" (click)="save()">{{'general.send'|translate}}</button>
+    <button class="btn btn-outline-main" (click)="close()">{{'general.cancel'|translate}}</button>
+  </div>
+</div>

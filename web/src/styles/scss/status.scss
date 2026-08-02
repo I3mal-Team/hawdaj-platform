@@ -1,0 +1,67 @@
+.status-completed,
+.status-paid {
+  color: #32a071;
+}
+.status-pending {
+  color: #f9bc61;
+}
+.status-pendingPayment {
+  color: #77a13b;
+}
+.status-submitted {
+  color: #1071b8;
+}
+.status-rejected {
+  color: #f37070;
+}
+.status-cancelled,
+.status-noShow {
+  color: #8c95a3;
+}
+.status-inReview {
+  color: #f9bc61;
+}
+.status-confirmed,
+.status-attended {
+  color: #32a071 !important;
+}
+
+.status-bg {
+  padding: 13px;
+  border-radius: 30px;
+}
+.status-bg-completed,
+.status-bg-paid {
+  color: #32a071;
+  background-color: #32a07114;
+}
+.status-bg-pending {
+  color: #f9bc61;
+  background-color: #f9bc6114;
+}
+.status-bg-rejected {
+  color: #f37070;
+  background-color: #fdeaea;
+}
+.status-bg-cancelled,
+.status-bg-noShow {
+  color: #8c95a3;
+  background-color: #eeeff1;
+}
+.status-bg-inReview {
+  color: #f9bc61;
+  background-color: #fef5e7;
+}
+.status-bg-confirmed,
+.status-bg-attended {
+  color: #32a071 !important;
+  background-color: #e0f1ea !important;
+}
+.status-bg-submitted {
+  color: #1071b8 !important;
+  background-color: #dbeaf5 !important;
+}
+.status-bg-pendingPayment {
+  color: #77a13b !important;
+  background-color: #ebf1e2 !important;
+}

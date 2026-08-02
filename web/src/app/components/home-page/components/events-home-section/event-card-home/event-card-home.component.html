@@ -1,0 +1,21 @@
+<div class="event-card w-100 position-relative shadow-sm pointer" (click)="showDetails(item)">
+  <img [src]=" item?.image" onerror="src='assets/images/not-found/no-img.svg'" class="event-img w-100" alt="Image">
+  <span [class.d-none]="!item?.closed"
+    class="position-absolute closed py-1 px-2 bg-dark-color m-3 text-white-color rounded fs-6-1 top-0">{{'general.finished'|translate}}</span>
+  <ng-container *ngIf="item?.title&&item?.description">
+    <div class="event-content position-absolute w-100 p-3">
+      <div class="h-100 overflow-hidden">
+        <h5 class="event-title fs-5-1 fw-bold mb-0">
+          {{item?.title || ''}}
+        </h5>
+        <p class="mb-0 fw-500 fs-6 description">
+          {{(item?.description || '')|stripHtml}}
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <a class="btn-details rounded-circle d-flex justify-content-center align-items-center position-absolute text-white-color"
+    (click)="showDetails(item)">
+    <i class="pi pi-arrow-right scaleX-rtl"></i>
+  </a>
+</div>

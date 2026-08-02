@@ -1,0 +1,133 @@
+<ng-container *ngIf="isLoadingCategories; else elseViewData">
+  <app-skeleton [type]="'visit'"></app-skeleton>
+</ng-container>
+<ng-template #elseViewData>
+  <div class="content">
+    <div class="row m-0 g-0">
+      <!-- Vertical Tab Buttons -->
+      <div class="col-md-2 position-relative p-0">
+        <div class=" all-tabs py-3">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <ng-container *ngFor="let category of categoriesList; let isFirst = first">
+              <a (click)="getPlacesByCategoryId(category?.id)"
+                class="nav-link nav-link-tab d-flex align-items-center justify-content-between gap-2 m-2 mb-1"
+                [class.active]="isFirst" [class.active-tab]="isFirst" [id]="'v-pills-tab-' + category.id"
+                data-bs-toggle="pill" [href]="'#v-pills-content-' + category.id" role="tab"
+                [attr.aria-controls]="'v-pills-content-' + category.id" [attr.aria-selected]="isFirst">
+                <span class="cat-name">
+                  {{category?.name}}
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                  [style.transform]="currentLanguage !== 'ar' ? 'rotate(180deg)' : 'none'">
+                  <path d="M10 4L6 8L10 12" stroke="#98A2B3" stroke-width="1.66667" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Vertical Tab Content -->
+      <div class="col-md-9">
+        <div class="tab-content p-4 pb-3" id="v-pills-tabContent">
+          <div *ngFor="let category of categoriesList; let isFirst = first" class="tab-pane fade" [class.show]="isFirst"
+            [class.active]="isFirst" [id]="'v-pills-content-' + category.id" role="tabpanel"
+            [attr.aria-labelledby]="'v-pills-tab-' + category.id">
+            <div class="gap-3 mb-3">
+              <div class="d-flex col-9 justify-content-end align-items-center gap-2">
+                <span class="p-input-icon-right w-100 input-search">
+                  <input pInputText class="form-control bg-white-color border-0" type="text" #search
+                    (reset)="clearSearchValue(search)" (keyup)="handleSearch(search.value)"
+                    placeholder="{{'placeholder.search'|translate}}" />
+                  <!-- <ng-container *ngIf="search.value && !isLoadingSearch">
+                    <a (click)="clearSearchValue(search)">
+                      <i class="pi pi-times text-danger pointer px-2"></i>
+                    </a>
+                  </ng-container> -->
+                  <ng-container *ngIf="isLoadingSearch">
+                    <i class="pi pi-spin pi-spinner"></i>
+                  </ng-container>
+                </span>
+                <button
+                  class="btn clear-btn border-0 btn-solid-secondary d-flex justify-content-center align-items-center"
+                  [class.d-none]="!search.value" (click)="clearSearchValue(search)">
+                  <i class="pi pi-times text-dark"></i>
+                </button>
+                <button type="button" class="btn-search btn-solid-secondary text-nowrap cl-6 px-2"
+                  (click)="openPlaceWithCategoryId()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    [style.transform]="currentLanguage !== 'ar' ? 'rotate(180deg)' : 'none'">
+                    <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M10 7L5 12" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M10 17L5 12" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                  {{'general.allPlaces'|translate}}
+                </button>
+              </div>
+
+
+            </div>
+            <!-- <a (click)="openPlaceWithCategoryId(category?.id)">
+              <div class="rounded py-2 text-white-color fs-5-2 mb-3 text-center bg-main-color text-capitalize">
+                {{category?.name}}
+              </div>
+            </a> -->
+            <div class="row all-cards">
+              <!-- Dynamic cards for each tab-pane -->
+              <ng-container *ngIf="isLoadingPlaces; else showPlaces">
+                <app-skeleton [type]="'places-category'"></app-skeleton>
+              </ng-container>
+              <ng-template #showPlaces>
+                <ng-container *ngIf="placesList?.length>0; else noPlaces">
+                  <div class="col-lg-4 col-md-6 mb-3" *ngFor="let place of placesList">
+                    <div class="card-body p-0 global-card pointer" [class.h-100]="placesList?.length>1"
+                      (click)="openPlaceDetails(place?.slug)">
+                      <div class="d-flex align-items-start gap-2 h-100">
+                        <div class="img-card">
+                          <img [src]="place?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                            [alt]="place?.title">
+                        </div>
+                        <div class="w-100 p-2 d-flex flex-column h-100">
+                          <h6 class="text-start">{{place?.title}}</h6>
+                          <p class="mb-0 fs-8 mt-1 place-desc text-start">{{place?.description | stripHtml}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="px-3 d-flex justify-content-end">
+                    <button type="button" class="btn-search btn-solid-secondary text-nowrap px-2"
+                      (click)="openPlaceWithCategoryId(categoryId)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        [style.transform]="currentLanguage !== 'ar' ? 'rotate(180deg)' : 'none'">
+                        <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M10 7L5 12" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                        <path d="M10 17L5 12" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round" />
+                      </svg>
+                      {{'general.viewAll'|translate}}
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-template #noPlaces>
+                  <div class="py-4 row justify-content-center">
+                    <div class="col-md-5 col-10">
+                      <div class="d-flex justify-content-center align-items-center gap-3 flex-column">
+                        <app-no-result [isWhite]="true"></app-no-result>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

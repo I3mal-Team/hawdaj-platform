@@ -1,0 +1,34 @@
+<div>
+  <div class="p-4">
+    <div class="d-flex  justify-content-between align-items-center">
+      <h5 class="fw-bold mb-0">{{'general.confirmDelete'|translate}}</h5>
+      <a class="close rounded-circle d-flex justify-content-center align-items-center" (click)="close()"><i
+          class="pi pi-times"></i></a>
+    </div>
+    <div class="w-100 d-flex mb-3 justify-content-center">
+      <svg width="110" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M12 2.98828L22.2924 21H1.70764L12 2.98828ZM4.29241 19.5H19.7076L12 6.01163L4.29241 19.5Z" fill="#FF0000">
+          </path>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M11.25 15L11.25 10.5L12.75 10.5L12.75 15L11.25 15Z"
+            fill="#FF0000"></path>
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M11.25 17.25L11.25 15.75L12.75 15.75L12.75 17.25L11.25 17.25Z" fill="#FF0000"></path>
+        </g>
+      </svg>
+    </div>
+    <div class="d-flex align-items-center justify-content-center text-center">
+      <div>
+        <h5 class="fw-bold mb-3 fs-5-1">{{config?.data?.title || 'general.areYouSureToDeleteTrip'|translate}}</h5>
+        <p class="text-muted-color">{{config?.data?.description ||'general.beCareful'|translate}}</p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center gap-2 mt-4">
+      <button class="btn btn-cancel" (click)="close()">{{'general.cancel'|translate}}</button>
+      <button class="btn delete-btn border-0" (click)="confirm()">{{'general.confirm'|translate}}</button>
+    </div>
+  </div>
+</div>

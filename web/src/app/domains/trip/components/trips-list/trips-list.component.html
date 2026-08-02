@@ -1,0 +1,80 @@
+<main id="trips-list-layout" class="trips-list-layout" [class.trips-list-layout--ar]="currentLanguage() === 'ar'">
+  <app-banner-2 [title]="'nav.myTrips'" [subtitle]="'saveTrip.enjoyTrip'"
+    [largeImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'"
+    [smallImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'">
+  </app-banner-2>
+
+  <div class="trips-list-layout__content container">
+
+    <!-- Filters Section -->
+    <div class="trips-list-layout__filters-section">
+      <app-tab-list [tabItems]="travelTypeTabs()" [tabConfig]="tabListConfig()"
+        (tabChange)="onTravelTypeTabChange($event)" class="trips-list-layout__tabs">
+      </app-tab-list>
+      <div class="trips-list-layout__left-actions">
+        <!-- Create Trip Button -->
+        <button type="button" class="trips-list-layout__create-btn" (click)="createTrip()"
+          *ngIf="facade.tripsList().length">
+          <app-svg-icon name="create-trip-icon" />
+          <span>{{ 'trip.createTrip' | translate }}</span>
+        </button>
+
+        <!-- Search Input -->
+        <div class="trips-list-layout__search-input" *ngIf="facade.tripsList().length >= 0">
+          <input type="text" class="trips-list-layout__search-field" [value]="searchQuery()"
+            (input)="onSearchInput($event)" [placeholder]="'placeholder.searchTrip' | translate" pInputText />
+
+          <div class="trips-list-layout__search-actions">
+            <button *ngIf="searchQuery()" class="trips-list-layout__clear-btn" (click)="clearSearch()" type="button"
+              [attr.aria-label]="'general.clearSearch' | translate">
+              <i class="pi pi-times text-danger"></i>
+            </button>
+
+            <button class="trips-list-layout__search-btn" (click)="onSearchButtonClick()" type="button"
+              [attr.aria-label]="'general.search' | translate"
+              [disabled]="!searchQuery() || searchQuery().trim().length < 2">
+              <app-svg-icon name="search-icon" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trips Cards Section -->
+    <div class="trips-list-layout__cards"
+      [class.trips-list-layout__cards--empty]="!facade.tripsList().length && !facade.isLoadingTripsList()">
+      <!-- Loading skeleton -->
+      <ng-container *ngIf="facade.isLoadingTripsList(); else loaded">
+        <ng-container *ngFor="let item of [1, 2,3]">
+          <app-skeleton type="tripsList"></app-skeleton>
+        </ng-container>
+      </ng-container>
+
+      <!-- Loaded trips -->
+      <ng-template #loaded>
+        <ng-container *ngIf="facade.tripsList().length; else noData">
+          <ng-container *ngFor="let trip of facade.tripsList()">
+            <app-trip-list-card [item]="trip" (deleteClicked)="deleteTrip(trip)" (onExplore)="exploreTrip(trip)" />
+          </ng-container>
+        </ng-container>
+
+        <ng-template #noData>
+          <app-no-result-2></app-no-result-2>
+        </ng-template>
+      </ng-template>
+    </div>
+
+    <!-- Pagination -->
+    <ng-container *ngIf="facade.tripsList().length">
+      <div class="trips-list-layout__pagination">
+        <app-shared-pagination [itemsPageNumber]="facade.currentPage()" [itemsListTotalCount]="facade.total()"
+          [itemsPerPageCount]="facade.perPage()" (pageChange)="onPageChange($event)">
+        </app-shared-pagination>
+      </div>
+    </ng-container>
+  </div>
+</main>
+
+<app-new-footer></app-new-footer>
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" [hideTransitionOptions]="'0'" [baseZIndex]="5000000"></p-toast>

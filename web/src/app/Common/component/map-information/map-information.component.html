@@ -1,0 +1,7 @@
+<div class="info-window-card w-100" (click)="handleClick()">
+    <h5 class="info-window-title text-truncate">
+        {{ title }}
+    </h5>
+    <img [src]="thumbnail" class="info-window-img w-100" alt="Location Image"
+        onerror="this.src='assets/images/not-found/no-img.svg'">
+</div>

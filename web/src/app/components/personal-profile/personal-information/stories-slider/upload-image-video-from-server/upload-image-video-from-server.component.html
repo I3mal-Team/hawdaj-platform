@@ -1,0 +1,123 @@
+<hr class="m-0 mb-4">
+<div id="upload-img-container" class="pe-3">
+  <div class="uploader row w-100 d-flex justify-content-center align-items-center m-auto"
+    [class.justify-content-between]="showFile" [class.h-100]="!showFile" (dragover)="handleDragOver($event)"
+    (dragenter)="handleDragEnter()" (dragleave)="handleDragLeave()" (drop)="handleDrop($event)">
+    <!-- Upload Img  -->
+    <ng-container *ngIf="!showFile && !isLoading">
+      <label class="w-100 d-flex align-items-center justify-content-center" ondragover="return false;"
+        [class.loaded]="loaded" (dragenter)="handleDragEnter()" (dragleave)="handleDragLeave()"
+        (drop)="handleDrop($event)">
+        <input #inputFile type="file" name="file" [accept]="accept" (change)="handleInputChange($event)" hidden
+          id="file-img" />
+
+        <div class="d-flex justify-content-center text-center py-3">
+          <a class="fw-bold text-dark-color d-flex flex-column align-items-center gap-5">
+            <div>
+              <div class="d-flex justify-content-center mb-2">
+                <app-dynamic-svg [name]="'image-video'"></app-dynamic-svg>
+              </div>
+              <p class="fw-500 mb-0 mt-2 text-center">{{"profile.dragPhoto"|translate}}</p>
+            </div>
+            <!-- <label for="file-img">
+              <button class="btn btn-solid-main py-2 mt-3">
+                {{'profile.selectComputer'|translate}}
+              </button>
+            </label> -->
+          </a>
+        </div>
+      </label>
+    </ng-container>
+    <!-- Show Img -->
+    <ng-container *ngIf="showFile && !isLoading">
+      <div class="col-sm-6 p-0">
+        <div class="d-flex align-items-center gap-3 p-2">
+          <ng-container *ngIf="type.includes('image')">
+            <p-image class="shadow" [src]="imageSrc" [previewImageSrc]="imageSrc" alt="Image" [preview]="showPreview"
+              [appendTo]="'body'"></p-image>
+          </ng-container>
+          <ng-container *ngIf="type.includes('video')">
+            <div class="video-img position-relative overflow-hidden">
+              <a class="overlay-img position-absolute d-flex justify-content-center align-items-center"
+                (click)="previewVideo()">
+                <i class="pi pi-play fs-5 text-white-color"></i>
+              </a>
+              <img class="shadow" [src]="imageSrc" alt="Image" class="w-100 h-100" />
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="d-flex flex-wrap gap-2 py-3">
+          <label class="d-flex align-items-center justify-content-center gap-2 pointer badge-info badge-btn mb-0"
+            [class.loaded]="loaded">
+            <input #inputFile type="file" name="file" [accept]="accept" (change)="handleInputChange($event)" hidden />
+            <span>
+              <app-dynamic-svg [name]="'replace'"></app-dynamic-svg>
+            </span>
+            <span class="fw-500">{{'general.replace'|translate}}</span>
+          </label>
+          <button class="btn badge-danger d-flex align-items-center
+            gap-2 badge-btn" (click)="remove()">
+            <span>
+              <svg width="16" height="21" viewBox="0 0 19 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M16.8861 6.33496C16.6061 6.33496 16.3376 6.44616 16.1397 6.64411C15.9417 6.84208 15.8305 7.11056 15.8305 7.39051V19.2033C15.8003 19.737 15.5603 20.2372 15.1629 20.5949C14.7654 20.9524 14.2429 21.1387 13.7089 21.1127H5.2855C4.7515 21.1387 4.22888 20.9524 3.83149 20.5949C3.43409 20.2372 3.19412 19.737 3.16385 19.2033V7.39051C3.16385 7.11056 3.05263 6.84208 2.85468 6.64411C2.65672 6.44616 2.38823 6.33496 2.10829 6.33496C1.82834 6.33496 1.55985 6.44616 1.3619 6.64411C1.16394 6.84208 1.05273 7.11056 1.05273 7.39051V19.2033C1.08286 20.297 1.54523 21.3343 2.33858 22.0879C3.13195 22.8415 4.1916 23.25 5.2855 23.2239H13.7089C14.8028 23.25 15.8623 22.8415 16.6557 22.0879C17.4491 21.3343 17.9115 20.297 17.9416 19.2033V7.39051C17.9416 7.11056 17.8305 6.84208 17.6324 6.64411C17.4345 6.44616 17.1661 6.33496 16.8861 6.33496Z"
+                  fill="#E55555" />
+                <path
+                  d="M17.9445 3.16667H13.7222V1.05556C13.7222 0.775605 13.6109 0.50712 13.413 0.309165C13.2151 0.111211 12.9467 0 12.6667 0H6.33333C6.05338 0 5.7849 0.111211 5.58694 0.309165C5.38898 0.50712 5.27778 0.775605 5.27778 1.05556V3.16667H1.05555C0.775601 3.16667 0.507117 3.27787 0.309166 3.47582C0.111211 3.67379 0 3.94227 0 4.22222C0 4.50217 0.111211 4.77065 0.309166 4.96861C0.507117 5.16657 0.775601 5.27777 1.05555 5.27777H17.9445C18.2244 5.27777 18.4928 5.16657 18.6909 4.96861C18.8888 4.77065 19 4.50217 19 4.22222C19 3.94227 18.8888 3.67379 18.6909 3.47582C18.4928 3.27787 18.2244 3.16667 17.9445 3.16667ZM7.38888 3.16667V2.11111H11.6111V3.16667H7.38888Z"
+                  fill="#E55555" />
+                <path
+                  d="M8.4451 16.8878V9.49891C8.4451 9.21896 8.33388 8.95048 8.13593 8.75253C7.93797 8.55456 7.66948 8.44336 7.38953 8.44336C7.10959 8.44336 6.8411 8.55456 6.64315 8.75253C6.4452 8.95048 6.33398 9.21896 6.33398 9.49891V16.8878C6.33398 17.1677 6.4452 17.4362 6.64315 17.6342C6.8411 17.8321 7.10959 17.9434 7.38953 17.9434C7.66948 17.9434 7.93797 17.8321 8.13593 17.6342C8.33388 17.4362 8.4451 17.1677 8.4451 16.8878Z"
+                  fill="#E55555" />
+                <path
+                  d="M12.6659 16.8878V9.49891C12.6659 9.21896 12.5546 8.95048 12.3566 8.75253C12.1587 8.55456 11.8902 8.44336 11.6102 8.44336C11.3303 8.44336 11.0618 8.55456 10.8639 8.75253C10.6659 8.95048 10.5547 9.21896 10.5547 9.49891V16.8878C10.5547 17.1677 10.6659 17.4362 10.8639 17.6342C11.0618 17.8321 11.3303 17.9434 11.6102 17.9434C11.8902 17.9434 12.1587 17.8321 12.3566 17.6342C12.5546 17.4362 12.6659 17.1677 12.6659 16.8878Z"
+                  fill="#E55555" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="text-truncate mt-2">
+          <p class="fw-500 mb-1">{{name}}</p>
+          <p class="mb-0 text-desc-color">{{fileSize}}</p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Loading -->
+    <ng-container *ngIf="isLoading">
+      <div class="w-100">
+        <p-skeleton size="2rem" styleClass="mb-2 mx-auto"></p-skeleton>
+        <p-skeleton width="80%" styleClass="mb-2 mx-auto"></p-skeleton>
+        <p-skeleton width="40%" styleClass="mb-2 mx-auto"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+  <!-- Input -->
+  <ng-container *ngIf="showFile && !isLoading">
+    <!-- <hr> -->
+    <div class="mt-4">
+      <input type="text" class="form-control border-bottom rounded-0 bg-white border-0 px-0" [(ngModel)]="storyName"
+        placeholder="{{'general.storyName' | translate}}">
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+      <button type="submit" class="btn btn-solid-main d-flex align-items-center gap-2" (click)="save()">
+        <svg width="22" height="20" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.6875 20.9375H24.3125V22.625H0.6875V20.9375ZM20.4312 6.59375C21.1062 5.91875 21.1062 4.90625 20.4312 4.23125L17.3937 1.19375C16.7188 0.51875 15.7063 0.51875 15.0312 1.19375L2.375 13.85V19.25H7.775L20.4312 6.59375ZM16.2125 2.375L19.25 5.4125L16.7188 7.94375L13.6812 4.90625L16.2125 2.375ZM4.0625 17.5625V14.525L12.5 6.0875L15.5375 9.125L7.1 17.5625H4.0625Z"
+            fill="#FFF" />
+        </svg>
+        <span>
+          {{'general.save'|translate}}
+        </span>
+      </button>
+
+      <!-- <button type="button" class="btn btn-outline-main d-flex align-items-center gap-2" (click)="cancel()">
+        <i class="pi pi-times-circle"></i>
+        <span>
+          {{'general.cancel'|translate}}
+        </span>
+      </button> -->
+    </div>
+  </ng-container>
+</div>

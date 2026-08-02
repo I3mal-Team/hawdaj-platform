@@ -1,0 +1,1768 @@
+<app-header></app-header>
+<div id="all-places-details">
+  <div class="d-md-block d-none">
+    <div id="place-details">
+      <div class="container">
+        <ng-container *ngIf="isLoadingPlaceDetails; else noLoadingPlacesDetails">
+          <app-skeleton [type]="'place-details-v2'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingPlacesDetails>
+          <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+            <div>
+              <h5 class="fw-bold fs-4-1">{{placeDetails?.title}}</h5>
+              <div class="d-flex gap-2 align-items-center fs-6-1 address">
+                {{'titles.saudiArabia'| translate}}
+                <ng-container *ngIf="placeDetails?.region?.name">
+                  <i class="pi pi-angle-right"></i>
+                  <span>{{placeDetails?.region?.name}}</span>
+                </ng-container>
+                <ng-container *ngIf="placeDetails?.city?.name">
+                  <i class="pi pi-angle-right"></i>
+                  <span>{{placeDetails?.city?.name}}</span>
+                </ng-container>
+              </div>
+              <div class="d-flex gap-2 align-items-center mt-2">
+                <p-rating [(ngModel)]="placeDetails.rate" [id]="'rating3'" [disabled]="true"
+                  [cancel]="false"></p-rating>
+                <u *ngIf="placeDetails?.review>0" (click)="placeDetails?.review>0?showReviews():''" class="pointer">
+                  <p class="mb-0 fs-5-1 address">
+                    {{placeDetails?.review || 0}} {{'general.reviews'|translate}}
+                  </p>
+                </u>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-3 details-icons">
+              <ng-container *ngIf="isUserLoggedin">
+                <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                  (click)="addToFavorite(placeDetails)">
+                  <i class="pi light-new-color pointer"
+                    [ngClass]="placeDetails?.is_favorite?'pi-heart-fill':'pi-heart'"></i>
+                  <a class="fw-500 fs-6-1 text-main-color">{{'general.addFavorites'|translate}}</a>
+                </div>
+              </ng-container>
+              <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                (click)="share(placeDetails?.website)">
+                <i class="pi pi-share-alt"></i>
+                <a class="fw-500 fs-6-1 text-main-color">{{'general.share'|translate}}</a>
+              </div>
+              <ng-container *ngIf="isLoadingSavePlace; else elseViewAction1">
+                <app-skeleton [type]="'savePlace'"></app-skeleton>
+              </ng-container>
+              <ng-template #elseViewAction1>
+                <ng-container *ngIf="isUserLoggedin">
+                  <div class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                    (click)="savePlace()">
+                    <i class="pi" [ngClass]="placeDetails.is_saved?'pi-bookmark-fill':'pi-bookmark'"></i>
+                    <a class="fw-500 fs-6-1 text-main-color">{{'general.save'|translate}}</a>
+                  </div>
+                </ng-container>
+              </ng-template>
+              <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                (click)="goToLocation()">
+                <i class="fas fa-location-dot"></i>
+                <a class="fw-500 fs-6-1 text-main-color">{{'general.location'|translate}}</a>
+              </a>
+              <!-- <div class="d-flex align-items-center flex-column justify-content-center gap-1">
+                <i class="fas fa-file-import"></i>
+                <a class="fw-500 fs-6-1 text-main-color">{{'general.sendToPhone'|translate}}</a>
+              </div> -->
+              <a class="d-flex align-items-center flex-column justify-content-center gap-1 pointer"
+                [href]="placeDetails.address" [class.d-none]="!placeDetails.address" target="_blank">
+                <i class="pi pi-directions-alt"></i>
+                <a class="fw-500 fs-6-1 text-main-color">{{'general.directions'|translate}}</a>
+              </a>
+            </div>
+          </div>
+          <ng-container *ngIf="placeDetails?.galleries?.length>0; else noImagesForView">
+            <ng-container *ngIf="showGalleria; else showGalleries">
+              <div class="mt-3 position-relative">
+                <p-galleria [value]="placeDetails?.galleries|| []" [responsiveOptions]="galleriaOptions"
+                  [containerStyle]="{'max-width': '100%'}" [numVisible]="5" [circular]="true"
+                  [showItemNavigators]="true">
+                  <ng-template pTemplate="item" let-item>
+                    <img [src]="item.file" onerror="src='assets/images/not-found/no-img.svg'"
+                      style="width: 100%; display: block;" class="preview-img" />
+                  </ng-template>
+                  <ng-template pTemplate="thumbnail" let-item>
+                    <div class="grid grid-nogutter justify-content-center">
+                      <img [src]="item.file" onerror="src='assets/images/not-found/no-img.svg'" style="display: block;"
+                        class="thumbnail w-100 object-fit-cover" />
+                    </div>
+                  </ng-template>
+                </p-galleria>
+                <div>
+                  <a (click)="showGalleria=false"
+                    class="text-white-color bg-dark-color px-4 py-2 rounded-pill position-absolute less">{{'general.less'|translate}}</a>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #showGalleries>
+              <div class="mt-3 all-places-img">
+                <div class="row position-relative">
+                  <ng-container *ngFor="let item of placeDetails?.galleries;let i=index">
+                    <ng-container *ngIf="placeDetails?.galleries?.length==1">
+                      <div class="">
+                        <img src="{{item?.file}}" onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                          class="w-100 obj-fit-cover first-img img-place">
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="placeDetails?.galleries?.length==2">
+                      <div class="col-md-6 mb-md-0 mb-4">
+                        <div>
+                          <img src="{{item?.file}}" onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                            class="w-100 obj-fit-cover img img-place" [class.img1]="i==0" [class.img2]="i==1">
+                        </div>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="placeDetails?.galleries?.length==3">
+                    <div class="col-md-6 mb-md-0 mb-4">
+                      <img src="{{placeDetails?.galleries[0]?.file}}" onerror="src='assets/images/not-found/no-img.svg'"
+                        alt="img" class="w-100 obj-fit-cover img img-place img1">
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-4">
+                        <img src="{{placeDetails?.galleries[1]?.file}}"
+                          onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                          class="w-100 obj-fit-cover img img-place img3 img-h">
+                      </div>
+                      <div>
+                        <img src="{{placeDetails?.galleries[2]?.file}}"
+                          onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                          class="w-100 obj-fit-cover img img-place img4 img-h">
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="placeDetails?.galleries?.length==4">
+                    <div class="col-md-6 mb-md-0 mb-4">
+                      <div>
+                        <img src="{{placeDetails?.galleries[0]?.file}}"
+                          onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                          class="w-100 obj-fit-cover img img-place img1">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6 mb-md-0 mb-4">
+                          <div>
+                            <img src="{{placeDetails?.galleries[1]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="">
+                            <img src="{{placeDetails?.galleries[2]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img3">
+                          </div>
+                        </div>
+                        <div class="col-md-12 mt-4">
+                          <div>
+                            <img src="{{placeDetails?.galleries[3]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img5">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="placeDetails?.galleries?.length>=5">
+                    <div class="col-md-6 mb-md-0 mb-4">
+                      <div>
+                        <img src="{{placeDetails?.galleries[0]?.file}}"
+                          onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                          class="w-100 obj-fit-cover img img-place img1">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6 mb-md-0 mb-4">
+                          <div>
+                            <img src="{{placeDetails?.galleries[1]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img1 rounded-0">
+                          </div>
+                          <div class="mt-4">
+                            <img src="{{placeDetails?.galleries[2]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img1 rounded-0">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div>
+                            <img src="{{placeDetails?.galleries[3]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img3 ">
+                          </div>
+                          <div class="mt-4">
+                            <img src="{{placeDetails?.galleries[4]?.file}}"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img"
+                              class="w-100 obj-fit-cover img-h img-place img4">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="placeDetails?.galleries?.length>4">
+                    <div>
+                      <a (click)="showGalleria=true"
+                        class="text-white-color bg-dark-color px-4 py-2 rounded-pill position-absolute seeAllPhotos">{{'general.seeAllPhotos'|translate}}</a>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+          <ng-template #noImagesForView>
+            <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+              <img src="assets/images/not-found/no-img.svg" width="200px" alt="no-data">
+              <p>{{'general.noGallery'|translate}}</p>
+            </div>
+          </ng-template>
+          <div class="mt-4" #locationTab>
+            <p-tabView [(activeIndex)]="activeIndex" appLazyLoadSection
+              (sectionInView)="placeDetailelocationTab = true">
+              <ng-container *ngIf="placeDetailelocationTab">
+
+                <p-tabPanel>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center justify-content-center flex-column gap-1">
+                      <img src="assets/images/places/tabs/description.svg" alt="description">
+                      <span class="fw-500">{{'places.description'|translate}}</span>
+                    </div>
+                  </ng-template>
+                  <div class="row mt-3">
+                    <div class="col-xl-7 col-lg-6">
+                      <div>
+                        <div>
+                          <h5 class="fw-bold">{{placeDetails?.title || ''}}</h5>
+                          <div class="fw-500 d-flex align-items-center gap-1 mb-3">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p class="mb-0">{{placeDetails?.address_name ||'titles.saudiArabia'| translate }}</p>
+                          </div>
+                          <div class="fs-5-2 mb-2 rich-text" [innerHTML]="placeDetails?.description | safeHtml"></div>
+                          <ng-container
+                            *ngIf="placeDetails?.facebook_link||placeDetails?.whatsapp||placeDetails?.instagram_link">
+                            <div class="d-flex align-items-center gap-3 mt-3">
+                              <a *ngIf="placeDetails?.facebook_link" [href]="placeDetails?.facebook_link"
+                                target="_blank">
+                                <i class="pi pi-facebook fs-4 text-main-color"></i></a>
+                              <a *ngIf="placeDetails?.whatsapp" [href]="'https://wa.me/' + placeDetails?.whatsapp"
+                                target="_blank"> <i class="pi pi-whatsapp fs-4 text-main-color"></i></a>
+                              <a *ngIf="placeDetails?.instagram_link" [href]="placeDetails?.instagram_link"
+                                target="_blank">
+                                <i class="pi pi-instagram fs-4 text-main-color"></i></a>
+                            </div>
+                          </ng-container>
+                        </div>
+                        <ng-container *ngIf="relatedPlaces?.length>0">
+                          <hr class="mt-4">
+                          <div class="mt-4">
+                            <h5 class="fs-5-1 fw-500 mb-4">{{'places.recommendedPlaces'|translate}}</h5>
+                            <div class="" id=recommendedPlaces>
+                              <ng-container *ngIf="isLoadingRelatedPlaces; else noLoadingRelatedPlaces">
+                                <app-skeleton [type]="'relatedPlaces'"></app-skeleton>
+                              </ng-container>
+                              <ng-template #noLoadingRelatedPlaces>
+                                <ng-container *ngIf="relatedPlaces?.length>0; else noRelatedPlaces">
+                                  <p-carousel [value]="relatedPlaces" [numVisible]="3" [numScroll]="1" [circular]="true"
+                                    [showIndicators]="true" [showNavigators]="true"
+                                    [responsiveOptions]="recommendedPlacesOptions" [attr.stagePadding]="30"
+                                    [autoplayInterval]="7000">
+                                    <ng-template let-slide pTemplate="item">
+                                      <div class="mx-2 slider-item dir-rtl p-0 position-relative pointer"
+                                        (click)="showDetails(slide)">
+                                        <img [src]="slide?.image" class="slider-img w-100 object-fit-cover"
+                                          onerror="src='assets/images/not-found/no-img.svg'" alt="img">
+                                        <div class="slider-content position-absolute ">
+                                          <div
+                                            class="d-flex justify-content-between align-items-center gap-2 mt-2 p-2 flex-wrap">
+                                            <div>
+                                              <h6 class="mb-0 fs-5-2 fw-500">{{slide?.title || ''}}</h6>
+                                              <p class="fw-600 fs-6-1 mt-1 mb-0 text-muted-color ">
+                                                {{slide?.address_name ||'titles.saudiArabia'| translate}}
+                                              </p>
+                                            </div>
+                                            <a (click)="recallNewPlaceDetails(slide?.slug)" rel="noopener noreferrer">
+                                              <i class="pi pi-angle-right"></i>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </ng-template>
+                                  </p-carousel>
+                                </ng-container>
+                                <ng-template #noRelatedPlaces>
+                                  <div
+                                    class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                                    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                                    <p>{{'general.noData'|translate}}</p>
+                                  </div>
+                                </ng-template>
+                              </ng-template>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-10 m-auto mt-lg-0 mt-4">
+                      <div class="position-relative p-3 z-index ms-lg-5">
+                        <div class="global-card p-4">
+                          <div class="position-absolute form-cover"></div>
+                          <div class="overlay-search position-absolute d-flex justify-content-center"
+                            *ngIf="isLoadingBtn">
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                              <ng-container *ngFor="let item of [8,8,9,8]">
+                                <div class="spinner-grow" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                          <h4 class="fw-bold text-center mt-2">{{'places.giveFeedback'|translate}}</h4>
+                          <p class="fw-500 text-center op fs-6-1">{{'places.howWasExperience'|translate}}</p>
+
+                          <form class="msg-form" [formGroup]="form" (submit)="sendFeedbackFromPlaces()">
+                            <div class="my-5">
+                              <div class="d-flex justify-content-between gap-3 align-items-center flex-wrap">
+                                <div
+                                  class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                                  <input class="form-check-input" type="radio" formControlName="status" id="terrible"
+                                    value="1" hidden>
+                                  <label class="form-check-label" for="terrible">
+                                    <p class="mb-0 emojy mb-2">😥</p>
+                                  </label>
+                                  <label class="form-check-label" for="terrible">
+                                    {{'general.terrible'|translate}}
+                                  </label>
+                                </div>
+                                <div
+                                  class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                                  <input class="form-check-input" type="radio" formControlName="status" id="bad"
+                                    value="2" hidden>
+                                  <label class="form-check-label" for="bad">
+                                    <p class="mb-0 emojy mb-2">🙁</p>
+                                  </label>
+                                  <label class="form-check-label" for="bad">
+                                    {{'general.bad'|translate}}
+                                  </label>
+                                </div>
+                                <div
+                                  class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                                  <input class="form-check-input" type="radio" formControlName="status" id="okay"
+                                    value="3" hidden>
+                                  <label class="form-check-label" for="okay">
+                                    <p class="mb-0 emojy mb-2">🙂</p>
+                                  </label>
+                                  <label class="form-check-label" for="okay">
+                                    {{'general.okay'|translate}}
+                                  </label>
+                                </div>
+                                <div
+                                  class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                                  <input class="form-check-input" type="radio" formControlName="status" id="good"
+                                    value="4" hidden>
+                                  <label class="form-check-label" for="good">
+                                    <p class="mb-0 emojy mb-2">😀</p>
+                                  </label>
+                                  <label class="form-check-label" for="good">
+                                    {{'general.good'|translate}}
+                                  </label>
+                                </div>
+                                <div
+                                  class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                                  <input class="form-check-input" type="radio" formControlName="status" id="amazing"
+                                    value="5" hidden>
+                                  <label class="form-check-label" for="amazing">
+                                    <p class="mb-0 emojy mb-2">😍</p>
+                                  </label>
+                                  <label class="form-check-label" for="amazing">
+                                    {{'general.amazing'|translate}}
+                                  </label>
+                                </div>
+                              </div>
+                              <ng-container
+                                *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                                <div class="mt-2">
+                                  <ng-container
+                                    *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                                    <ng-container *ngIf="formControls?.status?.errors?.['required']">
+                                      <span class="text-danger fs-8">
+                                        {{'validations.required_field'|translate}}
+                                      </span>
+                                    </ng-container>
+                                  </ng-container>
+                                </div>
+                              </ng-container>
+                            </div>
+                            <ng-container *ngIf="!currentLoginInformation">
+                              <div class="mb-3">
+                                <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.name'|translate}}</label>
+                                <div class="p-inputgroup leaveMsg">
+                                  <span class="p-inputgroup-addon bg-transparent border-0">
+                                    <i class="pi pi-user fw-bold fs-5 text-dark-color"></i>
+                                  </span>
+                                  <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                                    (input)="publicService.clearValidationErrors(formControls?.name)"
+                                    formControlName="name" placeholder="{{'placeholder.name'|translate}}">
+                                </div>
+                                <ng-container
+                                  *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                                  <div class="mt-2">
+                                    <ng-container
+                                      *ngIf="formControls?.name?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                                      <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                                        <span class="text-danger fs-8">
+                                          {{'validations.required_field'|translate}}
+                                        </span>
+                                      </ng-container>
+                                    </ng-container>
+                                  </div>
+                                </ng-container>
+                              </div>
+                              <div class="mb-3">
+                                <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.email'|translate}}</label>
+                                <div class="p-inputgroup leaveMsg">
+                                  <span class="p-inputgroup-addon bg-transparent border-0">
+                                    <i class="pi pi-envelope fw-bold fs-5 text-dark-color"></i>
+                                  </span>
+                                  <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                                    (input)="publicService.clearValidationErrors(formControls?.email)"
+                                    formControlName="email" placeholder="{{'placeholder.email'|translate}}">
+                                </div>
+                                <ng-container
+                                  *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                                  <div class="mt-2">
+                                    <ng-container
+                                      *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                                      <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                                        <span class="text-danger fs-8">
+                                          {{'validations.required_field'|translate}}
+                                        </span>
+                                      </ng-container>
+                                      <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                                        <span class="text-danger fs-8">
+                                          {{'validations.emailNotValid'|translate}}
+                                        </span>
+                                      </ng-container>
+                                    </ng-container>
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                            <div>
+                              <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.shareExperience'|translate}}</label>
+                              <div class="p-inputgroup leaveMsg">
+                                <span class="p-inputgroup-addon bg-transparent border-0">
+                                  <img src="assets/images/icons/msg.svg" alt="msg">
+                                </span>
+                                <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                                  (input)="publicService.clearValidationErrors(formControls?.massage)"
+                                  formControlName="massage" placeholder="{{'placeholder.leaveMsg'|translate}}">
+                              </div>
+                              <ng-container
+                                *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                                <div class="mt-2">
+                                  <ng-container
+                                    *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                                    <ng-container *ngIf="formControls?.massage?.errors?.['required']">
+                                      <span class="text-danger fs-8">
+                                        {{'validations.required_field'|translate}}
+                                      </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="formControls?.massage?.errors?.['minlength']">
+                                      <span class="text-danger fs-8">
+                                        {{'validations.rateLength'|translate}}
+                                      </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="formControls?.massage?.errors?.['pattern']">
+                                      <span class="text-danger fs-8 d-block">
+                                        {{'validations.msgAcceptLetters'|translate}}
+                                      </span>
+                                    </ng-container>
+                                  </ng-container>
+                                </div>
+                              </ng-container>
+                            </div>
+                            <div class="d-flex justify-content-center gap-3 flex-wrap mt-5">
+                              <button class="btn submit d-flex justify-content-center align-items-center gap-2"
+                                type="submit">
+                                {{'general.submit'|translate}}
+
+                              </button>
+                              <button class="btn cancel" type="button"
+                                (click)="cancel()">{{'general.cancel'|translate}}</button>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-center align-items-center gap-3 d-none"
+                          *ngIf="placeDetails?.facebook_link||placeDetails?.whatsapp||placeDetails?.instagram_link">
+                          <!-- <h6 class="fs-5-2 fw-bold mb-0">{{'places.followSocial'|translate}}</h6> -->
+                          <div
+                            class="d-flex align-items-center gap-3 flex-column px-2 py-3 all-social position-absolute bg-main-color">
+                            <a *ngIf="placeDetails?.facebook_link" [href]="placeDetails?.facebook_link" target="_blank">
+                              <i class="pi pi-facebook fs-4 text-white-color"></i></a>
+                            <a *ngIf="placeDetails?.whatsapp" [href]="'https://wa.me/' + placeDetails?.whatsapp"
+                              target="_blank"> <i class="pi pi-whatsapp fs-4 text-white-color"></i></a>
+                            <a *ngIf="placeDetails?.instagram_link" [href]="placeDetails?.instagram_link"
+                              target="_blank">
+                              <i class="pi pi-instagram fs-4 text-white-color"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </p-tabPanel>
+                <p-tabPanel>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center justify-content-center flex-column gap-1">
+                      <img src="assets/images/places/tabs/feature.svg" alt="feature"> <span
+                        class="fw-500">{{'places.features'|translate}}</span>
+                    </div>
+                  </ng-template>
+                  <div class="mt-3 position-relative" id="features">
+                    <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                      <div>
+                        <h5 class="fw-bold ">{{'places.findOut'|translate}}</h5>
+                        <p class="text-muted-color">{{'places.infoAboutPlace'|translate}}</p>
+                      </div>
+                      <div class="create-date position-relative me-auto">
+                        <div
+                          class="position-absolute check d-flex justify-content-center align-items-center rounded-circle">
+                          <i class="pi pi-check fw-bold"></i>
+                        </div>
+                        <p class="mb-0 text-center">
+                          {{publicService.convertTimeOrDate(placeDetails?.created_at,'date3')}}
+                        </p>
+                        <p class="mb-0 text-center">{{'places.createdDate'|translate}}</p>
+                      </div>
+                    </div>
+
+                    <div class="row mt-4 align-items-center g-0">
+                      <div class="col-lg-8">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="position-relative">
+                              <img src="assets/images/places/features/shopping.svg" alt="shopping"
+                                class="w-100 feature-img">
+                              <img src="assets/images/places/features/shopping-img.svg" alt="shopping-img"
+                                class="position-absolute feature-icon p-3">
+                              <div class="position-absolute feature-content p-4 text-white-color">
+                                <h6 class="fs-5">{{placeDetails?.categories[0]?.name ||
+                                  publicService.translateTextFromJson('general.none')}}</h6>
+                                <p class="mb-0 fs-6">{{'places.category'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="position-relative">
+                              <img src="assets/images/places/features/price.svg" alt="price" class="w-100 feature-img">
+                              <img src="assets/images/places/features/price-img.svg" alt="price-img"
+                                class="position-absolute feature-icon p-3">
+                              <div class="position-absolute feature-content p-4 text-white-color">
+                                <h6 class="fs-5">{{placeDetails?.price?.name ||
+                                  publicService.translateTextFromJson('general.noPrice')}}</h6>
+                                <p class="mb-0 fs-6">{{'places.price'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="position-relative">
+                              <img src="assets/images/places/features/seasons.svg" alt="seasons"
+                                class="w-100 feature-img">
+                              <img src="assets/images/places/features/seasons-img.svg" alt="seasons-img"
+                                class="position-absolute feature-icon p-3">
+                              <div class="position-absolute feature-content p-4 text-white-color">
+                                <h6 class="fs-5">{{placeDetails?.seasons[0]}}</h6>
+                                <p class="mb-0 fs-6 text-capitalize">{{'places.seasons'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="position-relative">
+                              <img src="assets/images/places/features/tickets.svg" alt="tickets"
+                                class="w-100 feature-img">
+                              <div
+                                class="d-flex justify-content-between align-items-center flex-wrap gap-2 position-absolute feature-icon p-3 w-100">
+                                <ng-container *ngIf="placeDetails?.visited; else noTicketLink">
+                                  <a [href]="placeDetails?.ticket_link" target="_blank"
+                                    class="mb-0 book-now p-2 rounded-pill">
+                                    {{'general.bookNow'|translate}}
+                                  </a>
+                                </ng-container>
+                                <ng-template #noTicketLink>
+                                  <div></div>
+                                </ng-template>
+                                <img src="assets/images/places/features/tickets-img.svg" alt="tickets-img me-auto"
+                                  class="">
+                              </div>
+                              <div class="position-absolute feature-content p-4 text-white-color">
+                                <h6 class="fs-5">{{'places.tickets'|translate}}</h6>
+                                <p class="mb-0 fs-6">
+                                  <ng-container *ngIf="placeDetails?.visited; else noTicket">
+                                    {{'general.yes'|translate}}
+                                  </ng-container>
+                                  <ng-template #noTicket>
+                                    {{'general.no'|translate}}
+                                  </ng-template>
+
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-lg-1"></div>
+                      <div class="col-lg-3 col-md-6 col-11 m-lg-0 m-auto">
+                        <div
+                          class="d-lg-flex d-none align-items-center justify-content-end gap-0 social position-relative">
+                          <div class="d-flex align-items-center flex-column">
+                            <a [href]="placeDetails?.facebook_link" target="_blank"
+                              [class.pointer-none]="!placeDetails?.facebook_link"
+                              class="border-end pe-4 border-top pb-3">
+                              <ng-container *ngIf="placeDetails?.facebook_link; else noFacebook">
+                                <img src="assets/images/places/features/facebook.svg" alt="facebook" class="facebook">
+                              </ng-container>
+                              <ng-template #noFacebook>
+                                <span class="lock shadow d-block facebook">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.whatsapp" target="_blank"
+                              [class.pointer-none]="!placeDetails?.whatsapp"
+                              class="border-end pe-4 whatsapp position-relative pb-3">
+                              <ng-container *ngIf="placeDetails?.whatsapp; else noWhatsapp">
+                                <img src="assets/images/places/features/whatsapp.svg" alt="whatsapp" class="">
+                              </ng-container>
+                              <ng-template #noWhatsapp>
+                                <span class="lock shadow d-block">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.instagram_link" target="_blank"
+                              [class.pointer-none]="!placeDetails?.instagram_link"
+                              class="border-end pe-4 whatsapp position-relative pb-3">
+                              <ng-container *ngIf="placeDetails?.instagram_link; else noInstagram">
+                                <img src="assets/images/places/features/instagram.png" alt="instagram"
+                                  class="rounded-circle" width="40px" height="40px">
+                              </ng-container>
+                              <ng-template #noInstagram>
+                                <span class="lock shadow d-block">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.twitter" target="_blank" class="border-end pe-4 border-bottom"
+                              [class.pointer-none]="!placeDetails?.twitter">
+                              <ng-container *ngIf="placeDetails?.twitter; else noTwitter">
+                                <img src="assets/images/places/features/twitter.svg" alt="twitter" class="twitter">
+                              </ng-container>
+                              <ng-template #noTwitter>
+                                <span class="lock shadow d-block twitter">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                          </div>
+                          <hr class="w-100">
+                          <div
+                            class="p-4 follow-social  d-flex justify-content-center align-items-center text-center fw-500">
+                            {{'places.followUs'|translate}}
+                          </div>
+                          <div class="position-absolute overlay-follow-social shadow"></div>
+                        </div>
+                        <div id="places-details-sm-features"
+                          class="align-items-center justify-content-end gap-0 social position-relative mt-3 d-lg-none d-block">
+                          <div
+                            class="p-4 follow-social d-flex justify-content-center align-items-center text-center fw-500 shadow-sm">
+                            {{'places.followUs'|translate}}
+                          </div>
+                          <div class="d-flex align-items-center flex-column social-rotate">
+                            <a [href]="placeDetails?.facebook_link" target="_blank"
+                              [class.pointer-none]="!placeDetails?.facebook_link"
+                              class="border-end pe-4 border-top pb-4">
+                              <ng-container *ngIf="placeDetails?.facebook_link; else noFacebook">
+                                <img src="assets/images/places/features/facebook.svg" alt="facebook" class="facebook">
+                              </ng-container>
+                              <ng-template #noFacebook>
+                                <span class="lock shadow d-block facebook">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.whatsapp" target="_blank"
+                              [class.pointer-none]="!placeDetails?.whatsapp"
+                              class="border-end pe-4 whatsapp position-relative pb-4">
+                              <ng-container *ngIf="placeDetails?.whatsapp; else noWhatsapp">
+                                <img src="assets/images/places/features/whatsapp.svg" alt="whatsapp" class="">
+                              </ng-container>
+                              <ng-template #noWhatsapp>
+                                <span class="lock shadow d-block">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.instagram_link" target="_blank"
+                              [class.pointer-none]="!placeDetails?.instagram_link"
+                              class="border-end pe-4 whatsapp position-relative pb-4">
+                              <ng-container *ngIf="placeDetails?.instagram_link; else noInstagram">
+                                <img src="assets/images/places/features/instagram.png" alt="instagram"
+                                  class="rounded-circle" width="40px" height="40px">
+                              </ng-container>
+                              <ng-template #noInstagram>
+                                <span class="lock shadow d-block">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                            <a [href]="placeDetails?.twitter" target="_blank" class="border-end pe-4 border-bottom"
+                              [class.pointer-none]="!placeDetails?.twitter">
+                              <ng-container *ngIf="placeDetails?.twitter; else noTwitter">
+                                <img src="assets/images/places/features/twitter.svg" alt="twitter" class="twitter">
+                              </ng-container>
+                              <ng-template #noTwitter>
+                                <span class="lock shadow d-block twitter">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                                    width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                                    <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                                    <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                                    <path d="M22 22l-5 -5" />
+                                    <path d="M17 22l5 -5" />
+                                  </svg>
+                                </span>
+                              </ng-template>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </p-tabPanel>
+                <p-tabPanel>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center justify-content-center flex-column gap-1">
+                      <img src="assets/images/places/tabs/location.svg" alt="location">
+                      <span class="fw-500">{{'places.location'|translate}}</span>
+                    </div>
+                  </ng-template>
+                  <div class="mt-3">
+                    <h5 class="fw-bold text-main-color">{{placeDetails?.title || ''}}</h5>
+                    <div class="fw-500 d-flex align-items-center gap-1 mb-3">
+                      <i class="fa-solid fa-location-dot"></i>
+                      <p class="mb-0">{{placeDetails?.address_name ||'titles.saudiArabia'| translate }}</p>
+                    </div>
+                    <div class="mt-3">
+                      <div class="map-container position-relative">
+                        <a [href]="placeDetails.address" target="_blank" rel="noopener noreferrer">
+                          <div class="location-arrow d-flex justify-content-center align-items-center">
+                            <i class="fas fa-location-arrow fs-4"></i>
+                          </div>
+                        </a>
+                        <google-map width="100%" height="100%" [center]="center" [zoom]="zoom"
+                          [options]="{styles: darkMode, draggable: false}" (mapClick)="onMapClick($event);">
+                          <map-marker #marker="mapMarker" *ngFor="let markerPosition of markerPositions"
+                            [position]="markerPosition" (mapClick)="openInfoWindow(marker,markerPosition)"
+                            [icon]="markerPosition?.place_icon"></map-marker>
+                        </google-map>
+                      </div>
+                    </div>
+                  </div>
+                </p-tabPanel>
+                <p-tabPanel>
+                  <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center justify-content-center flex-column gap-1">
+                      <img src="assets/images/places/tabs/ai.svg" alt="ai">
+                      <span class="fw-500">{{'places.ai'|translate}}</span>
+                    </div>
+                  </ng-template>
+                  <div>
+                    <div class="chat-header p-3 d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <img src="assets/images/places/chat.svg" alt="chat">
+                        <div>
+                          <h5 class="fw-bold">{{'places.newChat'|translate}}</h5>
+                          <p class="mb-0 fs-6-1">{{'places.askAnything'|translate}}</p>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-outline-main rounded-pill d-flex align-items-center justify-content-center gap-2 p-2">
+                        <i class="pi pi-share-alt"></i>
+                        {{'general.share'|translate}}
+                      </button>
+                    </div>
+                    <div>
+                      <div class="p-4 chat-messages position-relative" #chatGpt>
+                        <div *ngIf="chat?.length==0" class="overlay-chat position-absolute pointer"
+                          (click)="openComingSoon()">
+                        </div>
+                        <div class="chat-content pe-3">
+                          <ng-container *ngIf="isLoadingChat; else noLoadingChat">
+                            <app-skeleton [type]="'chat'"></app-skeleton>
+                          </ng-container>
+                          <ng-template #noLoadingChat>
+                            <ng-container *ngIf="chat?.length>0; else noChat">
+                              <div *ngFor="let item of chat">
+                                <div class="mb-4" *ngIf="item.type=='one'">
+                                  <div>
+                                    <div class="d-flex align-items-end gap-2 mb-2">
+                                      <img class="chat-img rounded-circle" src="assets/images/places/chat2.svg"
+                                        alt="item.type">
+                                      <div class="w-fit-content chat-text  position-relative p-3  text-one round">
+                                        <p class="fs-8 lh-sm mb-0">{{item.text}}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="mb-4" *ngIf="item.type=='two'">
+                                  <div class="d-flex align-items-end flex-column">
+                                    <div
+                                      class="w-fit-content chat-text p-3 text-two round  position-relative d-flex justify-content-end">
+                                      <p class="fs-8 text-dark lh-sm mb-0 text-white-color">{{item?.text}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                            <ng-template #noChat>
+                              <div
+                                class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                                <img src="../../../../../../../assets/images/places/chatgpt.svg" width="200px"
+                                  alt="no-data">
+                                <p>{{'general.noMessages'|translate}}</p>
+                              </div>
+                            </ng-template>
+                          </ng-template>
+                        </div>
+                        <div class="message p-3 pb-0 w-100">
+                          <form class="mb-2" [formGroup]="chatForm">
+                            <div class="p-inputgroup bg-white-color rounded-pill">
+                              <input #message class="form-control bg-transparent form-control border-0"
+                                formControlName="message" name="message"
+                                placeholder="{{'placeholder.type'|translate}}" />
+                              <span class="p-inputgroup-addon bg-transparent border-0 py-0 w-fit-content">
+                                <div class="d-flex align-items-center gap-3 w-100 justify-content-end">
+                                  <a class="text-muted-color" (click)="fileInput.click()"><svg
+                                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                      class="bi bi-paperclip" viewBox="0 0 16 16">
+                                      <path
+                                        d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+                                    </svg></a>
+                                  <input hidden (change)="onFileSelected($event)" #fileInput type="file"
+                                    accept=".doc,.pdf,.ppt,.txt" id="file">
+
+                                  <a class="text-muted-color" (click)="fileInput2.click()"><svg
+                                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                      class="bi bi-upload" viewBox="0 0 16 16">
+                                      <path
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path
+                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                    </svg></a>
+                                  <input hidden (change)="onFileSelected($event)" #fileInput2 type="file" accept="image"
+                                    id="file">
+
+                                  <button
+                                    class="bg-main-color text-white d-flex justify-content-center align-items-center arrow border-0 rounded-circle border-0"
+                                    [disabled]="!chatForm.valid" (click)="addToChat(chatGpt,message)">
+                                    <i class="pi pi-arrow-right scaleX-rtl"></i>
+                                  </button>
+                                </div>
+                              </span>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </p-tabPanel>
+
+              </ng-container>
+
+            </p-tabView>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div *appResponsiveIfStandalone="'mobile'" class="d-md-none d-block" id="places-details-sm">
+    <ng-container *ngIf="isLoadingPlaceDetails; else noLoadingPlacesDetailsSm">
+      <app-skeleton [type]="'place-details-sm'"></app-skeleton>
+    </ng-container>
+    <ng-template #noLoadingPlacesDetailsSm>
+      <div class="position-relative gallery-items">
+        <div class="d-flex justify-content-between w-100 p-3 position-absolute icons">
+          <a (click)="back()"><i class="pi pi-angle-left fs-1 text-white-color"></i></a>
+          <div class="d-flex gap-3">
+            <a (click)="displayChat=true" class="ai rounded-circle d-flex justify-content-center align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="25"
+                height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M8 9h8" />
+                <path d="M8 13h6" />
+                <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" />
+              </svg>
+            </a>
+            <!-- <a class="map-location rounded-circle d-flex justify-content-center align-items-center">
+            <svg xmlns=" http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-current-location text-white-color" width="20" height="20"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+              <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+              <path d="M12 2l0 2" />
+              <path d="M12 20l0 2" />
+              <path d="M20 12l2 0" />
+              <path d="M2 12l2 0" />
+            </svg>
+          </a> -->
+          </div>
+        </div>
+        <div id="chat-sm-content">
+          <p-sidebar [(visible)]="displayChat" position="bottom" [baseZIndex]="10000">
+            <div class="">
+              <div>
+                <div class="chat-header p-3 d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center gap-2">
+                    <img src="assets/images/places/chat.svg" alt="chat">
+                    <div>
+                      <h5 class="fw-bold">{{'places.newChat'|translate}}</h5>
+                      <p class="mb-0 fs-6-1">{{'places.askAnything'|translate}}</p>
+                    </div>
+                  </div>
+                  <a class="text-main-color">
+                    <i class="pi pi-share-alt"></i>
+                  </a>
+                  <!-- <button
+                  class="btn btn-outline-main rounded-pill d-flex align-items-center justify-content-center gap-2 p-2">
+                  <i class="pi pi-share-alt"></i>
+                  {{'general.share'|translate}}
+                </button> -->
+                </div>
+                <div>
+                  <div class="p-3 chat-messages rounded-0 position-relative" #chatGpt>
+                    <div *ngIf="chat?.length==0" class="overlay-chat position-absolute pointer"
+                      (click)="openComingSoon()"></div>
+                    <div class="chat-content pe-3">
+                      <ng-container *ngIf="isLoadingChat; else noLoadingChat">
+                        <app-skeleton [type]="'chat'"></app-skeleton>
+                      </ng-container>
+                      <ng-template #noLoadingChat>
+                        <ng-container *ngIf="chat?.length>0; else noChat">
+                          <div *ngFor="let item of chat">
+                            <div class="mb-4" *ngIf="item.type=='one'">
+                              <div>
+                                <div class="d-flex align-items-end gap-2 mb-2">
+                                  <img class="chat-img rounded-circle" src="assets/images/places/chat2.svg"
+                                    alt="item.type">
+                                  <div class="w-fit-content chat-text  position-relative p-3  text-one round">
+                                    <p class="fs-8 lh-sm mb-0">{{item.text}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="mb-4" *ngIf="item.type=='two'">
+                              <div class="d-flex align-items-end flex-column">
+                                <div
+                                  class="w-fit-content chat-text p-3 text-two round  position-relative d-flex justify-content-end">
+                                  <p class="fs-8 text-dark lh-sm mb-0 text-white-color">{{item?.text}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <ng-template #noChat>
+                          <div
+                            class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column h-100">
+                            <img src="../../../../../../../assets/images/places/chatgpt.svg" width="200px"
+                              alt="no-data">
+                            <p>{{'general.noMessages'|translate}}</p>
+                          </div>
+                        </ng-template>
+                      </ng-template>
+                    </div>
+                    <div class="message p-2 pb-0 w-100">
+                      <form class="mb-2" [formGroup]="chatForm">
+                        <div class="p-inputgroup bg-white-color rounded-pill">
+                          <input #message class="form-control bg-transparent form-control border-0"
+                            formControlName="message" name="message" placeholder="{{'placeholder.type'|translate}}" />
+                          <span class="p-inputgroup-addon bg-transparent border-0 py-0 w-fit-content">
+                            <div class="d-flex align-items-center gap-3 w-100 justify-content-end">
+                              <a class="text-muted-color" (click)="fileInput.click()"><svg
+                                  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                  class="bi bi-paperclip" viewBox="0 0 16 16">
+                                  <path
+                                    d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+                                </svg></a>
+                              <input hidden (change)="onFileSelected($event)" #fileInput type="file"
+                                accept=".doc,.pdf,.ppt,.txt" id="file">
+
+                              <a class="text-muted-color" (click)="fileInput2.click()"><svg
+                                  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                  class="bi bi-upload" viewBox="0 0 16 16">
+                                  <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                  <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                </svg></a>
+                              <input hidden (change)="onFileSelected($event)" #fileInput2 type="file" accept="image"
+                                id="file">
+
+                              <button
+                                class="bg-main-color text-white d-flex justify-content-center align-items-center arrow border-0 rounded-circle border-0"
+                                [disabled]="!chatForm.valid" (click)="addToChat(chatGpt,message)">
+                                <i class="pi pi-arrow-right scaleX-rtl"></i>
+                              </button>
+                            </div>
+                          </span>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-sidebar>
+        </div>
+        <ng-container *ngIf="placeDetails?.galleries?.length>0; else noImagesForView">
+          <p-carousel [value]="placeDetails?.galleries" [numVisible]="1" [numScroll]="1" [circular]="true"
+            [showIndicators]="true" [showNavigators]="false" [attr.autoPlayInterval]="2000">
+            <ng-template let-item pTemplate="item">
+              <div class="">
+                <img src="{{item?.file}}" onerror="src='assets/images/not-found/no-img.svg'" alt="img" height="360px"
+                  class="w-100 obj-fit-cover img-place img-place-sm shadow-sm">
+              </div>
+            </ng-template>
+          </p-carousel>
+        </ng-container>
+        <ng-template #noImagesForView>
+          <div class="py-4 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+            <img src="assets/images/not-found/no-img.svg" width="200px" alt="no-data">
+            <p>{{'general.noGallery'|translate}}</p>
+          </div>
+        </ng-template>
+      </div>
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 my-3">
+          <div>
+            <h5 class="fw-bold fs-4-1">{{placeDetails?.title}}</h5>
+            <div class="d-flex gap-2 align-items-center fs-6-1 address">
+              {{'titles.saudiArabia'| translate}}
+              <ng-container *ngIf="placeDetails?.region?.name">
+                <i class="pi pi-angle-right"></i>
+                <span>{{placeDetails?.region?.name}}</span>
+              </ng-container>
+              <ng-container *ngIf="placeDetails?.city?.name">
+                <i class="pi pi-angle-right"></i>
+                <span>{{placeDetails?.city?.name}}</span>
+              </ng-container>
+            </div>
+            <div class="d-flex gap-2 align-items-center mt-2">
+              <p-rating [(ngModel)]="placeDetails.rate" [id]="'rating3'" [disabled]="true" [cancel]="false"></p-rating>
+              <u *ngIf="placeDetails?.review>0" (click)="placeDetails?.review>0?showReviews():''" class="pointer">
+                <p class="mb-0 fs-5-1 address">
+                  {{placeDetails?.review || 0}} {{'general.reviews'|translate}}
+                </p>
+              </u>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap details-icons">
+          <ng-container *ngIf="isUserLoggedin">
+            <i class="pi light-new-color pointer" (click)="addToFavorite(placeDetails)"
+              [ngClass]="placeDetails?.is_favorite?'pi-heart-fill':'pi-heart'"></i>
+          </ng-container>
+          <i (click)="share(placeDetails?.website)" class="pi pi-share-alt pointer"></i>
+          <ng-container *ngIf="isLoadingSavePlace; else elseViewActions2">
+            <app-skeleton [type]="'savePlace'"></app-skeleton>
+          </ng-container>
+          <ng-template #elseViewActions2>
+            <ng-container *ngIf="isUserLoggedin">
+              <i class="pi  pointer" [ngClass]="placeDetails.is_saved?'pi-bookmark-fill':'pi-bookmark'"
+                (click)="savePlace()"></i>
+            </ng-container>
+          </ng-template>
+          <i class="fas fa-location-dot pointer" (click)="showMap()"></i>
+          <!-- <i class="fas fa-file-import"></i> -->
+          <a [href]="placeDetails.address" [class.d-none]="!placeDetails.address" target="_blank"><i
+              class="pi pi-directions-alt"></i></a>
+        </div>
+
+        <div>
+          <h5 class="fw-bold fs-5 mt-4 mb-2">{{'places.description'|translate}}</h5>
+          <div>
+            <div>
+              <div class="fs-5-2 mb-2 rich-text" [innerHTML]="placeDetails?.description | safeHtml"></div>
+            </div>
+            <ng-container *ngIf="placeDetails?.facebook_link||placeDetails?.whatsapp||placeDetails?.instagram_link">
+              <div class="d-flex align-items-center gap-3 mt-3">
+                <a *ngIf="placeDetails?.facebook_link" [href]="placeDetails?.facebook_link" target="_blank">
+                  <i class="pi pi-facebook fs-4 text-main-color"></i></a>
+                <a *ngIf="placeDetails?.whatsapp" [href]="'https://wa.me/' + placeDetails?.whatsapp" target="_blank"> <i
+                    class="pi pi-whatsapp fs-4 text-main-color"></i></a>
+                <a *ngIf="placeDetails?.instagram_link" [href]="placeDetails?.instagram_link" target="_blank">
+                  <i class="pi pi-instagram fs-4 text-main-color"></i></a>
+              </div>
+            </ng-container>
+          </div>
+
+          <div>
+            <h5 class="fw-bold fs-5 mt-4 mb-2">{{'places.features'|translate}}</h5>
+            <div class="mt-3 position-relative" id="features">
+              <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+                <div>
+                  <h5 class="fw-bold fs-6">{{'places.findOut'|translate}}</h5>
+                  <p class="text-muted-color">{{'places.infoAboutPlace'|translate}}</p>
+                </div>
+                <div class="create-date position-relative me-auto w-100 d-sm-block d-none">
+                  <div class="position-absolute check d-flex justify-content-center align-items-center rounded-circle">
+                    <i class="pi pi-check fw-bold"></i>
+                  </div>
+                  <p class="mb-0 text-center">{{publicService.convertTimeOrDate(placeDetails?.created_at,'date3')}}
+                  </p>
+                  <p class="mb-0 text-center">{{'places.createdDate'|translate}}</p>
+                </div>
+              </div>
+
+              <div class="row mt-sm-4 mt-2 align-items-center g-0">
+                <div class="col-lg-8">
+                  <div class="features-sm d-sm-none d-block position-relative">
+                    <a class="bg-white-color d-flex justify-content-center align-items-center position-absolute h-100 shadow-sm tab-arrow tab-prev-arrow scaleX-rtl"
+                      [class.d-none]="tabIndex==0" (click)="openPrev()">
+                      <i class="pi pi-chevron-left">
+                      </i>
+                    </a>
+                    <a class="bg-white-color d-flex justify-content-center align-items-center position-absolute h-100 shadow-sm tab-arrow tab-next-arrow scaleX-rtl"
+                      (click)="openNext()" [class.d-none]="tabIndex==3">
+                      <i class="pi pi-chevron-right">
+                      </i>
+                    </a>
+                    <p-tabView styleClass="tabview-custom" [(activeIndex)]="tabIndex">
+                      <p-tabPanel>
+                        <ng-template pTemplate="header">
+                          <div class="feature-bg p-2"
+                            style="--feature-bg:url(assets/images/places/features/shopping.svg)">
+                            <div
+                              class="feature-info d-flex flex-column align-items-center justify-content-center gap-1">
+                              <img src="assets/images/places/features/shopping-img.svg" alt="shopping-img"
+                                class="feature-icon">
+                              <div class="feature-content text-white-color">
+                                <h6 class="fs-5 mb-1">{{placeDetails?.categories[0]?.name ||
+                                  publicService.translateTextFromJson('general.none')}}</h6>
+                                <p class="mb-0 fs-6">{{'places.category'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-tabPanel>
+                      <p-tabPanel header="Header II">
+                        <ng-template pTemplate="header">
+                          <div class="feature-bg p-2" style="--feature-bg:url(assets/images/places/features/price.svg)">
+                            <div
+                              class="feature-info d-flex flex-column align-items-center justify-content-center gap-1">
+                              <img src="assets/images/places/features/price-img.svg" alt="price-img"
+                                class="feature-icon">
+                              <div class="feature-content text-white-color">
+                                <h6 class="fs-5 mb-1">{{placeDetails?.price?.name ||
+                                  publicService.translateTextFromJson('general.noPrice')}}</h6>
+                                <p class="mb-0 fs-6">{{'places.price'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-tabPanel>
+                      <p-tabPanel header="Header III">
+                        <ng-template pTemplate="header">
+                          <div class="feature-bg p-2"
+                            style="--feature-bg:url(assets/images/places/features/seasons.svg)">
+                            <div
+                              class="feature-info d-flex flex-column align-items-center justify-content-center gap-1">
+                              <img src="assets/images/places/features/seasons-img.svg" alt="seasons-img"
+                                class="feature-icon">
+                              <div class="feature-content text-white-color">
+                                <h6 class="fs-5 mb-1">{{placeDetails?.seasons[0]}}</h6>
+                                <p class="mb-0 fs-6 text-capitalize">{{'places.seasons'|translate}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-tabPanel>
+                      <p-tabPanel header="Header IV">
+                        <ng-template pTemplate="header">
+                          <div class="feature-bg p-2"
+                            style="--feature-bg:url(assets/images/places/features/tickets.svg)">
+                            <div
+                              class="feature-info  d-flex flex-column align-items-center justify-content-center gap-1">
+                              <div
+                                class="d-flex justify-content-between align-items-center flex-nowrap gap-2 feature-icon">
+                                <ng-container *ngIf="placeDetails?.visited; else noTicketLink">
+                                  <a [href]="placeDetails?.ticket_link" target="_blank"
+                                    class="mb-0 book-now py-sm-2 py-1 px-2 rounded-pill text-nowrap">
+                                    {{'general.bookNow'|translate}}
+                                  </a>
+                                </ng-container>
+                                <ng-template #noTicketLink>
+                                  <div></div>
+                                </ng-template>
+                                <img src="assets/images/places/features/tickets-img.svg" alt="tickets-img me-auto"
+                                  class="">
+                              </div>
+                              <div class="feature-content text-white-color">
+                                <div class="">
+                                  <h6 class="fs-5 mb-1">{{'places.tickets'|translate}}</h6>
+                                  <p class="mb-0 fs-6">
+                                    <ng-container *ngIf="placeDetails?.visited; else noTicket">
+                                      {{'general.yes'|translate}}
+                                    </ng-container>
+                                    <ng-template #noTicket>
+                                      {{'general.no'|translate}}
+                                    </ng-template>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-tabPanel>
+                    </p-tabView>
+                  </div>
+                  <div class="row d-sm-flex d-none">
+                    <div class="col-6 mb-3">
+                      <div class="position-relative">
+                        <img src="assets/images/places/features/shopping.svg" alt="shopping" class="w-100 feature-img">
+                        <div class="feature-info">
+                          <img src="assets/images/places/features/shopping-img.svg" alt="shopping-img"
+                            class="position-absolute feature-icon p-3">
+                          <div class="position-absolute feature-content p-3 text-white-color">
+                            <h6 class="fs-5">{{placeDetails?.categories[0]?.name ||
+                              publicService.translateTextFromJson('general.none')}}</h6>
+                            <p class="mb-0 fs-6">{{'places.category'|translate}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <div class="position-relative">
+                        <img src="assets/images/places/features/price.svg" alt="price" class="w-100 feature-img">
+                        <div class="feature-info">
+                          <img src="assets/images/places/features/price-img.svg" alt="price-img"
+                            class="position-absolute feature-icon p-3">
+                          <div class="position-absolute feature-content p-3 text-white-color">
+                            <h6 class="fs-5">{{placeDetails?.price?.name ||
+                              publicService.translateTextFromJson('general.noPrice')}}</h6>
+                            <p class="mb-0 fs-6">{{'places.price'|translate}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <div class="position-relative">
+                        <img src="assets/images/places/features/seasons.svg" alt="seasons" class="w-100 feature-img">
+                        <div class="feature-info">
+                          <img src="assets/images/places/features/seasons-img.svg" alt="seasons-img"
+                            class="position-absolute feature-icon p-3">
+                          <div class="position-absolute feature-content p-3 text-white-color">
+                            <h6 class="fs-5">{{placeDetails?.seasons[0]}}</h6>
+                            <p class="mb-0 fs-6 text-capitalize">{{'places.seasons'|translate}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <div class="position-relative">
+                        <img src="assets/images/places/features/tickets.svg" alt="tickets" class="w-100 feature-img">
+                        <div class="feature-info w-100">
+                          <div
+                            class="d-flex justify-content-between align-items-center flex-nowrap gap-2 position-absolute feature-icon p-sm-2 p-3 w-100">
+                            <ng-container *ngIf="placeDetails?.visited; else noTicketLink">
+                              <a [href]="placeDetails?.ticket_link" target="_blank"
+                                class="mb-0 book-now py-sm-2 py-1 px-2 rounded-pill text-nowrap">
+                                {{'general.bookNow'|translate}}
+                              </a>
+                            </ng-container>
+                            <ng-template #noTicketLink>
+                              <div></div>
+                            </ng-template>
+                            <img src="assets/images/places/features/tickets-img.svg" alt="tickets-img me-auto" class="">
+                          </div>
+                          <div class="position-absolute feature-content p-3 text-white-color">
+                            <div class="">
+                              <h6 class="fs-5">{{'places.tickets'|translate}}</h6>
+                              <p class="mb-0 fs-6">
+                                <ng-container *ngIf="placeDetails?.visited; else noTicket">
+                                  {{'general.yes'|translate}}
+                                </ng-container>
+                                <ng-template #noTicket>
+                                  {{'general.no'|translate}}
+                                </ng-template>
+                              </p>
+                            </div>
+                            <!-- <ng-container *ngIf="placeDetails?.visited; else noTicketLink">
+                              <a [href]="placeDetails?.ticket_link" target="_blank"
+                                class="mb-0 book-now p-2  rounded-pill d-sm-none d-block text-nowrap mx-3">
+                                {{'general.bookNow'|translate}}
+                              </a>
+                            </ng-container> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-10 m-auto d-none">
+                  <div class="align-items-center justify-content-end gap-0 social position-relative mt-3">
+                    <div
+                      class="p-4 follow-social d-flex justify-content-center align-items-center text-center fw-500 shadow-sm">
+                      {{'places.followUs'|translate}}
+                    </div>
+                    <div class="d-flex align-items-center flex-column social-rotate">
+                      <a [href]="placeDetails?.facebook_link" target="_blank"
+                        [class.pointer-none]="!placeDetails?.facebook_link" class="border-end pe-4 border-top pb-4">
+                        <ng-container *ngIf="placeDetails?.facebook_link; else noFacebook">
+                          <img src="assets/images/places/features/facebook.svg" alt="facebook" class="facebook">
+                        </ng-container>
+                        <ng-template #noFacebook>
+                          <span class="lock shadow d-block facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                              width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                              <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                              <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                              <path d="M22 22l-5 -5" />
+                              <path d="M17 22l5 -5" />
+                            </svg>
+                          </span>
+                        </ng-template>
+                      </a>
+                      <a [href]="placeDetails?.whatsapp" target="_blank" [class.pointer-none]="!placeDetails?.whatsapp"
+                        class="border-end pe-4 whatsapp position-relative pb-4">
+                        <ng-container *ngIf="placeDetails?.whatsapp; else noWhatsapp">
+                          <img src="assets/images/places/features/whatsapp.svg" alt="whatsapp" class="">
+                        </ng-container>
+                        <ng-template #noWhatsapp>
+                          <span class="lock shadow d-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                              width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                              <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                              <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                              <path d="M22 22l-5 -5" />
+                              <path d="M17 22l5 -5" />
+                            </svg>
+                          </span>
+                        </ng-template>
+                      </a>
+                      <a [href]="placeDetails?.instagram_link" target="_blank"
+                        [class.pointer-none]="!placeDetails?.instagram_link"
+                        class="border-end pe-4 whatsapp position-relative pb-4">
+                        <ng-container *ngIf="placeDetails?.instagram_link; else noInstagram">
+                          <img src="assets/images/places/features/instagram.png" alt="instagram" class="rounded-circle"
+                            width="40px" height="40px">
+                        </ng-container>
+                        <ng-template #noInstagram>
+                          <span class="lock shadow d-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                              width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                              <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                              <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                              <path d="M22 22l-5 -5" />
+                              <path d="M17 22l5 -5" />
+                            </svg>
+                          </span>
+                        </ng-template>
+                      </a>
+                      <a [href]="placeDetails?.twitter" target="_blank" class="border-end pe-4 border-bottom"
+                        [class.pointer-none]="!placeDetails?.twitter">
+                        <ng-container *ngIf="placeDetails?.twitter; else noTwitter">
+                          <img src="assets/images/places/features/twitter.svg" alt="twitter" class="twitter">
+                        </ng-container>
+                        <ng-template #noTwitter>
+                          <span class="lock shadow d-block twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-x"
+                              width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                              <path d="M13 21h-6a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v.5" />
+                              <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+                              <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+                              <path d="M22 22l-5 -5" />
+                              <path d="M17 22l5 -5" />
+                            </svg>
+                          </span>
+                        </ng-template>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <ng-container *ngIf="relatedPlaces?.length>0">
+              <div class="mt-md-5 mt-4">
+                <h5 class="fs-5-1 fw-500 mb-4">
+                  {{'places.recommendedPlaces'|translate}}</h5>
+                <div class="" id=recommendedPlaces>
+                  <ng-container *ngIf="isLoadingRelatedPlaces; else noLoadingRelatedPlaces">
+                    <app-skeleton [type]="'relatedPlaces'"></app-skeleton>
+                  </ng-container>
+                  <ng-template #noLoadingRelatedPlaces>
+                    <ng-container *ngIf="relatedPlaces?.length>0; else noRelatedPlaces">
+                      <p-carousel [value]="relatedPlaces" [numVisible]="3" [numScroll]="1" [circular]="true"
+                        [showIndicators]="true" [showNavigators]="true" [responsiveOptions]="recommendedPlacesOptions"
+                        [attr.stagePadding]="30" [autoplayInterval]="7000">
+                        <ng-template let-slide pTemplate="item">
+                          <div class="mx-2 slider-item dir-rtl p-0 position-relative pointer d-sm-block d-none"
+                            (click)="showDetails(slide)">
+                            <img [src]="slide?.image" class="slider-img w-100 object-fit-cover"
+                              onerror="src='assets/images/not-found/no-img.svg'" alt="img">
+                            <div class="slider-content position-absolute ">
+                              <div class="d-flex justify-content-between align-items-center gap-2 mt-2 p-2 flex-wrap">
+                                <div>
+                                  <h6 class="mb-0 fs-5-2 fw-500">{{slide?.title || ''}}</h6>
+                                  <p class="fw-600 fs-6-1 mt-1 mb-0 text-muted-color ">
+                                    {{slide?.address_name ||'titles.saudiArabia'| translate}}
+                                  </p>
+                                </div>
+                                <a (click)="recallNewPlaceDetails(slide?.slug)" rel="noopener noreferrer">
+                                  <i class="pi pi-angle-right scaleX-rtl"></i>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="d-sm-none d-block recomended-sm p-1 dir-rtl">
+                            <div class="global-card" (click)="showDetails(slide)">
+                              <div class="row">
+                                <div class="col-5">
+                                  <img [src]="slide?.image" class="slider-img w-100 object-fit-cover"
+                                    onerror="src='assets/images/not-found/no-img.svg'" alt="img">
+                                </div>
+                                <div class="col-7">
+                                  <div class="slider-content mt-2">
+                                    <div class="d-flex justify-content-between gap-2   flex-column">
+                                      <div>
+                                        <h6 class="mb-0 fs-5-2 fw-500">{{slide?.title || ''}}</h6>
+                                        <p class="fw-600 fs-6-1 mt-1 mb-0 text-muted-color ">
+                                          {{slide?.address_name ||'titles.saudiArabia'| translate}}
+                                        </p>
+                                      </div>
+                                      <a (click)="recallNewPlaceDetails(slide?.slug)" rel="noopener noreferrer">
+                                        {{'general.moreDetails'|translate}}
+                                        <i class="pi pi-angle-right"></i>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </p-carousel>
+                    </ng-container>
+                    <ng-template #noRelatedPlaces>
+                      <div
+                        class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                        <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                        <p>{{'general.noData'|translate}}</p>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="position-relative z-index ms-lg-5 mt-md-0 mt-sm-4 mt-2">
+            <!-- <div class="global-card p-4"> -->
+            <div class="border py-sm-4 py-3 px-sm-5 px-3 rounded position-relative">
+              <!-- <div class="position-absolute form-cover"></div> -->
+              <div class="overlay-search2 position-absolute d-flex justify-content-center" *ngIf="isLoadingBtn">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                  <ng-container *ngFor="let item of [8,8,9,8]">
+                    <div class="spinner-grow" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <h4 class="fw-bold text-center">{{'places.giveFeedback'|translate}}</h4>
+              <p class="fw-500 text-center op fs-6-1">{{'places.howWasExperience'|translate}}</p>
+              <form class="msg-form msg-form-sm" [formGroup]="form" (submit)="sendFeedbackFromPlaces()">
+                <div class="my-3">
+                  <div class="d-flex justify-content-between gap-2 align-items-center flex-wrap">
+                    <div class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                      <input class="form-check-input" type="radio" formControlName="status" id="terrible" value="1"
+                        hidden>
+                      <label class="form-check-label" for="terrible">
+                        <p class="emojy mb-2"><span>😥</span></p>
+                      </label>
+                      <label class="form-check-label" for="terrible">
+                        {{'general.terrible'|translate}}
+                      </label>
+                    </div>
+                    <div class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                      <input class="form-check-input" type="radio" formControlName="status" id="bad" value="2" hidden>
+                      <label class="form-check-label" for="bad">
+                        <p class="mb-0 emojy mb-2">🙁</p>
+                      </label>
+                      <label class="form-check-label" for="bad">
+                        {{'general.bad'|translate}}
+                      </label>
+                    </div>
+                    <div class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                      <input class="form-check-input" type="radio" formControlName="status" id="okay" value="3" hidden>
+                      <label class="form-check-label" for="okay">
+                        <p class="mb-0 emojy mb-2">🙂</p>
+                      </label>
+                      <label class="form-check-label" for="okay">
+                        {{'general.okay'|translate}}
+                      </label>
+                    </div>
+                    <div class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                      <input class="form-check-input" type="radio" formControlName="status" id="good" value="4" hidden>
+                      <label class="form-check-label" for="good">
+                        <p class="mb-0 emojy mb-2">😀</p>
+                      </label>
+                      <label class="form-check-label" for="good">
+                        {{'general.good'|translate}}
+                      </label>
+                    </div>
+                    <div class="form-check p-0 d-flex flex-column align-items-center justify-content-center">
+                      <input class="form-check-input" type="radio" formControlName="status" id="amazing" value="5"
+                        hidden>
+                      <label class="form-check-label" for="amazing">
+                        <p class="mb-0 emojy mb-2">😍</p>
+                      </label>
+                      <label class="form-check-label" for="amazing">
+                        {{'general.amazing'|translate}}
+                      </label>
+                    </div>
+                  </div>
+                  <ng-container
+                    *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                    <div class="mt-2">
+                      <ng-container
+                        *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                        <ng-container *ngIf="formControls?.status?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+                <ng-container *ngIf="!currentLoginInformation">
+                  <div class="mb-3">
+                    <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.name'|translate}}</label>
+                    <div class="p-inputgroup leaveMsg">
+                      <span class="p-inputgroup-addon bg-transparent border-0">
+                        <i class="pi pi-user fw-bold fs-5 text-dark-color"></i>
+                      </span>
+                      <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                        (input)="publicService.clearValidationErrors(formControls?.name)" formControlName="name"
+                        placeholder="{{'placeholder.name'|translate}}">
+                    </div>
+                    <ng-container
+                      *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.name?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                          <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="mb-3">
+                    <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.email'|translate}}</label>
+                    <div class="p-inputgroup leaveMsg">
+                      <span class="p-inputgroup-addon bg-transparent border-0">
+                        <i class="pi pi-envelope fw-bold fs-5 text-dark-color"></i>
+                      </span>
+                      <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                        (input)="publicService.clearValidationErrors(formControls?.email)" formControlName="email"
+                        placeholder="{{'placeholder.email'|translate}}">
+                    </div>
+                    <ng-container
+                      *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                      <div class="mt-2">
+                        <ng-container
+                          *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                          <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                              {{'validations.required_field'|translate}}
+                            </span>
+                          </ng-container>
+                          <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                            <span class="text-danger fs-8">
+                              {{'validations.emailNotValid'|translate}}
+                            </span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <div>
+                  <label for="" class="fw-500 mb-3 fs-6-1">{{'labels.shareExperience'|translate}}</label>
+                  <div class="p-inputgroup leaveMsg">
+                    <span class="p-inputgroup-addon bg-transparent border-0">
+                      <img src="assets/images/icons/msg.svg" alt="msg">
+                    </span>
+                    <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                      (input)="publicService.clearValidationErrors(formControls?.massage)" formControlName="massage"
+                      placeholder="{{'placeholder.leaveMsg'|translate}}">
+                  </div>
+                  <ng-container
+                    *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                    <div class="mt-2">
+                      <ng-container
+                        *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                        <ng-container *ngIf="formControls?.massage?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.massage?.errors?.['minlength']">
+                          <span class="text-danger fs-8">
+                            {{'validations.rateLength'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.massage?.errors?.['pattern']">
+                          <span class="text-danger fs-8 d-block">
+                            {{'validations.msgAcceptLetters'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-sm-5 mt-4">
+                  <button class="btn submit d-flex justify-content-center align-items-center gap-2" type="submit">
+                    {{'general.submit'|translate}}
+                  </button>
+                  <button class="btn cancel" type="button" (click)="cancel()">{{'general.cancel'|translate}}</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="mt-3 d-none"
+              *ngIf="placeDetails?.facebook_link||placeDetails?.whatsapp||placeDetails?.instagram_link">
+              <h6 class="fs-5-2 fw-bold mb-0 text-center">{{'places.followSocial'|translate}}</h6>
+              <div class="d-flex align-items-center justify-content-center flex-wrap gap-3 p-2 ">
+                <a *ngIf="placeDetails?.facebook_link" [href]="placeDetails?.facebook_link" target="_blank"> <i
+                    class="pi pi-facebook fs-4 text-main-color"></i></a>
+                <a *ngIf="placeDetails?.whatsapp" [href]="'https://wa.me/' + placeDetails?.whatsapp" target="_blank"> <i
+                    class="pi pi-whatsapp fs-4 text-main-color"></i></a>
+                <a *ngIf="placeDetails?.instagram_link" [href]="placeDetails?.instagram_link" target="_blank"> <i
+                    class="pi pi-instagram fs-4 text-main-color"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+    <style *ngIf="homeShowFooter">
+      #home {
+        padding-bottom: 0 !important;
+
+      }
+    </style>
+  </div>
+
+</div>
+
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

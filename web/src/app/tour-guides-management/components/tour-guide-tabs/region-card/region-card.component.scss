@@ -1,0 +1,41 @@
+.img-container {
+    width: 100%;
+    height: 14rem;
+    background-color: rgba(128, 128, 128, 0.344);
+    overflow: hidden;
+    border-radius: 22px;
+    cursor: pointer;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    @media (max-width: 767px) {
+        border-radius: 22px;
+    }
+    .content {
+        width: 95%;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 21px;
+        padding: 15px 25px;
+        background: radial-gradient(100% 100% at 0% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+        box-shadow: inset -5px -5px 250px rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(6.4px);
+        z-index: 2;
+        p {
+            font-family: 1.25rem;
+        }
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.186);
+        pointer-events: none;
+        border-radius: inherit;
+    }
+}

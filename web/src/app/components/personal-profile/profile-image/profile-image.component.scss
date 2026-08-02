@@ -1,0 +1,40 @@
+#profile {
+  .profile-img {
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    background-color: #7939A7;
+
+    .overlay-img {
+      visibility: hidden;
+    }
+
+    &:hover {
+      .overlay-img {
+        visibility: visible;
+      }
+    }
+  }
+
+  .profile-avatar {
+    width: 70px;
+    min-width: 70px;
+    height: 70px;
+    background-color: #7939A7;
+  }
+
+  .overlay-img {
+    inset: 0;
+    background-color: #1111112e;
+    color: #fff;
+  }
+}
+
+:host::ng-deep {
+  #profile {
+    .p-dialog .p-dialog-content:last-of-type {
+      border-radius: 15px !important;
+      padding: 0;
+    }
+  }
+}

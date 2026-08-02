@@ -1,0 +1,299 @@
+#hero-trip {
+  background-image: url(../../../../../assets/images/trips/image03.webp);
+  min-height: 80vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  // margin-bottom: 20px;
+}
+
+.overlay {
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+  height: 100%;
+
+}
+
+.content {
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-color: #64594771;
+  // align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 55;
+  color: white;
+
+  div {
+    text-align: center;
+
+    h4 {
+      color: var(--bg-white-color);
+      font-size: 45px;
+      line-height: 55px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 36px;
+      color: #c9c7c7 !important;
+    }
+  }
+}
+
+.min-h {
+  height: 595px;
+}
+
+@media (max-width: 787px) {
+  .content {
+    div {
+      h4 {
+        font-size: 25px !important;
+        line-height: 35px;
+      }
+    }
+  }
+}
+
+// .banner-cards {
+//   width: 900px;
+//   --bs-gutter-x: 0;
+//   position: absolute;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   bottom: 100px;
+//   margin-left: 120px;
+//   z-index: 5;
+
+//   div {
+//     border-radius: 7px;
+//     --bs-gutter-x: 0;
+//     height: 0px;
+//     overflow: hidden;
+//     img {
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover
+//     }
+
+//     // &:last-child{
+//     //   background-color: yellow;
+//     //   height:200px;
+//     //   img{
+//     //     width: 100%;
+//     //     height: 100%;
+//     //     object-fit: cover
+//     //   }
+
+//     // }
+//   }
+// }
+
+.links {
+  bottom: 0;
+}
+
+.hero-img {
+  clip-path: polygon(0 0, 100% 0%, 80% 100%, 0% 100%);
+}
+
+.w-85 {
+  width: 85%;
+}
+
+.min-h {
+  min-height: 80vh;
+}
+
+.desc {
+  color: #767676;
+}
+
+.calendar {
+  background-color: #cf86ac;
+  border-radius: 5px;
+  padding: 0.6rem 1rem;
+}
+
+.calendar2 {
+  background-color: #cfcfcf;
+}
+
+.saveTrip-btn {
+  background-color: white;
+  border-radius: 5px !important;
+  padding: 0.4rem .4rem;
+}
+
+.p-inputgroup {
+  border-radius: 7px;
+  border: 1px solid #80808069;
+
+  .form-control {
+    height: 3.1rem !important;
+  }
+}
+
+.tripProgram {
+  // background-image: url(../../../../../assets/images/trips/vector.svg);
+  // background-repeat: no-repeat;
+  // background-position: ;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+}
+
+.day-bg {
+  background-color: #c892d9;
+  border-radius: 5px;
+  padding: 0.7rem;
+  color: var(--text-white-color);
+
+  .sun {
+    background-color: var(--bg-white-color);
+    left: 0.5rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.all-days {
+  // max-height: 540px;
+  // overflow-y: auto;
+  // overflow-x: hidden;
+
+}
+
+// .all-list {
+//   background-color: rgb(132 84 142 / 8%);
+// }
+
+.trips-cards {
+  position: relative;
+  margin-top: 50px;
+
+  >img {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: fit-content;
+    z-index: -5;
+
+  }
+}
+.trip-card {
+  border-radius: 15px;
+  background-color: var(--bg-white-color);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px !important;
+  transition: .3s;
+
+  .img-container {
+    overflow: hidden;
+    border-radius: 15px;
+
+    img {
+      transition: .3s;
+    }
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px !important;
+    .img-container {
+      img {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .trip-img {
+    // height: 220px;
+    border-radius: 15px;
+  }
+
+  .text-forth-color {
+    color: gray !important;
+  }
+
+  .close {
+    width: 30px;
+    height: 30px;
+    background-color: var(--bg-white-color);
+    right: -10px;
+    cursor: pointer;
+    top: -10px;
+  }
+}
+
+:host::ng-deep {
+  .btn-solid-main {
+    background-color: var(--light-new-color) !important;
+    border-color: var(--light-new-color) !important;
+  }
+
+  .btn-outline-main {
+    border-color: var(--light-new-color) !important;
+    color: var(--light-new-color) !important;
+  }
+
+  // .all-list {
+  //   .btn-solid-main {
+  //     background-color: #cf86ac !important;
+  //     border-color: #cf86ac !important;
+  //     padding: 0.5rem;
+  //   }
+
+  //   .btn-outline-main {
+  //     color: #000000 !important;
+  //     border-color: #00000061 !important;
+  //     padding: 0.5rem;
+  //   }
+  // }
+
+  .p-paginator {
+    background-color: transparent !important;
+    z-index: 33;
+    padding-bottom: 2rem;
+    flex-wrap: nowrap;
+    gap: 5px;
+  }
+
+  .p-link {
+    // border-radius: 7px !important;
+    background-color: #fff !important;
+    border-radius: 5px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    color: #000000;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+    // &.p-highlight {
+    //   background-color: #cf86ac !important;
+    //   color: var(--text-white-color) !important;
+    // }
+  }
+
+  .p-paginator-pages {
+    gap: 5px;
+    display: flex;
+
+    .p-link {
+      &.p-highlight {
+        border: 1px solid #ffffff !important;
+        background-color: #000000 !important;
+        color: #fff9f9 !important;
+      }
+    }
+  }
+
+  .p-multiselect {
+    background-color: var(--bg-white-color) !important;
+    border: 1px solid #21303933 !important;
+  }
+}

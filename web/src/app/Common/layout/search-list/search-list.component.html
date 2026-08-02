@@ -1,0 +1,180 @@
+<ng-container *ngIf="title;else noTitle">
+    <h3 class="mb-4 fs-3"> {{title|translate}}</h3>
+</ng-container>
+<ng-template #noTitle>
+    <h3 class="mb-4 fs-3"> {{searchTitle??'home.searchPlace'|translate}}</h3>
+</ng-template>
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div class="row g-0 justify-content-between">
+        <div class="row search-content col-10">
+            <div id="quick-global-search" class="form__quick-search px-0">
+                <form [formGroup]="searchForm" (ngSubmit)="search()" role="search" aria-label="search"
+                    class="d-lg-block d-none h-100">
+                    <div class="w-md-100 mx-auto position-relative shadow-sm h-100">
+                        <div class="row search flex-nowrap m-0">
+                            <div *ngFor="let field of fieldsConfig"
+                                [ngClass]="field?.widthClass || 'col-4 px-3 input-search-result border-end'"
+                                class="d-flex align-items-center">
+                                <img [appLazyLoadImage]="field?.icon" [ngSrc]="field?.icon" width="30" height="30"
+                                    [alt]="field?.name" ngOptimizedImage>
+                                <div class="ps-2 w-100">
+                                    <label *ngIf="field?.label" [for]="field?.name"
+                                        class="form__quick-search__label fw-bold text-capitalize mb-1">
+                                        {{ field?.label | translate }}
+                                    </label>
+
+                                    <!-- Input Field -->
+                                    <ng-container *ngIf="field?.type === 'text' || field?.type === 'number'">
+                                        <div class="d-flex align-items-center justify-content-center position-relative">
+                                            <input [type]="field?.type" [formControlName]="field?.name"
+                                                [placeholder]="field?.placeholder | translate"
+                                                class="form-control p-0 h-auto bg-transparent border-0 w-100 form__quick-search__input"
+                                                pInputText #inputElement
+                                                (blur)="onChangeControl(field?.name); field.inputElementFocus=false"
+                                                (focus)="field.inputElementFocus=true">
+                                            <ng-container *ngIf="searchForm.value[field?.name]">
+                                                <i class="pi pi-times form__quick-search__close"
+                                                    (click)="clearField(field?.name, $event)"></i>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+
+                                    <!-- Dropdown Field -->
+                                    <ng-container *ngIf="field?.type === 'select'">
+                                        <span class="p-input-icon-right d-block">
+                                            <p-dropdown [options]="field?.listValues" formControlName="{{field?.name}}"
+                                                optionLabel="name" [filter]="true"
+                                                dropdownIcon="fas fa-chevron-down text-muted" [autofocusFilter]="false"
+                                                panelStyleClass="dropdown-new-panel"
+                                                [filterPlaceholder]="'placeholder.filter' | translate"
+                                                (onChange)="onChangeControl(field?.name)"
+                                                (onFocus)="focusStates[field?.name] = true"
+                                                (onHide)="focusStates[field?.name] = false"
+                                                [readonly]="field?.isLoading" scrollHeight="180px"
+                                                [emptyMessage]="'general.noResultFound' | translate" placeholder="">
+
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="flex align-items-center gap-2">
+                                                        <div class="form__quick-search__value text-truncate"
+                                                            [class.form__quick-search__value--active]="searchForm.value[field?.name]?.name">
+                                                            <span>
+                                                                {{
+                                                                searchForm.value[field?.name]
+                                                                ? searchForm.value[field?.name].name
+                                                                : field?.placeholder | translate
+                                                                }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <ng-container *ngIf="searchForm.value[field?.name]">
+                                                        <i class="pi pi-times form__quick-search__close"
+                                                            (click)="clearField(field?.name, $event)"></i>
+                                                    </ng-container>
+                                                </ng-template>
+
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item d-flex gap-2 align-items-center">
+                                                        <span class="text-dark">{{ item?.name }}</span>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                            <ng-container *ngIf="field?.isLoading">
+                                                <i class="pi pi-spin pi-spinner mx-4"></i>
+                                            </ng-container>
+                                        </span>
+                                    </ng-container>
+
+                                    <!-- DateRange Field -->
+                                    <ng-container *ngIf="field?.type === 'dateRange'">
+                                        <span class="p-input-icon-right d-block">
+                                            <p-calendar selectionMode="range" [showWeek]="true" dateFormat="dd M yy"
+                                                [readonlyInput]="true" formControlName="date"
+                                                placeholder="{{field?.placeholder|translate}}"
+                                                styleClass="event-calendar"
+                                                (clickOutside)="onChangeControl(field?.name)" inputStyleClass="border-0"
+                                                [showIcon]="true"></p-calendar>
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="flex align-items-center gap-2">
+                                                    <div class="form__quick-search__value text-truncate"
+                                                        [class.form__quick-search__value--active]="searchForm.value[field?.name]?.name">
+                                                        <span>
+                                                            {{
+                                                            searchForm.value[field?.name]
+                                                            ? searchForm.value[field?.name].name
+                                                            : field?.placeholder | translate
+                                                            }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </ng-template>
+                                            <ng-container *ngIf="searchForm.value[field?.name]">
+                                                <i class="pi pi-times form__quick-search__close"
+                                                    (click)="clearField(field?.name, $event)"></i>
+                                            </ng-container>
+                                        </span>
+                                    </ng-container>
+                                    <!-- MultiSelect Field -->
+                                    <ng-container *ngIf="field?.type === 'multiSelect'">
+                                        <span class="p-input-icon-right d-block">
+                                            <p-multiSelect [options]="field?.listValues"
+                                                formControlName="{{field?.name}}" optionLabel="name" [filter]="true"
+                                                dropdownIcon="fas fa-chevron-down text-muted"
+                                                panelStyleClass="dropdown-new-panel" [showToggleAll]="false"
+                                                [readonly]="field?.isLoading" scrollHeight="180px"
+                                                [emptyMessage]="'general.noResultFound' | translate"
+                                                placeholder="{{ field?.placeholder | translate }}"
+                                                (onChange)="onChangeControl(field?.name)"
+                                                (onShow)="focusStates[field?.name] = true"
+                                                (onHide)="focusStates[field?.name] = false">
+
+                                                <ng-template pTemplate="selectedItems">
+                                                    <div class="form__quick-search__value text-truncate"
+                                                        [class.form__quick-search__value--active]="searchForm.value[field?.name]?.length">
+                                                        <span>
+                                                            {{ getSelectedValues(field?.name) }}
+                                                        </span>
+                                                    </div>
+                                                    <ng-container *ngIf="searchForm.value[field?.name]?.length">
+                                                        <i class="pi pi-times form__quick-search__close"
+                                                            (click)="clearField(field?.name, $event)"></i>
+                                                    </ng-container>
+                                                </ng-template>
+
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="item d-flex gap-2 align-items-center">
+                                                        <span class="text-dark">{{ item?.name }}</span>
+                                                    </div>
+                                                </ng-template>
+                                            </p-multiSelect>
+                                            <ng-container *ngIf="field?.isLoading">
+                                                <i class="pi pi-spin pi-spinner mx-4"></i>
+                                            </ng-container>
+                                        </span>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-2 shadow-bottom search">
+            <div class="form__search-btn d-flex align-items-center justify-content-end h-100">
+                <button type="submit"
+                    class="h-100 w-100 border-0 d-flex align-items-center justify-content-center gap-2 btn btn-solid-main">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                        <path
+                            d="M12 22.25C6.35 22.25 1.75 17.65 1.75 12C1.75 6.35 6.35 1.75 12 1.75C17.65 1.75 22.25 6.35 22.25 12C22.25 17.65 17.65 22.25 12 22.25ZM12 3.25C7.17 3.25 3.25 7.18 3.25 12C3.25 16.82 7.17 20.75 12 20.75C16.83 20.75 20.75 16.82 20.75 12C20.75 7.18 16.83 3.25 12 3.25Z"
+                            fill="white" />
+                        <path
+                            d="M22.5004 23.2499C22.3104 23.2499 22.1204 23.1799 21.9704 23.0299L19.9704 21.0299C19.6804 20.7399 19.6804 20.2599 19.9704 19.9699C20.2604 19.6799 20.7404 19.6799 21.0304 19.9699L23.0304 21.9699C23.3204 22.2599 23.3204 22.7399 23.0304 23.0299C22.8804 23.1799 22.6904 23.2499 22.5004 23.2499Z"
+                            fill="white" />
+                    </svg>
+                    <span class="fw-bold fs-5-1 text-start">{{'general.searchNow'|translate}}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

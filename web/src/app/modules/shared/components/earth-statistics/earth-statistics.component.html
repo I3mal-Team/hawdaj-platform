@@ -1,0 +1,18 @@
+<div class="earth p-3 d-flex justify-content-center align-items-center flex-column">
+  <div class="d-flex justify-content-between align-items-center w-100 mb-3 p-2">
+    <h5 class="text-center mb-0 fw-bold">{{'general.ourVisitors'|translate}}</h5>
+    <button (click)="close()"
+      class="btn bg-danger text-white-color rounded-circle close-btn d-flex justify-content-center align-items-center">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+  <ng-container *ngIf="isLoading; else noLoading">
+    <app-skeleton [type]="'earth'"></app-skeleton>
+  </ng-container>
+  <ng-template #noLoading>
+    <div class="w-100">
+      <div id="chartdiv" class="w-100"></div>
+    </div>
+  </ng-template>
+
+</div>

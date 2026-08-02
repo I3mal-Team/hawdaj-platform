@@ -1,0 +1,66 @@
+.profile-stories {
+  .story-img {
+    width: 75px;
+    min-width: 75px;
+    height: 75px;
+    border: 1px solid #d8d8d8;
+    padding: 3px;
+    color: #d8d8d8;
+    cursor: pointer;
+
+    &.active-story {
+      border: 1px solid #7939A7;
+    }
+
+    .overlay-img {
+      inset: 0;
+      background-color: #1111116e;
+      visibility: hidden;
+    }
+
+    &:hover .overlay-img {
+      visibility: visible;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-carousel-container {
+    direction: ltr;
+  }
+
+  .p-carousel-prev,
+  .p-carousel-next {
+    border-radius: 50%;
+  }
+
+  .p-carousel-prev.p-disabled,
+  .p-carousel-next.p-disabled {
+    display: none;
+  }
+
+  // p-image {
+  //   width: 100%;
+  //   min-width: 100%;
+  //   height: 75px;
+  //   border-radius: 50%;
+  //   overflow: hidden;
+  // }
+  // .p-image-preview-indicator {
+  //   height: 67px;
+  //   width: 100%;
+  //   border-radius: 50%;
+  // }
+  // .p-image {
+  //   width: 100%;
+  //   min-width: 100%;
+  //   height: 67px;
+  //   border-radius: 50%;
+  //   & > img {
+  //     width: 100%;
+  //     min-width: 100%;
+  //     height: 67px;
+  //     border-radius: 50%;
+  //   }
+  // }
+}

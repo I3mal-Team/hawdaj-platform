@@ -1,0 +1,85 @@
+<div *appResponsiveIfNotStandalone="'desktop'" class="dropdown-language general-dropdown d-xl-block d-none">
+  <div class="dropdown">
+    <button class="dropdown-toggle lang-flag btn p-0 d-flex align-items-center gap-1" type="button"
+      [ngClass]="page!='stores'&&page!='events'&&page!='restaurant-details'&&page!='stories'&&page!='searchResult'?'text-white-color':'text-dark-color dark-toggle'"
+      id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <ng-container *ngIf="currentLanguage=='ar'">
+        <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/sa.svg" alt="sa flag">
+      </ng-container>
+      <ng-container *ngIf="currentLanguage=='en'">
+        <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/us.svg" alt="en flag">
+      </ng-container>
+      <ng-container *ngIf="currentLanguage=='ru'">
+        <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/ru.svg" alt="ru flag">
+      </ng-container>
+      <ng-container *ngIf="currentLanguage=='zh'">
+        <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/cn.svg" alt="zh flag">
+      </ng-container>
+      <span class="lang">
+        {{currentLanguage=='ar'?'عربي':currentLanguage=='ru'?'Рой':currentLanguage=='zh'?'尼亞尼':'EN'}}
+      </span>
+    </button>
+    <ul class="dropdown-menu rounded-25 border-0 shadow p-3" aria-labelledby="dropdownMenuButton1">
+      <li class="nav-item" (click)="chnageLanguage('ar')">
+        <a class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/sa.svg" alt="sa flag">
+          <span>العربية</span>
+        </a>
+      </li>
+      <li class="nav-item" (click)="chnageLanguage('en')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/us.svg" alt="us flag">
+          <span>English</span>
+        </a></li>
+      <li class="nav-item" (click)="chnageLanguage('ru')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag shadow-sm" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/ru.svg"
+            alt="ru flag">
+          <span>Рой</span>
+        </a></li>
+      <li class="nav-item" (click)="chnageLanguage('zh')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag shadow-sm" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/cn.svg"
+            alt="zh flag">
+          <span>尼亞尼</span>
+        </a></li>
+    </ul>
+  </div>
+</div>
+
+<div *appResponsiveIfNotStandalone="'mobile'" class="dropdown-language general-dropdown d-xl-none d-block">
+  <div class="dropdown">
+    <button class="dropdown-toggle languages rounded-pill btn d-flex align-items-center gap-1"
+      [ngClass]="page!='place-details'&&page!='store-details'&&page!='stores'&&page!='events'&&page!='restaurant-details'&&page!='stories'&&page!='searchResult'?'text-white-color':'text-dark-color dark-toggle'"
+      type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="pi pi-language fs-4"></i>
+      <span class="">
+        {{currentLanguage=='ar'?'عربي':currentLanguage=='ru'?'Рой':currentLanguage=='zh'?'尼亞尼':'EN'}} </span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu2 rounded-25 border-0 shadow p-3" aria-labelledby="dropdownMenuButton1">
+      <li class="nav-item" (click)="chnageLanguage('ar')">
+        <a class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/sa.svg" alt="sa">
+          <span>العربية</span>
+        </a>
+      </li>
+      <li class="nav-item" (click)="chnageLanguage('en')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/us.svg" alt="en">
+          <span>English</span>
+        </a></li>
+      <li class="nav-item" (click)="chnageLanguage('ru')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag shadow-sm" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/ru.svg"
+            alt="en">
+          <span>Рой</span>
+        </a></li>
+      <li class="nav-item" (click)="chnageLanguage('zh')"><a
+          class="nav-link px-2 p-1 d-flex align-items-center gap-2">
+          <img class="flag shadow-sm" NgOptimizedImage width="23" height="18" ngSrc="assets/newImages/flag/cn.svg"
+            alt="en">
+          <span>尼亞尼</span>
+        </a></li>
+    </ul>
+  </div>
+</div>

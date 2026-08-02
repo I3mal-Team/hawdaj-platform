@@ -1,0 +1,36 @@
+#coming-soon {
+  min-height: 100vh;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+  padding-top: 100px;
+  .title {
+    font-size: 60px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    background: linear-gradient(
+      90deg,
+      #af71ff 1.83%,
+      #c83ec2 41.17%,
+      #898ce1 74.54%,
+      #b15bc2 91.38%
+    );
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    width: fit-content;
+  }
+  .desc {
+    color: #ffffff99;
+  }
+  .form-control {
+    background-color: #100e11;
+    border: 1px solid #41464a;
+    color: #a5a8ab;
+  }
+  .sendMessage {
+    background-color: var(--bg-white-color);
+    text-wrap: nowrap;
+    color: #111;
+    width: fit-content;
+  }
+}

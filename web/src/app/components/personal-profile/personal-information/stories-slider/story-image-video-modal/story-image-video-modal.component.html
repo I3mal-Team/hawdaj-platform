@@ -1,0 +1,103 @@
+<div>
+  <!-- <div class="row">
+    <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 position-relative"> -->
+  <div class="row justify-content-center">
+    <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10 position-relative p-0">
+      <p-progressBar [value]="progressValue" [showValue]="false"></p-progressBar>
+      <div class="content position-relative d-flex justify-content-center">
+        <ng-container *ngIf="data.type=='file'">
+          <img [src]="data.file" alt="img" class="h-100 w-100">
+        </ng-container>
+        <ng-container *ngIf="data.type=='video'">
+          <video id="videoPlayer" #videoPlayer width="100%" height="100%" controls [poster]="data.file">
+            <source [src]="url" type="video/mp4">
+          </video>
+        </ng-container>
+        <!-- </div>
+    </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 justify-content-center">
+    <div class="col-xl-4 col-lg-6 col-md-8 col-sm-10">
+      <div class="bg-white-color p-4 icons">
+        <!-- Start Icons  -->
+        <ul class="d-flex justify-content-center gap-lg-5 gap-md-4 gap-3">
+          <li>
+            <a>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="30"
+                height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z"
+                  stroke-width="0" fill="currentColor" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a (click)="addComment()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle" width="30"
+                height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a (click)="share()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="30" height="30"
+                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M10 14l11 -11" />
+                <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <!-- End Icons  -->
+
+        <!-- Start Input -->
+        <div class="p-inputgroup gap-4 align-items-end" *ngIf="showInput">
+          <input type="text" class="form-control border-bottom rounded-0 bg-white border-0 px-0" [(ngModel)]="comment"
+            [disabled]="isLoading" [placeholder]="'labels.comment'|translate">
+          <span class="p-inputgroup-addon bg-transparent border-0 p-0 d-flex gap-2 align-items-center">
+            <ng-container *ngIf="isLoading; else noLoading">
+              <ng-container *ngFor="let item of [8,8,8,2]">
+                <div class="spinner-grow" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-template #noLoading>
+              <button class="send-btn btn d-flex justify-content-center align-items-center" (click)="sendComment()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send-2" width="35"
+                  height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
+                  <path d="M6.5 12h14.5" />
+                </svg>
+              </button>
+              <button class="close-btn btn d-flex justify-content-center align-items-center" (click)="cancelComment()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="35" height="35"
+                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill=" none" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
+              </button>
+            </ng-template>
+          </span>
+        </div>
+        <!-- End Input -->
+      </div>
+    </div>
+  </div>
+</div>

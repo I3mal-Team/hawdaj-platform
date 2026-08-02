@@ -1,0 +1,177 @@
+<div class="rate-place position-relative">
+    <div class="overlay-search2 position-absolute d-flex justify-content-center" *ngIf="loading">
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <ng-container *ngFor="let item of [8,8,9,8]">
+                <div class="spinner-grow" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <h4 class="mb-0">{{'places.shareOpinion'|translate}}</h4>
+    <svg xmlns="http://www.w3.org/2000/svg" width="178" height="20" viewBox="0 0 178 20" fill="none">
+        <path
+            d="M1.05078 2C59.3654 6.62222 118.384 7.51111 177.051 5.02222C122.491 8.57778 67.9308 12.8444 13.7228 18C66.7574 15.3333 120.027 14.8 173.061 16.9333"
+            stroke="#7939A7" stroke-width="3" />
+    </svg>
+    <p>{{title|translate}}</p>
+    <form class="msg-form msg-form-sm" [formGroup]="form" (submit)="sendFeedbackFromPlaces()">
+        <div class="mt-lg-5 mt-3">
+            <div class="d-flex stars justify-content-center gap-2 align-items-center flex-wrap"
+                [ngStyle]="{'direction': currentLanguage !== 'ar' ? 'rtl' : 'ltr'}">
+                <input class="form-check-input" type="radio" formControlName="status" id="amazing" value="5" hidden>
+                <label class="form-check-label" for="amazing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.602 34.7212C12.7569 35.1624 11.7345 35.0847 10.9657 34.5209C10.1969 33.9572 9.81547 33.0054 9.98215 32.0668L11.331 24.3352L5.65201 18.893C4.95785 18.231 4.70345 17.2303 4.99717 16.3172C5.2909 15.404 6.08099 14.7393 7.03092 14.6062L14.9159 13.479L18.4757 6.37775C18.8978 5.5261 19.7661 4.9873 20.7166 4.9873C21.6671 4.9873 22.5355 5.5261 22.9576 6.37775L26.5174 13.479L34.4023 14.6062C35.3523 14.7393 36.1423 15.404 36.4361 16.3172C36.7298 17.2303 36.4754 18.231 35.7812 18.893L30.1022 24.3352L31.4511 32.0684C31.6178 33.0071 31.2363 33.9589 30.4676 34.5226C29.6988 35.0864 28.6764 35.164 27.8313 34.7229L20.7166 31.0464L13.602 34.7212Z"
+                            stroke="#AEAEAE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </label>
+
+                <input class="form-check-input" type="radio" formControlName="status" id="good" value="4" hidden>
+                <label class="form-check-label" for="good">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.602 34.7212C12.7569 35.1624 11.7345 35.0847 10.9657 34.5209C10.1969 33.9572 9.81547 33.0054 9.98215 32.0668L11.331 24.3352L5.65201 18.893C4.95785 18.231 4.70345 17.2303 4.99717 16.3172C5.2909 15.404 6.08099 14.7393 7.03092 14.6062L14.9159 13.479L18.4757 6.37775C18.8978 5.5261 19.7661 4.9873 20.7166 4.9873C21.6671 4.9873 22.5355 5.5261 22.9576 6.37775L26.5174 13.479L34.4023 14.6062C35.3523 14.7393 36.1423 15.404 36.4361 16.3172C36.7298 17.2303 36.4754 18.231 35.7812 18.893L30.1022 24.3352L31.4511 32.0684C31.6178 33.0071 31.2363 33.9589 30.4676 34.5226C29.6988 35.0864 28.6764 35.164 27.8313 34.7229L20.7166 31.0464L13.602 34.7212Z"
+                            stroke="#AEAEAE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </label>
+
+                <input class="form-check-input" type="radio" formControlName="status" id="okay" value="3" hidden>
+                <label class="form-check-label" for="okay">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.602 34.7212C12.7569 35.1624 11.7345 35.0847 10.9657 34.5209C10.1969 33.9572 9.81547 33.0054 9.98215 32.0668L11.331 24.3352L5.65201 18.893C4.95785 18.231 4.70345 17.2303 4.99717 16.3172C5.2909 15.404 6.08099 14.7393 7.03092 14.6062L14.9159 13.479L18.4757 6.37775C18.8978 5.5261 19.7661 4.9873 20.7166 4.9873C21.6671 4.9873 22.5355 5.5261 22.9576 6.37775L26.5174 13.479L34.4023 14.6062C35.3523 14.7393 36.1423 15.404 36.4361 16.3172C36.7298 17.2303 36.4754 18.231 35.7812 18.893L30.1022 24.3352L31.4511 32.0684C31.6178 33.0071 31.2363 33.9589 30.4676 34.5226C29.6988 35.0864 28.6764 35.164 27.8313 34.7229L20.7166 31.0464L13.602 34.7212Z"
+                            stroke="#AEAEAE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </label>
+
+                <input class="form-check-input" type="radio" formControlName="status" id="bad" value="2" hidden>
+                <label class="form-check-label" for="bad">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.602 34.7212C12.7569 35.1624 11.7345 35.0847 10.9657 34.5209C10.1969 33.9572 9.81547 33.0054 9.98215 32.0668L11.331 24.3352L5.65201 18.893C4.95785 18.231 4.70345 17.2303 4.99717 16.3172C5.2909 15.404 6.08099 14.7393 7.03092 14.6062L14.9159 13.479L18.4757 6.37775C18.8978 5.5261 19.7661 4.9873 20.7166 4.9873C21.6671 4.9873 22.5355 5.5261 22.9576 6.37775L26.5174 13.479L34.4023 14.6062C35.3523 14.7393 36.1423 15.404 36.4361 16.3172C36.7298 17.2303 36.4754 18.231 35.7812 18.893L30.1022 24.3352L31.4511 32.0684C31.6178 33.0071 31.2363 33.9589 30.4676 34.5226C29.6988 35.0864 28.6764 35.164 27.8313 34.7229L20.7166 31.0464L13.602 34.7212Z"
+                            stroke="#AEAEAE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </label>
+
+                <input class="form-check-input" type="radio" formControlName="status" id="terrible" value="1" hidden>
+                <label class="form-check-label" for="terrible">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M13.602 34.7212C12.7569 35.1624 11.7345 35.0847 10.9657 34.5209C10.1969 33.9572 9.81547 33.0054 9.98215 32.0668L11.331 24.3352L5.65201 18.893C4.95785 18.231 4.70345 17.2303 4.99717 16.3172C5.2909 15.404 6.08099 14.7393 7.03092 14.6062L14.9159 13.479L18.4757 6.37775C18.8978 5.5261 19.7661 4.9873 20.7166 4.9873C21.6671 4.9873 22.5355 5.5261 22.9576 6.37775L26.5174 13.479L34.4023 14.6062C35.3523 14.7393 36.1423 15.404 36.4361 16.3172C36.7298 17.2303 36.4754 18.231 35.7812 18.893L30.1022 24.3352L31.4511 32.0684C31.6178 33.0071 31.2363 33.9589 30.4676 34.5226C29.6988 35.0864 28.6764 35.164 27.8313 34.7229L20.7166 31.0464L13.602 34.7212Z"
+                            stroke="#AEAEAE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </label>
+            </div>
+            <ng-container
+                *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                <div class="mt-2">
+                    <ng-container
+                        *ngIf="formControls?.status?.invalid && (formControls?.status?.dirty || formControls?.status?.touched)">
+                        <ng-container *ngIf="formControls?.status?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                                {{'validations.required_field'|translate}}
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="!currentLoginInformation">
+            <div class="mb-3">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                        (input)="publicService.clearValidationErrors(formControls?.name)" formControlName="name"
+                        placeholder="{{'placeholder.name'|translate}}">
+                </div>
+                <ng-container
+                    *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                    <div class="mt-2">
+                        <ng-container
+                            *ngIf="formControls?.name?.invalid && (formControls?.name?.dirty || formControls?.name?.touched)">
+                            <ng-container *ngIf="formControls?.name?.errors?.['required']">
+                                <span class="text-danger fs-8">
+                                    {{'validations.required_field'|translate}}
+                                </span>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="mb-3">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                        (input)="publicService.clearValidationErrors(formControls?.email)" formControlName="email"
+                        placeholder="{{'placeholder.email'|translate}}">
+                </div>
+                <ng-container
+                    *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                    <div class="mt-2">
+                        <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                                {{ 'validations.required_field' | translate }}
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                            <span class="text-danger fs-8">
+                                {{ 'validations.emailNotValid' | translate }}
+                            </span>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+            </div>
+        </ng-container>
+        <div>
+            <div class="p-inputgroup leaveMsg">
+                <textarea type="text" pInputText class="form-control px-1 bg-transparent border-0"
+                    (input)="publicService.clearValidationErrors(formControls?.massage)" formControlName="massage"
+                    placeholder="{{'placeholder.leaveMsg'|translate}}">
+                                </textarea>
+            </div>
+            <ng-container
+                *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                <div class="mt-2">
+                    <ng-container
+                        *ngIf="formControls?.massage?.invalid && (formControls?.massage?.dirty || formControls?.massage?.touched)">
+                        <ng-container *ngIf="formControls?.massage?.errors?.['required']">
+                            <span class="text-danger fs-8">
+                                {{'validations.required_field'|translate}}
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.massage?.errors?.['minlength']">
+                            <span class="text-danger fs-8">
+                                {{'validations.rateLength'|translate}}
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.massage?.errors?.['pattern']">
+                            <span class="text-danger fs-8 d-block">
+                                {{'validations.msgAcceptLetters'|translate}}
+                            </span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div class="d-flex justify-content-center gap-3 flex-md-nowrap flex-wrap mt-sm-5 mt-4">
+            <ng-container *ngIf="!loading">
+                <button class="btn btn-solid-main submit d-flex justify-content-center align-items-center gap-2"
+                    type="submit" [ngStyle]="{'padding': currentLanguage === 'ru' ? '1rem 3rem' : '1rem 5rem'}">
+                    {{'general.submit'|translate}}
+                </button>
+            </ng-container>
+            <ng-container *ngIf="loading">
+                <button class="btn btn-solid-main submit d-flex justify-content-center align-items-center gap-2"
+                    disabled [ngStyle]="{'padding': currentLanguage === 'ru' ? '1rem 3rem' : '1rem 5rem'}">
+                    <i class="pi pi-spin pi-spinner"></i>
+                    {{'general.wait'|translate}}
+
+                </button>
+            </ng-container>
+            <button class="btn btn-outline-light-new" type="button"
+                [ngStyle]="{'padding': currentLanguage === 'ru' ? '1rem 3rem' : '1rem 5rem'}"
+                (click)="cancel()">{{'general.cancel'|translate}}</button>
+        </div>
+    </form>
+</div>

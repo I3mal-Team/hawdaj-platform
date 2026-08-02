@@ -1,0 +1,145 @@
+<div class="mt-0">
+  <app-header></app-header>
+</div>
+<div id="storyDetails">
+  <div class="container">
+    <ng-container *ngIf="isLoading; else elseTemplate">
+      <div class="d-none d-lg-block">
+        <app-skeleton [type]="'story-details-v2'"></app-skeleton>
+      </div>
+      <div class="d-block d-lg-none">
+        <app-skeleton [type]="'story-details-sm-v2'"></app-skeleton>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <!-- <app-details-banner [item]="storyDetails"></app-details-banner> -->
+      <div class="col-12 col-lg-6 d-flex flex-column flex-lg-row w-100 gap-3 justify-content-between">
+        <div class="col-12 col-lg-6  order-2 order-lg-1">
+          <app-story-content [item]="storyDetails" [fullUrl]="fullUrl"></app-story-content>
+        </div>
+
+        <div class="media col-12 col-lg-5 order-1 order-lg-2" appLazyLoadSection>
+          <div class="d-block d-lg-none">
+            <div class="story--content__header">
+              <div class="story--content__header--title-category">
+                <p class="story--content__header--title-category--title">
+                  {{storyDetails?.title}}
+                </p>
+                <div class="story--content__header--title-category--categories">
+                  <div *ngFor="let category of storyDetails?.categories; let i = index"
+                    class="story--content__header--title-category--categories--category"
+                    [ngStyle]="{ 'background': getCategoryBackground(i) }">
+                    <ng-container *ngIf="category?.icon">
+                      <div class="img-container">
+                        <img [src]="category?.icon" [alt]="category?.name">
+                      </div>
+                    </ng-container>
+                    <p>{{category?.name}}</p>
+                  </div>
+                </div>
+              </div>
+              <app-share-social [fullUrl]="fullUrl"></app-share-social>
+            </div>
+          </div>
+          <div class="story-media">
+            <app-media-viewer [pageContent]="storyDetails" [lang]="currentLanguage"></app-media-viewer>
+            <ng-container *ngIf="storyDetails?.source">
+              <div class="source">
+                <p>
+                  {{'storyDetails.sources'|translate}}
+                </p>
+                <p>
+                  {{storyDetails?.source}}
+                </p>
+              </div>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="storyDetails?.audioStoryLink">
+            <div class="audio-story">
+              <div class="audio-story__title">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M18.7189 21.5H5.28288C4.04788 21.5 3.04688 20.499 3.04688 19.264V8.736C3.04688 7.501 4.04788 6.5 5.28288 6.5H18.7189C19.9539 6.5 20.9549 7.501 20.9549 8.736V19.264C20.9549 20.499 19.9539 21.5 18.7189 21.5Z"
+                    stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M4.78125 6.558V5.5C4.78125 4.395 5.67625 3.5 6.78125 3.5H17.2163C18.3213 3.5 19.2163 4.395 19.2163 5.5V6.558"
+                    stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M12.4142 15.0858C13.1953 15.8668 13.1953 17.1332 12.4142 17.9142C11.6332 18.6953 10.3668 18.6953 9.58579 17.9142C8.80474 17.1332 8.80474 15.8668 9.58579 15.0858C10.3668 14.3047 11.6332 14.3047 12.4142 15.0858"
+                    stroke="#7939A7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M16 10.5L13 9.5V16.5" stroke="#7939A7" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <p>
+                  {{'storyDetails.audioStory'|translate}}
+                </p>
+              </div>
+              <div class="audio-story__link">
+                <a [href]="storyDetails?.audioStoryLink" target="_blank" rel="noopener">
+                  {{storyDetails?.audioStoryTitle}}
+                </a>
+                <button (click)="copyAudioLink()" [attr.title]="copied ? 'تم الحفظ' : 'انسخ الرابط'">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M17.4457 12.7781L19.7787 10.4451C21.4967 8.72709 21.4967 5.94109 19.7787 4.22209V4.22209C18.0607 2.50409 15.2747 2.50409 13.5557 4.22209L11.2227 6.55509"
+                      stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8.89062 15.1096L15.1106 8.88965" stroke="#323232" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M6.55509 11.2217L4.22209 13.5547C2.50409 15.2727 2.50409 18.0587 4.22209 19.7777V19.7777C5.94009 21.4957 8.72609 21.4957 10.4451 19.7777L12.7781 17.4447"
+                      stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <div class="tooltip-message" *ngIf="copied">
+                    <p>
+                      {{"storyDetails.saved"|translate}}
+                    </p>
+                  </div>
+
+                </button>
+
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div>
+        <div appLazyLoadSection class="d-flex justify-content-between align-items-center mt-4">
+          <!-- <h4 class="story-title">
+                        {{storyDetails?.title}}
+                    </h4>
+                    <app-share-social [fullUrl]="fullUrl"></app-share-social> -->
+
+        </div>
+        <!-- <p class="mt-3">{{storyDetails?.content}}</p> -->
+      </div>
+    </ng-template>
+
+    <ng-container>
+      <div appLazyLoadSection
+        class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+          <h4 class="title">
+            {{'storyDetails.suggestedStories'|translate}}
+          </h4>
+        </div>
+        <ng-container *ngIf="isLoadingFeaturedStories; else noLoadingslider">
+          <div class="w-100">
+            <app-skeleton [type]="'stories-slider'"></app-skeleton>
+          </div>
+        </ng-container>
+        <ng-template #noLoadingslider>
+          <app-slider [items]="this.featuredStories.slice(0, 5)"></app-slider>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div appLazyLoadSection>
+  <app-new-footer></app-new-footer>
+  <style>
+    #home {
+      padding-bottom: 0 !important;
+    }
+  </style>
+</div>

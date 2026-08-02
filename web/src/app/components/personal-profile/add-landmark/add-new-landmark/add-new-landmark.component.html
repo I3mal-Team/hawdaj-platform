@@ -1,0 +1,95 @@
+<div id="modal" class="pe-3">
+  <form [formGroup]="landmarkForm" (submit)="submit()">
+    <div class="mb-3">
+      <label for="title" class="custom-label mb-2 required">
+        {{'labels.landmarkName' | translate}}
+      </label>
+      <input type="text" class="form-control" formControlName="title" autocomplete="cc-name"
+        [class.prevent-click]="true" (input)="publicService?.clearValidationErrors(formControls?.title)"
+        placeholder="{{'labels.landmarkName'|translate}}"
+        [class.border-red]="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+      <div class="my-2">
+        <ng-container
+          *ngIf="formControls?.title?.invalid && (formControls?.title?.dirty || formControls?.title?.touched)">
+          <ng-container *ngIf="formControls?.title?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field' | translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="custom-label mb-2 required">
+        {{'labels.description' | translate}}
+      </label>
+      <textarea class="form-control textarea" formControlName="description" autocomplete="cc-name"
+        [class.prevent-click]="true" (input)="publicService?.clearValidationErrors(formControls?.description)"
+        placeholder="{{'placeholder.description'|translate}}"
+        [class.border-red]="formControls?.description?.invalid && (formControls?.description?.dirty || formControls?.description?.touched)"></textarea>
+      <div class="my-2">
+        <ng-container
+          *ngIf="formControls?.description?.invalid && (formControls?.description?.dirty || formControls?.description?.touched)">
+          <ng-container *ngIf="formControls?.description?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field' | translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="address" class="custom-label mb-2 required">
+        {{'labels.landmarkAddress' | translate}}
+      </label>
+      <input type="text" class="form-control" formControlName="address" autocomplete="cc-name"
+        [class.prevent-click]="true" (input)="publicService?.clearValidationErrors(formControls?.address)"
+        placeholder="{{'labels.landmarkAddress'|translate}}"
+        [class.border-red]="formControls?.address?.invalid && (formControls?.address?.dirty || formControls?.address?.touched)">
+      <div class="my-2">
+        <ng-container
+          *ngIf="formControls?.address?.invalid && (formControls?.address?.dirty || formControls?.address?.touched)">
+          <ng-container *ngIf="formControls?.address?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field' | translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="custom-label mb-2 required">
+        {{'labels.image' | translate}}
+      </label>
+      <div>
+        <app-file-upload (uploadHandler)="uploadImg($event)"></app-file-upload>
+      </div>
+      <div class="my-2">
+        <ng-container
+          *ngIf="formControls?.placeImg?.invalid && (formControls?.placeImg?.dirty || formControls?.placeImg?.touched)">
+          <ng-container *ngIf="formControls?.placeImg?.errors?.['required']">
+            <span class="text-danger fs-8">
+              {{'validations.required_field' | translate}}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button type="submit"
+        class="btn btn-solid-main d-flex align-items-center justify-content-center gap-1 text-capitalize">
+        <svg width="22" height="20" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.6875 20.9375H24.3125V22.625H0.6875V20.9375ZM20.4312 6.59375C21.1062 5.91875 21.1062 4.90625 20.4312 4.23125L17.3937 1.19375C16.7188 0.51875 15.7063 0.51875 15.0312 1.19375L2.375 13.85V19.25H7.775L20.4312 6.59375ZM16.2125 2.375L19.25 5.4125L16.7188 7.94375L13.6812 4.90625L16.2125 2.375ZM4.0625 17.5625V14.525L12.5 6.0875L15.5375 9.125L7.1 17.5625H4.0625Z"
+            fill="#FFF" />
+        </svg>
+        <span>
+          {{'general.save'|translate}}
+        </span>
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Toast Component for notifications -->
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>

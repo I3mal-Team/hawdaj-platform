@@ -1,0 +1,486 @@
+<ng-container *ngIf="!notShowPage">
+  <app-header></app-header>
+</ng-container>
+<ng-container *ngIf="!notShowPage">
+
+  <div id="save-trip">
+    <div id="hero-trip">
+      <!-- <div class="row min-h g-0">
+      <div class="col-md-7 position-relative">
+        <div class="overlay position-absolute scaleX-rtl"></div>
+        <img src="assets/images/trips/arab-people.jpg" class="w-100 h-100 object-fit-cover hero-img scaleX-rtl"
+          alt="hero-img"> -->
+      <!-- <div class="position-absolute links py-4 px-md-5 px-4">
+          <div class="d-flex gap-2 align-items-center">
+            <a class="text-main-color fw-500" routerLink="/home">{{'nav.home'|translate}}</a>
+            <i class="text-main-color pi pi-angle-double-right"></i>
+            <a class="text-main-color fw-500" routerLink="/trips/list">{{'nav.myTrips'|translate}}</a>
+            <i class="text-main-color pi pi-angle-double-right"></i>
+            <a class="text-white-color fw-500">{{'saveTrip.saveTrip'|translate}}</a>
+          </div>
+        </div> -->
+      <!-- </div> -->
+      <!-- <div class="col-md-5 d-flex align-items-end">
+        <div class="px-4 py-md-5 py-4 w-85 w-md-100 text-center trip-info">
+          <h4 class="fw-bold mb-2">{{'saveTrip.hereAreTrips'|translate}}</h4>
+          <p class="desc w-75 w-md-100 mb-4 m-auto">{{'saveTrip.canExplore'|translate}}</p>
+          <ng-container *ngIf="isLoading; else noLoadingDates">
+            <app-skeleton [type]="'tripsDates'"></app-skeleton>
+          </ng-container>
+          <ng-template #noLoadingDates>
+            <div class="row g-md-4 g-3 justify-content-center pb-3">
+              <div class="col-xl-5 col-lg-6 col-sm-6 col-6">
+                <div class="d-flex justify-content-center align-items-center gap-2 calendar">
+                  <img src="assets/images/icons/calendar.svg" alt="calendar">
+                  <span class="text-white-color lh-0">{{tripData?.daterange?tripData?.daterange?.split('-')[0]:'' |
+                    date: 'd MM y':'':currentLanguage}}</span>
+                </div>
+              </div>
+              <div class="col-xl-5 col-lg-6 col-sm-6 col-6">
+                <div class="d-flex justify-content-center align-items-center gap-2 calendar calendar2">
+                  <img src="assets/images/icons/calendar2.svg" alt="calendar">
+                  <span class="text-dark-color lh-0">{{tripData?.daterange?tripData?.daterange?.split('-')[1]:'' | date:
+                    'd MM y':'':currentLanguage}}</span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <div class="mt-sm-5 mt-3">
+            <div class="d-flex gap-3 flex-wrap justify-content-center">
+              <ng-container *ngIf="tripPlaces?.length>0;">
+                <button
+                  class="btn btn-solid-main px-2 w-content fs-6-1 d-flex justify-content-center align-items-center gap-1"
+                  (click)="saveTrip()" [disabled]="isLoading">
+                  <i class="pi pi-save"></i>
+                  <span>{{'general.save'|translate}}</span>
+                </button>
+              </ng-container>
+              <button [disabled]="isLoading" (click)="regenerateTrip()"
+                class="btn btn-solid-main px-2 w-content fs-6-1 d-flex justify-content-center align-items-center gap-1">
+                <img src="assets/images/icons/regenerate.svg" width="16px" alt="regenerate">
+                <span>{{'general.regenerate'|translate}}</span>
+              </button>
+              <button [disabled]="isLoading" (click)="addToCalendar()"
+                class="btn btn-solid-main px-2 w-content fs-6-1 d-flex justify-content-center align-items-center gap-1">
+                <i class="pi pi-calendar-plus"></i>
+                <span>{{'general.addToCalender'|translate}}</span>
+              </button>
+              <a (click)="emailTripTo()"
+                class="btn btn-solid-main px-2 w-content fs-6-1 d-flex justify-content-center align-items-center gap-1"
+                [class.disabled]="isLoading">
+                <i class="pi pi-envelope"></i>
+                <span>{{'general.email'|translate}}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <!-- </div> -->
+      <div class="h-100 banner position-relative">
+        <div class="overlay position-absolute scaleX-rtl"></div>
+        <div class="img-container scaleX-rtl">
+          <!-- <img ngOptimizedImage width="1600" height="600" src="assets/images/trips/tourism.jpg"
+          class="banner-img w-100 h-100 object-fit-cover" onerror="src='assets/images/not-found/no-img.svg'"
+          alt="hero-img"> -->
+          <img ngOptimizedImage width="1600" height="600" src="assets/images/trips/tourism.jpg"
+            class="banner-img w-100 h-100 object-fit-cover" onerror="src='assets/images/not-found/no-img.svg'"
+            alt="hero-img">
+        </div>
+        <div class="banner-content container-fluid position-absolute text-white z-1">
+          <h3 class="fw-bold mb-3">{{'saveTrip.availableTrips'|translate}}</h3>
+          <ng-container>
+            <p class=" fw-bold mb-3">{{'saveTrip.hereAreTrips'|translate}}
+            </p>
+          </ng-container>
+        </div>
+        <div>
+          <div class="trip-information z-2 bg-white position-absolute">
+            <svg width="50" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--noto"
+              preserveAspectRatio="xMidYMid meet" fill="#000000">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M62.87 81.8l-10.28 2.53s1.9 14.78 1.48 16.82c-.42 2.04-2.18 9.57-2.75 10.14c-.56.56-4.84 4.47-3.45 6.41c.99 1.37 3.41 1.76 5.77 1.76c1.34 0 4.86-.11 5.49-1.58c.63-1.48.53-3.63.53-3.63s4.12-8.66 4.54-11.19c.43-2.53-1.33-21.26-1.33-21.26z"
+                  fill="#df9047"></path>
+                <path
+                  d="M88 88.21s2.25 10.56 1.9 12.46c-.35 1.9-1.9 7.46-2.25 8.24c-.35.77-3.8 5.3-1.69 6.83c1.65 1.2 3.8 1.2 5.63 1.2c2.71 0 4.5-1.06 5.14-2.11c.63-1.06.49-4.36.49-4.36s2.89-9.85 2.96-11.12s-2.82-16.05-2.82-16.05L88 88.21z"
+                  fill="#df9047"></path>
+                <path
+                  d="M54.91 18.45L39.64 38.16l-21.4.49l.07-.49l-5.91 5.24s2.5-.35 4.12-.88c1.08-.35 2.18-.77 2.96-.56c.77.21 3.27 1.9 4.54 2.53c1.27.63 3.94 1.9 3.94 1.9l.21 8.52l12.6 7.88l7.53-11.9s.14-6.62.7-7.67c.56-1.06 4.06-3.25 5-10.56c.6-4.68.81-6.26.81-6.26s3.68-2.78 4.19-5.07c.67-2.99-.88-5.03-.88-5.03l-3.21 2.15z"
+                  fill="#df9047"></path>
+                <path
+                  d="M51.68 24.86s-.14 10.49-2.25 14.22c-1.61 2.85-6.04 6.39-9.7 6.72c-8.52.77-18.5-5.91-20.71-5.66c-1.9.21-7.04 6.9-13.16.99c-4.51-4.36-1.9-17.46 8.66-19.71c3.82-.81 7.88-1.06 9.22-1.69c1.34-.63 4.37-4.54 7.74-6.19c3.87-1.9 6.83-1.97 6.83-1.97s.87-4.08 4.58-3.94c3.8.14 3.45 4.15 3.45 4.15s1.41.21 2.82 1.27c.8.6 2.25 2.18 2.25 2.18s4.28-2.52 6.48.7c3.43 5.06-6.21 8.93-6.21 8.93z"
+                  fill="#f6b03e"></path>
+                <path
+                  d="M7.49 30.77s4.56-3.01 6.19-1.22c1.97 2.16-5.49 4.41-5.49 4.41l-.18 3.14s.99.99 2.77.89s3.52-1.6 4.55-.47s-3.43 5.6-9.27 2.43C4 38.83 3.15 35.54 3.6 35.22c1.13-.8.99 1.6 1.69.99c.19-.61.19-3.85.19-3.85s-1.27-3.61.05-4.27c1.31-.65 1.96 2.68 1.96 2.68z"
+                  fill="#ba8859"></path>
+                <path
+                  d="M32.65 25.56c.94-.19 2.44-.15 4.69-.09c1.74.05 3.79-.03 3.85.94c.09 1.5-.87 2.24-1.64 2.72c-1.13.7-3.14.75-4.5.14c-2.56-1.15-3.34-3.52-2.4-3.71z"
+                  fill="#323230"></path>
+                <path
+                  d="M33.16 26.31s-.35.66-1.74 1.45c-.74.43-2.32.31-2.3 1.45c.02 1.06 1.71 1.03 3.12.38c1.41-.66 2.39-2.02 2.39-2.02l.25 1.08s-.87.89-1.62 1.27c-.75.38-2.17.89-1.63 1.74c.54.84 2.4.25 3.46-.72c.93-.84 1.79-2.01 1.79-2.01l.82.21s-.59 1.1-1.15 1.71c-.56.61-1.95 1.53-1.13 2.49c.82.96 2.73-.66 3.5-2.23c.73-1.5.77-2.77.77-2.77l-6.53-2.03z"
+                  fill="#323230"></path>
+                <path
+                  d="M39.36 54.94C34.22 56.07 28.1 52.8 28.1 52.8s.05 13.46 2.32 19.6c2.09 5.65 6.78 10.5 12.98 12.75s13.05 2.53 16.14 2.35s4.13-.47 4.13-.47s1.22.75 1.78 1.03s1.5.47 1.5.47s2.06 8.54 1.78 11.73c-.28 3.19-3.38 13.7-3.38 13.7s-4.64 3.78-3 5.91c1.08 1.41 4.79 1.79 7.41 1.79s6.09-.55 6.9-3.52c.42-1.56.33-4.38.33-4.38s1.22-5.35 1.69-7.23c.47-1.88 1.31-4.04 1.31-5.26s-.56-4.6-.56-6.76V90.1s5.63.09 11.36-.66c5.73-.75 8.82-2.72 8.82-2.72s2.72 6.1 3.47 8.54c.75 2.44 1.22 4.13 1.22 4.79c0 .66-2.16 10.7-2.16 10.7s-4.6 4.6-4.22 7.04c.38 2.44 4.13 2.16 8.63 1.78s4.88-2.72 4.88-4.88s3.38-11.64 3.38-13.89s-3.19-12.48-2.91-13.98c.28-1.5 1.03-4.41 1.5-6.85c.47-2.44.84-6.76.84-6.76s1.13 5.63 2.91 8.54s4.41 6.1 6.1 4.5c1.69-1.6-1.6-2.91-2.35-7.13s-1.03-16.42-4.13-23.65c-3.1-7.23-10.04-9.57-10.04-9.57s-3.06-14.48-5.13-18.89s-7.17-9.64-13.55-9.08c-6.38.56-12.93 3.81-15.56 8.97s-3.31 15.8-4.06 16.37c-.75.56-6.57 3-8.82 7.98c-2.25 4.97-2.25 8.26-2.25 8.26s-3.69 1.23-6.38-1.03c-3.26-2.75-2.59-9.92-2.59-9.92s-1.34 4.69-9.03 6.38z"
+                  fill="#f6b03e"></path>
+                <path
+                  d="M86.66 13.36c-5.91.09-9.35 3.46-11.64 7.79c-2.72 5.16-3.28 7.7-3.28 7.7s.74-.01 2.25-1.78c1.29-1.51 2.22-3.65 4.08-3.12c2.85.81-3.2 7.62 1.62 9.01c6.83 1.97 2.71-8.41 7.07-8.27c5.07.16-.2 9.51 6.46 8.48c6.24-.97-.52-8.76 3.18-9.96c2.43-.79 2.55 2.37 3.48 3.66c1.5 2.06 2.72 2.73 2.72 2.73s-1.14-6.36-4.79-10.98c-2.32-2.97-5.65-5.35-11.15-5.26z"
+                  fill="#e09147"></path>
+              </g>
+            </svg>
+            <div class="justify-content-between gap-3 d-lg-flex mb-3  g-0" *ngIf="!isLoading">
+              <div class="trip-info g-0 location bg-white row col-lg-6 col-12 pb-0 position-relative">
+                <div class="col-6 d-flex flex-column gap-2">
+                  <div class="d-flex align-items-center gap-1">
+                    <svg class=" scaleX-rtl" width="22" fill="#000000" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M3 18h18v2H3zm18.509-9.473a1.61 1.61 0 0 0-2.036-1.019L15 9 7 6 5 7l6 4-4 2-4-2-1 1 4 4 14.547-5.455a1.611 1.611 0 0 0 .962-2.018z">
+                        </path>
+                      </g>
+                    </svg>
+                    {{'saveTrip.from'|translate}}
+                  </div>
+                  <p class="fs-5 fs-md-6 fw-medium">
+                    {{region1|translate}}
+                  </p>
+                </div>
+                <div class="icon-container d-flex align-items-center justify-content-center rounded-circle top-50">
+                  <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path d="M20 10L4 10L9.5 4" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                      <path d="M4 14L20 14L14.5 20" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    </g>
+                  </svg>
+                </div>
+                <div class="col-6 d-flex flex-column gap-2">
+                  <div class="d-flex align-items-center gap-1">
+                    <svg class="scaleX-rtl" width="22" fill="#000000" viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M18.842 15.296a1.61 1.61 0 0 0 1.892-1.189v-.001a1.609 1.609 0 0 0-1.177-1.949l-4.576-1.133L9.825 4.21l-2.224-.225 2.931 6.589-4.449-.449-2.312-3.829-1.38.31 1.24 5.52 15.211 3.17zM3 18h18v2H3z">
+                        </path>
+                      </g>
+                    </svg>
+                    {{'saveTrip.to'|translate}}
+
+                  </div>
+                  <p class="fs-5 fs-md-6 fw-medium">
+                    {{region2|translate}}
+                  </p>
+                </div>
+              </div>
+              <div class="trip-info g-0 date bg-white row col-lg-6 col-12 pb-0 position-relative">
+                <div class="col-6 d-flex flex-column gap-2">
+                  <div class="d-flex align-items-center gap-1">
+                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M3 9H21M9 15L11 17L15 13M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"
+                          stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                    {{'saveTrip.startDate'|translate}}
+                  </div>
+                  <p class="fs-5 fw-medium ">
+                    {{(tripData?.daterange?tripData?.daterange?.split('-')[0]:'') | date: 'd MMM y':'':currentLanguage}}
+                  </p>
+                </div>
+                <div class="icon-container d-flex align-items-center justify-content-center rounded-circle top-50">
+                  <svg width="20" fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M19,4H17V3a1,1,0,0,0-2,0V4H9V3A1,1,0,0,0,7,3V4H5A3,3,0,0,0,2,7V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V7A3,3,0,0,0,19,4Zm1,15a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V12H20Zm0-9H4V7A1,1,0,0,1,5,6H7V7A1,1,0,0,0,9,7V6h6V7a1,1,0,0,0,2,0V6h2a1,1,0,0,1,1,1Z">
+                      </path>
+                    </g>
+                  </svg>
+                </div>
+                <div class="col-6 d-flex flex-column gap-2">
+                  <div class="d-flex align-items-center gap-1">
+                    <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M10 13L14 17M14 13L10 17M3 9H21M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"
+                          stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </svg>
+                    {{'saveTrip.endDate'|translate}}
+                  </div>
+                  <p class="fs-5 fw-medium ">
+                    {{(tripData?.daterange?tripData?.daterange?.split('-')[1]:'') | date: 'd MMM y':'':currentLanguage}}
+
+                  </p>
+
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="isLoading">
+              <app-skeleton [type]="'tripsDates'"></app-skeleton>
+            </ng-container>
+            <div class="btns  position-absolute start-50 w-100 d-flex flex-row justify-content-center gap-3">
+              <ng-container *ngIf="!isLoading">
+                <div class="mt-sm-5 mt-3">
+                  <div class="d-flex gap-1 flex-wrap flex-lg-nowrap justify-content-center">
+                    <div class="row col-6 justify-content-center w-100  gap-2">
+                      <ng-container *ngIf="tripPlaces?.length>0;">
+                        <button
+                          class="col-5 btn btn-solid-main px-2  fs-6-1 d-flex justify-content-center align-items-center gap-3"
+                          [ngClass]="{ 'ru-size': currentLanguage === 'ru' }" (click)="saveTrip()"
+                          [disabled]="isLoading">
+                          <i class="pi pi-save"></i>
+                          <span>{{'general.save'|translate}}</span>
+                        </button>
+                      </ng-container>
+                      <button [disabled]="isLoading" (click)="regenerateTrip()"
+                        class="btn col-5 btn-solid-main px-xxl-2 fs-6-1 d-flex justify-content-center align-items-center gap-3"
+                        [ngClass]="{ 'ru-size': currentLanguage === 'ru' }">
+                        <img src="assets/images/icons/regenerate.svg" width="16px" alt="regenerate">
+                        <span>{{'general.regenerate'|translate}}</span>
+                      </button>
+                    </div>
+                    <div class="row col-3 justify-content-center w-100 gap-2 mx-1">
+                      <button [disabled]="isLoading" (click)="addToCalendar()"
+                        class="btn col-5 btn-solid-main px-2 fs-6-1 d-flex justify-content-center align-items-center gap-3"
+                        [ngClass]="{ 'ru-size': currentLanguage === 'ru' }">
+                        <svg width="19" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M3 9H21M12 18V12M15 15.001L9 15M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"
+                              stroke="#7939a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </svg>
+                        <span>{{'general.addToCalender'|translate}}</span>
+                      </button>
+                      <a (click)="emailTripTo()"
+                        class="btn col-5 btn-solid-main px-2 fs-6-1 d-flex justify-content-center align-items-center gap-3"
+                        [ngClass]="{ 'ru-size': currentLanguage === 'ru' }" [class.disabled]="isLoading">
+                        <svg width="22" viewBox=" 0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z"
+                              fill="#7939a7"></path>
+                          </g>
+                        </svg> <span>{{'general.email'|translate}}</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-sm-5 pt-lg-8 days">
+      <div class="container">
+        <div
+          class="d-flex justify-content-sm-between justify-content-center align-items-center pt-5 pb-sm-4 gap-2 flex-sm-row flex-column">
+          <div class="tripProgram">
+            <h3 class="fw-bold tripProgram w-content">{{'saveTrip.tripProgram'|translate}}
+              <img src="assets/images/trips/star.svg" loading="lazy" class="scaleX-rtl" alt="star">
+            </h3>
+
+            <img width="60" height="4" alt="Vector Decoration" onerror="src='assets/images/not-found/no-img.svg'"
+              class="application-img m-1" ng-reflect-width="60" ng-reflect-height="4"
+              ng-reflect-ng-src="assets/images/vector-title.svg" loading="lazy" fetchpriority="auto" ng-img="true"
+              src="assets/images/vector-title.svg">
+          </div>
+          <div class="d-flex gap-3 flex-wrap align-items-center">
+            <!-- <button class="btn btn-solid-main d-flex justify-content-center align-items-center gap-2"
+            (click)="addAnotherPlace()">
+            <i class="pi pi-plus"></i>
+            {{"general.addAnotherPlace"|translate}}
+          </button> -->
+            <ng-container *ngIf="isLoading; else noLoadingOnMap">
+              <app-skeleton [type]="'showOnMap'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingOnMap>
+              <button class="btn btn-outline-main fw-500 d-flex align-items-center gap-2" (click)="showMap()">
+                <img src="assets/images/icons/newShowOnMap.svg" alt="showOnMap">
+                {{'general.showOnMap'|translate}}
+              </button>
+            </ng-template>
+          </div>
+        </div>
+        <div>
+          <div class="mt-4">
+            <ng-container *ngIf="isLoading; else noLoading">
+              <app-skeleton [type]="'timeLine'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoading>
+              <ng-container *ngIf="tripPlaces?.length>0; else noData">
+                <ng-container *ngFor="let item of tripPlaces;let i=index">
+                  <ng-container *ngIf="item?.placesItems?.length>0">
+                    <div class="row g-0 gx-lg-5 gx-3 align-items-start d-sm-flex d-none">
+                      <div class="col-md-4 col-5 position-relative">
+                        <div class="d-flex align-items-center h-100 numAndDate">
+                          <div
+                            class="bg-main-color date-content text-white-color fs-5-2 fw-500 d-flex justify-content-center py-3 w-100">
+                            {{ item?.date | date: 'd MMMM y':'':currentLanguage }}
+                          </div>
+                          <div
+                            class="num bg-white-color text-main-color fs-2 fw-500 shadow d-flex justify-content-center align-items-center">
+                            {{item?.indexNumber<=9?0:''}}{{item?.indexNumber}} </div>
+                          </div>
+                        </div>
+                        <div class="col-md-8 col-7">
+                          <div class="all-days row h-100 gx-5 m-0" [class.timeline]="i<tripPlaces?.length-1">
+                            <ng-container *ngFor="let place of item?.placesItems">
+                              <div class="col-lg-6 mb-4">
+                                <!-- <div class="trip-card h-100 row align-items-center shadow-sm position-relative pointer"
+                                [style.background]="currentLanguage=='ar'?'url(../../../../../../../assets/images/trips/content-bg-rtl.png)':'url(../../../../../../../assets/images/trips/content-bg.svg)'"> -->
+                                <div class="trip-card h-100 row align-items-center shadow-sm position-relative pointer">
+                                  <ng-container *ngIf="item?.placesItems?.length>1 ">
+                                    <!-- &&item?.placesItems?.length>1 -->
+                                    <div
+                                      class="close position-absolute d-flex justify-content-center align-items-center"
+                                      (click)="deletePlaceTrip(place,i)">
+                                      <i class="pi pi-trash"></i>
+                                    </div>
+                                  </ng-container>
+                                  <div class="col-md-5 p-2" (click)="showDetails(place)">
+                                    <div class="img-trip-container">
+                                      <img [src]="place?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                        class="trip-img object-fit-cover w-100" alt="Image">
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="trip-content h-100 col-md-7 p-2 d-flex flex-column justify-content-between"
+                                    (click)="showDetails(place)">
+                                    <div>
+                                      <h5 class="trip-title mb-2 fs-5-1 fw-500">
+                                        {{place?.title || ''}}
+                                      </h5>
+                                      <p class="mb-0 d-flex align-items-center gap-2">
+                                        <i aria-hidden="true" class="pi pi-map-marker"></i>
+                                        <span class="text-forth-color fs-6-1">
+                                          {{place?.address_name || 'titles.saudiArabia'|translate}}
+                                        </span>
+                                      </p>
+                                    </div>
+                                    <div class="mt-2 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                      <p class="mb-0 fw-500">
+                                        ( {{place?.review || 0}} ) {{'general.review'|translate}}
+                                      </p>
+                                      <p-rating [(ngModel)]="place.rate" [id]="'rating3'" [cancel]="false"
+                                        [disabled]="true"></p-rating>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row g-0 gx-lg-5 gx-3 align-items-start d-sm-none d-flex">
+                        <div class="position-relative mb-3">
+                          <div class="d-flex align-items-center h-100">
+                            <div
+                              class="bg-main-color date-content text-white-color fs-5-2 fw-500 d-flex justify-content-center py-3 w-100">
+                              {{ item?.date | date: 'd MMMM y':'':currentLanguage }}
+                            </div>
+                            <div
+                              class="num num-sm bg-white-color text-main-color fs-2 fw-500 shadow d-flex justify-content-center align-items-center">
+                              {{i<=9?0:''}}{{i+1}} </div>
+                            </div>
+                          </div>
+                          <div class="">
+                            <div class="all-days row h-100 m-0" [class.timeline]="i<tripPlaces?.length-1">
+                              <ng-container *ngFor="let place of item?.placesItems">
+                                <div class="mb-4">
+                                  <div class="trip-card row align-items-center shadow-sm position-relative pointer"
+                                    [style.background]="currentLanguage=='ar'?'url(../../../../../../../assets/images/trips/content-bg-rtl.png)':'url(../../../../../../../assets/images/trips/content-bg.svg)'">
+                                    <ng-container *ngIf="item?.placesItems?.length>1 ">
+                                      <!-- &&item?.placesItems?.length>1 -->
+                                      <div
+                                        class="close position-absolute d-flex justify-content-center align-items-center"
+                                        (click)="deletePlaceTrip(place,i)">
+                                        <i class="pi pi-trash"></i>
+                                      </div>
+                                    </ng-container>
+                                    <div class="col-5 p-2" (click)="showDetails(place)">
+                                      <img [src]="place?.image" onerror="src='assets/images/not-found/no-img.svg'"
+                                        class="trip-img object-fit-cover w-100" alt="Image">
+                                    </div>
+                                    <div class="trip-content h-100 col-7 p-2 d-flex flex-column justify-content-between"
+                                      (click)="showDetails(place)">
+                                      <div>
+                                        <h5 class="trip-title mb-2 fs-5-1 fw-500">
+                                          {{place?.title || ''}}
+                                        </h5>
+                                        <p class="mb-0 d-flex align-items-center gap-2">
+                                          <img src="assets/images/icons/location3.svg" width="12px" alt="location3">
+                                          <span class="text-forth-color fs-6-1">
+                                            {{place?.address_name || 'titles.saudiArabia'|translate}}
+                                          </span>
+                                        </p>
+                                      </div>
+                                      <div
+                                        class="mt-2 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                        <p class="mb-0 fw-500">
+                                          ( {{place?.review || 0}} ) {{'general.review'|translate}}
+                                        </p>
+                                        <p-rating [(ngModel)]="place.rate" [id]="'rating3'" [cancel]="false"
+                                          [disabled]="true"></p-rating>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <ng-template #noData>
+                <div class="py-4 mt-5 d-flex no-provider justify-content-center align-items-center gap-3 flex-column">
+                  <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                  <p>{{'general.noData'|translate}}</p>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                  <a class="start-trip text-capitalize d-flex align-items-center justify-content-center gap-2 fs-5-1"
+                    (click)="startTrip()">
+                    {{'trip.startYourTrip'|translate}}
+                    <i class="fas fa-plane scaleX-rtl"></i>
+                  </a>
+                </div>
+              </ng-template>
+
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+        <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

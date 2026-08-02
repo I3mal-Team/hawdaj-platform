@@ -1,0 +1,30 @@
+<div class="position-relative">
+  <button (click)="close()"
+    class="btn bg-danger text-white-color position-absolute rounded-circle close-btn d-flex justify-content-center align-items-center">
+    <i class="pi pi-times"></i>
+  </button>
+  <div class="position-relative overflow-hidden rounded">
+    <iframe id="videoPlayer" *ngIf="isValidUrl; else fallbackContent" [src]="trustedVideoUrl" frameborder="0"
+      allowfullscreen></iframe>
+    <ng-template #fallbackContent>
+      <div class="min-height-modal-content fallback-message">
+        <p class="mb-0">
+          <!-- Video not available -->
+        </p>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="!isPlay">
+      <div class="position-absolute w-100 h-100 top-0 start-0">
+        <img class="object-fit-cover w-100 h-100" ngOptimizedImage [ngSrc]="data?.image_video" width="100"
+          onerror="this.src='assets/image/not-found/no-img.svg'" height="100" alt="location">
+        <div class="overlay-img-course" (click)="playVideo()" role="button">
+          <div class="d-flex align-items-center justify-content-center w-100 play">
+            <img class="play-icon" ngOptimizedImage [ngSrc]="'assets/images/icons/play.svg'" width="100"
+              onerror="this.src='assets/images/icons/play.svg'" height="100" alt="image">
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

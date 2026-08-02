@@ -1,0 +1,90 @@
+<app-header></app-header>
+<div id="storiesDetails">
+
+    <!--Start banner -->
+    <app-banner [title]="'titles.swalefs'"
+        [largeImage]="'assets/images-v2/pages/swalef-list/banner/swalef-banner-web.webp'"
+        [smallImage]="'assets/images-v2/pages/swalef-list/banner/swalef-banner-tablet.webp'">
+    </app-banner>
+    <!-- End banner -->
+
+    <!-- Start search-->
+    <div appLazyLoadSection class="d-flex align-items-center justify-content-center">
+        <div id="stories-search" class="container d-lg-block d-none position-absolute p-4 bg-white">
+            <app-search-list [fieldsConfig]="searchFields" (formValues)="search($event)"
+                (fieldChanged)="onFieldChanged($event)" (clearEvent)="clearSearch($event)"
+                [defaultSelectId]="defaultSelectedType" [searchTitle]="'home.searchStory'"></app-search-list>
+        </div>
+    </div>
+    <!-- End search-->
+
+    <!-- Start search sm-->
+    <app-search-list-sm [fieldsConfig]="searchFields" (formValues)="search($event)"
+        (fieldChanged)="onFieldChanged($event)" (clearEvent)="clearSearch($event)" [searchTitle]="'home.searchStory'"
+        [searchSubtitle]="' '"></app-search-list-sm>
+    <!-- End search sm-->
+
+    <ng-container>
+        <div appLazyLoadSection
+            class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+            <div class="text-center mb-lg-5 mb-4 mb-lg-2">
+                <h4 class="title">
+                    <ng-container *ngIf="keyword || storyTypeId; else recentStoriesTitle">
+                        {{'general.searchResults'|translate}}
+                    </ng-container>
+                    <ng-template #recentStoriesTitle>
+                        {{'stories.recentStories'|translate}}
+                    </ng-template>
+                </h4>
+            </div>
+            <ng-container *ngIf="isLoadingRecentStories; else noLoadingslider">
+                <div class="w-100">
+                    <app-skeleton [type]="'stories-slider'"></app-skeleton>
+                </div>
+            </ng-container>
+            <ng-template #noLoadingslider>
+                <ng-container *ngIf="this.recentStories.length>0;else noSearchResultData">
+                    <app-slider [items]="this.recentStories.slice(0, 5)"
+                        [isSearch]="keyword || storyTypeId"></app-slider>
+                    <app-shared-pagination class="w-100" [itemsPageNumber]="page"
+                        [itemsListTotalCount]="storiesTotalCount" [itemsPerPageCount]="perPage"
+                        (pageChange)="changePage($event)"></app-shared-pagination>
+                </ng-container>
+                <ng-template #noSearchResultData>
+                    <app-no-result></app-no-result>
+                </ng-template>
+
+            </ng-template>
+        </div>
+
+    </ng-container>
+
+    <!--Start Common Stories List -->
+
+    <div appLazyLoadSection
+        class="container m-auto d-flex align-items-center justify-content-center flex-column section-space">
+        <h2 class="title text-center mb-lg-5 mb-2">{{'stories.featuredStories'|translate}}</h2>
+        <app-list-slider [items]="this.featuredStories.slice(0, 5)" (viewAllClicked)="handleViewAll()"
+            [link]="'/stories'"></app-list-slider>
+    </div>
+    <!--End Common Stories List -->
+
+    <!-- Start Subscribe -->
+    <div appLazyLoadSection class="mt-md-5 mt-3">
+        <div>
+            <app-news-letter></app-news-letter>
+        </div>
+    </div>
+</div>
+<div appLazyLoadSection>
+    <app-new-footer></app-new-footer>
+    <style>
+        #home {
+            padding-bottom: 0 !important;
+        }
+    </style>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

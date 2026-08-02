@@ -1,0 +1,206 @@
+<div id="auth-form">
+  <div class="row g-0">
+    <div class="auth-form__banner col-lg-6 d-lg-block d-none position-relative">
+      <!-- <h5 class="p-4 fw-bold position-absolute title">{{'form.createAccount'|translate}}</h5> -->
+      <div class="position-fixed h-100 d-flex justify-content-center align-items-center auth-form__banner__bg-form">
+        <div class="auth-form__banner__bg-form__register-img-container">
+          <img src="assets/images-v2/popups/register/arab.png" width="410px" height="550px" alt="arab">
+          <div class="auth-form__banner__bg-form__register-img-container__content">
+            <h3>{{'home.hawdaj'|translate}}</h3>
+            <p>
+              {{'home.organize'|translate}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="d-flex justify-content-end p-3 px-4 pb-0">
+        <a class="auth-form__form__close d-flex justify-content-center align-items-center" (click)="close()">
+          <i class="pi pi-times"></i>
+        </a>
+      </div>
+      <div class="px-4 pb-2">
+        <div class="auth-form__form-content row align-items-center justify-content-center g-0"
+          [ngStyle]="currentLang === 'ar' ? {'margin-right': '-20px'} : {'margin-left': '-20px'}">
+          <div class="col-md-10 col-lg-11">
+            <div id="register" class="auth-form pb-2">
+              <div class="d-lg-none d-flex flex-column align-items-sm-center mb-3">
+                <img src="assets/images/logo/logo.png" class="auth-form__form-content__form-logo mb-2" alt="logo">
+              </div>
+              <div>
+                <h4 class="fw-bold text-black ">{{'form.createAccountOnHawdaj'|translate}}</h4>
+              </div>
+              <form [formGroup]="registerForm" (ngSubmit)="RegisterNow()" class="pt-3">
+                <div class="mb-2">
+                  <label class="my-2 fw-bold">{{'placeholder.firstName'|translate}} <span class="text-danger">*</span>
+                  </label>
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)"
+                    [class.is-valid]="formControls?.firstName?.valid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><img appLazyLoadImage
+                        src="assets/images-v2/popups/register/icons/User.png" alt="user"></span>
+                    <input type="text" class="form-control rounded-start-0 border-start-0 px-1"
+                      formControlName="firstName" autocomplete="cc-name"
+                      (input)="publicService.clearValidationErrors(formControls?.firstName)"
+                      placeholder="{{'placeholder.firstName'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['minlength']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.length'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['charactersOnly']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.acceptLetters' | translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label class="my-2 fw-bold">{{'placeholder.lastName'|translate}} <span class="text-danger">*</span>
+                  </label>
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)"
+                    [class.is-valid]="formControls?.lastName?.valid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><img appLazyLoadImage
+                        src="assets/images-v2/popups/register/icons/User.png" alt="user"></span>
+                    <input type="text" class="form-control rounded-start-0 border-start-0 px-1"
+                      formControlName="lastName" autocomplete="cc-name"
+                      (input)="publicService.clearValidationErrors(formControls?.lastName)"
+                      placeholder="{{'placeholder.lastName'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                        <ng-container *ngIf="formControls?.lastName?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.lastName?.errors?.['minlength']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.length'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['charactersOnly']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.acceptLetters' | translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label class="my-2 fw-bold">{{'placeholder.email'|translate}} <span class="text-danger">*</span>
+                  </label>
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)"
+                    [class.is-valid]="formControls?.email?.valid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><img appLazyLoadImage
+                        src="assets/images-v2/popups/register/icons/email.png" alt="email"></span>
+                    <input type="email" class="email form-control rounded-start-0 border-start-0 px-1"
+                      formControlName="email" autocomplete="cc-name"
+                      (input)="publicService.clearValidationErrors(formControls?.email)"
+                      placeholder="{{'placeholder.email'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                        <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.emailNotValid'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label class="my-2 fw-bold">{{'placeholder.password'|translate}} <span class="text-danger">*</span>
+                  </label>
+                  <div class="rounded-input p-mask"
+                    [class.border-red]="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched)"
+                    [class.is-valid]="formControls?.password?.valid && (formControls?.password?.dirty || formControls?.password?.touched)">
+                    <div class="p-inputgroup">
+                      <span class="p-inputgroup-addon bg-transparent"><img appLazyLoadImage
+                          src="assets/images-v2/popups/register/icons/Lock.png" alt="lock"></span>
+                      <p-password [toggleMask]="true" id="p-password" formControlName="password"
+                        (input)="publicService.clearValidationErrors(formControls?.password)"
+                        inputStyleClass="rounded-start-0 border-start-0 px-1" placeholder="{{'placeholder.password'|translate}}
+                        " [attr.autocomplete]="'current-password'" [feedback]="false">
+                      </p-password>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched) ">
+                      <ng-container *ngIf="formControls?.password?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.required_field'|translate}}
+                        </span>
+                      </ng-container>
+                      <ng-container *ngIf="formControls?.password?.errors?.['pattern']">
+                        <span class="text-danger fs-8 lh-sm">
+                          {{'validations.passwordPattern'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="auth-form__or-log-in text-center mb-0 position-relative fw-normal text-black">
+                    {{'form.createAccount'|translate}}</p>
+                </div>
+                <div class="d-flex gap-2 justify-content-center pt-2">
+                  <a class="d-flex justify-content-center align-items-center"
+                    (click)="authFirebaseService.GoogleAuth()">
+                    <img src="assets/images-v2/popups/register/icons/google.png" appLazyLoadImage width="53px"
+                      alt="google">
+                  </a>
+                  <a class="d-flex justify-content-center align-items-center"
+                    (click)="authFirebaseService.TwitterAuth()">
+                    <img src="assets/images-v2/popups/register/icons/X.png" appLazyLoadImage width="60px" alt="twitter">
+                  </a>
+                </div>
+                <button type="submit" class="btn w-100 btn-solid-main form-btn mt-4" [disabled]="isLoadingBtn">
+                  <span>
+                    {{'form.createAccount'|translate}}
+                  </span>
+                </button>
+                <div class="d-flex align-items-center justify-content-center gap-1 flex-wrap mt-2">
+                  <p class="auth-register mb-0 fw-bold">{{'form.haveAccount'|translate}}</p>
+                  <a class="fw-bold text-main-color" (click)="login()">{{'form.login'|translate}}</a>
+                  <!-- <app-language-selector></app-language-selector> -->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

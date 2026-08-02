@@ -1,0 +1,75 @@
+<div id="auth-form">
+  <div class="row g-0">
+    <div class="col-lg-6 d-lg-block d-none position-relative">
+      <div class="position-fixed h-100 d-flex justify-content-center align-items-center bg-form">
+        <div>
+          <img src="assets/images/auth/otp.svg" class="forgetPassword-img" alt="forgetPassword">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-end p-3 px-4 pb-0">
+        <a class="close d-flex justify-content-center align-items-center" (click)="close()">
+          <i class="pi pi-times"></i>
+        </a>
+      </div>
+      <div class="px-2 pb-2">
+        <div class="form-content row align-items-center justify-content-center g-0">
+          <div class="col-md-10 col-11">
+            <div id="login" class="pb-md-4 pb-2 auth-form">
+              <div class="d-lg-none d-flex flex-column align-items-sm-center mb-3">
+                <img src="assets/images/logo/logo.svg" class="form-logo mb-2" alt="logo">
+              </div>
+
+              <div>
+                <h4 class="fw-bold">{{'form.verificationCode'|translate}}</h4>
+                <p class="fw-500 text-muted-color">{{'form.checkEmail'|translate}} <span class="text-main-color fw-500">
+                    {{email}}</span></p>
+              </div>
+              <div class="py-3">
+                <div class="d-flex justify-content-center">
+                  <div class=" mb-4 otp-code w-sm-100">
+                    <app-code-input [clearInputs]="clearCodeInput" [typedInput]="'num'"
+                      (codeChanged)="handleCodeChange($event)"
+                      (codeCompleted)="handleCodeCompletion($event)"></app-code-input>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn w-100 btn-solid-main form-btn mt-4" [disabled]="isLoadingBtn"
+                  (click)="verify()" [disabled]="codeLength?.length < 4">
+                  <span>
+                    {{'general.follow'|translate}}
+                  </span>
+                  <ng-container *ngIf="isLoadingBtn">
+                    <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                  </ng-container>
+                </button>
+                <div class="text-center mt-3">
+                  <p class="text-desc-color d-flex justify-content-center"> <span>
+                      {{'form.didntReceive'|translate}}
+                    </span>
+                    <ng-container *ngIf="isWaiting">
+                      <a (click)="resendCode(true)" class="text-main-color ps-1 fw-500">
+                        {{'form.resend'|translate}}
+                      </a>
+                    </ng-container>
+                    <ng-container *ngIf="!isWaiting">
+                      <app-countdown [customTitle]="minute" (emitServicePrice)="printTimeEnd($event)"></app-countdown>
+                    </ng-container>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flex container for centering the link -->
+            <div class="text-center w-100">
+              <a (click)="goToForgetPassword()" class="fw-bold text-main-color text-decoration-underline">
+                {{'general.back'|translate}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

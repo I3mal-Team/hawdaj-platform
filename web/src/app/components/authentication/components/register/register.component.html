@@ -1,0 +1,186 @@
+<div id="auth-form">
+  <div class="row g-0">
+    <div class="col-lg-6 d-lg-block d-none position-relative">
+      <h5 class="p-4 fw-bold position-absolute title">{{'form.createAccount'|translate}}</h5>
+      <div class="position-fixed h-100 d-flex justify-content-center align-items-center bg-form">
+        <div>
+          <img src="assets/images/auth/register.svg" alt="register" width="400px">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-end p-3 px-4 pb-0">
+        <a class="close rounded-circle d-flex justify-content-center align-items-center" (click)="close()">
+          <i class="pi pi-times"></i>
+        </a>
+      </div>
+      <div class="px-2 pb-2">
+        <div class="form-content row align-items-center justify-content-center g-0">
+          <div class="col-md-10 col-lg-11">
+            <div id="login" class="auth-form pb-2">
+              <div class="d-lg-none d-flex flex-column align-items-sm-center mb-3">
+                <img src="assets/images/logo/logo.svg" class="form-logo mb-2" alt="logo">
+              </div>
+
+              <div>
+                <div class="d-flex align-items-center gap-2 flex-wrap mb-3">
+                  <p class="mb-0 fw-500 text-muted-color">{{'form.haveAccount'|translate}}</p>
+                  <a class="fw-500 text-main-color" (click)="login()">{{'form.login'|translate}}</a>
+                  <!-- <app-language-selector></app-language-selector> -->
+                </div>
+                <h4 class="fw-bold">{{'form.createAccountOnHawdaj'|translate}}</h4>
+                <p class="fw-500 text-muted-color">{{'form.enterAccount'|translate}}</p>
+              </div>
+              <form [formGroup]="registerForm" (ngSubmit)="RegisterNow()" class="pt-3">
+                <div class="mb-4">
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)"
+                    [class.is-valid]="formControls?.firstName?.valid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><i class="pi pi-user fs-5-1"></i></span>
+                    <input type="text" class="form-control rounded-start-0 border-start-0 px-1"
+                      formControlName="firstName" autocomplete="cc-name"
+                      (input)="publicService.clearValidationErrors(formControls?.firstName)"
+                      placeholder="{{'placeholder.firstName'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.firstName?.invalid && (formControls?.firstName?.dirty || formControls?.firstName?.touched)">
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['minlength']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.length'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['charactersOnly']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.acceptLetters' | translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)"
+                    [class.is-valid]="formControls?.lastName?.valid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><i class="pi pi-user fs-5-1"></i></span>
+                    <input type="text" class="form-control rounded-start-0 border-start-0 px-1"
+                      formControlName="lastName" autocomplete="cc-name"
+                      (input)="publicService.clearValidationErrors(formControls?.lastName)"
+                      placeholder="{{'placeholder.lastName'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.lastName?.invalid && (formControls?.lastName?.dirty || formControls?.lastName?.touched)">
+                        <ng-container *ngIf="formControls?.lastName?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.lastName?.errors?.['minlength']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.length'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.firstName?.errors?.['charactersOnly']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.acceptLetters' | translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="p-inputgroup"
+                    [class.border-red]="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)"
+                    [class.is-valid]="formControls?.email?.valid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                    <span class="p-inputgroup-addon bg-transparent"><i class="pi pi-envelope fs-5-1"></i></span>
+                    <input type="email" class="form-control rounded-start-0 border-start-0 px-1" formControlName="email"
+                      autocomplete="cc-name" (input)="publicService.clearValidationErrors(formControls?.email)"
+                      placeholder="{{'placeholder.email'|translate}}" pInputText>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                      <ng-container
+                        *ngIf="formControls?.email?.invalid && (formControls?.email?.dirty || formControls?.email?.touched)">
+                        <ng-container *ngIf="formControls?.email?.errors?.['required']">
+                          <span class="text-danger fs-8">
+                            {{'validations.required_field'|translate}}
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="formControls?.email?.errors?.['pattern']">
+                          <span class="text-danger fs-8 d-block lh-base">
+                            {{'validations.emailNotValid'|translate}}
+                          </span>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="rounded-input p-mask"
+                    [class.border-red]="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched)"
+                    [class.is-valid]="formControls?.password?.valid && (formControls?.password?.dirty || formControls?.password?.touched)">
+                    <div class="p-inputgroup">
+                      <span class="p-inputgroup-addon bg-transparent"><i class="pi pi-lock-open fs-5"></i></span>
+                      <p-password [toggleMask]="true" id="p-password" formControlName="password"
+                        (input)="publicService.clearValidationErrors(formControls?.password)"
+                        inputStyleClass="rounded-start-0 border-start-0 px-1" placeholder="{{'placeholder.password'|translate}}
+                      " [attr.autocomplete]="'current-password'" [feedback]="false">
+                      </p-password>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <ng-container
+                      *ngIf="formControls?.password?.invalid && (formControls?.password?.dirty || formControls?.password?.touched) ">
+                      <ng-container *ngIf="formControls?.password?.errors?.['required']">
+                        <span class="text-danger fs-8">
+                          {{'validations.required_field'|translate}}
+                        </span>
+                      </ng-container>
+                      <ng-container *ngIf="formControls?.password?.errors?.['pattern']">
+                        <span class="text-danger fs-8 lh-sm">
+                          {{'validations.passwordPattern'|translate}}
+                        </span>
+                      </ng-container>
+                    </ng-container>
+
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <p class="text-center mb-0 orLogIn position-relative">{{'form.orLogIn'|translate}}</p>
+                </div>
+                <div class="d-flex gap-4 justify-content-center pt-4">
+                  <a class="global-card icon d-flex justify-content-center align-items-center"
+                    (click)="authFirebaseService.GoogleAuth()">
+                    <img src="assets/images/icons/google.png" alt="google">
+                  </a>
+                  <a class="global-card icon d-flex justify-content-center align-items-center"
+                    (click)="authFirebaseService.TwitterAuth()">
+                    <img src="assets/images/icons/twitter.png" alt="twitter">
+                  </a>
+                </div>
+                <button type="submit" class="btn w-100 btn-solid-main form-btn mt-4" [disabled]="isLoadingBtn">
+                  <span>
+                    {{'form.createAccount'|translate}}
+                  </span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

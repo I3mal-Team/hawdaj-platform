@@ -1,0 +1,93 @@
+<section class="carousel" class="position-relative">
+  <div class="overlay position-absolute"></div>
+  <div class="d-flex align-items-end gap-md-5 gap-3 flex-sm-nowrap flex-wrap carsoul-container">
+    <!-- <div class="col-xl-2 col-lg-3 col-md-3 d-flex align-items-center"> -->
+    <article class="content-list ps-md-5 ps-4 w-100">
+      <ng-container *ngFor="let item of items; let i = index; trackBy: trackByFn">
+        <ng-container *ngIf="i==activeIndex">
+          <figcaption class="d-none flex-column place-content">
+            <div class="details">
+              <h3 class="type fw-bold text-capitalize d-flex gap-2 align-items-center">
+                <i *ngIf="item?.type=='place'" class="pi pi-building"></i>
+                <i *ngIf="item?.type=='store'" class="fas fa-store"></i>
+                <i *ngIf="item?.type=='event'" class="pi pi-ticket"></i>
+                <i *ngIf="item?.type=='zad'" class="fas fa-cutlery"></i>
+                {{'nav.'+item?.type|translate }}
+              </h3>
+              <h2 class="title fw-bold mb-3">
+                {{ item?.title }}
+              </h2>
+              <h4 class="location-address fs-5 fw-bold">
+                <i class="fa-solid fa-location-dot"></i> {{ item?.address_name }}
+              </h4>
+              <p class="description">
+                {{ item?.description | stripHtml }}
+              </p>
+            </div>
+            <div class="buttons d-flex gap-3">
+              <button class="btn" (click)="showDetails(item)">
+                {{'general.moreDetails'|translate}} </button>
+              <button class="btn" [routerLink]="['/places']">
+                {{'general.seeAll'|translate}}
+              </button>
+            </div>
+          </figcaption>
+        </ng-container>
+      </ng-container>
+      <nav class=" arrows-btns d-flex justify-content-md-end gap-3 mt-sm-4">
+        <button id="prev" class="d-flex justify-content-center align-items-center rounded-circle prev-arrow"
+          (click)="prev()">
+          <i class="fa fa-angle-left scaleX-rtl"></i>
+        </button>
+        <button id="next" class="d-flex justify-content-center align-items-center rounded-circle" (click)="next()"
+          [class.disabled]="activeIndex==items?.length-1">
+          <i class="fa fa-angle-right scaleX-rtl"></i>
+        </button>
+      </nav>
+    </article>
+    <!-- </div> -->
+    <!-- <div class="col-xl-10 col-lg-9 col-md-9 d-flex align-items-end  pb-sm-5 pb-4"> -->
+    <div class="overflow-hidden">
+      <aside class="thumbnail d-flex gap-md-3 gap-2  px-md-0 px-sm-0  px-3 py-sm-0 py-3">
+        <ng-container *ngFor="let item of items; let i = index; trackBy: trackByFn">
+          <!-- [ngClass]="{'active': activeIndex === i}" (click)="setActive(i)" -->
+          <div class="item-content position-relative">
+            <a [href]="item?.address" target="_blank" class="position-absolute address-icon p-2 z-idx"
+              *ngIf="item?.address">
+              <div class="map-icon-image">
+                <!-- <img [defaultImage]="'assets/images/stores/icons/location.png'"
+                  [lazyLoad]="'assets/images/stores/icons/location.png'" priority="high" fetchpriority="high"
+                  loading="lazy" [alt]="'mapImageIcon'"> -->
+                <div class="image-content">
+                  <img ngOptimizedImage [ngSrc]="'assets/images/stores/icons/location.png'" width="100" height="100"
+                    alt="Join Us Image">
+                </div>
+              </div>
+            </a>
+            <!-- <img class="w-100 h-100" [routerLink]="['/stores/',item?.slug]"
+              [defaultImage]="item?.image" [lazyLoad]="item?.image" priority="high"
+              fetchpriority="high" loading="lazy" [alt]="item?.title"> -->
+            <div class="h-100">
+              <img class="w-100 h-100" ngOptimizedImage [ngSrc]="item?.image"
+                onerror="src='assets/images/not-found/no-img.svg'" width="250" height="270" [alt]="item?.title">
+            </div>
+            <div class="content position-absolute" [routerLink]="['/stores/',item?.slug]">
+              <h5 class="fs-5-1 text-truncate mb-1">{{item?.title}}</h5>
+              <div class="d-flex w-100 justify-content-between">
+                <p class="text-desc fs-6-1 fw-500 mb-0 text-muted-color d-flex gap-1 align-items-center">
+                  <i class="fas fa-location-dot"></i>
+                  <u>{{item?.address_name||
+                    'titles.saudiArabia'|translate}}</u>
+                </p>
+                <i class="pi pi-angle-right text-muted-color"></i>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </aside>
+    </div>
+  </div>
+  <ng-container *ngIf="autoPlay && enableTimeProgress">
+    <div class="time" [style.width]="timeProgressWidth"></div>
+  </ng-container>
+</section>

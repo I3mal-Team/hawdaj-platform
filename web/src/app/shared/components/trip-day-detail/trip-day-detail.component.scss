@@ -1,0 +1,240 @@
+.trip-day-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+
+    /* ---------- RTL Variant ---------- */
+    &--rtl {
+        direction: rtl;
+    }
+
+    /* ---------- Info Container (Header + Region with Background) ---------- */
+    &__info-container {
+        display: flex;
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 1rem;
+        align-self: stretch;
+        border-radius: 0.75rem;
+        background: #f9fcff;
+    }
+
+    /* ---------- Header Section ---------- */
+    &__header {
+        display: flex;
+        padding: 0.5rem 0;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    &__day-info {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+    }
+
+    &__day-badge {
+        display: flex;
+        justify-content: center;
+        padding: 0.25rem 1rem;
+        align-items: center;
+        gap: 0.75rem;
+        border-radius: 0.5rem;
+        background: var(--Color-text-2, #3a4980);
+    }
+
+    &__day-number {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+
+        @media (max-width: 767px) {
+            font-size: 1.25rem;
+        }
+    }
+
+    &__day-title {
+        color: #242424;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.4;
+        margin: 0;
+        padding-top: 0.5rem;
+
+        @media (max-width: 767px) {
+            font-size: 1.125rem;
+            padding-top: 0.25rem;
+        }
+    }
+
+    &__meta {
+        color: var(--Color-text-2, #3a4980);
+        font-size: 1rem;
+        font-weight: 400;
+
+        @media (max-width: 767px) {
+            font-size: 0.875rem;
+        }
+    }
+
+    /* ---------- Region Section ---------- */
+    &__region {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    &__region-name {
+        color: #242424;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+
+        @media (max-width: 767px) {
+            font-size: 1.125rem;
+        }
+    }
+
+    &__region-description {
+        color: #717680;
+        font-size: 1.125rem;
+        font-weight: 400;
+        margin: 0;
+        max-width: 53.5625rem;
+
+        @media (max-width: 767px) {
+            font-size: 1rem;
+        }
+    }
+
+    /* ---------- Periods Section ---------- */
+    &__periods {
+        width: 100%;
+
+        /* Desktop Layout */
+        &--desktop {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+
+            /* Single period layout - takes full width */
+            &.trip-day-detail__periods--single {
+                grid-template-columns: 1fr;
+            }
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
+        }
+
+        /* Mobile Tabs Layout */
+        &--mobile {
+            display: none;
+
+            @media (max-width: 1024px) {
+                display: block;
+            }
+        }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 767px) {
+        &__info-container {
+            padding: 0.75rem;
+        }
+    }
+}
+
+/* ---------- LTR Support ---------- */
+[dir="ltr"] .trip-day-detail {
+    direction: ltr;
+
+    &__info-container {
+        align-items: flex-start;
+    }
+
+    &__region-name {
+        text-align: left;
+    }
+}
+
+/* ---------- Mobile Tabs Styling ---------- */
+::ng-deep .trip-periods-tabs {
+    .p-tabview-nav {
+        background: #f9fcff;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 0.25rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        > li {
+            flex: 1;
+        }
+    }
+
+    .p-tabview-nav-link {
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        color: #3a4980;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        &:hover {
+            background: rgba(121, 57, 167, 0.1);
+        }
+
+        // Default icon color
+        app-svg-icon ::ng-deep svg {
+            transition: all 0.3s ease;
+
+            path {
+                fill: #3a4980;
+                transition: all 0.3s ease;
+            }
+        }
+    }
+
+    .p-highlight .p-tabview-nav-link {
+        background: #7939a7;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(121, 57, 167, 0.2);
+
+        // Active icon color - white
+        app-svg-icon ::ng-deep svg {
+            path {
+                fill: #fff;
+            }
+        }
+    }
+
+    .p-tabview-panels {
+        padding: 1rem 0 0 0;
+        background: transparent;
+    }
+
+    .p-tabview-panel {
+        background: transparent;
+    }
+
+    app-svg-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .time-period-card__header {
+        display: none;
+    }
+}

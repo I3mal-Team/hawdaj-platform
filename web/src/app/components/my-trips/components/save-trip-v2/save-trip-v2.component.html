@@ -1,0 +1,287 @@
+<ng-container *ngIf="!notShowPage">
+    <app-header></app-header>
+</ng-container>
+<ng-container *ngIf="!notShowPage">
+    <div id="save-trip" class="mb-5">
+        <app-banner-2 [title]="'saveTrip.availableTrips'"
+            [largeImage]="'assets/images-v2/pages/save-trip/banner/banner.webp'"
+            [smallImage]="'assets/images-v2/pages/save-trip/banner/banner-tablet.webp'"></app-banner-2>
+        <div class="container-fluid row justify-content-center gap-4 mt-md-5">
+            <div class="col-lg-5 d-flex flex-column gap-4 save-trip-card">
+                <ng-container *ngIf="!isLoading">
+                    <div class="row p-1 region-boxs" [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.startArea'|translate}}</h4>
+                                <p> {{tripData?.region1Object.name}}</p>
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.endArea'|translate}}</h4>
+                                <p> {{tripData?.region2Object.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tripPlaces?.length>0;">
+                        <div class="row align-items-center justify-content-center gap-3">
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" (click)="saveTrip()"
+                                [disabled]="isLoading">
+                                <img src="assets/images-v2/pages/save-trip/icons/save.svg" alt="save" loading="lazy"
+                                    aria-label="save">
+                                {{'general.save'|translate}}</button>
+                            <button class="col-12 col-md-5 justify-content-center gap-1"
+                                [class.d-flex]="currentLanguage !== 'ru'" [disabled]="isLoading"
+                                (click)="regenerateTrip()">
+                                <img src="assets/images-v2/pages/save-trip/icons/new.svg" alt="new"
+                                    aria-label="new">{{'general.regenerate'|translate}}</button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripsDates-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+            <div class="col-lg-5 d-flex flex-column gap-4 save-trip-card">
+                <ng-container *ngIf="!isLoading">
+                    <div class="row p-1 calender-boxs" [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.startDate'|translate}}</h4>
+                                <p>{{tripData?.start_date | date: 'd MMM y':'':currentLanguage}}</p>
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.endDate'|translate}}</h4>
+                                <p>
+                                    {{tripData?.end_date | date: 'd MMM y':'':currentLanguage}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tripPlaces?.length>0;">
+                        <div class="row align-items-center justify-content-center gap-3">
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" [disabled]="isLoading"
+                                (click)="addToCalendar()">
+                                <img src="assets/images-v2/pages/save-trip/icons/calender1.svg" alt="calendar"
+                                    aria-label="calendar">
+                                {{'general.addToCalender'|translate}}</button>
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" (click)="emailTripTo()"
+                                [disabled]="isLoading">
+                                <img src="assets/images-v2/pages/save-trip/icons/email.svg" alt="email"
+                                    aria-label="email">
+                                {{'general.email'|translate}}</button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripsDates-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+
+        </div>
+        <div class="container-fluid row justify-content-center gap-4 mt-5 mt-md-0">
+            <div class="col-lg-5 d-flex flex-column gap-4 save-trip-card-sm">
+                <ng-container *ngIf="!isLoading">
+                    <div class="flex-column row p-1 gap-2 region-boxs"
+                        [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.startArea'|translate}}</h4>
+                                <p>{{tripData?.region1Object.name}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.endArea'|translate}}</h4>
+                                <p>{{tripData?.region2Object.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column row p-1 calender-boxs gap-2"
+                        [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.startDate'|translate}}</h4>
+                                <p>{{tripData?.start_date | date: 'd MMM
+                                    y':'':currentLanguage}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.endDate'|translate}}</h4>
+                                <p>
+                                    {{tripData?.end_date | date: 'd MMM y':'':currentLanguage}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripsDates-sm-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+            <div class="col-lg-5 d-flex flex-column gap-4 save-trip-card-sm">
+                <ng-container *ngIf="!isLoading">
+                    <ng-container *ngIf="tripPlaces?.length>0;">
+                        <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" (click)="saveTrip()"
+                                [disabled]="isLoading">
+                                <img src="assets/images-v2/pages/save-trip/icons/save.svg" alt="save" loading="lazy"
+                                    aria-label="save">
+                                {{'general.save'|translate}}</button>
+                            <button class="col-12 col-md-5 justify-content-center gap-1"
+                                [class.d-flex]="currentLanguage !== 'ru'" [disabled]="isLoading"
+                                (click)="regenerateTrip()">
+                                <img src="assets/images-v2/pages/save-trip/icons/new.svg" alt="new"
+                                    aria-label="new">{{'general.regenerate'|translate}}</button>
+                        </div>
+                        <div class="d-flex flex-row align-items-center justify-content-center gap-1">
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" [disabled]="isLoading"
+                                (click)="addToCalendar()">
+                                <img src="assets/images-v2/pages/save-trip/icons/calender1.svg" alt="calendar"
+                                    aria-label="calendar">
+                                {{'general.addToCalender'|translate}}</button>
+                            <button class="col-12 col-md-5 d-flex justify-content-center gap-1" (click)="emailTripTo()"
+                                [disabled]="isLoading">
+                                <img src="assets/images-v2/pages/save-trip/icons/email.svg" alt="email"
+                                    aria-label="email">
+                                {{'general.email'|translate}}</button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripsDates-sm-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+
+        </div>
+        <div class="container trip-plan">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>{{'saveTrip.tripProgram'|translate}}</h2>
+                <ng-container *ngIf="isLoading; else noLoadingOnMap">
+                    <app-skeleton [type]="'showOnMap-v2'"></app-skeleton>
+                </ng-container>
+                <ng-template #noLoadingOnMap>
+                    <div class="img-container">
+                        <img src="assets/images-v2/pages/save-trip/icons/map.svg" alt="map" (click)="showMap()">
+                    </div>
+                </ng-template>
+            </div>
+            <ng-container *ngIf="isLoading; else noLoading">
+                <div class="mt-5">
+                    <app-skeleton [type]="'timeLine-v2'"></app-skeleton>
+                </div>
+            </ng-container>
+            <ng-template #noLoading>
+                <ng-container *ngIf="tripData; else noData">
+                    <ng-container *ngIf="tripPlaces?.length>0">
+                        <ng-container *ngFor="let item of tripPlaces;let i=index">
+                            <ng-container *ngIf="item?.placesItems?.length>0">
+                                <div class="d-flex align-items-center date gap-3 mt-4">
+                                    <div class="day-number">
+                                        <h3>{{item?.indexNumber}} </h3>
+                                    </div>
+                                    <div class="date-content">
+                                        <h4><span>.</span>
+                                            {{ getAdjustedDate(tripData?.start_date, item?.indexNumber - 1 ) | date: 'd
+                                            MMM
+                                            y':'':currentLanguage }}
+                                            -
+                                            {{item?.placesItems?.length}} -</h4>
+                                    </div>
+                                </div>
+                                <div class="row cards gap-2 mt-4 mx-0">
+                                    <ng-container *ngFor="let place of item?.placesItems">
+                                        <div class="col-6 col-lg-2 col-md-3 trip-card">
+                                            <div class="card-img-container" (click)="showDetails(place)">
+                                                <img class="card-img" [src]="place?.image"
+                                                    onerror="src='assets/images/not-found/no-img.svg'" alt="img">
+                                                <div
+                                                    class="d-flex card-status align-items-center justify-content-between w-100">
+                                                    <div class="d-flex align-items-center gap-2 right-side">
+                                                        <div class="d-flex align-items-center gap-1 ju rate">
+                                                            <img src=" assets/images-v2/pages/save-trip/icons/card/star.svg"
+                                                                alt="star">
+                                                            <p>{{place.rate}} ({{place?.review || 0}})</p>
+                                                        </div>
+                                                        <a class="location" target="_blank"
+                                                            href="https://www.google.com/maps/search/?api=1&query={{place?.address}}"
+                                                            (click)="$event.stopPropagation()">
+                                                            <img src="assets/images-v2/pages/save-trip/icons/card/card-location-2.svg"
+                                                                alt="location">
+                                                        </a>
+                                                        <!-- <div class="d-flex align-items-center gap-1 status">
+                                                            <span></span>
+                                                            <p>{{'open'|translate}}</p>
+                                                        </div> -->
+                                                    </div>
+                                                    <ng-container *ngIf="item?.placesItems?.length>1 ">
+                                                        <div class="left-side">
+                                                            <div class="delete"
+                                                                (click)="deletePlaceTrip(place,i); $event.stopPropagation()">
+                                                                <img src="assets/images-v2/pages/save-trip/icons/card/trash.svg"
+                                                                    alt="trash">
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                                <div class="card-content">
+                                                    <h4> {{getPlaceNameByLocale(place,currentLanguage)}}</h4>
+                                                    <p>
+                                                        <img src="assets/images-v2/pages/save-trip/icons/card/card-location.svg"
+                                                            alt="location">
+                                                        {{place?.address_name || 'titles.saudiArabia'|translate}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+            <ng-template #noData>
+                <div class="d-flex flex-column align-items-center justify-content-center gap-3 mt-5 no-provider py-4">
+                    <img src="assets/images/not-found/no-data.svg" width="200px" alt="no-data">
+                    <p>{{'general.noData'|translate}}</p>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <a class="d-flex align-items-center justify-content-center text-capitalize fs-5-1 gap-2 start-trip"
+                        (click)="startTrip()">
+                        {{'trip.startYourTrip'|translate}}
+                        <i class="fa-plane fas scaleX-rtl"></i>
+                    </a>
+                </div>
+            </ng-template>
+
+        </div>
+        <div appLazyLoadSection (sectionInView)="homeShowFooter = true" class="w-100 mt-3">
+            <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        </div>
+    </div>
+</ng-container>
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

@@ -1,0 +1,62 @@
+<div id="events-home">
+  <div class="event-second-bg">
+    <div class="container">
+      <ng-container *ngIf="items?.length >0">
+        <div class="items-list mt-md-4 mt-3 d-none d-lg-block">
+          <div class="row g-3">
+            <div class="cards d-flex flex-row align-items-center justify-content-center">
+              <div (click)="displayContent(i)" class="card"
+                *ngFor="let item of _PublicService.slicedData(items,5);let i =index" [class.active]="i === activeIndex">
+                <img ngOptimizedImage src="{{item?.image}}" onerror="this.src='assets/images/not-found/no-img.svg'"
+                  alt="Image" />
+                <button class="explore-btn" [routerLink]="['/restaurants/' + item?.slug]" role="button"
+                  [attr.title]="'general.explore'" *ngIf="item?.slug">
+                  {{'general.explore'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="description d-flex flex-column align-items-center my-4 justify-content-center m-auto text-center ">
+            <h4>{{items[activeIndex]?.title}}</h4>
+            <p>{{items[activeIndex]?.description|stripHtml}}</p>
+            <div class="rating d-flex align-items-center justify-content-center pb-2">
+              <div class="img-container" *ngFor="let star of [].constructor(5); let i = index">
+                <img [src]="i < rating ? 'assets/images/events/fav-star.svg' : 'assets/images/events/star.svg'"
+                  alt="star" onerror="this.src='assets/images/not-found/no-img.svg'">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-lg-none" [showNavigators]="false"
+          [autoplayInterval]="4000" [circular]="true" [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+          <ng-template pTemplate="item" let-item>
+            <div class="d-flex response justify-content-center">
+              <div class="card custom-card small-card mt-lg-3" [routerLink]="['/restaurants/' + item?.slug]">
+                <img class="w-100 h-100" ngOptimizedImage [src]="item?.image" width="350" height="250"
+                  onerror="this.src='assets/images/not-found/no-img.svg'" [alt]="item?.title">
+                <div
+                  class="card-img-overlay align-items-center text-white d-flex flex-column justify-content-center p-3">
+                  <div class="card-content" *ngIf="item?.title!=null||item?.description!=null">
+                    <h5 class="card-title">{{item?.title}}</h5>
+                    <p class="card-text">{{item?.description|stripHtml}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+        <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center">
+          <button type="button" [attr.aria-label]="'general.seeAll' | translate"
+            [attr.title]="'general.seeAll' | translate" id="unique-button-id" role="button"
+            [routerLink]="['/restaurants/']" class="new-button">
+            <span class="hover-underline-animation">
+              {{'general.seeAll'|translate}}
+            </span>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

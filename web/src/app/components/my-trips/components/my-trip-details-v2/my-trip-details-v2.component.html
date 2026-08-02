@@ -1,0 +1,271 @@
+<ng-container *ngIf="!notShowPage">
+    <app-header></app-header>
+</ng-container>
+<ng-container *ngIf="!notShowPage">
+    <div id="trip-details" class="mb-5">
+        <app-banner-2 [title]="'saveTrip.enjoyTrip'"
+            [largeImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'"></app-banner-2>
+        <div class="row container-fluid mt-md-5 gap-4 justify-content-center">
+            <div class="save-trip-card col-lg-5 d-flex flex-column gap-4 ">
+                <ng-container *ngIf="!isLoading">
+                    <div class="row region-boxs p-1" [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.startArea'|translate}}</h4>
+                                <p> {{tripData?.region1Object?.name}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.endArea'|translate}}</h4>
+                                <p> {{tripData?.region2Object?.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="tripPlaces && tripPlaces.length > 0">
+                        <ng-container
+                            *ngIf="!isLoading && currentLoginInformation && currentLoginInformation?.id == tripData?.trip?.user_id">
+                            <div class="row gap-3 align-items-center justify-content-center">
+                                <!-- <button class="col-md-5 col-12 btn btn-solid-main d-flex justify-content-center gap-1"
+                                (click)="share()" [disabled]="isLoading">
+                                <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M16.5 2.25C14.7051 2.25 13.25 3.70507 13.25 5.5C13.25 5.69591 13.2673 5.88776 13.3006 6.07412L8.56991 9.38558C8.54587 9.4024 8.52312 9.42038 8.50168 9.43939C7.94993 9.00747 7.25503 8.75 6.5 8.75C4.70507 8.75 3.25 10.2051 3.25 12C3.25 13.7949 4.70507 15.25 6.5 15.25C7.25503 15.25 7.94993 14.9925 8.50168 14.5606C8.52312 14.5796 8.54587 14.5976 8.56991 14.6144L13.3006 17.9259C13.2673 18.1122 13.25 18.3041 13.25 18.5C13.25 20.2949 14.7051 21.75 16.5 21.75C18.2949 21.75 19.75 20.2949 19.75 18.5C19.75 16.7051 18.2949 15.25 16.5 15.25C15.4472 15.25 14.5113 15.7506 13.9174 16.5267L9.43806 13.3911C9.63809 12.9694 9.75 12.4978 9.75 12C9.75 11.5022 9.63809 11.0306 9.43806 10.6089L13.9174 7.4733C14.5113 8.24942 15.4472 8.75 16.5 8.75C18.2949 8.75 19.75 7.29493 19.75 5.5C19.75 3.70507 18.2949 2.25 16.5 2.25ZM14.75 5.5C14.75 4.5335 15.5335 3.75 16.5 3.75C17.4665 3.75 18.25 4.5335 18.25 5.5C18.25 6.4665 17.4665 7.25 16.5 7.25C15.5335 7.25 14.75 6.4665 14.75 5.5ZM6.5 10.25C5.5335 10.25 4.75 11.0335 4.75 12C4.75 12.9665 5.5335 13.75 6.5 13.75C7.4665 13.75 8.25 12.9665 8.25 12C8.25 11.0335 7.4665 10.25 6.5 10.25ZM16.5 16.75C15.5335 16.75 14.75 17.5335 14.75 18.5C14.75 19.4665 15.5335 20.25 16.5 20.25C17.4665 20.25 18.25 19.4665 18.25 18.5C18.25 17.5335 17.4665 16.75 16.5 16.75Z"
+                                            fill="#ffffff"></path>
+                                    </g>
+                                </svg>
+                                {{'general.share'|translate}}</button> -->
+                                <app-share-social [fullUrl]="fullUrl" [isButton]="true"></app-share-social>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripDetails-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+            <div class="save-trip-card col-lg-5 d-flex flex-column gap-4">
+                <ng-container *ngIf="!isLoading">
+                    <div class="row calender-boxs p-1" [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.startDate'|translate}}</h4>
+                                <p>{{tripData?.start_date | date: 'd MMM y':'':currentLanguage}}</p>
+                            </div>
+                        </div>
+                        <div class="col-6 d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.endDate'|translate}}</h4>
+                                <p>
+                                    {{tripData?.end_date | date: 'd MMM y':'':currentLanguage}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container
+                        *ngIf="!isLoading && currentLoginInformation && currentLoginInformation?.id == tripData?.trip?.user_id">
+                        <div class="row gap-3 align-items-center justify-content-center">
+                            <button class="col-md-5 col-12 d-flex justify-content-center gap-1" (click)="deleteTrip()"
+                                [disabled]="isLoading">
+                                <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M6 5H18M9 5V5C10.5769 3.16026 13.4231 3.16026 15 5V5M9 20H15C16.1046 20 17 19.1046 17 18V9C17 8.44772 16.5523 8 16 8H8C7.44772 8 7 8.44772 7 9V18C7 19.1046 7.89543 20 9 20Z"
+                                            stroke="#7939a7" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                                {{'general.deleteMyTrip'|translate}}</button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripDetails-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+
+        </div>
+        <div class="row container-fluid mt-5 mt-md-0 gap-4 justify-content-center">
+            <div class="save-trip-card-sm col-lg-5 d-flex flex-column gap-4 ">
+                <ng-container *ngIf="!isLoading">
+                    <div class="row gap-2 flex-column region-boxs p-1"
+                        [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.startArea'|translate}}</h4>
+                                <p> {{tripData?.region1Object?.name}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/location.svg" alt="location"
+                                aria-label="location">
+                            <div class="content">
+                                <h4>{{'trip.endArea'|translate}}</h4>
+                                <p> {{tripData?.region2Object?.name}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gap-2 flex-column calender-boxs p-1"
+                        [ngClass]="{'ltr-after': currentLanguage !== 'ar'}">
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.startDate'|translate}}</h4>
+
+                                <p>{{tripData?.start_date | date: 'd MMM y':'':currentLanguage}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <img src="assets/images-v2/pages/save-trip/icons/calender2.svg" alt="calendar"
+                                aria-label="calendar">
+                            <div class="content">
+                                <h4> {{'saveTrip.endDate'|translate}}</h4>
+                                <p>{{tripData?.end_date | date: 'd MMM y':'':currentLanguage}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isLoading">
+                    <app-skeleton [type]="'tripsDates-sm-v2'"></app-skeleton>
+                </ng-container>
+            </div>
+            <ng-container
+                *ngIf="!isLoading && currentLoginInformation && currentLoginInformation?.id == tripData?.trip?.user_id">
+                <div class="save-trip-card-sm col-lg-5 d- flex-column gap-4">
+                    <ng-container *ngIf="!isLoading">
+                        <ng-container *ngIf="tripPlaces && tripPlaces.length > 0">
+                            <div
+                                class="d-flex flex-row gap-3 flex-wrap gap-1 align-items-center justify-content-center">
+                                <button class="col-md-5 col-12 btn btn-solid-main d-flex justify-content-center gap-1"
+                                    (click)="share()" [disabled]="isLoading">
+                                    <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M16.5 2.25C14.7051 2.25 13.25 3.70507 13.25 5.5C13.25 5.69591 13.2673 5.88776 13.3006 6.07412L8.56991 9.38558C8.54587 9.4024 8.52312 9.42038 8.50168 9.43939C7.94993 9.00747 7.25503 8.75 6.5 8.75C4.70507 8.75 3.25 10.2051 3.25 12C3.25 13.7949 4.70507 15.25 6.5 15.25C7.25503 15.25 7.94993 14.9925 8.50168 14.5606C8.52312 14.5796 8.54587 14.5976 8.56991 14.6144L13.3006 17.9259C13.2673 18.1122 13.25 18.3041 13.25 18.5C13.25 20.2949 14.7051 21.75 16.5 21.75C18.2949 21.75 19.75 20.2949 19.75 18.5C19.75 16.7051 18.2949 15.25 16.5 15.25C15.4472 15.25 14.5113 15.7506 13.9174 16.5267L9.43806 13.3911C9.63809 12.9694 9.75 12.4978 9.75 12C9.75 11.5022 9.63809 11.0306 9.43806 10.6089L13.9174 7.4733C14.5113 8.24942 15.4472 8.75 16.5 8.75C18.2949 8.75 19.75 7.29493 19.75 5.5C19.75 3.70507 18.2949 2.25 16.5 2.25ZM14.75 5.5C14.75 4.5335 15.5335 3.75 16.5 3.75C17.4665 3.75 18.25 4.5335 18.25 5.5C18.25 6.4665 17.4665 7.25 16.5 7.25C15.5335 7.25 14.75 6.4665 14.75 5.5ZM6.5 10.25C5.5335 10.25 4.75 11.0335 4.75 12C4.75 12.9665 5.5335 13.75 6.5 13.75C7.4665 13.75 8.25 12.9665 8.25 12C8.25 11.0335 7.4665 10.25 6.5 10.25ZM16.5 16.75C15.5335 16.75 14.75 17.5335 14.75 18.5C14.75 19.4665 15.5335 20.25 16.5 20.25C17.4665 20.25 18.25 19.4665 18.25 18.5C18.25 17.5335 17.4665 16.75 16.5 16.75Z"
+                                                fill="#ffffff"></path>
+                                        </g>
+                                    </svg>
+                                    {{'general.share'|translate}}</button>
+                                <button class="col-md-5 col-12 d-flex justify-content-center gap-1"
+                                    (click)="deleteTrip()" [disabled]="isLoading">
+                                    <svg viewBox="0 0 24 24" width="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path
+                                                d="M6 5H18M9 5V5C10.5769 3.16026 13.4231 3.16026 15 5V5M9 20H15C16.1046 20 17 19.1046 17 18V9C17 8.44772 16.5523 8 16 8H8C7.44772 8 7 8.44772 7 9V18C7 19.1046 7.89543 20 9 20Z"
+                                                stroke="#7939a7" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                    {{'general.deleteMyTrip'|translate}}</button>
+
+                            </div>
+
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="isLoading">
+                        <app-skeleton [type]="'tripsDates-sm-v2'"></app-skeleton>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+        </div>
+        <div class="trip-plan container">
+            <app-trip-header [headerConfig]="tripHeaderConfig" (downloadPdf)="downloadTripPdf()" (mapClick)="showMap()">
+            </app-trip-header>
+            <ng-container *ngIf="isLoading; else noLoading">
+                <div class="mt-5">
+                    <app-skeleton [type]="'timeLine-v2'"></app-skeleton>
+                </div>
+            </ng-container>
+            <ng-template #noLoading>
+                <ng-container *ngFor="let item of tripPlaces;let i=index">
+                    <ng-container *ngIf="item?.placesItems?.length>0">
+                        <div class="date d-flex align-items-center gap-3 mt-4">
+                            <div class="day-number">
+                                <h3>{{i + 1}} </h3>
+
+                            </div>
+                            <div class="date-content">
+                                <h4><span>.</span> {{ getAdjustedDate(tripData?.start_date, item?.indexNumber - 1 ) |
+                                    date: 'd MMM y':'':currentLanguage }} -
+                                    {{item?.placesItems?.length}} -</h4>
+                            </div>
+                        </div>
+                        <div class="cards mt-4 row gap-2 mx-0">
+                            <ng-container *ngFor="let place of item?.placesItems">
+                                <div class="trip-card col-lg-2 col-md-3 col-6">
+                                    <div class="card-img-container" (click)="showDetails(place)">
+                                        <img class="card-img" [src]="place?.image"
+                                            onerror="src='assets/images/not-found/no-img.svg'" alt="img">
+                                        <div
+                                            class="card-status d-flex align-items-center justify-content-between w-100">
+                                            <div class="right-side d-flex align-items-center gap-2">
+                                                <div class="rate d-flex align-items-center ju gap-1">
+                                                    <img src=" assets/images-v2/pages/save-trip/icons/card/star.svg"
+                                                        alt="star">
+                                                    <p>{{place.rate}} ({{place?.review || 0}})</p>
+                                                </div>
+                                                <a class="location" target="_blank"
+                                                    href="https://www.google.com/maps/search/?api=1&query={{place?.address}}"
+                                                    (click)="$event.stopPropagation()">
+                                                    <img src="assets/images-v2/pages/save-trip/icons/card/card-location-2.svg"
+                                                        alt="location">
+                                                </a>
+                                                <!-- <div class="status d-flex align-items-center gap-1">
+                                                            <span></span>
+                                                            <p>{{'open'|translate}}</p>
+                                                        </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <h4> {{place?.title || ''}}</h4>
+                                            <p>
+                                                <img src="assets/images-v2/pages/save-trip/icons/card/card-location.svg"
+                                                    alt="location">
+                                                {{place?.address_name || 'titles.saudiArabia'|translate}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+
+        </div>
+        <div appLazyLoadSection (sectionInView)="homeShowFooter = true" class="w-100 mt-3">
+            <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+        </div>
+    </div>
+</ng-container>
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

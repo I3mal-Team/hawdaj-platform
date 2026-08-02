@@ -1,0 +1,14 @@
+.trip-img {
+  width: 330px;
+  max-width: 100%;
+}
+button{
+  &:first-child{
+    background-color: var(--light-new-color) !important;
+    border: none !important;
+  }
+  &:last-child{
+    border: 1px solid var(--light-new-color) !important;
+    color: var(--light-new-color) !important;
+  }
+}

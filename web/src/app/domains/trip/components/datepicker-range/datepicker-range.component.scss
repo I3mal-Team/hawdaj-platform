@@ -1,0 +1,136 @@
+$primary: #7939a7;
+
+#date-range {
+  height: fit-content;
+  overflow: auto;
+  .bag {
+    @media (max-width: 767px) {
+      width: 210px;
+    }
+  }
+  #calender-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // height: calc(70vh - 160px);
+    // overflow: auto;
+    // padding: 0 5px;
+    overflow-y: auto;
+    max-height: 77vh;
+    .content {
+      h3 {
+        font-size: 48px !important;
+        color: #7939a7;
+        font-weight: bold;
+        @media (max-width: 1240px) {
+          font-size: 30px !important;
+        }
+      }
+      p.memories {
+        font-size: 24px;
+        @media (max-width: 1240px) {
+          font-size: 20px;
+        }
+        color: #000000;
+      }
+      p.journey {
+        color: #656565;
+        font-size: 16px;
+      }
+    }
+  }
+  .datepicker {
+    background-color: #ffffffb0;
+    box-shadow: 0px 0px 20px 10px #0000000d;
+    padding-bottom: 16px;
+    border-radius: 7px;
+    .dates-cards {
+      margin-top: 4.5rem;
+      .date-trip-content {
+        border-radius: 5px;
+        background-color: #ffffffb2;
+      }
+    }
+  }
+  .btn {
+    font-size: 1.05rem;
+  }
+  .confirm-btn,
+  .next-btn {
+    background-color: $primary;
+    color: var(--text-white-color);
+    width: 210px;
+    padding: 10px 25px;
+    border-radius: 12px;
+    @media (max-width: 767px) {
+      font-size: 16px;
+      width: 190px;
+    }
+  }
+  .selected-date {
+    background-color: #ffffff85;
+    box-shadow: 0px 0px 20px 10px #0000000d;
+    border-radius: 6px;
+    .calendar {
+      border: 1px solid $primary;
+      border-radius: 5px;
+      height: 3rem;
+    }
+  }
+}
+@media (max-width: 991px) {
+  #date-range {
+    .datepicker .dates-cards {
+      margin-top: 1rem !important;
+    }
+  }
+}
+.end-date,
+.start-date {
+  position: relative;
+  label,
+  img {
+    position: absolute;
+    top: 30%;
+    z-index: 2;
+    width: fit-content;
+    color: #3a4980;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  input {
+    color: transparent;
+    background-color: transparent !important;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.052);
+    position: relative;
+    transition: all 0.3s ease;
+    padding: 1rem;
+    height: 3.5rem;
+  }
+
+  // Active state when date is selected
+  &.has-value {
+    input {
+      border: 2px solid $primary;
+      background-color: rgba(121, 57, 167, 0.05) !important;
+    }
+
+    label {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    height: 100px;
+    width: 100%;
+  }
+
+  input[type="date"]::-moz-calendar-picker-indicator {
+    opacity: 0;
+    height: 100px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,48 @@
+<ng-container>
+    <app-header></app-header>
+</ng-container>
+<ng-container>
+    <section id="trip-list">
+        <div class="mb-5">
+            <app-banner-2 [title]="'saveTrip.enjoyTrip'"
+                [largeImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'"
+                [smallImage]="'assets/images-v2/pages/my-trips/car-banner-web.png'"></app-banner-2>
+            <div class="list container mt-3 mt-md-4">
+                <h2 class="fw-bold">{{'nav.myTrips'|translate}}</h2>
+                <div class="trips-cards mt-4 row">
+                    <ng-container *ngIf="isLoadingTrips; else noLoading">
+                        <app-skeleton [type]="'tripsList'"></app-skeleton>
+                    </ng-container>
+                    <ng-template #noLoading>
+                        <ng-container *ngIf="tripsList?.length>0; else noData">
+                            <ng-container *ngFor="let item of tripsList">
+                                <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+                                    <app-trip-list-card [item]="item" (deleteClicked)="deleteTrip(item)"
+                                        (onExplore)="exploreTrip(item)"></app-trip-list-card>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noData>
+                            <app-no-result-2></app-no-result-2>
+                        </ng-template>
+                    </ng-template>
+                </div>
+                <ng-container *ngIf="tripsList?.length>0;">
+                    <div>
+                        <app-shared-pagination [itemsPageNumber]="page" [itemsListTotalCount]="totalTripsCount"
+                            [itemsPerPageCount]="perPage" (pageChange)="changePage($event)"></app-shared-pagination>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </section>
+</ng-container>
+<div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+    <style *ngIf="homeShowFooter">
+        #home {
+            padding-bottom: 0 !important;
+
+        }
+    </style>
+</div>

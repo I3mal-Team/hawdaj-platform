@@ -1,0 +1,60 @@
+<div id="tour-guide-home">
+  <div class="tour-guide-second-bg">
+    <div class="container">
+
+      <ng-container *ngIf="items?.length >0">
+        <div class="items-list mt-md-4 mt-3">
+          <div class="d-none d-lg-block">
+            <div class="row g-3">
+              <ng-container *ngFor="let item of _PublicService.slicedData(items,4)">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                  <app-tour-guide-card [item]="item"></app-tour-guide-card>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <!-- PrimeNG Carousel for mobile view -->
+          <!-- <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-md-none"
+            [responsiveOptions]="responsiveOptions" [showNavigators]="false" [circular]="true" [showIndicators]="true">
+            <ng-template pTemplate="item" let-item>
+              <div class="d-flex justify-content-center">
+                <app-tour-guide-card [item]="item"></app-tour-guide-card>
+              </div>
+            </ng-template>
+          </p-carousel> -->
+          <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" class="d-lg-none" [showNavigators]="false"
+            [autoplayInterval]="4000" [circular]="true" [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+            <ng-template pTemplate="item" let-item>
+              <div class="d-flex justify-content-center"
+                [ngStyle]="{'direction': currentLanguage == 'ar' ? 'rtl' : 'ltr'}">
+                <app-tour-guide-card [item]="item"></app-tour-guide-card>
+              </div>
+            </ng-template>
+          </p-carousel>
+          <div class="d-flex flex-wrap gap-3 align-items-center justify-content-center mt-md-5 mt-3">
+            <button type="button" [attr.title]="'general.seeAll' | translate"
+              [attr.title]="'general.seeAll' | translate" class="new-button" id="unique-button-id" role="button"
+              [routerLink]="['/tour-guides']">
+              <span class="hover-underline-animation">
+                {{'general.seeAll'|translate}}
+              </span>
+            </button>
+            <button type="button" [attr.aria-label]="'tourGuide.beTourGuide' | translate"
+              [attr.title]="'tourGuide.beTourGuide' | translate" class="new-button" id="unique-button-id-join"
+              role="button-join" (click)="joinUs()">
+              <span class="hover-underline-animation">
+                <ng-container *ngIf="isLoggedIn; else elseJoinUs">
+                  {{'tourGuide.beTourGuide'|translate}}
+                </ng-container>
+                <ng-template #elseJoinUs>
+                  {{'home.join.joinUs'|translate}}
+                </ng-template>
+              </span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

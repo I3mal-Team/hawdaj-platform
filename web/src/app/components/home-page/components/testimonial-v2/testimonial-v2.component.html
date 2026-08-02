@@ -1,0 +1,29 @@
+<section class="row align-items-center justify-content-center d-none d-md-flex">
+    <div class="content  d-flex col-md-6 col-12 align-items-center justify-content-center">
+        <div class="img-container">
+            <img src="assets/images-v2/pages/Home/Testimonial-section/haw1-web.webp"
+                onerror="src='assets/images/not-found/no-img.svg'" alt="{{testimonialData[0]?.value}}" loading="lazy">
+        </div>
+        <p class="m-auto text-center">{{testimonialData[0]?.value}}</p>
+    </div>
+    <div class=" content d-flex col-md-6  col-12 align-items-center justify-content-center">
+        <div class="img-container">
+            <img src="assets/images-v2/pages/Home/Testimonial-section/haw2-web.webp"
+                onerror="src='assets/images/not-found/no-img.svg'" alt="{{testimonialData[1]?.value}}" loading="lazy">
+        </div>
+        <p class="m-auto text-center">{{testimonialData[1]?.value}}</p>
+    </div>
+</section>
+<p-carousel [value]="testimonialDataCarousel" [numVisible]="1" [numScroll]="1" class="d-md-none"
+    [autoplayInterval]="4000" [showNavigators]="false" [circular]="true" [showIndicators]="true"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="item" let-item>
+        <div class="content d-flex col-md-6 col-12 align-items-center justify-content-center">
+            <div class="img-container">
+                <img [src]="item?.image" onerror="this.src='assets/images/not-found/no-img.svg'" alt="{{item?.value}}"
+                    loading="lazy">
+            </div>
+            <p class="m-auto text-center">{{item?.value}}</p>
+        </div>
+    </ng-template>
+</p-carousel>

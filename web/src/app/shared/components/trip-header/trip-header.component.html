@@ -1,0 +1,33 @@
+<article [ngClass]="headerClasses()" role="region" [attr.aria-label]="config().title">
+  <!-- Trip Info Section -->
+  <div class="trip-header__info">
+    <h1 class="trip-header__title">{{ config().title }}</h1>
+    <time class="trip-header__date" [attr.datetime]="config().dateRange">
+      {{ config().dateRange }}
+    </time>
+  </div>
+
+  <!-- Action Buttons Section -->
+  <div class="trip-header__actions">
+    <!-- Download PDF Button -->
+    <ng-container *ngIf="config().showDownloadPdf">
+      <button type="button" class="trip-header__action-btn trip-header__action-btn--download" (click)="onDownloadPdf()"
+        [attr.aria-label]="'trip.downloadPdf' | translate">
+        <app-download-pdf-icon [size]="24" [color]="'#7939A7'" [ariaLabel]="'Download PDF icon'">
+        </app-download-pdf-icon>
+        <span class="trip-header__action-text">{{ 'trip.downloadPdf' | translate }}</span>
+      </button>
+    </ng-container>
+    <!-- Map/Save Button -->
+    <ng-container *ngIf="config().showMapButton">
+      <button type="button" class="trip-header__action-btn trip-header__action-btn--map" (click)="onMapClick()"
+        [attr.aria-label]="'trip.viewOnMap' | translate">
+        <app-map-pin-heart-icon [size]="24" [color]="'#7939A7'" [ariaLabel]="'Map pin with heart icon'">
+        </app-map-pin-heart-icon>
+        <span class="trip-header__action-text trip-header__action-text--sr-only">
+          {{ 'trip.viewOnMap' | translate }}
+        </span>
+      </button>
+    </ng-container>
+  </div>
+</article>

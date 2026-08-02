@@ -1,0 +1,9 @@
+#svg-container svg {
+  height: 250px !important;
+  margin-top: 10px;
+}
+@media (max-width: 567px) {
+  #svg-container svg {
+    height: 200px !important;
+  }
+}

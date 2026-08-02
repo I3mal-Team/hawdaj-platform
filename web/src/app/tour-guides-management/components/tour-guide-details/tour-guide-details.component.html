@@ -1,0 +1,117 @@
+<div class="mt-0">
+    <app-header></app-header>
+</div>
+<div id="tourGuideDetails">
+    <div class="container mb-4">
+        <div class="row gap-4 gap-lg-0 mx-0">
+            <div class="row gap-4 gap-lg-0 mx-0" style="margin-top:7rem">
+                <ng-container *ngIf="isLoadingTourGuideDetails; else noLoadingStoreDetails">
+                    <div class="d-none d-lg-block">
+                        <app-skeleton [type]="'place-details-v2'"></app-skeleton>
+                    </div>
+                    <div class="d-block d-lg-none">
+                        <app-skeleton [type]="'place-details-sm-v2'"></app-skeleton>
+                    </div>
+                </ng-container>
+                <ng-template #noLoadingStoreDetails>
+                    <div class="tabs col-lg-6 px-0 px-lg-3">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                            <div class="w-100">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <div class="profile-img rounded-circle">
+                                            <img [appLazyLoadImage]="tourGuideDetails?.image"
+                                                ngSrc="{{tourGuideDetails?.image }}" [alt]="tourGuideDetails?.name"
+                                                ngOptimizedImage width="50" height="50" (error)="onImageError($event)">
+                                        </div>
+                                        <h5 class="fw-bold fs-4-1 mb-0">{{tourGuideDetails?.name}}</h5>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-3 details-icons">
+                                        <app-share-social [fullUrl]="fullUrl"></app-share-social>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container>
+                            <div class="d-none d-lg-block" appLazyLoadSection>
+                                <app-tour-guide-tabs [tourGuideDetails]="tourGuideDetails" [tabsConfig]="tabs"
+                                    [isLoadingReviews]="isLoadingReviews"></app-tour-guide-tabs>
+                            </div>
+                            <div class="d-lg-none mt-3" appLazyLoadSection>
+                                <app-media-viewer [pageContent]="tourGuideDetails"
+                                    [lang]="currentLanguage"></app-media-viewer>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="col-lg-6 px-0 px-md-2">
+                        <div class="d-none d-lg-block" appLazyLoadSection>
+                            <app-media-viewer [pageContent]="tourGuideDetails"
+                                [lang]="currentLanguage"></app-media-viewer>
+                        </div>
+                        <div class="d-lg-none" appLazyLoadSection>
+                            <app-tour-guide-tabs [tourGuideDetails]="tourGuideDetails" [tabsConfig]="tabs"
+                                [isLoadingReviews]="isLoadingReviews"></app-tour-guide-tabs>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="best-tour-guides section-space">
+            <h3 class="title text-center">
+                {{'tourGuide.titleHome'|translate}}
+            </h3>
+            <ng-container *ngIf="isLoadingTourGuidesList; else noLoadingTourGuides">
+                <div class="mt-md-5 mt-3">
+                    <app-skeleton [type]="'tourGuideList'"></app-skeleton>
+                </div>
+            </ng-container>
+            <ng-template #noLoadingTourGuides>
+                <div class="d-md-block d-none">
+                    <div class="row mt-md-5 mt-3">
+                        <div *ngFor="let tourGuide of itemsList" class="col-lg-3 col-md-6">
+                            <app-tour-guide-card [item]="tourGuide"></app-tour-guide-card>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-block d-md-none">
+                    <p-carousel [value]="itemsList" [numVisible]="1" [numScroll]="1" class="d-lg-none"
+                        [showNavigators]="false" [autoplayInterval]="4000" [circular]="true" [showIndicators]="true"
+                        [responsiveOptions]="responsiveOptions">
+                        <ng-template pTemplate="item" let-item>
+                            <div class="d-flex justify-content-center"
+                                [ngStyle]="{'direction': currentLanguage == 'ar' ? 'rtl' : 'ltr'}">
+                                <app-tour-guide-card [item]="item"></app-tour-guide-card>
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            </ng-template>
+        </div>
+        <div id="rating" class="section-space row align-items-center justify-content-between">
+            <div class="col-lg-4">
+                <app-rate-item [title]="'tourGuide.yourOpinion'" [currentLoginInformation]="currentLoginInformation"
+                    [loading]="isLoadingBtn" [itemId]="tourGuideId"
+                    (feedbackSubmitted)="sendFeedbackFromTourGuide($event)"
+                    [type]="tourGuideDetails?.type ||moduleTypeRating"></app-rate-item>
+            </div>
+            <div class="rate-site col-lg-6 d-none d-lg-block h-100">
+                <app-rate-site [item]="tourGuideDetails"
+                    [isLoadingPlaceDetails]="isLoadingTourGuideDetails"></app-rate-site>
+            </div>
+        </div>
+    </div>
+    <div appLazyLoadSection>
+        <app-new-footer></app-new-footer>
+        <style>
+            #home {
+                padding-bottom: 0 !important;
+
+            }
+        </style>
+    </div>
+</div>
+<p-toast class="position-absolute" position="top-center" [showTransitionOptions]="'0'"
+    [baseZIndex]="50000000000000"></p-toast>
+<p-toast class="position-absolute" position="top-center" key="search" hideTransitionOptions
+    [baseZIndex]="5000000"></p-toast>

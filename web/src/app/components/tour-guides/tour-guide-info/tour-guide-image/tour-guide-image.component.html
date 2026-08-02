@@ -1,0 +1,65 @@
+<div id="profile">
+  <ng-container *ngIf="src; else noImg">
+    <a class="profile-img d-block shadow-sm position-relative shadow-sm">
+      <div class="position-absolute d-flex justify-content-center align-items-center overlay-img"
+        (click)="changeProfileImage()">
+        <i class="pi pi-camera" style="font-size: 1.5rem"></i>
+      </div>
+      <img [src]="src" [alt]="name" onerror="src='assets/images/not-found/no-img.svg'" loading="lazy"
+        class="w-100 h-100">
+    </a>
+  </ng-container>
+  <ng-template #noImg>
+    <a
+      class="profile-img d-flex justify-content-center align-items-center fs-4 text-white-color fw-bold text-uppercase shadow position-relative">
+      <div class="position-absolute d-flex justify-content-center align-items-center overlay-img"
+        (click)="changeProfileImage()">
+        <i class="pi pi-pencil" style="font-size: 1.5rem"></i>
+      </div>
+      {{summaryName}}
+    </a>
+  </ng-template>
+
+  <p-dialog header="Title" [(visible)]="display" [showHeader]="false" [style]="{width: '30vw'}" [modal]="true"
+    [breakpoints]="{'960px': '70vw', '640px': '90vw'}">
+    <div>
+      <div class="px-4 pt-4 d-flex flex-column gap-3 align-items-center justify-content-center text-center">
+        <div class="position-relative">
+          <div class="position-absolute d-flex justify-content-center align-items-center overlay-img" *ngIf="isLoading">
+            <i class="pi pi-spin pi-spinner" style="font-size: 1.3rem"></i>
+          </div>
+          <ng-container *ngIf="src; else noAvatar">
+            <div class="profile-avatar">
+              <img [src]="src" [alt]="name" onerror="src='assets/images/not-found/no-img.svg'" loading="lazy"
+                class="w-100 h-100">
+            </div>
+          </ng-container>
+          <ng-template #noAvatar>
+            <div
+              class="profile-avatar d-flex justify-content-center align-items-center fs-5 text-white-color fw-bold text-uppercase">
+              {{summaryName}}
+            </div>
+          </ng-template>
+        </div>
+        <div>
+          <h5 class="fs-5-1 fw-bold mb-0">{{'profile.syncedProfile'|translate}}</h5>
+          <p class="mb-0 text-muted-color fs-6-1">{{'titles.hawdaj'|translate}}</p>
+        </div>
+      </div>
+      <hr class="my-2">
+      <input id="file" #inputFile type="file" name="file" [accept]="'image/*'" (change)="handleInputChange($event)"
+        hidden />
+      <label for="file" class="px-3 py-1 d-block text-center text-new-light-color fw-bold">
+        {{'profile.uploadImg'|translate}}
+      </label>
+      <hr class="my-2">
+      <a class="px-3 py-1 d-block text-center text-danger fw-bold" (click)="removeImage()">
+        {{'profile.removeCurrentImg'|translate}}
+      </a>
+      <hr class="my-2">
+      <a class="px-3 pt-1 pb-2 d-block text-center fw-bold" (click)="cancel()">
+        {{'general.cancel'|translate}}
+      </a>
+    </div>
+  </p-dialog>
+</div>

@@ -1,0 +1,51 @@
+:host::ng-deep {
+  .wizard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .stepper {
+    margin-bottom: 1rem;
+
+    &.horizontal {
+      .p-steps {
+        flex-direction: row;
+        justify-content: space-evenly;
+      }
+    }
+
+    &.vertical {
+      .p-steps {
+        flex-direction: column;
+        justify-content: start;
+      }
+    }
+  }
+
+  .step-content {
+    flex-grow: 1;
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .stepper-footer {
+    display: flex;
+    justify-content:flex-end;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .stepper-footer {
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+#ourTripsSection {
+  background-image: url(../../../../../assets/images/home/home-trip-bg.svg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 70%;
+  .home-trips {
+    border-radius: 30px 5px;
+    background-image: url(../../../../../assets/newImages/restaurants/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 2rem;
+
+    .trip-overlay {
+      inset: 0;
+      background-color: #8b008b93;
+      z-index: 0;
+      border-radius: 30px 5px;
+    }
+
+    h2,
+    p {
+      z-index: 1;
+    }
+
+    .start-trip {
+      position: relative;
+      z-index: 1;
+      min-width: 8rem;
+      background-color: #fff;
+      color: #8b008b;
+      padding: 10px 20px;
+      border-radius: 0 30px 30px 15px;
+    }
+  }
+}
+@media (max-width: 520px) {
+  #ourTripsSection {
+    .trip-overlay {
+      border-radius: 5px !important;
+    }
+
+    .home-trips {
+      border-radius: 5px !important;
+      padding: 1rem 0.5rem !important;
+
+      h2 {
+        font-size: 1rem !important;
+      }
+
+      p {
+        font-size: 14rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .start-trip {
+        min-width: auto !important;
+        border-radius: 5px !important;
+      }
+    }
+  }
+}

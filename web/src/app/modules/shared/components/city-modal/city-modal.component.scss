@@ -1,0 +1,47 @@
+#regions {
+  max-height: 350px !important;
+  min-height: 200px !important;
+  padding-right: 10px;
+  overflow: auto;
+  &::-webkit-scrollbar-thumb {
+    background: var(--bg-main-color);
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    max-height: 80% !important;
+  }
+}
+.search-input {
+  background-color: transparent !important;
+  border: 1px solid #d1d1d1 !important;
+  height: 3.1rem;
+}
+.p-input-icon-left > .p-inputtext {
+  border-radius: 8px !important;
+  height: 3.1rem !important;
+}
+.item {
+  background: #84548e0a;
+  border-radius: 12px;
+  padding: 10px 20px;
+  min-height: 3.2rem;
+}
+.price {
+  color: var(--light-new-color);
+}
+.loading-more {
+  background: linear-gradient(
+    331deg,
+    rgba(215, 230, 240, 0.95) 0%,
+    rgba(215, 230, 240, 0) 100%
+  );
+  backdrop-filter: blur(11px);
+  border-radius: 5px;
+}
+.check {
+  width: 20px;
+}
+.active {
+  background-color: rgb(245 245 245);
+}

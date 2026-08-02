@@ -1,0 +1,53 @@
+.contact-us {
+  .area-control {
+    height: 12rem !important;
+  }
+  .overlay-search {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #11111151;
+    z-index: 2;
+    border-radius: 20px;
+  }
+
+  .spinner-grow {
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--bg-main-color);
+  }
+  .contact-form {
+    width: 70%;
+
+    @media (max-width: 991px) {
+      width: 90%;
+    }
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  form {
+    .form-control {
+      background-color: #eee !important;
+      border-radius: 5px;
+    }
+
+    textarea {
+      // border: 0 !important;
+      background-color: #eee !important;
+      height: 150px;
+      width: 100%;
+      border-radius: 5px;
+      resize: none;
+      padding: 10px;
+    }
+  }
+
+  .form-btn {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}

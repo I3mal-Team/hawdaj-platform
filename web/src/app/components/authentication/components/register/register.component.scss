@@ -1,0 +1,45 @@
+// Base styles and variables
+$border-modal-radius: 10px; // example value, adjust as needed
+$color-background: #84548e1f;
+$color-border: #6d6d6d61;
+$color-button-bg: #d9d9d9;
+$color-button-text: #6d6d6d;
+
+.bg-form {
+  background-color: $color-background;
+  width: inherit;
+  border-radius: $border-modal-radius 0 0 $border-modal-radius;
+
+}
+
+.form-content {
+  max-height: 80vh;
+  // max-height: calc(100vh - 11rem) !important;
+  padding: 0.75rem;
+  overflow: auto;
+}
+@media (max-width: 567px) {
+  .form-content {
+    max-height: 58vh;
+  }
+}
+.form-logo {
+  width: 5rem !important;
+}
+
+.title {
+  z-index: 3;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+}
+
+.close {
+  width: 30px;
+  height: 30px;
+  background-color: $color-button-bg;
+  color: $color-button-text;
+}

@@ -1,0 +1,19 @@
+#trip-list {
+    overflow: hidden;
+    background-image: url("../../../../../assets/images-v2/pages/save-trip/banner/plane-bg.svg");
+    background-repeat: no-repeat;
+    background-position-y: 500px;
+    @media (max-width: 1024px) {
+        background-image: none;
+    }
+    h2 {
+        font-size: 3.5rem;
+        color: #101828;
+        @media (max-width: 1024px) {
+            font-size: 2rem;
+        }
+        @media (max-width: 767px) {
+            text-align: center;
+        }
+    }
+}

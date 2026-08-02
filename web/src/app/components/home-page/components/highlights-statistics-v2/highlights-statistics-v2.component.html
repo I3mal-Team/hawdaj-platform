@@ -1,0 +1,31 @@
+<h4 class="section-title text-center mb-lg-5 mb-md-3">{{'places.findOut'|translate}}</h4>
+<section id="highlights-statistics" class="mt-5" [class.ar-content]="currentLanguage=='ar'">
+  <div
+    class="row container justify-content-md-start h-100 position-relative justify-content-center justify-content-center m-auto">
+    <ng-container *ngFor="let item of statistics;let i=index">
+      <div class="statistic col-md-4 col-sm-6 d-flex align-items-center justify-content-center">
+        <div class="statistic-item d-flex flex-column justify-content-center align-items-center gap-2 my-1"
+          [class.statistic-bg]="i<statistics?.length-1">
+          <h4 class="gradient-text d-flex mb-0">
+            <span class="statistic-item-title d-flex flex-column gap-2 align-items-center gap-1">
+              <span class="gradient-fast-level">
+                {{item?.count}}
+              </span>
+              <span class="gradient-fast-text">
+                <img src="assets/images/ad.svg" alt="img" onerror="src='assets/images/not-found/no-img.svg'">
+                {{item?.title}}
+              </span>
+            </span>
+          </h4>
+          <span class="item-value">
+            {{item?.content}}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="img">
+    <img src="assets/images-v2/pages/Home/Highlights-statistics-section/tooltip/salwa.jpg" alt="">
+  </div>
+  <!-- <div class="curve"></div> -->
+</section>

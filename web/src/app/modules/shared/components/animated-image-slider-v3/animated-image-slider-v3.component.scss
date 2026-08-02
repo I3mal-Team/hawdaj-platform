@@ -1,0 +1,159 @@
+.overlay {
+  inset: 0;
+  background-color: #11111193;
+  z-index: 1;
+}
+.slide-img {
+  object-fit: fill;
+  inset: 0;
+  height: 100vh;
+}
+.carsoul-container {
+  .thumbnail {
+    z-index: 2;
+    .item-content {
+      width: 260px;
+      height: 340px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 5px;
+      transition: transform 0.3s ease;
+      border-radius: 10px;
+      overflow: hidden;
+      &.active {
+        width: 320px;
+        height: 500px;
+        box-shadow: #ffffff 0px 0px 9px;
+      }
+      img {
+        object-fit: cover;
+      }
+      .content {
+        bottom: 7px;
+        left: 7px;
+        right: 7px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 4px;
+        border-radius: 5px;
+        .title {
+          font-size: 0.8rem;
+        }
+        .title,
+        .description {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 12px;
+        }
+        .title {
+          font-weight: 500;
+          margin-bottom: 2px;
+        }
+        .description {
+          font-weight: 300;
+        }
+      }
+    }
+    .map-icon-image {
+      width: 40px;
+      height: 40px;
+      background-color: #0026ff3b;
+      border-radius: 3px;
+      z-index: 3;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+    }
+  }
+}
+
+/* Time progress bar style moved to the top for better visibility */
+.time {
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+  height: 3px;
+  background-color: #af00af;
+  animation: runningTime 8s linear forwards;
+
+  @keyframes runningTime {
+    from {
+      width: 100%;
+    }
+
+    to {
+      width: 0;
+    }
+  }
+}
+.content-info {
+  top: 2.5rem;
+  left: 350px;
+  width: 70vw;
+  .desc2 {
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    height: 3rem;
+    overflow: hidden;
+  }
+}
+.carsoul-title {
+  top: 10%;
+}
+.item-content:hover {
+  .carsoul-title {
+    display: none;
+  }
+
+  .slider-content,
+  .address-icon,
+  .overlay {
+    display: block !important;
+  }
+}
+.slider-content {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+.overlay {
+  inset: 0;
+  background-color: #000000a1;
+  border-radius: 10px;
+}
+.address-icon {
+  z-index: 2;
+}
+
+.arrow {
+  background-color: var(--bg-main-color) !important;
+  color: var(--text-white-color) !important;
+  border-radius: 7px;
+  position: absolute;
+  bottom: 7rem;
+  z-index: 888;
+  width: 40px;
+  height: 50px;
+  font-size: 20px;
+  border: 0;
+}
+#next {
+  right: 0;
+}
+.carsoul-container:dir(rtl) {
+  .content-info {
+    right: 350px !important;
+    left: inherit !important;
+  }
+  #next {
+    left: 0 !important;
+    right: inherit !important;
+  }
+}

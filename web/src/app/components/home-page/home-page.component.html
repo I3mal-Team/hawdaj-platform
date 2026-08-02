@@ -1,0 +1,417 @@
+<app-header></app-header>
+<div id="home" class="overflow-hidden" [class.ar-content]="currentLanguage=='ar'">
+  <!-- Start New Hero Section -->
+  <app-home-page-hero-section [startTrip]="startTrip"
+    [isLoadingHomeData]="isLoadingHomeData"></app-home-page-hero-section>
+  <!-- End New Hero Section -->
+
+  <!-- Start Quick Global Search -->
+  <div appLazyLoadSection (sectionInView)="globalSearchSectionInView = true" class="mt-4">
+    <div *ngIf="globalSearchSectionInView" class="global-search" id="global-search" class="pt-4">
+      <div class="container">
+        <ng-container *ngIf="isLoadingHomeData; else noLoadingSearch">
+          <app-skeleton [type]="'global-search'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingSearch>
+          <div class="global-search-container">
+            <div class="row align-items-end p-4">
+              <div class="col-lg-9 col-md-7">
+                <h2 class="fs-4 mb-4">
+                  {{'home.searchPlace'|translate}}
+                </h2>
+                <!-- <quick-global-search></quick-global-search> -->
+                <app-quick-global-search-v2></app-quick-global-search-v2>
+              </div>
+              <div class="col-lg-3 col-md-5 mt-md-0 mt-3">
+                <div class="row gap-2 justify-content-center mt-3">
+                  <button
+                    class="btn col-12 bg-main-color text-capitalize d-flex align-items-center justify-content-center gap-2 fs-5-1"
+                    (click)="explore()">
+                    <img src="assets/images-v2/pages/Home/quick-search/radar.svg" alt="radar">
+                    {{'general.interactiveMap'|translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <!-- End Quick Global Search -->
+
+  <!-- Start Download Apps Section -->
+  <ng-container *ngIf="!isLoadingHomeData">
+    <div appLazyLoadSection (sectionInView)="isDownlaodAppsInView = true" class="mt-section">
+      <app-home-download-apps-section></app-home-download-apps-section>
+    </div>
+  </ng-container>
+  <!-- End Download Apps Section -->
+
+  <!-- Start Top Destination -->
+  <div appLazyLoadSection (sectionInView)="destinationsParent = true">
+    <div #joinSection id="destinations-join" class="destinations-join-bg home-section" *ngIf="destinationsParent">
+      <!-- Start Top Destination -->
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingDestinationsSlider">
+        <app-skeleton [type]="'destinations-slider'"></app-skeleton>
+        <div class="" style="margin-top: 100px;">
+          <app-skeleton [type]="'topDestination'"></app-skeleton>
+        </div>
+      </ng-container>
+      <ng-template #noLoadingDestinationsSlider>
+        <section appLazyLoadSection (sectionInView)="destinationsSliderSectionInView = true" id="destinations"
+          class="position-relative">
+          <div *ngIf="destinationsSliderSectionInView">
+            <div class="d-flex gap-2 align-items-center justify-content-center">
+              <h2 class="section-title text-center fw-bold vector-bg fs-2">
+                {{'home.topDestination'|translate}}
+              </h2>
+            </div>
+            <p class="discover-text text-center fw-500 w-85 m-auto fs-6">
+              {{'home.discoverAll'|translate}}
+            </p>
+            <div>
+              <app-app-animated-image-slider-v5
+                [items]="homeData?.topVisitedPlaces?.items"></app-app-animated-image-slider-v5>
+            </div>
+          </div>
+        </section>
+      </ng-template>
+      <!-- End Top Destination -->
+
+      <!-- Start Popular Apps -->
+      <div appLazyLoadSection (sectionInView)="popularSectionInView = true" class="mt-5 home-section" id="popular-apps">
+        <ng-container *ngIf="popularSectionInView">
+          <ng-container *ngIf="isLoadingHomeData; else noLoadingPopularApps">
+            <app-skeleton [type]="'homePopularApps'"></app-skeleton>
+          </ng-container>
+          <ng-template #noLoadingPopularApps>
+            <ng-container *ngIf="homeData?.applications?.items?.length>0; else noAppData">
+              <div>
+                <div>
+                  <app-home-page-applications-v2 [items]="homeData?.applications?.items"
+                    [autoPlay]="true"></app-home-page-applications-v2>
+                </div>
+              </div>
+              <!-- <app-apps-home-section [items]="homeData?.applications?.items"></app-apps-home-section> -->
+            </ng-container>
+            <ng-template #noAppData>
+              <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/not-found/no-img.svg"
+                class="w-100 no-data-img" alt="no-img">
+            </ng-template>
+          </ng-template>
+        </ng-container>
+      </div>
+      <!-- End Popular Apps -->
+      <!-- Start Join Us -->
+      <section #joinSection appLazyLoadSection (sectionInView)="joinUsSectionInView = true" id="join"
+        class="mt-section">
+        <app-join-us-home-section></app-join-us-home-section>
+      </section>
+      <!-- End Join Us -->
+    </div>
+  </div>
+  <!-- End Top Destination -->
+
+  <!-- Start Trips Section -->
+  <div appLazyLoadSection (sectionInView)="homeTripSectionInView = true" class="mt-section"
+    *ngIf="homeData?.swalefs?.items">
+    <app-swalef-section [items]="homeData?.swalefs?.items"></app-swalef-section>
+  </div>
+  <!-- End Trips Section -->
+
+  <!-- Start Events Section -->
+  <section appLazyLoadSection (sectionInView)="eventSectionInView = true" class="saudi-section mt-section home-section"
+    id="events-content">
+    <div *ngIf="eventSectionInView">
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingEvents">
+        <app-skeleton [type]="'home-events'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingEvents>
+        <!-- Start New Events Home Section -->
+        <ng-container *ngIf="homeData?.applications?.items?.length>0; else noAppData">
+          <!-- <app-events-home-section [items]="homeData?.topEvents?.items"></app-events-home-section> -->
+          <app-events-home-section-v2 [items]="homeData?.topEvents?.items"
+            [autoPlay]="true"></app-events-home-section-v2>
+        </ng-container>
+        <ng-template #noAppData>
+          <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/not-found/no-img.svg" class="w-100 no-data-img"
+            alt="no-img">
+        </ng-template>
+        <!-- End New Events Home Section -->
+
+        <!-- Start Home Events -->
+        <div class="pb-md-0 pb-2 d-none">
+          <home-events [events]="homeData?.topEvents?.items"></home-events>
+        </div>
+        <!-- End Home Events -->
+      </ng-template>
+    </div>
+  </section>
+  <!-- End Events Section -->
+
+  <!-- Start Our Trip -->
+  <div appLazyLoadSection (sectionInView)="homeTripSectionInView = true" class="mt-section home-section">
+    <div *ngIf="homeTripSectionInView">
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingTrip">
+        <app-skeleton [type]="'home-trip'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingTrip>
+        <!-- <app-home-trip></app-home-trip> -->
+        <app-home-trip-v2></app-home-trip-v2>
+      </ng-template>
+    </div>
+  </div>
+  <!-- End Our Trip -->
+
+  <!-- Start Tour Guide -->
+  <div appLazyLoadSection (sectionInView)="tourGuideSectionInView = true" class="home-section mt-section"
+    id="tour-guide">
+    <ng-container *ngIf="tourGuideSectionInView">
+      <div class="d-flex flex-column flex-wrap gap-1 align-items-center justify-content-center">
+        <h4 class="title section-title text-center mb-0">
+          {{ 'tourGuide.titleHome' | translate }}
+        </h4>
+        <!-- <div class="col-lg-6 col-md-8 col-sm-11 col-12 sub-title text-center lh-base mt-1">
+          {{ 'tourGuide.subTitleHome' | translate }}
+        </div> -->
+
+      </div>
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingPopularApps">
+        <app-skeleton [type]="'tourGuide'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingPopularApps>
+        <ng-container *ngIf="homeData?.guides?.items?.length>0; else noAppData">
+          <app-tour-guide-home [items]="homeData?.guides?.items"></app-tour-guide-home>
+        </ng-container>
+        <ng-template #noAppData>
+          <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/not-found/no-img.svg" class="w-100 no-data-img"
+            alt="no-img">
+        </ng-template>
+      </ng-template>
+    </ng-container>
+  </div>
+  <!-- End Tour Guide -->
+  <!-- Start Stores Section -->
+  <section appLazyLoadSection (sectionInView)="homeStoresSectionInView = true"
+    class="position-relative mt-section m-auto d-flex justify-content-center" id="stores">
+    <div *ngIf="homeStoresSectionInView">
+      <div class="container row m-auto">
+        <div class="col-lg-6 col-12 d-flex align-items-center flex-column justify-content-center text-center">
+          <h4 class="section-title fw-bold text-capitalize">
+            {{"titles.stores"|translate}}
+          </h4>
+          <p class="fs-6 mb-2 w-100 fw-500 lh-lg">
+            {{'homePage.onLineShopping'|translate}}
+          </p>
+        </div>
+
+        <div class=" col-lg-6 col-12 mt-4">
+          <ng-container *ngIf="isLoadingHomeData; else noLoadingStore">
+            <!-- <app-skeleton [type]="'homePopularApps'"></app-skeleton> -->
+            <app-skeleton [type]="'home-services'"></app-skeleton>
+
+          </ng-container>
+          <ng-template #noLoadingStore>
+            <ng-container *ngIf="homeData?.topVisitedStores?.items?.length>0; else noStoreData">
+              <app-stores-v2 [items]="homeData?.topVisitedStores?.items"></app-stores-v2>
+            </ng-container>
+            <ng-template #noStoreData>
+              <img class="w-100 no-app-img" NgOptimizedImage appLazyLoad
+                dataSrc="'assets/newImages/not-found/no-img.svg'" alt="imageNoItem">
+            </ng-template>
+          </ng-template>
+        </div>
+        <!-- End Stores Section -->
+      </div>
+    </div>
+  </section>
+  <!-- Start Services -->
+  <section appLazyLoadSection (sectionInView)="homeServicesSectionInView = true" class="mt-section home-section"
+    id="services">
+    <div *ngIf="homeServicesSectionInView">
+      <div class="container">
+        <div class="row g-0">
+          <div class="col-12 w-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex gap-2 align-items-center">
+              <div>
+                <h2 class="fw-bold section-title vector-bg w-content w-100 text-center">
+                  {{'home.hawdaj'|translate}}
+                </h2>
+                <p class="text-muted-color w-md-100 mt-3 fs-5 w-100 text-center">
+                  {{'home.hawdajPlatform'|translate}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="isLoadingHomeData; else noLoadingServices">
+          <app-skeleton [type]="'servies'"></app-skeleton>
+        </ng-container>
+        <ng-template #noLoadingServices>
+
+          <div>
+            <div class="row mt-md-3 mt-4 gx-lg-5 align-items-center justify-content-center">
+              <div class=" col-11 m-lg-0 m-auto order-lg-2 order-1">
+                <ng-container *ngIf="isLoadingHomeData; else noLoadTestimonial">
+                  <app-skeleton [type]="'testimonial'"></app-skeleton>
+                </ng-container>
+                <ng-template #noLoadTestimonial>
+                  <div>
+                    <app-testimonial-v2 [testimonialData]="homeData?.services"></app-testimonial-v2>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+  <!-- End Services -->
+
+  <!-- Start Restaurants  -->
+  <div appLazyLoadSection (sectionInView)="homeZadStoreParenSectionInView = true">
+    <div class="zad-store-bg home-section" id="zad-store" *ngIf="homeZadStoreParenSectionInView">
+      <!-- Start Zad Section -->
+      <section appLazyLoadSection (sectionInView)="homeZadSectionInView = true" id="zad"
+        class="mt-section position-relative">
+        <div *ngIf="homeZadSectionInView">
+          <div>
+            <div class="row justify-content-center mb-4">
+              <div class=" col-lg-7 col-md-10 col-sm-11 mb-3">
+                <div class="d-flex gap-2 align-items-center justify-content-center">
+                  <h2 class="section-title text-center vector-bg ">
+                    {{'homePage.restaurants'|translate}}
+                  </h2>
+                  <!-- <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/icons/restaurant.png" width="27px"
+                      alt="planeIcon"> -->
+                </div>
+                <p class="discover-text text-center  m-auto">
+                  {{'homePage.restaurantsDesc'|translate}}
+                </p>
+              </div>
+            </div>
+            <ng-container *ngIf="isLoadingHomeData; else noLoadingZads">
+              <app-skeleton [type]="'destinations-slider'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingZads>
+
+            </ng-template>
+            <div class="mt-2">
+              <ng-container *ngIf="isLoadingHomeData; else noLoadingRestaurant">
+                <app-skeleton [type]="'homeRestaurants'"></app-skeleton>
+              </ng-container>
+              <ng-template #noLoadingRestaurant>
+                <!-- <div *appResponsiveIfNotStandalone="'desktop'" class="d-md-block d-none"> -->
+                <!-- <app-animated-image-slider-v4 [autoPlay]="true" [enableTimeProgress]="false" [autoPlayInterval]="8000"
+                      [items]="homeData?.zads?.items"></app-animated-image-slider-v4> -->
+                <app-home-restaurants-v2 [items]="homeData?.zads?.items" [autoPlay]="true"></app-home-restaurants-v2>
+                <!-- </div> -->
+                <!-- <div *appResponsiveIfNotStandalone="'mobile'" class="d-xl-none d-block">
+                    <app-home-restaurants [restaurants]="homeData?.zads?.items"></app-home-restaurants>
+                  </div> -->
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Zad Section -->
+
+      <!-- Start Add Img Between Zad And Stores-->
+      <!-- <div appLazyLoadSection (sectionInView)="homeElezbaSectionInView = true">
+          <ng-container *ngIf="homeElezbaSectionInView">
+            <ng-container *ngIf="isLoadingHomeData; else noLoadingImg">
+              <app-skeleton [type]="'store-img'"></app-skeleton>
+            </ng-container>
+            <ng-template #noLoadingImg>
+              <div class="row justify-content-center">
+                <div class="col-xl-2 col-lg-3 col-md-5 col-sm-9 col-9">
+                  <div #imageElezba>
+                    <img NgOptimizedImage appLazyLoad dataSrc="assets/newImages/homepage/elezba.png"
+                      class="w-100 scaleX-rtl" width="1152" height="250" [alt]="'imageElezba'">
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div> -->
+    </div>
+  </div>
+  <!-- End Restaurants  -->
+  <!-- Start Earth -->
+  <section appLazyLoadSection (sectionInView)="homeVisitorsSectionInView = true" id="visitors-section"
+    class="mt-section home-section">
+    <div *ngIf="homeVisitorsSectionInView">
+
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingEarth">
+        <app-skeleton [type]="'home-earth'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingEarth>
+        <div>
+          <!-- <app-earth [items]="homeData?.globalMapData"></app-earth> -->
+          <app-earth-v2 [items]="homeData?.globalMapData"></app-earth-v2>
+        </div>
+      </ng-template>
+    </div>
+
+  </section>
+  <!-- End Earth -->
+
+  <!-- Start Highlights Statistics -->
+  <div class="d-xl-block d-md-block">
+    <ng-container *ngIf="isLoadingHomeData; else noLoadingStatistic">
+      <app-skeleton [type]="'statistics'"></app-skeleton>
+    </ng-container>
+    <ng-template #noLoadingStatistic>
+      <div appLazyLoadSection (sectionInView)="statisticsSectionInView = true">
+        <div *ngIf="statisticsSectionInView" class="mt-section statisticsSection">
+          <!-- <highlights-statistics></highlights-statistics> -->
+          <app-highlights-statistics-v2></app-highlights-statistics-v2>
+
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <!-- End Highlights Statistics -->
+
+  <!-- Start Subscribe -->
+  <div appLazyLoadSection (sectionInView)="homeSubscribeSectionInView = true" class="mt-md-5 mt-3">
+    <div *ngIf="homeSubscribeSectionInView">
+      <ng-container *ngIf="isLoadingHomeData; else noLoadingSubscribe">
+        <app-skeleton [type]="'subscribe'"></app-skeleton>
+      </ng-container>
+      <ng-template #noLoadingSubscribe>
+        <!-- <app-subscribe></app-subscribe> -->
+        <app-subscribe-v2></app-subscribe-v2>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-footer *ngIf="homeShowFooter"></app-footer>
+    <style *ngIf="homeShowFooter">
+      #home {
+        padding-bottom: 0 !important;
+      }
+    </style>
+  </div> -->
+
+  <div appLazyLoadSection (sectionInView)="homeShowFooter = true">
+    <app-new-footer *ngIf="homeShowFooter"></app-new-footer>
+
+    <style *ngIf="homeShowFooter">
+      #home {
+        padding-bottom: 0 !important;
+      }
+    </style>
+  </div>
+</div>
+
+<app-map *ngIf="showMap"></app-map>
+<app-scroll-top></app-scroll-top>
+<app-overlay-loading></app-overlay-loading>
+
+<p-toast position="top-center" [showTransitionOptions]="'0'" [baseZIndex]="50000000000000"></p-toast>
+<p-toast position="top-center" key="search" hideTransitionOptions [baseZIndex]="5000000"></p-toast>

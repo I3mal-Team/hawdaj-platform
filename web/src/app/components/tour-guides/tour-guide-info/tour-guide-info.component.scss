@@ -1,0 +1,201 @@
+#tour-guide-info {
+  .content-form-data {
+    background-color: var(--bg-white-color);
+    border-radius: 15px;
+    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1019607843);
+    padding: 1rem;
+
+    .basic-data {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+  }
+
+  .name {
+    color: #312e2e;
+  }
+
+  .social {
+    .social-icons {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+
+      a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        line-height: 40px;
+        text-align: center;
+        font-size: 24px;
+        color: #fff;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      .facebook {
+        background-color: #3b5998;
+      }
+
+      .twitter {
+        background-color: #000000;
+      }
+
+      .linkedin {
+        background-color: #0077b5;
+      }
+
+      .instagram {
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+      }
+
+      .personal-website {
+        background-color: #6c757d;
+
+        i {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .shortcut-items {
+    width: 80px;
+
+    .verified-box {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+    }
+  }
+
+  .data-fields {
+    background-color: var(--bg-white-color);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1019607843);
+
+    @media only screen and (max-width: 600px) {
+        padding: 1rem 0 !important;
+    }
+
+    #profile-tabs {
+      .nav-tabs {
+        border-bottom: 1px solid #dee2e6c4;
+
+        .nav-link {
+          border: none;
+          color: #121212b9;
+          font-weight: bold;
+          padding: 0.8rem 1rem;
+          font-size: 1rem;
+
+          &:hover {
+            border-color: transparent;
+          }
+        }
+
+        .nav-link.active {
+          border-bottom: 3px solid var(--light-new-color);
+          color: var(--light-new-color);
+          background-color: transparent;
+          font-size: 1.1rem;
+        }
+      }
+    }
+
+    .textarea {
+      height: auto !important;
+    }
+
+  }
+}
+
+:host::ng-deep {
+  .data-fields {
+    .prevent-click {
+      pointer-events: none;
+      background-color: #ededed !important;
+
+      .p-dropdown {
+        background-color: #ededed !important;
+      }
+
+      border-radius: var(--border-input-radius);
+    }
+
+    .p-inputtext,
+    .p-dropdown,
+    .p-multiselect,
+    .p-inputnumber,
+    .p-password,
+    .form-control,
+    .p-calendar-w-btn .p-inputtext {
+      background-color: #fafafa;
+      border-color: #eee;
+      height: 3.5rem !important;
+      border-radius: var(--border-input-radius);
+
+      // Adding placeholder styles
+      &::placeholder {
+        color: gray !important;
+        opacity: 1;
+      }
+    }
+
+    .p-dropdown {
+      margin: 0;
+      overflow: hidden;
+
+      .p-inputtext {
+        border-radius: 0;
+      }
+
+      .p-dropdown-trigger {
+        background-color: #fafafa;
+        border-radius: 0;
+      }
+    }
+
+    .input-group {
+
+      .p-icon,
+      .p-datepicker-trigger .p-icon {
+        fill: var(--light-new-color) !important;
+        background-color: #fafafa;
+      }
+
+      .edit-input {
+        width: 2.4rem;
+        min-width: 2.4rem;
+        height: 2.4rem;
+        border-radius: 10px;
+        background-color: #eaeaea;
+      }
+    }
+
+    &:dir(rtl) {
+
+      .p-carousel-prev,
+      .p-carousel-next {
+        transform: scaleX(-1);
+      }
+    }
+  }
+}
+
+label {
+  font-weight: 500;
+}

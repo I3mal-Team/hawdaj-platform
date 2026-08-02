@@ -1,0 +1,11 @@
+.section-space {
+    margin-top: 7rem !important;
+    @media (max-width: 1024px) {
+        margin-top: 2rem !important;
+    }
+}
+img {
+    @media (max-width: 767px) {
+        width: 210px;
+    }
+}

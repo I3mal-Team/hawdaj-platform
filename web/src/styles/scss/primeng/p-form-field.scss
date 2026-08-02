@@ -1,0 +1,265 @@
+$primary-trip-datePicker: #7939a7;
+$primary-trip-datePicker-opacity: #7939a7;
+
+.p-inputtext,
+.p-multiselect,
+p-inputnumber,
+.p-inputnumber,
+.p-password {
+  width: 100% !important;
+}
+.p-dropdown {
+  // width: 100% ;
+}
+
+.p-inputmask {
+  border-radius: 0 var(--border-input-radius) var(--border-input-radius) 0 !important;
+  width: calc(100%) !important;
+  border-left: 0 !important;
+}
+
+// p-inputmask.ng-dirty.ng-valid > .p-inputtext,
+// .p-inputtext:enabled:focus {
+//   border: 1px solid var(--bg-input-color) !important;
+//   border-left: 0 !important;
+// }
+.p-inputtext:enabled:focus,
+.p-inputtext:enabled:hover {
+  border: 1px solid #ced4da;
+}
+p-inputmask.ng-dirty.ng-valid.is-valid > .p-inputtext {
+  border: 1px solid #198754 !important;
+}
+
+p-inputmask.ng-dirty.ng-valid.is-invalid > .p-inputtext {
+  border: 1px solid #dc3545 !important;
+}
+.p-input-icon-right > i:last-of-type {
+  z-index: 3 !important;
+}
+// .p-mask {
+//   .p-inputtext:enabled:focus,
+//   .p-inputtext:enabled:hover {
+//     border: transparent !important;
+//   }
+// }
+.p-inputmask:enabled:focus,
+.p-inputmask:enabled:hover {
+  border: transparent !important;
+}
+.p-mask.border-red {
+  .p-inputmask .p-inputtext,
+  .p-inputnumber-input,
+  .p-password > .p-inputtext {
+    border: 0 !important;
+  }
+}
+p-inputnumber.ng-dirty.ng-invalid > .p-inputnumber > .p-inputtext {
+  border: 0 !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  // border-color: var(--bg-main-color) !important;
+  // background: var(--bg-main-color) !important;
+}
+
+.p-radiobutton .p-radiobutton-box {
+  border-color: var(--bg-main-color) !important;
+  // background: rgba(140, 149, 163, 0.19) !important;
+}
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+  width: 14px;
+  height: 14px;
+  background-color: var(--bg-main-color) !important;
+}
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  background-color: var(--bg-white-color) !important;
+  box-shadow: none !important;
+}
+
+.form-check-input {
+  min-width: 1.25em !important;
+  min-height: 1.25rem !important;
+}
+.form-check-input:checked[type="radio"] {
+  // background-image: url(../../../assets/image/icons/check.svg) !important;
+}
+
+.form-radio-input {
+  transform: scale(1.5) !important;
+  accent-color: rgba(140, 149, 163, 0.19) !important;
+  border: none !important;
+}
+input[type="radio"]:checked {
+  accent-color: var(--bg-main-color) !important;
+}
+
+.p-calendar {
+  width: 100% !important;
+  &.p-button,
+  &.p-button:hover {
+    background-color: var(--bg-input-color);
+    border-color: var(--border-input-color);
+    border-left: 0;
+    color: #6c757d;
+  }
+}
+.p-calendar-w-btn {
+  &.p-inputtext {
+    &:enabled:hover,
+    &:enabled:focus {
+      border-color: var(--bg-input-color) !important;
+    }
+  }
+  &.p-datepicker-trigger {
+    border-radius: 0 10px 10px 0 !important;
+    .pi-calendar {
+      font-size: 1.2rem !important;
+    }
+  }
+}
+.p-dropdown-panel {
+  padding-bottom: 0.05rem;
+  .p-dropdown-items-wrapper {
+    margin: 10px !important;
+  }
+}
+.dropdown-new-panel {
+  margin-top: 1.5rem !important;
+  border-radius: 20px !important;
+  padding-bottom: 0.05rem;
+  .location-dot {
+    min-width: 32px !important;
+    height: 32px !important;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+  }
+  .p-scroller {
+    margin: 7px 0 !important;
+  }
+  .p-dropdown-items-wrapper {
+    margin: 10px !important;
+  }
+  .p-scroller,
+  .p-dropdown-items-wrapper {
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      width: 1rem !important;
+      background-color: #cccccc5f !important;
+    }
+  }
+  .p-dropdown-header,
+  .p-multiselect-header {
+    background-color: transparent !important;
+    padding-bottom: 0px !important;
+    // display: none;
+    .p-dropdown-filter,
+    .p-multiselect-filter {
+      border-radius: 50px !important;
+      border: 1px solid #eae9e9;
+      background-color: #c8c8c854 !important;
+      height: 2.7rem !important;
+    }
+  }
+  .p-dropdown-items .p-dropdown-item,
+  .p-multiselect-items .p-multiselect-item {
+    padding: 0.65rem !important;
+  }
+  .p-multiselect-items-wrapper {
+    margin: 10px !important;
+  }
+  .p-multiselect-close {
+    display: none;
+  }
+}
+
+#date-range {
+  .p-datepicker table td > span.p-highlight {
+    background-color: $primary-trip-datePicker !important;
+    color: #fff !important;
+  }
+  .p-calendar .p-datepicker {
+    background-color: transparent;
+    border: 0;
+  }
+  .p-datepicker .p-datepicker-calendar-container,
+  .p-monthpicker,
+  .p-yearpicker {
+    background-color: #ffffffb2 !important;
+    // margin: 0 15px;
+    margin-top: 10px;
+    padding: 10px;
+    height: 287px;
+    border-radius: 5px;
+    @media (max-width: 320px) {
+      margin-right: -17px;
+    }
+  }
+  .p-datepicker .p-datepicker-header {
+    background-color: transparent;
+    border: 0 !important;
+    .p-datepicker-title {
+      display: flex;
+      gap: 15px;
+
+      .p-link {
+        width: 8rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        height: 2.5rem;
+        border-radius: 5px;
+        background-color: $primary-trip-datePicker-opacity;
+        border-color: $primary-trip-datePicker-opacity;
+        justify-content: center;
+        color: white !important;
+        &:hover {
+          color: white !important;
+        }
+      }
+    }
+  }
+  .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover,
+  .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover {
+    // color: $primary-trip-datePicker !important;
+    color: white !important;
+  }
+  .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):not(.p-highlight):hover {
+    background-color: $primary-trip-datePicker-opacity !important;
+  }
+  .p-datepicker table td {
+    padding: 0.2rem;
+  }
+  .p-datepicker table th {
+    padding: 0.2rem;
+    text-align: center !important;
+    font-size: 13px;
+    @media (max-width: 380px) {
+      font-size: 12px;
+    }
+    @media (max-width: 360px) {
+      font-size: 11px;
+    }
+  }
+  .p-datepicker table td > span {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+  .p-datepicker .p-yearpicker .p-yearpicker-year:hover,
+  .p-datepicker .p-yearpicker .p-yearpicker-year:hover {
+    background-color: $primary-trip-datePicker-opacity;
+  }
+  .p-datepicker .p-yearpicker .p-yearpicker-year.p-highlight,
+  .p-datepicker .p-monthpicker .p-monthpicker-month.p-highlight {
+    background-color: $primary-trip-datePicker-opacity;
+    color: $primary-trip-datePicker !important;
+  }
+  .p-datepicker-weekheader,
+  .p-datepicker-weeknumber {
+    display: none !important;
+  }
+}

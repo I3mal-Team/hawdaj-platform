@@ -1,0 +1,98 @@
+name: Deploy to Staging Server
+
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # Using the generic secrets (since both apps are on the same new server)
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            set -e # Stop script on any error
+
+            # 1. Define the new directory path for Staging
+            PROJECT_PATH="/var/www/hawdaj_project/hawdaj-frontend-staging"
+
+            echo "🚀 Starting deployment to: $PROJECT_PATH"
+
+            # Ensure the directory exists
+            if [ ! -d "$PROJECT_PATH" ]; then
+              echo "❌ Directory not found! Please check if rsync finished correctly."
+              exit 1
+            fi
+
+            cd "$PROJECT_PATH"
+
+            # Setup Node.js environment variables
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PATH=$PATH:/usr/local/bin
+
+            # 2. Fix Git Permissions
+            git config --global --add safe.directory "$PROJECT_PATH"
+
+            # 3. Pull latest code
+            echo "📥 Pulling latest code..."
+            git stash
+            git pull origin staging
+            git stash pop || echo "⚠️ No stash to pop"
+
+            # 4. Install dependencies
+            echo "📦 Installing dependencies..."
+            npm install
+
+            # 5. Safe Build Strategy
+            echo "🏗️ Starting Safe Build Process..."
+
+            # A) Backup current build
+            if [ -d "dist" ]; then
+                echo "Backing up current dist folder..."
+                rm -rf dist_backup
+                mv dist dist_backup
+            fi
+
+            # B) Build Staging Version
+            echo "Building staging version..."
+            if npm run build:ssr-staging; then
+                echo "✅ Build Successful."
+                rm -rf dist_backup
+            else
+                echo "❌ BUILD FAILED. Restoring previous version..."
+                rm -rf dist
+                if [ -d "dist_backup" ]; then
+                    mv dist_backup dist
+                fi
+                echo "Site restored to previous state."
+                exit 1
+            fi
+
+            # 6. Manage PM2 Process
+            echo "🔄 Managing PM2 Process..."
+
+            # We use PORT 4002 for Staging to avoid conflict with Production (4001)
+            if pm2 list | grep -q "hawdaj-staging"; then
+                pm2 reload hawdaj-staging
+            else
+                PORT=4002 pm2 start dist/hawdaj/server/main.js --name "hawdaj-staging"
+            fi
+
+            pm2 save
+
+            # 7. Reload Nginx
+            echo "Reloading Nginx..."
+            sudo systemctl reload nginx
+
+            echo "🎉 Staging Deployment completed successfully!"

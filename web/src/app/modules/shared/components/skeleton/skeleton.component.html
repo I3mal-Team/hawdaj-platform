@@ -1,0 +1,1895 @@
+<ng-container *ngIf="type=='homeHeroPlaces'">
+  <p-skeleton width="100%" height="100vh" styleClass="default-skeleton-2"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='homePopularApps'">
+  <p-skeleton width="20rem" height="3rem" styleClass="mb-lg-4 mb-2  mx-auto"></p-skeleton>
+  <!-- <p-skeleton styleClass="mb-2 mx-auto" width="25%" height="600px"></p-skeleton>
+    -->
+
+  <div class="row align-items-center justify-content-center">
+    <div class="col-2 d-none d-lg-grid">
+      <div class="row">
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <p-skeleton styleClass="mb-2 mx-auto" width="90%" height="450px"></p-skeleton>
+    </div>
+    <div class="col-2 d-none d-lg-grid">
+      <div class="row">
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+        <div class="col-4">
+          <p-skeleton styleClass="mb-4 mx-auto" width="100%" height="100px"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-skeleton width="30rem" height="2rem" styleClass="mb-lg-4 mb-2 mt-2  mx-auto"></p-skeleton>
+  <p-skeleton width="10rem" height="3rem" styleClass="mb-lg-4 mb-2 mt-2  mx-auto"></p-skeleton>
+
+</ng-container>
+
+<ng-container *ngIf="type=='statistics'">
+  <div class="row">
+    <div *ngFor="let item of [3,4,4]" class="col-md-4 col-sm-6 py-3 mt-4">
+      <p-skeleton width="40%" height="1.2rem" styleClass="mb-2 mx-auto"></p-skeleton>
+      <p-skeleton width="70%" height="1rem" styleClass="mb-2 mx-auto"></p-skeleton>
+      <p-skeleton width="50%" height="1rem" styleClass="mx-auto"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='global-search'">
+  <!-- <p-skeleton width="100%" height="20rem" borderRadius="10px"></p-skeleton> -->
+  <p-skeleton width="100%" height="15rem" borderRadius="10px" styleClass="mb-5"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf=" type=='destinations-slider'">
+  <div class=" d-lg-none d-md-block">
+    <!-- <p-skeleton width="10rem" height="1rem" styleClass="mb-2 mx-auto"></p-skeleton>
+  <p-skeleton width="10rem" height="1rem" styleClass="mb-2 mx-auto"></p-skeleton>
+  <p-skeleton width="50%" height="1rem" styleClass="mx-auto"></p-skeleton> -->
+    <p-skeleton styleClass="mb-2 mx-auto" width="75%" height="400px"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='join'">
+  <p-skeleton width="10rem" height="1.2rem" styleClass="mb-2 mx-auto"></p-skeleton>
+  <p-skeleton width="80%" height=".9rem" styleClass="mx-auto mb-2"></p-skeleton>
+  <p-skeleton width="50%" height=".9rem" styleClass="mx-auto mb-2"></p-skeleton>
+  <p-skeleton width="30%" height=".9rem" styleClass="mx-auto mb-3"></p-skeleton>
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <p-skeleton width="100%" height="16rem"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='home-events'">
+  <!-- <p-skeleton width="100%" height="30rem"></p-skeleton>-->
+  <div class=" d-lg-flex flex-column align-items-center justify-content-center d-none ">
+    <div class="row align-items-center justify-content-center " style="width:90%">
+      <div class="col-md-2">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+      <div class="col-md-2">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+      <div class="col-md-4">
+        <p-skeleton width="100%" height="25rem" borderRadius="7px"></p-skeleton>
+      </div>
+      <div class="col-md-2">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+      <div class="col-md-2">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+    </div>
+    <p-skeleton width="10rem" height="4rem" styleClass="mb-lg-4 mb-1 mt-5  mx-auto"></p-skeleton>
+    <p-skeleton width="10rem" height="3rem" styleClass="mb-lg-4 mb-2 mt-2  mx-auto"></p-skeleton>
+  </div>
+  <div class="row align-items-center justify-content-center d-lg-none d-flex">
+    <div class="col-6">
+      <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-6">
+      <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='home-trip'">
+  <div class="container">
+    <p-skeleton width="100%" height="30rem"></p-skeleton>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='home-earth'">
+  <div class="container">
+    <p-skeleton width="100%" height="25rem"></p-skeleton>
+  </div>
+</ng-container>
+
+<!-- <ng-container *ngIf="type=='store-content'"> -->
+<!-- <p-skeleton width="10rem" height="1.2rem" styleClass="mb-2 mx-auto"></p-skeleton>
+  <p-skeleton width="80%" height=".95rem" styleClass="mx-auto mb-2"></p-skeleton>
+  <p-skeleton width="60%" height=".95rem" styleClass="mx-auto mb-2"></p-skeleton>
+  <p-skeleton width="40%" height=".95rem" styleClass="mx-auto mb-2"></p-skeleton>
+  <p-skeleton width="30%" height=".95rem" styleClass="mx-auto"></p-skeleton> -->
+<!-- <p-skeleton width="100%" height="15rem"></p-skeleton>
+</ng-container> -->
+<ng-container *ngIf="type=='store-content'">
+  <div class="container">
+    <p-skeleton width="100%" height="25rem"></p-skeleton>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='home-services'">
+  <div class="row">
+    <!-- <div class="col-lg-6">
+      <p-skeleton width="10rem" height="1.2rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton width="70%" height=".9rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton width="50%" height=".9rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton width="30%" height=".9rem"></p-skeleton>
+    </div> -->
+    <div>
+      <p-skeleton width="100%" height="15rem"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='store-img'">
+  <div class="row justify-content-center">
+    <div class="col-xl-2 col-lg-3 col-md-5 col-sm-9 col-9">
+      <p-skeleton width="100%" height="10rem"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='subscribe'">
+  <div class="container mb-5">
+    <p-skeleton width="100%" height="30rem"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='heroSectionPlaces'">
+  <div class="row row-cols-lg-5 justify-content-center align-items-center slider position-relative m-0">
+    <div class="col">
+      <p-skeleton width="100%" height="212px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col">
+      <p-skeleton width="100%" height="150px" borderRadius="7px" styleClass="mb-4"></p-skeleton>
+      <p-skeleton width="100%" height="212px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col">
+      <p-skeleton width="100%" height=" 458px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col">
+      <p-skeleton width="100%" height="212px" borderRadius="7px" styleClass="mb-4"></p-skeleton>
+      <p-skeleton width="100%" height="150px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col">
+      <p-skeleton width="100%" height="212px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='heroSectionPlaces-sm'">
+  <!-- <div class="row">
+    <div class="col-3">
+      <p-skeleton width="100%" height="320px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-9">
+      <p-skeleton width="100%" height="320px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div> -->
+  <p-skeleton width="100%" height="270px" borderRadius="10px"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='placePagination'">
+  <div class="d-flex gap-4 justify-content-end align-items-center">
+    <p-skeleton size="3rem" shape="circle"></p-skeleton>
+    <div>
+      <p-skeleton width="10rem" height=".8rem" borderRadius="7px"></p-skeleton>
+      <p-skeleton width="8rem" height=".8rem" borderRadius="7px" styleClass="mt-2"></p-skeleton>
+    </div>
+    <div>
+      <p-skeleton width="1.5rem" height="3rem" borderRadius="7px" styleClass=""></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='eventsSlider'">
+  <!-- <div class="row g-0">
+    <div class="col-sm-6 col-12 ">
+      <p-skeleton width="100%" height="9rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-sm-6 col-12 ">
+      <p-skeleton width="100%" height="9rem" borderRadius="7px"></p-skeleton>
+    </div>
+  </div> -->
+  <p-skeleton width="100%" height="10rem" borderRadius="7px"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='topDestination'">
+  <!-- <div class="row  align-items-end justify-content-center"> -->
+
+  <!-- <div class="col-3">
+      <p-skeleton width="100%" height="28rem" borderRadius="7px"></p-skeleton>
+    </div> -->
+
+  <!-- <div class="col-3">
+      <p-skeleton width="100%" height="30rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-3">
+      <p-skeleton width="100%" height="30rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-3">
+      <p-skeleton width="100%" height="30rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-3 d-none">
+      <p-skeleton width="100%" height="30rem" borderRadius="7px"></p-skeleton>
+    </div> -->
+  <p-skeleton width="40rem" height="3rem" styleClass="mb-lg-4 mb-2 mt-4  mx-auto"></p-skeleton>
+
+  <div class="row justify-content-center p-0 gap-3 d-none d-lg-flex">
+    <div class="col-auto mb-lg-4 p-0">
+      <div class="card custom-card large-card">
+        <img class="skeleton-loading h-100" width="350" height="250">
+      </div>
+
+      <div class="card custom-card small-card mt-3">
+        <img class="skeleton-loading h-100" width="350" height="250">
+      </div>
+    </div>
+
+    <div class="col-auto mb-lg-4 p-0">
+      <div class="card custom-card small-card">
+        <img class="skeleton-loading h-100" width="350" height="250">
+
+      </div>
+
+      <div class="card custom-card large-card mt-3">
+        <img class="skeleton-loading h-100" width="350" height="250">
+
+      </div>
+    </div>
+
+    <div class="col-auto  d-lg-grid d-md-flex gap-md-3 gap-lg-0 flex-row align-items-center mb-lg-4 p-0">
+      <div class="card custom-card large-card">
+        <img class="skeleton-loading h-100" width="350" height="250">
+
+      </div>
+
+      <div class="card custom-card small-card mt-lg-3">
+        <img class="skeleton-loading h-100" width="350" height="250">
+
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</ng-container>
+<ng-container *ngIf="type=='topDestination-md'">
+  <!-- <div class="mx-3">
+    <p-skeleton width="100%" height="320px" borderRadius="7px" styleClass="mb-3"></p-skeleton>
+  </div>-->
+  <p-skeleton width="20rem" height="3rem" styleClass="mb-lg-4 mb-2  mx-auto"></p-skeleton>
+
+  <div class="mx-3">
+    <p-skeleton styleClass="mb-2 mx-auto" width="75%" height="400px"></p-skeleton>
+  </div>
+
+</ng-container>
+
+<ng-container *ngIf="type=='travelers'">
+  <div class="row align-items-center">
+    <div class="col-lg-5 col-md-5 justify-content-center travelersSwiper">
+      <div class="">
+        <p-skeleton size="30rem" shape="circle"></p-skeleton>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <p-skeleton width="5rem" height="1rem" borderRadius="7px" styleClass="mb-3"></p-skeleton>
+      <p-skeleton width="50%" height="2.5rem" borderRadius="7px" styleClass="mb-3"></p-skeleton>
+      <p class="discover-text fs-4 mb-2 w-100 fw-500 lh-base description-truncate">
+        <p-skeleton width="7" height="1.2rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="80%" height="1.2rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="70%" height="1.2rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="60%" height="1rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+      </p>
+
+      <div class="mt-4 d-flex justify-content-between gap-md-5 gap-4 align-items-center">
+        <p-skeleton width="7rem" height="3rem" borderRadius="7px" styleClass=""></p-skeleton>
+        <div class="d-flex gap-3 align-items-center justify-content-between w-60 w-md-100">
+          <p-skeleton width="1.5rem" height="3rem" borderRadius="7px" styleClass=""></p-skeleton>
+          <hr class="w-100">
+          <div class="d-flex gap-3">
+            <p-skeleton size="3rem" shape="circle"></p-skeleton>
+            <p-skeleton size="3rem" shape="circle"></p-skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='saudi-opening'">
+  <div class="row align-items-center">
+    <div class="col-md-6 justify-content-center">
+      <div class="">
+        <p-skeleton width="100%" height="23rem"></p-skeleton>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <p-skeleton width="50%" height="2.5rem" borderRadius="7px" styleClass="mb-3"></p-skeleton>
+      <p class="discover-text fs-4 mb-2 w-100 fw-500 lh-base description-truncate">
+        <p-skeleton width="7" height="1.2rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="80%" height="1.2rem" borderRadius="7px" styleClass="mb-2"></p-skeleton>
+      </p>
+      <p-skeleton width="7rem" height="3rem" borderRadius="7px" styleClass="my-3"></p-skeleton>
+      <div class="d-flex gap-3 align-items-center justify-content-between w-md-100 mt-4">
+        <p-skeleton width="1.5rem" height="3rem" borderRadius="7px" styleClass=""></p-skeleton>
+        <p-skeleton width="100%" height=".5rem" borderRadius="7px" styleClass=""></p-skeleton>
+        <div class="d-flex gap-3">
+          <p-skeleton size="3rem" shape="circle"></p-skeleton>
+          <p-skeleton size="3rem" shape="circle"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='saudiPlaces'">
+  <p-skeleton width="100%" height="18rem"></p-skeleton>
+  <div class="my-4">
+    <div class="d-flex justify-content-between gap-2 flex-wrap">
+      <p>
+        <p-skeleton width="7rem" height="1rem"></p-skeleton>
+      </p>
+      <p>
+        <p-skeleton width="5rem" height="1rem"></p-skeleton>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p-skeleton width="100%" height="15rem"></p-skeleton>
+    </div>
+    <div class="col-md-6">
+      <p-skeleton width="100%" height="15rem"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='testimonial'">
+  <div class=" d-lg-block d-none">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='service'">
+  <div class="d-flex gap-md-4 gap-3 ps-4 flex-wrap">
+    <ng-container *ngFor=" let item of [5,6,6]">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <div>
+          <p-skeleton width="2rem" height="1rem"></p-skeleton>
+        </div>
+        <div class="my-3">
+          <p-skeleton width="5rem" height="1rem"></p-skeleton>
+        </div>
+        <p-skeleton width="7rem" height="1rem"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='sliderPlaces'">
+  <p-skeleton width="100%" height="100vh" styleClass="default-skeleton"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='places-list'">
+  <div class="mt-2">
+    <div class="row justify-content-end">
+      <ng-container *ngFor="let item of [5,5,5,5,9,9,9,8,8,8,8,8]">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+          <p-skeleton width="100%" height="370px" styleClass="default-skeleton list-card-skeleton"></p-skeleton>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='neary-by-list'">
+  <div class="mt-2">
+    <div class="row justify-content-end">
+      <ng-container *ngFor="let item of [5,5,5,5]">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+          <p-skeleton width="100%" height="370px" styleClass="default-skeleton list-card-skeleton"></p-skeleton>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='list-card'">
+  <div class="mt-2">
+    <p-skeleton width="100%" height="370px" styleClass="default-skeleton list-card-skeleton"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='list-categories'">
+  <div class="mt-2 list-categories">
+    <p-skeleton width="80vw" height="50px" styleClass="default-skeleton"></p-skeleton>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='list-selectedItems'">
+  <div class="mt-2">
+    <div class="row justify-content-center">
+      <p-skeleton width="280px" height="45px" styleClass="default-skeleton m-auto rounded-pill"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='list-slider'">
+  <div class="mt-2">
+    <div class="row justify-content-center w-100">
+      <p-skeleton width="100%" height="55vh" styleClass="default-skeleton"></p-skeleton>
+      <p-skeleton width="20%" height="30px" styleClass="default-skeleton m-auto mt-3"></p-skeleton>
+      <p-skeleton width="17%" height="20px" styleClass="default-skeleton m-auto mt-2"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='places'">
+  <div class="mt-2">
+    <div class="row justify-content-end">
+      <ng-container *ngFor="let item of [5,5,5,5]">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
+          <p-skeleton width="100%" height="370px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='tourGuide'">
+  <p-skeleton width="30rem" height="3rem" styleClass="mb-lg-4 mb-2 mt-4  mx-auto"></p-skeleton>
+  <p-skeleton width="10rem" height="1rem" styleClass="mb-lg-4 mb-2 mt-4  mx-auto"></p-skeleton>
+
+  <div class="row align-items-center w-75 m-auto">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <p-skeleton width="100%" height="300px"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-md-block">
+        <p-skeleton width="100%" height="300px"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-lg-block">
+        <p-skeleton width="100%" height="300px"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-lg-block">
+        <p-skeleton width="100%" height="300px"></p-skeleton>
+      </div>
+    </div>
+    <p-skeleton width="10rem" height="3rem" styleClass="mb-lg-4 mb-2 mt-2  mx-auto"></p-skeleton>
+
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='tourGuideList'">
+  <div class="row align-items-center w-100 m-auto">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-md-block">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-lg-block">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3 mb-3 d-none d-lg-block">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='tripSteps'">
+  <ng-container *ngFor="let item of [9,9,9,8];let i=index">
+    <div class="row justify-content-center align-items-center mb-4">
+      <div class="col-lg-5 col-md-6" [ngClass]="i%2==0?'order-1':'order-2'">
+        <p-skeleton width="80%" height="20rem" styleClass="default-skeleton mb-2 m-auto"></p-skeleton>
+      </div>
+      <div class="col-lg-6 col-md-6" [ngClass]="i%2==0?'order-2':'order-1'">
+        <p-skeleton size="18rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton>
+        <div class="mt-3">
+          <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="75%" height=".8rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="60%" height=".8rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="type=='place-details'">
+  <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <div>
+      <p-skeleton width="12rem" height="1.1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+      <div class="d-flex gap-2 align-items-center fs-6-1 address">
+        <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex gap-2 align-items-center mt-2">
+        <p-skeleton width="10rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <u>
+          <p class="mb-0 fs-5-1 address">
+            <p-skeleton width="8rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          </p>
+        </u>
+      </div>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3 row">
+    <div class="col-md-6 mb-md-0 mb-4">
+      <div>
+        <p-skeleton width="100%" height="75vh" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 mb-md-0 mb-4">
+          <div>
+            <p-skeleton width="100%" height="36vh" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="mt-4">
+            <p-skeleton width="100%" height="36vh" styleClass="default-skeleton"></p-skeleton>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <p-skeleton width="100%" height="36vh" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="mt-4">
+            <p-skeleton width="100%" height="36vh" styleClass="default-skeleton"></p-skeleton>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3">
+    <p-skeleton width="40%" height="4rem" styleClass="default-skeleton"></p-skeleton>
+    <div class="mt-4 row">
+      <div class="col-lg-7">
+        <p-skeleton width="12rem" height="1.1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        <p-skeleton width="17rem" height="1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        <div class="mt-4">
+          <p-skeleton width="90%" height=".9rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="80%" height=".9rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="70%" height=".9rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="60%" height=".9rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div class="mt-5">
+          <p-skeleton width="12rem" height="1.1rem" styleClass="default-skeleton"></p-skeleton>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <ng-container *ngFor="let item of [9,9,9,9,9,9,9]">
+              <p-skeleton width="10rem" height="2.5rem" styleClass="default-skeleton  rounded-pill"></p-skeleton>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <p-skeleton width="100%" height="25rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='place-details-v2'">
+
+  <div class="mt-3 row">
+
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+        <div>
+          <p-skeleton width="12rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <div class="d-flex gap-2 align-items-center fs-6-1 address">
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div>
+      <p-skeleton width="100%" height="8vh" styleClass="default-skeleton"></p-skeleton>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-4">
+        <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div class="d-flex gap-3">
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="27rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-md-0 mb-4">
+      <div>
+        <p-skeleton width="100%" height="650px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="row mt-4 justify-content-around">
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='place-details-sm-v2'">
+  <div class="col-lg-6">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+      <div>
+        <p-skeleton width="12rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        <div class="d-flex gap-2 align-items-center fs-6-1 address">
+          <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div class="mt-3 row">
+    <div class="col-lg-6 mb-md-0 mb-4">
+      <div>
+        <p-skeleton width="100%" height="400px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="row mt-4 justify-content-around">
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+        <div>
+          <p-skeleton width="12rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <div class="d-flex gap-2 align-items-center fs-6-1 address">
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div>
+      <p-skeleton width="100%" height="8vh" styleClass="default-skeleton"></p-skeleton>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-4">
+        <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div class="d-flex gap-3">
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="27rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='place-details-sm'">
+  <div>
+    <p-skeleton width="100%" height="360px" styleClass="default-skeleton mb-2"
+      borderRadius="0 0 30px 30px"></p-skeleton>
+    <div class="container">
+      <p-skeleton width="12rem" height="1.1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+      <div class="d-flex gap-2 align-items-center fs-6-1 address">
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex gap-2 align-items-center mt-2">
+        <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p class="mb-0 fs-5-1 address">
+          <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        </p>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-3">
+        <ng-container *ngFor="let item of [3,3,3,3,3]">
+          <p-skeleton size="2.5rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton>
+        </ng-container>
+      </div>
+
+      <div>
+        <p-skeleton width="7rem" height="1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+      </div>
+      <div>
+        <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+        <p-skeleton width="70%" height=".8rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="50%" height=".8rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+
+      <div class="mt-3">
+        <div>
+          <p-skeleton width="7rem" height="1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div>
+          <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+          <p-skeleton width="70%" height=".8rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="row mt-3">
+          <ng-container *ngFor="let item of [4,4,4,4]">
+            <div class="col-6">
+              <p-skeleton width="100%" height="180px" styleClass="default-skeleton mb-3"></p-skeleton>
+            </div>
+          </ng-container>
+        </div>
+        <div class="d-flex justify-content-center">
+          <p-skeleton size="10rem" [shape]="'circle'" styleClass="default-skeleton mb-3"></p-skeleton>
+        </div>
+        <div class="">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton mb-3"></p-skeleton>
+        </div>
+        <div class="">
+          <p-skeleton width="100%" height="300px" styleClass="default-skeleton mb-3"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='rate-site'">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-sm-6 mb-2">
+      <p-skeleton width="100%" height="400px" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="d-flex flex-column col-6">
+      <ng-container *ngFor="let item of [9,9]">
+        <div class="col-sm-6 mb-2 w-100">
+          <p-skeleton width="100%" height="300px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='reviews'">
+  <div class="d-flex flex-column w-100 mt-4">
+    <ng-container *ngFor="let item of [9,9,9]">
+      <div class="mb-2 w-100">
+        <p-skeleton width="100%" height="150px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='relatedPlaces'">
+  <div class="row">
+    <ng-container *ngFor="let item of [9,9,9,9]">
+      <div class="col-sm-6">
+        <p-skeleton width="100%" height="250px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='relatedPlaces-v2'">
+  <div class="row">
+    <ng-container *ngFor="let item of [9,9,9]">
+      <div class="col-sm-4">
+        <p-skeleton width="100%" height="250px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='tripsDates'">
+  <div class="row g-4 justify-content-center pb-2">
+    <div class=" col-lg-6 col-sm-12 pe-0">
+      <!-- <p-skeleton width="100%" height="5rem" styleClass="default-skeleton"></p-skeleton> -->
+      <p-skeleton width="100%" height="6rem" styleClass="default-skeleton"></p-skeleton>
+
+    </div>
+    <div class=" col-lg-6 col-sm-12  pe-0">
+      <!-- <p-skeleton width="100%" height="2.5rem" styleClass="default-skeleton"></p-skeleton> -->
+      <p-skeleton width="100%" height="6rem" styleClass="default-skeleton"></p-skeleton>
+
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='tripsDates-v2'">
+  <div class="row g-4 justify-content-center pb-2">
+    <!-- <p-skeleton width="100%" height="5rem" styleClass="default-skeleton"></p-skeleton> -->
+    <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+    <div class="row mt-4 gap-md-0 gap-2 align-items-center justify-content-center">
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-md-6">
+
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='tripsDates-sm-v2'">
+  <div class="row g-4 justify-content-center pb-2">
+    <div class="row mt-4 gap-md-0 gap-2 align-items-center justify-content-center">
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='tripDetails-v2'">
+  <div class="row g-4 justify-content-center pb-2">
+    <!-- <p-skeleton width="100%" height="5rem" styleClass="default-skeleton"></p-skeleton> -->
+    <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+    <div class="row mt-4 gap-md-0 gap-2 align-items-center justify-content-center">
+      <div class="col-md-6">
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='showOnMap'">
+  <div class="d-flex align-items-center gap-2">
+    <p-skeleton width="1.2rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    <p-skeleton width="7.5rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='timeLine'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6,6,6,6,7,6]">
+      <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
+        <p-skeleton width="100%" height="8rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='timeLine-v2'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6,6,6,6,7]">
+      <div class="col-lg-3 col-md-6 col-sm-6 mb-3">
+        <p-skeleton width="100%" height="20rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='allTrips'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6]">
+      <div class="col-xl-3 col-lg-4 col-sm-6 mb-3">
+        <p-skeleton width="100%" height="22rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='chat'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6]">
+      <div class="d-flex gap-2 align-items-end mb-2">
+        <p-skeleton size="2.4rem" shape="circle" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="17rem" height="2.5rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex gap-2 justify-content-end mb-2">
+        <p-skeleton width="17rem" height="2.5rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='places-category'">
+  <div class="mt-2">
+    <div class="row">
+      <ng-container *ngFor="let item of [9,9,9,9,9,9]">
+        <div class="col-md-4 mb-3">
+          <p-skeleton width="100%" height="7rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='visit'">
+  <div class="my-3">
+    <div class="row" style="width:90%; margin:auto">
+      <div class="col-md-2">
+        <p-skeleton width="100%" height="23rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-md-10">
+        <div class="row flex-nowrap align-items-center">
+          <div style="width:65%">
+            <p-skeleton height="3rem" styleClass="default-skeleton mt-4"></p-skeleton>
+          </div>
+          <div>
+            <p-skeleton width="8%" height="2.6rem" styleClass="default-skeleton mt-4"></p-skeleton>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <ng-container *ngFor="let item of [9,9,9,9,9,9]">
+            <div class="col-lg-4 col-md-4 mb-3">
+              <p-skeleton width="100%" height="6rem" styleClass="default-skeleton"></p-skeleton>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='eventsList'">
+  <div class="row">
+    <ng-container *ngFor="let item of [3,4,4,4]">
+      <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
+        <p-skeleton width="100%" height="330px" styleClass="default-skeleton"
+          [style.borderRadius]="'20px'"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='tripsList'">
+  <p-skeleton width="100%" height="350px" styleClass="default-skeleton" [style.borderRadius]="'20px'"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='propertiesList'">
+  <p-skeleton width="100%" height="350px" styleClass="default-skeleton" [style.borderRadius]="'20px'"></p-skeleton>
+</ng-container>
+
+
+<ng-container *ngIf="type=='map'">
+  <p-skeleton width="100%" height="100%" styleClass="default-skeleton"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='stores-btn'">
+  <div class="d-flex justify-content-center gap-3 flex-wrap">
+    <p-skeleton width="14rem" height="3rem" styleClass="default-skeleton"></p-skeleton>
+    <p-skeleton width="14rem" height="3rem" styleClass="default-skeleton"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='stores-category'">
+  <div class="row row-cols-lg-7 row-cols-md-5 row-cols-sm-3 row-cols-2 justify-content-center">
+    <ng-container *ngFor="let item of [4,5,5,5,5]">
+      <div class="col mb-3">
+        <p-skeleton width="100%" height="7rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+
+    </ng-container>
+
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='apps'">
+  <div class="mt-2">
+    <div class="row g-3">
+      <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+        <div
+          class="border-round border-1 d-flex flex-column align-items-center justify-content-center surface-border p-4 surface-card">
+          <div class="d-flex flex-column items-center justify-content-center mb-3 w-100">
+            <p-skeleton width="40%" height="300px" styleClass="mb-2 mx-auto"></p-skeleton>
+            <div class="d-flex align-items-center justify-content-center flex-column">
+              <p-skeleton width="5rem" styleClass="my-2"></p-skeleton>
+              <p-skeleton width="15rem" height="8px"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="5rem" height="8px" styleClass="mt-1"></p-skeleton>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+        <div
+          class="border-round border-1 d-flex flex-column align-items-center justify-content-center surface-border p-4 surface-card">
+          <div class="d-flex flex-column items-center justify-content-center mb-3 w-100">
+            <p-skeleton width="40%" height="300px" styleClass="mb-2 mx-auto"></p-skeleton>
+            <div class="d-flex align-items-center justify-content-center flex-column">
+              <p-skeleton width="5rem" styleClass="my-2"></p-skeleton>
+              <p-skeleton width="15rem" height="8px"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="5rem" height="8px" styleClass="mt-1"></p-skeleton>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+        <div
+          class="border-round border-1 d-flex flex-column align-items-center justify-content-center surface-border p-4 surface-card">
+          <div class="d-flex flex-column items-center justify-content-center mb-3 w-100">
+            <p-skeleton width="40%" height="300px" styleClass="mb-2 mx-auto"></p-skeleton>
+            <div class="d-flex align-items-center justify-content-center flex-column">
+              <p-skeleton width="5rem" styleClass="my-2"></p-skeleton>
+              <p-skeleton width="15rem" height="8px"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="15rem" height="8px" styleClass="mt-1"></p-skeleton>
+              <p-skeleton width="5rem" height="8px" styleClass="mt-1"></p-skeleton>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between gap-2">
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+            <p-skeleton width="6rem" height="2rem"></p-skeleton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='stores'">
+  <div class="mt-2">
+    <div class="row justify-content-end">
+      <div class="col-3">
+        <p-skeleton width="100%" height="420px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="420px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="420px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="420px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='topStores'">
+  <div class="mt-2">
+    <div class="row justify-content-end">
+      <div class="col-3">
+        <p-skeleton width="100%" height="300px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="300px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="300px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="col-3">
+        <p-skeleton width="100%" height="300px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='earth'">
+  <div class="m-auto">
+    <!-- <p-skeleton size="25rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton> -->
+    <p-skeleton width="1100px" height="30rem" styleClass="default-skeleton"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='savePlace'">
+  <p-skeleton size="2.5rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='favourite'">
+  <p-skeleton size="1.5rem" [shape]="'circle'" styleClass="default-skeleton"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='testimonialsData'">
+  <p-skeleton width="100%" height="15rem" styleClass="default-skeleton mt-5"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='restaurantCategories'">
+  <ng-container *ngFor="let item of [3,3,3,3,3]">
+    <div class="d-flex gap-3 mb-3">
+      <p-skeleton width="4rem" height="4rem" styleClass="default-skeleton" borderRadius="5px"></p-skeleton>
+      <div>
+        <p-skeleton width="12rem" height="1rem" styleClass="default-skeleton mb-2" borderRadius="5px"></p-skeleton>
+        <div>
+          <p-skeleton width="14rem" height=".7rem" styleClass="default-skeleton mb-2" borderRadius="5px"></p-skeleton>
+          <p-skeleton width="13rem" height=".7rem" styleClass="default-skeleton" borderRadius="5px"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="type=='nearbyRestaurants'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,5,5,5]">
+      <div class="col-lg-4 col-md-4 col-sm-6 mb-4">
+        <p-skeleton width="100%" height="210px" styleClass="default-skeleton" borderRadius="15px"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='topCategories'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6,4,4]">
+      <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='menu'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6]">
+      <div class="col-md-4 col-sm-6 mb-4">
+        <p-skeleton width="100%" height="350px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='restaurantDetails'">
+  <div class="container pt-5">
+    <div class="row align-items-center pt-5">
+      <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-4">
+        <p-skeleton width="70%" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+        <div class="mt-3">
+          <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+          <p-skeleton width="70%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+          <p-skeleton width="60%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+        </div>
+        <div class="mt-3">
+          <p-skeleton width="55%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+          <p-skeleton width="55%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+          <p-skeleton width="55%" height=".8rem" styleClass="default-skeleton mb-1"></p-skeleton>
+        </div>
+        <div class="mt-5 d-flex gap-3">
+          <p-skeleton width="7rem" height="2.5rem" styleClass="default-skeleton mb-1 rounded-pill"></p-skeleton>
+          <p-skeleton width="7rem" height="2.5rem" styleClass="default-skeleton mb-1 rounded-pill"></p-skeleton>
+        </div>
+      </div>
+      <div class="col-md-6 col-11 m-auto order-md-2 order-1">
+        <p-skeleton width="100%" height="450px" styleClass="default-skeleton" borderRadius="30px"></p-skeleton>
+      </div>
+    </div>
+    <div class="mt-5">
+      <div class="row">
+        <ng-container *ngFor="let item of [6,6,6]">
+          <div class="col-md-4 col-sm-6 mb-4">
+            <p-skeleton size="4rem" [shape]="'circle'" styleClass="default-skeleton m-auto"></p-skeleton>
+            <p-skeleton width="50%" height="1.2rem" styleClass="default-skeleton m-auto mt-2"></p-skeleton>
+            <div class="mt-3">
+              <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton m-auto mb-1"></p-skeleton>
+              <p-skeleton width="70%" height=".8rem" styleClass="default-skeleton m-auto mb-1"></p-skeleton>
+              <p-skeleton width="60%" height=".8rem" styleClass="default-skeleton m-auto mb-1"></p-skeleton>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='recentStories'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6,6]">
+      <div class="col-lg-6 col-md-12 col-sm-6 mb-4">
+        <p-skeleton width="100%" height="400px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='featuredStories'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6]">
+      <div
+        class="d-flex align-items-center align-items-center gap-3 mb-4 flex-lg-nowrap  flex-md-wrap flex-sm-nowrap flex-wrap">
+        <div>
+          <p-skeleton size="7rem" shape="circle" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div>
+          <div>
+            <p-skeleton width="13rem" height="1.2rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="mt-2">
+            <p-skeleton width="14rem" height=".8rem" styleClass="default-skeleton mb-2"></p-skeleton>
+            <p-skeleton width="12rem" height=".8rem" styleClass="default-skeleton mb-2"></p-skeleton>
+            <p-skeleton width="10rem" height=".8rem" styleClass="default-skeleton"></p-skeleton>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='storiesCategories'">
+  <div class="d-flex gap-3 flex-wrap">
+    <ng-container *ngFor="let item of [6,6,6,6,6,6]">
+      <p-skeleton width="7rem" height="2.5rem" styleClass="default-skeleton rounded-pill"></p-skeleton>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='featuredStoriesDetails'">
+  <p-skeleton width="15rem" height="1rem" styleClass="default-skeleton mb-5"></p-skeleton>
+
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6]">
+      <div class="col-4 mb-4">
+        <p-skeleton width="100%" height="400px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='reviewsStories'">
+  <div class="row">
+    <ng-container *ngFor="let item of [6,6,6]">
+      <div class="col-4 mb-4">
+        <p-skeleton width="100%" height="200px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='storiesDetails'">
+  <div class="p-4">
+
+    <p-skeleton width="100%" height="33rem" styleClass="default-skeleton mt-2"></p-skeleton>
+
+    <div>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="100%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="90%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="85%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="80%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+      <p-skeleton width="70%" height=".8rem" styleClass="default-skeleton mt-2"></p-skeleton>
+
+    </div>
+  </div>
+
+</ng-container>
+
+
+<ng-container *ngIf="type=='searchButtons'">
+  <div class="d-flex gap-3 me-auto">
+    <p-skeleton width="6rem" height="2.5rem" styleClass="default-skeleton rounded-pill"></p-skeleton>
+
+    <p-skeleton width="6rem" height="2.5rem" styleClass="default-skeleton rounded-pill"></p-skeleton>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='searchResult'">
+  <div class="row mt-4 container1 align-items-start">
+    <div class="col-md-7">
+      <div>
+        <p-skeleton width="100%" height="2.5rem" styleClass="default-skeleton rounded-pill"></p-skeleton>
+
+        <p-skeleton width="10rem" height="1.2rem" styleClass="default-skeleton my-3"></p-skeleton>
+
+
+        <ng-container *ngFor=" let item of [1,8,9,9];let i=index">
+          <div class="row mb-3 pb-3 border-bottom">
+            <div class="col-5 p-0">
+              <p-skeleton width="100%" height="9rem" styleClass="default-skeleton "></p-skeleton>
+            </div>
+            <div class="col-7 ps-4">
+              <div>
+                <div class="d-flex w-100">
+                  <div class="py-2 h-100 w-100">
+                    <p-skeleton width="10rem" height="1rem" styleClass="default-skeleton mb-2"></p-skeleton>
+
+                    <p-skeleton width="6rem" height="1.2rem" styleClass="default-skeleton"></p-skeleton>
+
+                    <span class="my-3 dash"></span>
+
+                    <span class="my-3 dash"></span>
+                  </div>
+                  <p-skeleton size="2rem" shape="circle" styleClass="default-skeleton rounded-pill"></p-skeleton>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton "></p-skeleton>
+
+                  <p-skeleton width="6rem" height="1rem" styleClass="default-skeleton "></p-skeleton>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-md-5 mb-3">
+      <p-skeleton width="100%" height="80vh" styleClass="default-skeleton"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='homeEvents'">
+  <p-skeleton width="100%" height="550px" borderRadius="7px"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='homeRestaurants'">
+  <div class="row align-items-center justify-content-center d-lg-flex d-none">
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-4">
+      <p-skeleton width="100%" height="25rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+  <div class="row align-items-center justify-content-center d-lg-none d-flex">
+    <div class="col-6">
+      <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-6">
+      <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='stories-slider'">
+  <div class="row align-items-center justify-content-center d-lg-flex d-none">
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-4">
+      <p-skeleton width="100%" height="25rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-2">
+      <p-skeleton width="200px" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+  <div class="row align-items-center justify-content-center d-lg-none d-flex">
+    <div class="col-12">
+      <p-skeleton width="100%" height="300px" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='servies'">
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <p-skeleton width="100%" height="15rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-md-6">
+      <p-skeleton width="100%" height="15rem" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='homeStore'">
+  <div class="row">
+    <ng-container *ngFor="let item of [9,9,9,9]">
+      <div class="col-lg-3 col-md-6">
+        <p-skeleton width="100%" height="280px" borderRadius="7px"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='restaurantSlider'">
+  <div class="mt-5">
+    <p-skeleton width="100%" height=".3rem" borderRadius="7px"></p-skeleton>
+  </div>
+  <div class=" py-5">
+    <p-skeleton width="7rem" height="1.1rem" borderRadius="7px" styleClass="mb-3 m-auto"></p-skeleton>
+    <div>
+      <p-skeleton width="90%" height=".8rem" borderRadius="7px" styleClass="mb-1 m-auto"></p-skeleton>
+      <p-skeleton width="80%" height=".8rem" borderRadius="7px" styleClass="mb-1 m-auto"></p-skeleton>
+      <p-skeleton width="70%" height=".8rem" borderRadius="7px" styleClass="mb-1 m-auto"></p-skeleton>
+      <p-skeleton width="60%" height=".8rem" borderRadius="7px" styleClass="mb-1 m-auto"></p-skeleton>
+    </div>
+  </div>
+  <div class="row justify-content-between mt-4">
+    <div class="col-2">
+      <p-skeleton width="2" height=".5rem" borderRadius="7px"></p-skeleton>
+    </div>
+    <div class="col-2"> <p-skeleton width="2" height=".5rem" borderRadius="7px"></p-skeleton>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='restaurantImg'">
+  <p-skeleton width="100%" height="410px" borderRadius="10px"></p-skeleton>
+
+</ng-container>
+<ng-container *ngIf="type=='foodCategories'">
+  <ng-container *ngFor="let item of [3,3,3,3,3,4]">
+    <p-skeleton width="100%" height="1rem" borderRadius="6px" styleClass="mb-3"></p-skeleton>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="type=='heroStories'">
+  <div class="row">
+    <div class="col-md-8">
+      <p-skeleton width="100%" height="550px" borderRadius="6px" styleClass="mb-3 default-skeleton"></p-skeleton>
+    </div>
+    <div class="col-md-4 mt-md-0 mt-4">
+      <div>
+        <p-skeleton width="100%" height="260px" borderRadius="6px" styleClass="mb-4 default-skeleton"></p-skeleton>
+      </div>
+      <div>
+        <p-skeleton width="100%" height="260px" borderRadius="6px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="type=='earth2'">
+  <p-skeleton width="100%" height="350px" borderRadius="0px"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='shots'">
+  <p-skeleton width="100%" height="340px" borderRadius="10px"></p-skeleton>
+</ng-container>
+
+<ng-container *ngIf="type=='myLastDayStories'">
+  <div class="row">
+    <ng-container *ngFor="let item of [4,4,4,4,44,4]">
+      <div class="col-2">
+        <p-skeleton size="4rem" shape="circle" styleClass="mx-auto"></p-skeleton>
+        <p-skeleton width="3rem" height=".95rem" borderRadius="5px" styleClass="mt-3 mx-auto"></p-skeleton>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+
+
+<ng-container *ngIf="type=='story-details-v2'">
+
+  <div class="mt-3 row">
+
+    <div class="col-lg-6">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+        <div>
+          <p-skeleton width="12rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <div class="d-flex gap-2 align-items-center fs-6-1 address">
+            <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+            <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="27rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2">
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-4">
+        <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-4">
+        <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="d-flex align-items-center gap-2 my-2">
+        <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+        <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-2">
+        <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="mb-4">
+        <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <!-- <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div class="d-flex gap-3">
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div> -->
+
+    </div>
+    <div class="col-lg-6 mb-md-0 mb-4">
+      <div>
+        <p-skeleton width="100%" height="650px" styleClass="default-skeleton"></p-skeleton>
+      </div>
+      <div class="row mt-4 justify-content-around">
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+        <div class="col-3">
+          <p-skeleton width="100%" height="100px" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="type=='story-details-sm-v2'">
+  <div class="col-lg-6">
+  </div>
+  <div class="col-lg-6">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-2">
+      <div>
+        <p-skeleton width="12rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        <div class="d-flex gap-2 align-items-center fs-6-1 address">
+          <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="6rem" height="2rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2">
+          <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+        </div>
+
+      </div>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="27rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="d-flex align-items-center gap-2 mt-2">
+      <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="d-flex align-items-center gap-2 my-2">
+      <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-4">
+      <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="d-flex align-items-center gap-2 my-2">
+      <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-4">
+      <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="d-flex align-items-center gap-2 my-2">
+      <p-skeleton width="1rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+      <p-skeleton width="4rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-2">
+      <p-skeleton width="100%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <div class="mb-4">
+      <p-skeleton width="40%" height="1rem" styleClass="default-skeleton"></p-skeleton>
+    </div>
+    <!-- <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div class="d-flex gap-3">
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+          <p-skeleton width="5rem" height="1.5rem" styleClass="default-skeleton mb-2"></p-skeleton>
+        </div>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p-skeleton width="1.5rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+        </div>
+      </div> -->
+
+  </div>
+</ng-container>
+
+<!-- Trip Full Page Skeleton -->
+<ng-container *ngIf="type === 'trip-full-page'">
+  <div id="trip-full-page-skeleton" class="trip-full-page-skeleton container pt-5 px-0">
+
+    <!-- ===================================== -->
+    <!-- Top Cards (Desktop)                   -->
+    <!-- ===================================== -->
+    <div class="row mt-md-5 justify-content-center d-none d-lg-flex">
+
+      <!-- First Card -->
+      <div class="col-lg-6 d-flex flex-column gap-4">
+        <p-skeleton width="100%" height="10rem" styleClass="default-skeleton" borderRadius="12px"></p-skeleton>
+
+        <div class="row gap-3 justify-content-center">
+          <div class="col-md-5">
+            <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+          </div>
+          <div class="col-md-5">
+            <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Card -->
+      <div class="col-lg-6 d-flex flex-column gap-4">
+        <p-skeleton width="100%" height="10rem" styleClass="default-skeleton" borderRadius="12px"></p-skeleton>
+
+        <div class="row gap-3 justify-content-center">
+          <div class="col-md-5">
+            <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+          </div>
+          <div class="col-md-5">
+            <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Mobile Cards                          -->
+    <!-- ===================================== -->
+    <div class="row mt-5 gap-4 justify-content-center d-lg-none">
+      <div class="col-12 d-flex flex-column gap-3">
+        <p-skeleton width="100%" height="8rem" styleClass="default-skeleton" borderRadius="12px"></p-skeleton>
+        <p-skeleton width="100%" height="8rem" styleClass="default-skeleton" borderRadius="12px"></p-skeleton>
+      </div>
+
+      <div class="col-12 d-flex flex-column gap-3">
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+        <p-skeleton width="100%" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+      </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Trip Header                           -->
+    <!-- ===================================== -->
+    <div class="row mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <p-skeleton width="40%" height="2.5rem" styleClass="default-skeleton"></p-skeleton>
+
+        <div class="d-flex gap-2">
+          <p-skeleton width="3rem" height="3rem" shape="circle" styleClass="default-skeleton"></p-skeleton>
+          <p-skeleton width="3rem" height="3rem" shape="circle" styleClass="default-skeleton"></p-skeleton>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Timeline Days                         -->
+    <!-- ===================================== -->
+    <div class="row">
+      <ng-container *ngFor="let day of [1,2,3]">
+        <div class="col-12 mb-4">
+
+          <!-- Day Header -->
+          <div class="d-flex justify-content-between align-items-center mb-3 p-3"
+            style="background: #f9fcff; border-radius: 12px;">
+            <div class="d-flex gap-3 align-items-center">
+              <p-skeleton width="3rem" height="3rem" styleClass="default-skeleton" borderRadius="8px"></p-skeleton>
+              <p-skeleton width="8rem" height="1.5rem" styleClass="default-skeleton"></p-skeleton>
+            </div>
+            <p-skeleton width="10rem" height="1rem" styleClass="default-skeleton"></p-skeleton>
+          </div>
+
+          <!-- Places Grid -->
+          <div class="row gap-3">
+            <ng-container *ngFor="let place of [1,2,3,4]">
+              <div class="col-lg-2 col-md-3 col-6">
+                <p-skeleton width="100%" height="20rem" styleClass="default-skeleton" borderRadius="16px"></p-skeleton>
+              </div>
+            </ng-container>
+          </div>
+
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</ng-container>

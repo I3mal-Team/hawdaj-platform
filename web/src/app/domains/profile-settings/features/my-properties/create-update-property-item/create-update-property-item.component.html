@@ -1,0 +1,684 @@
+<form class="property-form" [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+  <div class="property-form__wrapper">
+    <div class="property-form__row">
+      <div class="property-form__group w-half">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('propertyType')"
+          [class.property-form__label--required]="controls.propertyType.hasError('required')" for="propertyType">
+          {{ 'properties.fields.propertyType' | translate }}
+        </label>
+        <div class="property-form__control property-form__control--dropdown"
+          [class.property-form__control--error]="shouldShowError('propertyType')">
+          <p-dropdown id="propertyType" formControlName="propertyType" [options]="propertyTypes()" optionLabel="label"
+            optionValue="value" [placeholder]="'properties.fields.selectPropertyType' | translate"
+            class="property-form__dropdown" [filter]="true" filterBy="label"
+            filterPlaceholder="{{'placeholder.search' | translate}}" dropdownIcon="fas fa-caret-down text-muted"
+            [autofocusFilter]="false" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="200px">
+            <ng-template let-option pTemplate="item">
+              <div class="property-form__dropdown-item">
+                <span>{{ option.label | translate }}</span>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="selectedItem">
+              <div class="property-form__selected">
+                <span class="value" [class.active]="controls.propertyType.value">
+                  {{ option?.label ? (option.label | translate) : '' }}
+                </span>
+                <button *ngIf="controls.propertyType.value" type="button" class="property-form__clear-btn"
+                  (click)="clearControl('propertyType', $event)" [attr.aria-label]="'general.clearSearch' | translate">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('propertyType')">
+          {{ getErrorMessage('propertyType') | translate }}
+        </p>
+      </div>
+
+      <!-- ========================= -->
+      <!-- Start Store Fields -->
+      <!-- ========================= -->
+      <ng-container *ngIf="isStore()">
+
+        <div class="property-form__group w-half">
+          <label class="property-form__label" [class.property-form__label--error]="shouldShowError('storeType')"
+            [class.property-form__label--required]="controls.storeType.hasError('required')" for="storeType">
+            {{ 'properties.fields.storeType' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--dropdown"
+            [class.property-form__control--error]="shouldShowError('storeType')">
+            <p-dropdown id="storeType" formControlName="storeType" [options]="storeTypeOptions()" optionLabel="label"
+              optionValue="id" class="property-form__dropdown" [filter]="true" filterBy="label"
+              [placeholder]="'properties.fields.selectPropertyType' | translate"
+              filterPlaceholder=" {{'placeholder.search' | translate}}" dropdownIcon="fas fa-caret-down text-muted"
+              [autofocusFilter]="false" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="200px">
+              <ng-template let-option pTemplate="item">
+                <div class="property-form__dropdown-item">
+                  <span>{{ option.name | translate }}</span>
+                </div>
+              </ng-template>
+              <ng-template let-option pTemplate="selectedItem">
+                <div class="property-form__selected">
+                  <span class="value" [class.active]="controls.storeType.value">
+                    {{ option?.name ? (option.name | translate) : '' }}
+                  </span>
+                  <button *ngIf="controls.storeType.value" type="button" class="property-form__clear-btn"
+                    (click)="clearControl('storeType', $event)" [attr.aria-label]="'general.clearSearch' | translate">
+                    <i class="pi pi-times"></i>
+                  </button>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('storeType')">
+            {{ getErrorMessage('storeType') | translate }}
+          </p>
+        </div>
+
+        <!-- ONLINE STORE -->
+        <ng-container *ngIf="isOnlineStore()">
+          <div class="property-form__group w-half">
+            <label class="property-form__label property-form__label--required"
+              [class.property-form__label--error]="propertyForm.errors?.['storeUrlRequired']">
+              {{ 'properties.fields.storeUrl' | translate }}
+            </label>
+
+            <div class="property-form__control"
+              [class.property-form__control--error]="propertyForm.errors?.['storeUrlRequired']">
+
+              <!-- When control exists (normal flow) -->
+              <ng-container *ngIf="controls.storeUrl">
+                <input type="url" class="property-form__input" formControlName="storeUrl"
+                  [placeholder]="'properties.placeholders.enterStoreUrl' | translate" />
+              </ng-container>
+
+              <!-- When control doesn't exist yet (initial render) -->
+              <ng-container *ngIf="!controls.storeUrl">
+                <input type="url" class="property-form__input"
+                  [placeholder]="'properties.placeholders.enterStoreUrl' | translate" [value]="storeUrl() || ''"
+                  (input)="onStoreUrlInput($event)" (blur)="onStoreUrlBlur($event)" />
+              </ng-container>
+            </div>
+
+            <p class="property-form__error" *ngIf="propertyForm.errors?.['storeUrlRequired']">
+              {{ 'properties.errors.storeUrlRequired' | translate }}
+            </p>
+
+            <!-- Show control-specific errors -->
+            <p class="property-form__error"
+              *ngIf="controls.storeUrl?.invalid && (controls.storeUrl?.touched || isSubmitted())">
+              {{ getErrorMessage('storeUrl') }}
+            </p>
+          </div>
+        </ng-container>
+
+        <!-- OFFLINE STORE -->
+        <ng-container *ngIf="isOfflineStore()">
+
+          <!-- Address Type -->
+          <div class="property-form__group w-half">
+            <label class="property-form__label"
+              [class.property-form__label--error]="shouldShowError('storeAddressType')"
+              [class.property-form__label--required]="controls.storeAddressType.hasError('required')"
+              for="storeAddressType">
+              {{ 'properties.fields.addressType' | translate }}
+            </label>
+            <div class="property-form__control property-form__control--dropdown"
+              [class.property-form__control--error]="shouldShowError('storeAddressType')">
+              <p-dropdown id="storeAddressType" formControlName="storeAddressType" [options]="storeAddressTypeOptions()"
+                optionLabel="name" optionValue="id" class="property-form__dropdown" [filter]="true" filterBy="label"
+                [placeholder]="'properties.placeholders.selectAddressType' | translate"
+                filterPlaceholder=" {{'placeholder.search' | translate}}" dropdownIcon="fas fa-caret-down text-muted"
+                [autofocusFilter]="false" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="200px">
+                <ng-template let-option pTemplate="item">
+                  <div class="property-form__dropdown-item">
+                    <span>{{ option.name | translate }}</span>
+                  </div>
+                </ng-template>
+                <ng-template let-option pTemplate="selectedItem">
+                  <div class="property-form__selected">
+                    <span class="value" [class.active]="controls.storeAddressType.value">
+                      {{ option?.name ? (option.name | translate) : '' }}
+                    </span>
+                    <button *ngIf="controls.storeAddressType.value" type="button" class="property-form__clear-btn"
+                      (click)="clearControl('storeAddressType', $event)"
+                      [attr.aria-label]="'general.clearSearch' | translate">
+                      <i class="pi pi-times"></i>
+                    </button>
+                  </div>
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <p class="property-form__error" *ngIf="shouldShowError('storeAddressType')">
+              {{ getErrorMessage('storeAddressType') | translate }}
+            </p>
+          </div>
+
+          <!-- MAP LOCATION -->
+          <ng-container *ngIf="controls.storeAddressType?.value === 'map'">
+
+            <div class="property-form__group w-half">
+              <label class="property-form__label"
+                [class.property-form__label--error]="shouldShowError('propertyAddress')"
+                [class.property-form__label--required]="controls?.propertyAddress?.hasError('required')"
+                for="propertyAddress">
+                {{ 'properties.fields.propertyAddress' | translate }}
+              </label>
+              <div class="property-form__control"
+                [class.property-form__control--error]="shouldShowError('propertyAddress')"
+                (click)="openLocationPicker()">
+                <input id="propertyAddress" type="text" class="property-form__input property-form__input--with-icon"
+                  [placeholder]="'properties.fields.enterPropertyAddress' | translate" formControlName="propertyAddress"
+                  readonly />
+                <span class="property-form__location-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true" focusable="false">
+                    <path d="M9 19V4" stroke="#323232" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M15 14V20.8963" stroke="#323232" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M21 13V18.3321C21.0009 18.7619 20.7263 19.144 20.3186 19.28C19.0212 19.7125 16.2426 20.6388 15.3114 20.9494C15.1076 21.0173 14.8871 21.0168 14.6836 20.9478L9.31626 19.1585C9.11097 19.0901 8.88903 19.0901 8.68374 19.1585L4.31626 20.6145C4.01131 20.7162 3.67608 20.665 3.4153 20.4771C3.15453 20.2891 3 19.9873 3 19.6658V6.61276C3 6.18234 3.27542 5.80021 3.68374 5.66409L8.36747 4.10265C8.77803 3.96578 9.22191 3.96578 9.63247 4.10265L11 4.55852"
+                      stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M14 6.5C14 8.13851 15.788 9.88881 16.808 10.7544C17.2108 11.0819 17.7882 11.0819 18.191 10.7544C19.212 9.88881 21 8.13851 21 6.5"
+                      stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                      d="M17.501 6.25001C17.6389 6.25056 17.7504 6.36273 17.75 6.50067C17.7496 6.63861 17.6376 6.75019 17.4997 6.75C17.3617 6.74982 17.25 6.63795 17.25 6.50001C17.2496 6.43342 17.276 6.36947 17.3232 6.32248C17.3704 6.27549 17.4344 6.24939 17.501 6.25001"
+                      stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14 6.5V6.5C14 4.567 15.567 3 17.5 3V3C19.433 3 21 4.567 21 6.5V6.5" stroke="#323232"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
+              <p class="property-form__error" *ngIf="shouldShowError('propertyAddress')">
+                {{ getErrorMessage('propertyAddress') | translate }}
+              </p>
+            </div>
+
+          </ng-container>
+
+          <!-- LINK LOCATION -->
+          <ng-container *ngIf="controls.storeAddressType?.value === 'link'">
+            <div class="property-form__group w-half">
+              <label class="property-form__label property-form__label--required"
+                [class.property-form__label--error]="propertyForm.errors?.['storeUrlRequired']">
+                {{ 'properties.fields.storeUrl' | translate }}
+              </label>
+
+              <div class="property-form__control"
+                [class.property-form__control--error]="propertyForm.errors?.['storeUrlRequired']">
+
+                <!-- When control exists -->
+                <ng-container *ngIf="controls.storeUrl">
+                  <input type="url" class="property-form__input" formControlName="storeUrl"
+                    [placeholder]="'properties.placeholders.enterStoreUrl' | translate" />
+                </ng-container>
+
+                <!-- When control doesn't exist yet -->
+                <ng-container *ngIf="!controls.storeUrl">
+                  <input type="url" class="property-form__input"
+                    [placeholder]="'properties.placeholders.enterStoreUrl' | translate" [value]="storeUrl() || ''"
+                    (input)="onStoreUrlInput($event)" (blur)="onStoreUrlBlur($event)" />
+                </ng-container>
+              </div>
+
+              <p class="property-form__error" *ngIf="propertyForm.errors?.['storeUrlRequired']">
+                {{ 'properties.errors.storeUrlRequired' | translate }}
+              </p>
+
+              <!-- Show control-specific errors -->
+              <p class="property-form__error"
+                *ngIf="controls.storeUrl?.invalid && (controls.storeUrl?.touched || isSubmitted())">
+                {{ getErrorMessage('storeUrl') }}
+              </p>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+      </ng-container>
+
+      <!-- ========================= -->
+      <!-- End Store Fields -->
+      <!-- ========================= -->
+
+
+      <div class="property-form__group w-half" *ngIf="!isEvent()">
+        <label class="property-form__label property-form__label--required"
+          [class.property-form__label--error]="shouldShowError('departments')" for="departments">
+          {{ 'properties.fields.departments' | translate }}
+        </label>
+        <div class="property-form__control property-form__control--multiselect"
+          [class.property-form__control--error]="shouldShowError('departments')">
+          <p-multiSelect class="property-form__multiselect" inputId="departments" formControlName="departments"
+            [options]="departmentOptions()" optionLabel="name" [placeholder]="getDepartmentsPlaceholder() | translate"
+            display="chip" [maxSelectedLabels]="2" [filter]="true" filterBy="name"
+            selectedItemsLabel="{{ 'properties.multiselect.selectedItems' | translate }}"
+            panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="220px"
+            dropdownIcon="fas fa-caret-down text-muted" [disabled]="!isPropertyTypeSelected() || isLoadingDepartments()"
+            [showClear]="(controls.departments.value?.length || 0) > 0 && !isLoadingDepartments()"
+            [ngClass]="{'property-form__multiselect--loading': isLoadingDepartments()}">
+            <ng-template let-option pTemplate="item">
+              <div class="property-form__dropdown-item">
+                <span>{{ option.name }}</span>
+              </div>
+            </ng-template>
+          </p-multiSelect>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('departments')">
+          {{ getErrorMessage('departments') | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="property-form__row">
+      <div class="property-form__group w-half">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('propertyName')"
+          [class.property-form__label--required]="controls.propertyName.hasError('required')" for="propertyName">
+          {{ 'properties.fields.propertyName' | translate }}
+        </label>
+        <div class="property-form__control" [class.property-form__control--error]="shouldShowError('propertyName')">
+          <input id="propertyName" type="text" class="property-form__input"
+            [placeholder]="'properties.fields.enterPropertyName' | translate" formControlName="propertyName" />
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('propertyName')">
+          {{ getErrorMessage('propertyName') | translate }}
+        </p>
+      </div>
+
+      <div class="property-form__group w-half" *ngIf="!isStore()">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('propertyAddress')"
+          [class.property-form__label--required]="controls?.propertyAddress?.hasError('required')"
+          for="propertyAddress">
+          {{ 'properties.fields.propertyAddress' | translate }}
+        </label>
+        <div class="property-form__control" [class.property-form__control--error]="shouldShowError('propertyAddress')"
+          (click)="openLocationPicker()">
+          <input id="propertyAddress" type="text" class="property-form__input property-form__input--with-icon"
+            [placeholder]="'properties.fields.enterPropertyAddress' | translate" formControlName="propertyAddress"
+            readonly />
+          <span class="property-form__location-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true" focusable="false">
+              <path d="M9 19V4" stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15 14V20.8963" stroke="#323232" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path
+                d="M21 13V18.3321C21.0009 18.7619 20.7263 19.144 20.3186 19.28C19.0212 19.7125 16.2426 20.6388 15.3114 20.9494C15.1076 21.0173 14.8871 21.0168 14.6836 20.9478L9.31626 19.1585C9.11097 19.0901 8.88903 19.0901 8.68374 19.1585L4.31626 20.6145C4.01131 20.7162 3.67608 20.665 3.4153 20.4771C3.15453 20.2891 3 19.9873 3 19.6658V6.61276C3 6.18234 3.27542 5.80021 3.68374 5.66409L8.36747 4.10265C8.77803 3.96578 9.22191 3.96578 9.63247 4.10265L11 4.55852"
+                stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M14 6.5C14 8.13851 15.788 9.88881 16.808 10.7544C17.2108 11.0819 17.7882 11.0819 18.191 10.7544C19.212 9.88881 21 8.13851 21 6.5"
+                stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M17.501 6.25001C17.6389 6.25056 17.7504 6.36273 17.75 6.50067C17.7496 6.63861 17.6376 6.75019 17.4997 6.75C17.3617 6.74982 17.25 6.63795 17.25 6.50001C17.2496 6.43342 17.276 6.36947 17.3232 6.32248C17.3704 6.27549 17.4344 6.24939 17.501 6.25001"
+                stroke="#323232" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M14 6.5V6.5C14 4.567 15.567 3 17.5 3V3C19.433 3 21 4.567 21 6.5V6.5" stroke="#323232"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('propertyAddress')">
+          {{ getErrorMessage('propertyAddress') | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="property-form__row">
+      <div class="property-form__group w-full">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('description')"
+          [class.property-form__label--required]="controls.description.hasError('required')" for="description">
+          {{ 'properties.fields.description' | translate }}
+        </label>
+        <div class="property-form__control property-form__control--textarea"
+          [class.property-form__control--error]="shouldShowError('description')">
+          <textarea id="description" class="property-form__textarea"
+            [placeholder]="'properties.fields.enterDescription' | translate" formControlName="description" rows="4"
+            [class.property-form__textarea--error]="shouldShowError('description')"></textarea>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('description')">
+          {{ getErrorMessage('description') | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="property-form__row">
+
+      <div class="property-form__group w-half">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('region')"
+          [class.property-form__label--required]="controls.region.hasError('required')" for="region">
+          {{ 'properties.fields.region' | translate }}
+        </label>
+        <div class="property-form__control property-form__control--dropdown"
+          [class.property-form__control--error]="shouldShowError('region')">
+          <p-dropdown id="region" formControlName="region" [options]="regionOptions()" optionLabel="name"
+            [placeholder]="'properties.fields.selectRegion' | translate" class="property-form__dropdown" [filter]="true"
+            filterBy="name" [emptyMessage]="'general.noResultFound' | translate"
+            dropdownIcon="fas fa-caret-down text-muted" [autofocusFilter]="false" panelStyleClass="dropdown-new-panel"
+            appendTo="body" scrollHeight="200px">
+            <ng-template let-option pTemplate="item">
+              <div class="property-form__dropdown-item">
+                <span class="property-form__dropdown-item-icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </span>
+                <span>{{ option.name }}</span>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="selectedItem">
+              <div class="property-form__selected">
+                <span class="value" [class.active]="controls.region.value">
+                  {{ option?.name || '' }}
+                </span>
+                <button *ngIf="controls.region.value" type="button" class="property-form__clear-btn"
+                  (click)="clearControl('region', $event)" [attr.aria-label]="'general.clearSearch' | translate">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('region')">
+          {{ getErrorMessage('region') | translate }}
+        </p>
+      </div>
+      <div class="property-form__group w-half">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('city')"
+          [class.property-form__label--required]="controls.city.hasError('required')" for="city">
+          {{ 'properties.fields.city' | translate }}
+        </label>
+        <div class="property-form__control property-form__control--dropdown"
+          [class.property-form__control--error]="shouldShowError('city')">
+          <p-dropdown id="city" formControlName="city" [options]="cityOptions()" optionLabel="name" [placeholder]="''"
+            class="property-form__dropdown" [filter]="true" filterBy="name"
+            [emptyMessage]="'general.noResultFound' | translate" dropdownIcon="fas fa-caret-down text-muted"
+            [autofocusFilter]="false" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="200px"
+            [disabled]="!isRegionSelected() || isLoadingCities()"
+            [ngClass]="{'property-form__dropdown--loading': isLoadingCities()}">
+            <ng-template let-option pTemplate="item">
+              <div class="property-form__dropdown-item">
+                <span class="property-form__dropdown-item-icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </span>
+                <span>{{ option.name }}</span>
+              </div>
+            </ng-template>
+            <ng-template let-option pTemplate="selectedItem">
+              <div class="property-form__selected">
+                <span class="value" [class.active]="controls.city.value">
+                  <ng-container *ngIf="controls.city.value; else cityPlaceholderTpl">
+                    {{ option?.name || '' }}
+                  </ng-container>
+                  <ng-template #cityPlaceholderTpl>
+                    <span [class.property-form__placeholder]="true"
+                      [class.property-form__placeholder--loading]="isLoadingCities()">
+                      {{ cityPlaceholder() | translate }}
+                    </span>
+                  </ng-template>
+                </span>
+                <button *ngIf="controls.city.value" type="button" class="property-form__clear-btn"
+                  (click)="clearControl('city', $event)" [attr.aria-label]="'general.clearSearch' | translate">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <p class="property-form__error" *ngIf="shouldShowError('city')">
+          {{ getErrorMessage('city') | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Conditional Fields Based on Type -->
+    <!-- Place Fields -->
+    <ng-container *ngIf="isPlace()">
+      <div class="property-form__row">
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('bestSeasons')" for="bestSeasons">
+            {{ 'properties.fields.bestSeasons' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--multiselect"
+            [class.property-form__control--error]="shouldShowError('bestSeasons')">
+            <p-multiSelect id="bestSeasons" formControlName="bestSeasons" [options]="seasonOptions()" optionLabel="name"
+              [placeholder]="'properties.fields.selectBestSeasons' | translate" class="property-form__multiselect"
+              display="chip" [maxSelectedLabels]="2"
+              selectedItemsLabel="{{ 'properties.multiselect.selectedItems' | translate }}" [filter]="true"
+              filterBy="name" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="220px"
+              dropdownIcon="fas fa-caret-down text-muted" [showClear]="(controls.bestSeasons?.value?.length || 0) > 0">
+              <ng-template let-option pTemplate="item">
+                <div class="property-form__dropdown-item">
+                  <span>{{ option.name }}</span>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('bestSeasons')">
+            {{ getErrorMessage('bestSeasons') | translate }}
+          </p>
+        </div>
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('prices')" for="prices">
+            {{ 'properties.fields.prices' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--multiselect"
+            [class.property-form__control--error]="shouldShowError('prices')">
+            <p-multiSelect id="prices" formControlName="prices" [options]="priceOptions()" optionLabel="name"
+              [placeholder]="'properties.fields.selectPrices' | translate" class="property-form__multiselect"
+              display="chip" [maxSelectedLabels]="2"
+              selectedItemsLabel="{{ 'properties.multiselect.selectedItems' | translate }}" [filter]="true"
+              filterBy="name" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="220px"
+              dropdownIcon="fas fa-caret-down text-muted" [showClear]="(controls.prices?.value?.length || 0) > 0">
+              <ng-template let-option pTemplate="item">
+                <div class="property-form__dropdown-item">
+                  <span>{{ option.name }}</span>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('prices')">
+            {{ getErrorMessage('prices') | translate }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Zad Fields -->
+    <ng-container *ngIf="isZad()">
+      <div class="property-form__row">
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('menuImage')">
+            {{ 'properties.fields.menuImage' | translate }}
+          </label>
+          <app-property-file-upload [label]="'properties.fields.uploadMenuImage' | translate" [multiple]="false"
+            [accept]="'image/*'" [files]="controls.menuImage?.value ? [controls.menuImage.value] : []"
+            (filesChange)="onMenuImageChange($event)"></app-property-file-upload>
+          <p class="property-form__error" *ngIf="shouldShowError('menuImage')">
+            {{ getErrorMessage('menuImage') | translate }}
+          </p>
+        </div>
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('ownershipFile')">
+            {{ 'properties.fields.ownershipFile' | translate }}
+          </label>
+          <app-property-file-upload [label]="'properties.fields.uploadOwnershipFile' | translate" [multiple]="false"
+            [accept]="'image/*,application/pdf'"
+            [files]="controls.ownershipFile.value ? [controls.ownershipFile.value] : []"
+            (filesChange)="onOwnershipFileChange($event)"></app-property-file-upload>
+          <p class="property-form__error" *ngIf="shouldShowError('ownershipFile')">
+            {{ getErrorMessage('ownershipFile') | translate }}
+          </p>
+        </div>
+        <div class="property-form__group w-half">
+          <label class="property-form__label" [class.property-form__label--error]="shouldShowError('propertyImages')"
+            [class.property-form__label--required]="controls.propertyImages.hasError('required')">
+            {{ 'properties.fields.propertyImages' | translate }}
+          </label>
+          <app-property-file-upload [label]="'properties.fields.uploadImages' | translate" [multiple]="true"
+            [accept]="'image/*'" [files]="controls.propertyImages.value"
+            (filesChange)="onPropertyImagesChange($event)"></app-property-file-upload>
+          <p class="property-form__error" *ngIf="shouldShowError('propertyImages')">
+            {{ getErrorMessage('propertyImages') | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="property-form__row">
+        <div class="property-form__group w-full">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('foodTypes')" for="foodTypes">
+            {{ 'properties.fields.foodTypes' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--multiselect"
+            [class.property-form__control--error]="shouldShowError('foodTypes')">
+            <p-multiSelect id="foodTypes" formControlName="foodTypes" [options]="foodTypeOptions()" optionLabel="name"
+              [placeholder]="'properties.fields.selectFoodTypes' | translate"
+              class="property-form__multiselect property-form__multiselect--full" display="chip" [maxSelectedLabels]="2"
+              selectedItemsLabel="{{ 'properties.multiselect.selectedItems' | translate }}" [filter]="true"
+              filterBy="name" panelStyleClass="dropdown-new-panel" appendTo="body" scrollHeight="220px"
+              [showClear]="(controls.foodTypes?.value?.length || 0) > 0">
+              <ng-template let-option pTemplate="item">
+                <div class="property-form__dropdown-item">
+                  <span>{{ option.name }}</span>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('foodTypes')">
+            {{ getErrorMessage('foodTypes') | translate }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Event Fields -->
+    <ng-container *ngIf="isEvent()">
+      <div class="property-form__row">
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('videoLink')" for="videoLink">
+            {{ 'properties.fields.videoLink' | translate }}
+          </label>
+          <div class="property-form__control" [class.property-form__control--error]="shouldShowError('videoLink')">
+            <input id="videoLink" type="url" class="property-form__input"
+              [placeholder]="'properties.fields.enterVideoLink' | translate" formControlName="videoLink" />
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('videoLink')">
+            {{ getErrorMessage('videoLink') | translate }}
+          </p>
+        </div>
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('ticketLink')" for="ticketLink">
+            {{ 'properties.fields.ticketLink' | translate }}
+          </label>
+          <div class="property-form__control" [class.property-form__control--error]="shouldShowError('ticketLink')">
+            <input id="ticketLink" type="url" class="property-form__input"
+              [placeholder]="'properties.fields.enterTicketLink' | translate" formControlName="ticketLink" />
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('ticketLink')">
+            {{ getErrorMessage('ticketLink') | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="property-form__row">
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('startDate') || propertyForm.errors?.['dateRangeInvalid'] || propertyForm.errors?.['startDatePast']"
+            for="startDate">
+            {{ 'properties.fields.startDate' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--calendar"
+            [class.property-form__control--error]="shouldShowError('startDate') || propertyForm.errors?.['dateRangeInvalid'] || propertyForm.errors?.['startDatePast']">
+            <p-calendar id="startDate" formControlName="startDate"
+              [placeholder]="'properties.fields.selectStartDate' | translate" [showIcon]="true" dateFormat="yy-mm-dd"
+              [minDate]="today" class="property-form__calendar"></p-calendar>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('startDate')">
+            {{ getErrorMessage('startDate') | translate }}
+          </p>
+          <p class="property-form__error" *ngIf="propertyForm.errors?.['dateRangeInvalid']">
+            {{ 'properties.errors.dateRangeInvalid' | translate }}
+          </p>
+          <p class="property-form__error" *ngIf="propertyForm.errors?.['startDatePast']">
+            {{ 'properties.errors.startDatePast' | translate }}
+          </p>
+        </div>
+        <div class="property-form__group w-half">
+          <label class="property-form__label property-form__label--required"
+            [class.property-form__label--error]="shouldShowError('endDate') || propertyForm.errors?.['dateRangeInvalid'] || propertyForm.errors?.['startDatePast']"
+            for="endDate">
+            {{ 'properties.fields.endDate' | translate }}
+          </label>
+          <div class="property-form__control property-form__control--calendar"
+            [class.property-form__control--error]="shouldShowError('endDate') || propertyForm.errors?.['dateRangeInvalid'] || propertyForm.errors?.['startDatePast']">
+            <p-calendar id="endDate" formControlName="endDate"
+              [placeholder]="!controls.startDate?.value ? ('properties.fields.selectStartDateFirst' | translate) : ('properties.fields.selectEndDate' | translate)"
+              [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="controls.startDate?.value || today"
+              [disabled]="!controls.startDate?.value" class="property-form__calendar"></p-calendar>
+          </div>
+          <p class="property-form__error" *ngIf="shouldShowError('endDate')">
+            {{ getErrorMessage('endDate') | translate }}
+          </p>
+          <p class="property-form__error" *ngIf="propertyForm.errors?.['dateRangeInvalid']">
+            {{ 'properties.errors.dateRangeInvalid' | translate }}
+          </p>
+          <p class="property-form__error" *ngIf="propertyForm.errors?.['startDatePast']">
+            {{ 'properties.errors.startDatePast' | translate }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="property-form__row" *ngIf="!isZad()">
+      <div class="property-form__group w-half">
+        <label class="property-form__label property-form__label--required"
+          [class.property-form__label--error]="shouldShowError('ownershipFile')">
+          {{ 'properties.fields.ownershipFile' | translate }}
+        </label>
+        <app-property-file-upload [label]="'properties.fields.uploadOwnershipFile' | translate" [multiple]="false"
+          [accept]="'image/*,application/pdf'"
+          [files]="controls.ownershipFile.value ? [controls.ownershipFile.value] : []"
+          (filesChange)="onOwnershipFileChange($event)"></app-property-file-upload>
+        <p class="property-form__error" *ngIf="shouldShowError('ownershipFile')">
+          {{ getErrorMessage('ownershipFile') | translate }}
+        </p>
+      </div>
+
+      <div class="property-form__group w-half">
+        <label class="property-form__label" [class.property-form__label--error]="shouldShowError('propertyImages')"
+          [class.property-form__label--required]="controls.propertyImages.hasError('minlength')">
+          {{ 'properties.fields.propertyImages' | translate }}
+        </label>
+        <app-property-file-upload [label]="'properties.fields.uploadImages' | translate" [multiple]="true"
+          [accept]="'image/*'" [files]="controls.propertyImages.value"
+          (filesChange)="onPropertyImagesChange($event)"></app-property-file-upload>
+        <p class="property-form__error" *ngIf="shouldShowError('propertyImages')">
+          {{ getErrorMessage('propertyImages') | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <app-contact-info-links [items]="socialMediaForComponent()" [type]="'tourGuide'"
+      (changeContactInfoHandler)="getSocialLinks($event)"></app-contact-info-links>
+
+    <div class="property-form__actions">
+      <button type="button" class="property-form__submit" (click)="onCancel()" [disabled]="isSubmitting()">
+        <i class="pi pi-times-circle"></i>
+        <span>{{ 'general.cancel' | translate }}</span>
+      </button>
+      <button type="submit" class="property-form__submit property-form__submit--primary" [disabled]="isSubmitting()">
+        <svg width="22" height="20" viewBox="0 0 25 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0.6875 20.9375H24.3125V22.625H0.6875V20.9375ZM20.4312 6.59375C21.1062 5.91875 21.1062 4.90625 20.4312 4.23125L17.3937 1.19375C16.7188 0.51875 15.7063 0.51875 15.0312 1.19375L2.375 13.85V19.25H7.775L20.4312 6.59375ZM16.2125 2.375L19.25 5.4125L16.7188 7.94375L13.6812 4.90625L16.2125 2.375ZM4.0625 17.5625V14.525L12.5 6.0875L15.5375 9.125L7.1 17.5625H4.0625Z"
+            fill="#FFF"></path>
+        </svg>
+        <span>{{ isSubmitting() ? ('general.saving' | translate) : ('general.save' | translate) }}</span>
+      </button>
+    </div>
+  </div>
+</form>

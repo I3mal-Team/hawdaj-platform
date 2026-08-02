@@ -1,0 +1,76 @@
+<div class="dropdown-language general-dropdown">
+  <div class="dropdown">
+    <!-- Language Selector Button -->
+    <button class="dropdown-toggle lang-flag btn p-0 d-flex align-items-center gap-1 border-0" type="button"
+      [ngClass]="!shouldApplyDarkToggle()?'text-white-color':'text-dark-color'" data-bs-toggle="dropdown"
+      aria-expanded="false" aria-haspopup="true" aria-label="Select Language">
+      <!-- Display Flag Based on Current Language -->
+      <span class="d-xl-flex d-none" aria-hidden="true">
+        <ng-container *ngIf="currentLanguage=='ar'">
+          <img class="main-flag rounded-circle" ngSrc="assets/images/flag/sa.svg" NgOptimizedImage width="23"
+            height="17" priority alt="Saudi flag">
+        </ng-container>
+        <ng-container *ngIf="currentLanguage=='en'">
+          <img class="main-flag rounded-circle" ngSrc="assets/images/flag/us.svg" NgOptimizedImage width="23"
+            height="17" priority alt="US flag">
+        </ng-container>
+        <ng-container *ngIf="currentLanguage=='ru'">
+          <img class="main-flag rounded-circle" ngSrc="assets/images/flag/ru.svg" NgOptimizedImage width="23"
+            height="17" priority alt="Russian flag">
+        </ng-container>
+        <ng-container *ngIf="currentLanguage=='zh'">
+          <img class="main-flag rounded-circle" ngSrc="assets/images/flag/cn.svg" NgOptimizedImage width="23"
+            height="17" priority alt="Chinese flag">
+        </ng-container>
+      </span>
+      <i class="pi pi-language fs-4 d-xl-none d-flex" aria-hidden="true"></i>
+      <span class="lang" aria-hidden="true">
+        {{ currentLanguage == 'ar' ? 'عربي' : currentLanguage == 'ru' ? 'Рой' : currentLanguage == 'zh' ? '尼亞尼' :
+        'English' }}
+      </span>
+    </button>
+    <!-- Language Dropdown Menu -->
+    <ul class="dropdown-menu rounded-25 border-0 shadow p-3" aria-labelledby="dropdownMenuButton1" role="menu">
+      <li class="nav-item" role="none">
+        <a class="nav-link arabic px-2 p-1 d-flex align-items-center gap-2" role="menuitem"
+          (click)="chnageLanguage('ar')" aria-label="Switch to Arabic">
+          <img class="flag rounded-circle" ngSrc="assets/images/flag/sa.svg" NgOptimizedImage width="23" height="18"
+            priority alt="Arabic flag">
+          <span>
+            العربية
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" role="none">
+        <a class="nav-link px-2 p-1 d-flex align-items-center gap-2" role="menuitem" (click)="chnageLanguage('en')"
+          aria-label="Switch to English">
+          <img class="flag rounded-circle" ngSrc="assets/images/flag/us.svg" NgOptimizedImage width="23" height="18"
+            priority alt="English flag">
+          <span>
+            English
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" role="none">
+        <a class="nav-link px-2 p-1 d-flex align-items-center gap-2" role="menuitem" (click)="chnageLanguage('ru')"
+          aria-label="Switch to Russian">
+          <img class="flag rounded-circle" ngSrc="assets/images/flag/ru.svg" NgOptimizedImage width="23" height="18"
+            priority alt="Russian flag">
+          <span>
+            Рой
+          </span>
+        </a>
+      </li>
+      <li class="nav-item" role="none">
+        <a class="nav-link px-2 p-1 d-flex align-items-center gap-2" role="menuitem" (click)="chnageLanguage('zh')"
+          aria-label="Switch to Chinese">
+          <img class="flag rounded-circle" ngSrc="assets/images/flag/cn.svg" NgOptimizedImage width="23" height="18"
+            priority alt="Chinese flag">
+          <span>
+            尼亞尼
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

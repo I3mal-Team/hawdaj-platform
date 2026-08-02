@@ -1,0 +1,59 @@
+<section id="according">
+    <div class="according container d-flex w-100 flex-nowrap position-relative g-0">
+        <div class="attachment-container position-relative w-50" *ngFor="let img of images; let i = index"
+            [ngClass]="{ 'active': activeIndex === i,'ar': currentLanguage === 'ar' }">
+            <img class="w-100 h-100" [src]="img" alt="img">
+            <div class="content position-absolute h-100 d-flex flex-column justify-content-between"
+                [ngClass]="{ 'd-none': activeIndex !== i}">
+                <div>
+                    <div class="location d-flex gap-2 align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 11.5C11.337 11.5 10.7011 11.2366 10.2322 10.7678C9.76339 10.2989 9.5 9.66304 9.5 9C9.5 8.33696 9.76339 7.70107 10.2322 7.23223C10.7011 6.76339 11.337 6.5 12 6.5C12.663 6.5 13.2989 6.76339 13.7678 7.23223C14.2366 7.70107 14.5 8.33696 14.5 9C14.5 9.3283 14.4353 9.65339 14.3097 9.95671C14.1841 10.26 13.9999 10.5356 13.7678 10.7678C13.5356 10.9999 13.26 11.1841 12.9567 11.3097C12.6534 11.4353 12.3283 11.5 12 11.5ZM12 2C10.1435 2 8.36301 2.7375 7.05025 4.05025C5.7375 5.36301 5 7.14348 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 7.14348 18.2625 5.36301 16.9497 4.05025C15.637 2.7375 13.8565 2 12 2Z"
+                                fill="white" />
+                        </svg>
+                        <p class="mb-0 text-white">
+                            الرياض
+                        </p>
+                    </div>
+                    <div class="title mt-4">
+                        <p class="text-white fw-bold">متحف نجران الإقليمي</p>
+                    </div>
+                </div>
+                <button class="visit btn btn-solid-main">
+                    زيارة الموقع الإلكتروني
+                </button>
+            </div>
+            <button class="position-absolute next outline-0 border-0 bg-transparent" (click)="setActive(i)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56" fill="none">
+                    <path
+                        d="M56 28C56 24.2846 56 22.427 55.7947 20.8674C54.3768 10.0978 45.9022 1.62317 35.1326 0.205323C33.573 0 31.7154 0 28 0C24.2846 0 22.427 0 20.8674 0.205323C10.0978 1.62317 1.62317 10.0978 0.205322 20.8674C0 22.427 0 24.2846 0 28C0 31.7154 0 33.573 0.205322 35.1326C1.62317 45.9022 10.0978 54.3768 20.8674 55.7947C22.427 56 24.2846 56 28 56C31.7154 56 33.573 56 35.1326 55.7947C45.9022 54.3768 54.3768 45.9022 55.7947 35.1326C56 33.573 56 31.7154 56 28Z"
+                        fill="white" fill-opacity="0.3" />
+                    <path
+                        d="M31.1593 38.3706L33 36.5299L24.4704 28.0003L33 19.4706L31.1593 17.6299L20.7889 28.0003L31.1593 38.3706Z"
+                        fill="white" />
+                </svg>
+
+            </button>
+        </div>
+
+    </div>
+</section>
+<div class="container">
+    <div class="d-flex flex-nowrap position-relative w-100">
+        <div class="w-50 bg-danger" style="height: 15rem;
+        z-index: 2;">0</div>
+        <div class="w-50 bg-light" style="height: 15rem;
+        position: absolute;
+        left: 33.333333%;
+        z-index: 3;">hhhh</div>
+        <div class="w-50 bg-dark" style="height: 15rem;
+        position: absolute;
+        left: 16.67%;
+        z-index: 4;">hhhh</div>
+        <div class="w-50 bg-secondary" style="    height: 15rem;
+        position: absolute;
+        left: 0;
+        z-index: 1;">hhhh</div>
+    </div>
+</div>

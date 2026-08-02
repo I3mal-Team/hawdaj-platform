@@ -1,0 +1,75 @@
+<div class="swalef container">
+    <p class="swalef__title">
+        {{'titles.swalefs'|translate}}
+    </p>
+    <div class="swalef--content row align-items-center gap-2 justify-content-center">
+        <div class="content col-lg-6 col-12 d-flex align-items-center flex-column justify-content-center text-center">
+            <ng-container *ngIf="selectedItem">
+                <h4 class="content--title fw-bold text-capitalize">
+                    {{ selectedItem?.title }} </h4>
+                <div class="content--category">
+                    <ng-container *ngIf="selectedItem?.categories?.length > 0;">
+                        <div class="content--category--item"
+                            *ngFor="let category of selectedItem.categories; let i = index"
+                            [ngStyle]="{'background-color': getCategoryBackgroundColor(i)}">
+                            {{ category.name }}
+                        </div>
+                    </ng-container>
+                </div>
+                <p class="content--descritpion fs-6 mb-2 w-100 fw-500 lh-lg">
+                    {{ selectedItem?.description | stripHtml }} </p>
+                <button class="discover-more" *ngIf="selectedItem?.slug"
+                    [routerLink]="['/stories/'+selectedItem?.slug]">
+                    {{'general.exploreMore'|translate}}
+                </button>
+            </ng-container>
+        </div>
+        <div class="gallery mx-auto">
+            <ng-container *ngIf="items?.length > 0;else noItems">
+                <div class="gallery-web">
+                    <h4 class="gallery-web--title text-center fw-bold text-capitalize">
+                        {{ selectedItem?.title }} </h4>
+                    <div class="gallery-web--category mt-3">
+                        <ng-container *ngIf="selectedItem?.categories?.length > 0;">
+                            <div class="content--category--item"
+                                *ngFor="let category of selectedItem.categories; let i = index"
+                                [ngStyle]="{'background-color': getCategoryBackgroundColor(i)}">
+                                {{ category.name }}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="gallery-container position-relative">
+
+                        <div *ngFor="let item of items; let i = index" class="d-flex align-items-center h-100">
+                            <img [appLazyLoadImage]="item?.image" ngSrc="{{item?.image }}" [alt]="'Image ' + (i + 1)"
+                                [ngClass]="getClass(i)" (click)="onImageClick(i)" ngOptimizedImage width="100"
+                                height="100">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-mobile">
+                    <p-carousel [value]="items" [numVisible]="1" [numScroll]="1" [showNavigators]="false"
+                        [circular]="true" [showIndicators]="true" [responsiveOptions]="responsiveOptions">
+                        <ng-template pTemplate="item" let-item>
+                            <div class="mobile-card" [ngStyle]="{'direction':currentLanguage === 'ar' ? 'rtl' : 'ltr'}">
+                                <app-list-card class="w-100" [type]="'stories'" [item]="item"
+                                    (favouriteClicked)="addToFavourite(item)"
+                                    [isLoadingFavourite]="isLoadingFavourite"></app-list-card>
+                            </div>
+
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            </ng-container>
+            <ng-template #noItems>
+                <app-skeleton [type]="'list-slider'"></app-skeleton>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class=" d-flex justify-content-center mb-3"><button type="button" id="More" role="button-more"
+            class="new-button" tabindex="0" [routerLink]="['/stories/']"> {{'general.seeAll'|translate}}
+        </button>
+    </div>
+</div>

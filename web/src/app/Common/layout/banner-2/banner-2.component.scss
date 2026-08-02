@@ -1,0 +1,121 @@
+.banner {
+    width: 100%;
+    padding: 0 1.5rem;
+    margin-top: 120px;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 1024px) {
+        padding: 0 1rem;
+    }
+
+    @media (max-width: 767px) {
+        margin-top: 100px;
+    }
+
+    &__wrapper {
+        width: 100%;
+        max-width: 1300px;
+    }
+
+    .img-container {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 24px;
+
+        picture {
+            min-height: 350px;
+
+            img {
+                min-height: 350px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            border-radius: 16px;
+        }
+
+        .banner-content {
+            max-width: 70%;
+            background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.2) 0%,
+                    rgba(255, 255, 255, 0.12) 12%,
+                    rgba(255, 255, 255, 0.04) 50%,
+                    rgba(255, 255, 255, 0.08) 83%,
+                    rgba(255, 255, 255, 0.2) 100%
+                ),
+                linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+            border-radius: 24px;
+            text-align: center;
+            padding: 40px 120px;
+
+            h2 {
+                font-size: 2.5rem;
+                color: #7939a7;
+                margin: 0;
+            }
+
+            .banner-subtitle {
+                font-size: 1.25rem;
+                color: #7939a7;
+                margin: 0.5rem 0 0 0;
+                font-weight: 400;
+            }
+
+            @media (max-width: 1400px) {
+                max-width: 75%;
+
+                h2 {
+                    font-size: 2rem;
+                }
+
+                .banner-subtitle {
+                    font-size: 1.125rem;
+                }
+            }
+
+            @media (max-width: 1024px) {
+                padding: 40px 50px;
+
+                h2 {
+                    font-size: 1.5rem;
+                    line-height: 35px;
+                }
+
+                .banner-subtitle {
+                    font-size: 1rem;
+                }
+            }
+
+            @media (max-width: 555px) {
+                padding: 20px;
+
+                h2 {
+                    font-size: 1.1rem;
+                    line-height: 35px;
+                }
+
+                .banner-subtitle {
+                    font-size: 0.875rem;
+                }
+            }
+
+            @media (max-width: 360px) {
+                h2 {
+                    font-size: 0.8rem;
+                }
+
+                .banner-subtitle {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+
+        @media (max-width: 767px) {
+            border-radius: 0;
+            overflow: initial;
+        }
+    }
+}

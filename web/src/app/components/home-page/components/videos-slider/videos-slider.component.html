@@ -1,0 +1,104 @@
+<div id="video-slider">
+  <ng-container *ngIf="isLoadingEvents; else noLoadingEvents">
+    <div class="mb-4 mt-3">
+      <app-skeleton [type]="'eventsSlider'"></app-skeleton>
+    </div>
+  </ng-container>
+  <ng-template #noLoadingEvents>
+    <ng-container *ngIf="events?.length>1; else showCard">
+      <p-carousel [value]="events" [numVisible]="1" [numScroll]="1" [circular]="true" [showIndicators]="true"
+        [showNavigators]="false" [responsiveOptions]="responsiveOptions" [autoplayInterval]="7000">
+        <ng-template let-item pTemplate="item">
+          <div class="row h-100 g-0 bg-main-color overflow-hidden dir-rtl videos-content content-height">
+            <div class="col-sm-6 col-12 ">
+              <div class="position-relative h-100">
+                <div class="overlay d-sm-none d-block position-absolute"></div>
+                <span [class.d-none]="!item?.closed"
+                  class="position-absolute closed closed-sm py-1 px-2 m-2 rounded fs-6-1  d-sm-block d-none">{{'general.finished'|translate}}</span>
+                <img [src]="item?.image" class="w-100 h-100 object-fit-cover rounded-s video-img"
+                  onerror="src='assets/images/not-found/no-img.svg'" alt="image" appLazyImg>
+                <a [class.d-none]="!item?.video_url"
+                  class="play d-flex video-sm justify-content-center align-items-center bg-main-color position-absolute rounded-circle pointer"
+                  (click)="openVideo(item)">
+                  <i class="fas fa-caret-right fs-5 text-white-color"></i>
+                </a>
+                <div class="p-3 position-absolute bottom-0 w-100 d-sm-none d-block">
+                  <div class="d-flex justify-content-between align-items-center w-100 mb-2">
+                    <h5 class="text-white-color fs-5 title2 mb-0">{{item.title}}</h5>
+                    <span [class.d-none]="!item?.closed"
+                      class="closed p-1 rounded fs-6-1">{{'general.finished'|translate}}</span>
+                  </div>
+                  <p class="desc">{{item.address_name|| 'titles.saudiArabia'|translate}}</p>
+                  <div class="d-flex justify-content-between align-items-center w-100">
+                    <u class="desc mt-3 fs-8"><a [href]="item?.link"
+                        [routerLink]="['/events/event-details/'+item?.slug]">{{'general.moreDetails'|translate}}</a></u>
+                    <a [class.d-none]="!item?.video_url"
+                      class="play play-sm d-flex justify-content-center align-items-center bg-main-color rounded-circle pointer"
+                      (click)="openVideo(item)">
+                      <i class="fas fa-caret-right fs-5 text-white-color"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-12">
+              <div class="p-3">
+                <h5 class="text-white-color fs-5 title2">{{item.title}}</h5>
+                <p class="desc">{{item.address_name || 'titles.saudiArabia'|translate}}</p>
+                <u class="desc mt-3 fs-8"><a [href]="item?.link"
+                    [routerLink]="['/events/event-details/'+item?.slug]">{{'general.moreDetails'|translate}}</a></u>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </ng-container>
+    <ng-template #showCard>
+      <ng-container *ngFor="let item of events">
+        <div class="row g-0 bg-main-color overflow-hidden dir-rtl videos-content content-height h-100">
+          <div class="col-sm-6">
+            <div class="position-relative h-100">
+              <div class="overlay d-sm-none d-block position-absolute"></div>
+              <span [class.d-none]="!item?.closed"
+                class="position-absolute closed closed-sm py-1 px-2 m-2 rounded fs-6-1  d-sm-block d-none">{{'general.finished'|translate}}</span>
+              <img [src]="item?.image" class="w-100 h-100 object-fit-cover rounded-s video-img"
+                onerror="src='assets/images/not-found/no-img.svg'" alt="image" appLazyImg>
+              <a [class.d-none]="!item?.video_url"
+                class="play d-flex video-sm justify-content-center align-items-center bg-main-color position-absolute rounded-circle pointer"
+                (click)="openVideo(item)">
+                <i class="fas fa-caret-right fs-5 text-white-color"></i>
+              </a>
+              <div class="p-3 position-absolute bottom-0 w-100 d-sm-none d-block">
+                <div class="d-flex justify-content-between align-items-center w-100 mb-2">
+                  <h5 class="text-white-color fs-5 title2 mb-0">{{item.title}}</h5>
+                  <span [class.d-none]="!item?.closed"
+                    class="closed p-1 rounded fs-6-1">{{'general.finished'|translate}}</span>
+                </div>
+                <p class="desc">{{item.address_name || 'titles.saudiArabia'|translate}}</p>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <u class="desc mt-3 fs-8"><a [href]="item?.link"
+                      [routerLink]="['/events/event-details/'+item?.slug]">{{'general.moreDetails'|translate}}</a></u>
+                  <a [class.d-none]="!item?.video_url"
+                    class="play play-sm d-flex justify-content-center align-items-center bg-main-color rounded-circle pointer"
+                    (click)="openVideo(item)">
+                    <i class="fas fa-caret-right fs-5 text-white-color"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="p-3">
+              <h5 class="text-white-color fs-5 title2">{{item.title}}</h5>
+              <p class="desc">{{item.address_name || 'titles.saudiArabia'|translate}}</p>
+              <u class="desc mt-3 fs-8"><a
+                  [routerLink]="['/events/event-details/'+item?.slug]">{{'general.moreDetails'|translate}}</a></u>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-template>
+
+  </ng-template>
+</div>

@@ -1,0 +1,60 @@
+<div class="h-100">
+  <a (click)="close()"
+    class="btn bg-danger text-white-color position-absolute rounded-circle close-btn d-flex justify-content-center align-items-center">
+    <i class="pi pi-times"></i>
+  </a>
+
+  <div class="map-container" [ngClass]="{'not-arabic': currentLanguage !== 'ar'}">
+    <google-map width="100%" height="100%" [center]="center" [zoom]="zoom"
+      [options]="{styles: darkMode, draggable: false }" (mapClick)="onMapClick($event);">
+      <ng-container *ngFor="let markerPosition of markerPositions">
+        <ng-container
+          *ngIf="markerPosition?.lat &&markerPosition?.lat!=0&&markerPosition?.lng &&markerPosition?.lng!=0">
+          <map-marker #marker="mapMarker" *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
+            (mapClick)="openInfoWindow(marker,markerPosition)"
+            [icon]="markerPosition?.icon || 'assets/images/icons/location2.svg'"></map-marker>
+          <ng-container *ngIf="markerPositions?.length>1;">
+            <map-info-window>
+              <!-- <div class="info-window-card w-100">
+                <img [src]="selecedMarker?.thumbil_image || 'assets/images/icons/location2.svg'"
+                  class="info-window-img w-100" alt="Location Image" onerror="src='assets/images/not-found/no-img.svg'">
+                <div class="info-window-content p-3 w-100">
+                  <h5 class="info-window-title mb-2 text-main-color">
+                    {{selecedMarker?.title || 'Title'}}
+                  </h5>
+                  <p class="info-window-description mb-0">
+                    {{selecedMarker?.location_name ||'Location Name'}}
+                  </p>
+                  <div class="mt-2 d-flex justify-content-between align-items-center">
+                    <p class="text-muted-color mb-0 d-flex gap-2">
+                      <i class="fas fa-star"></i>
+                      {{selecedMarker?.rate}} ({{selecedMarker?.review}} {{'general.review'| translate}})
+                    </p>
+                    <a class="arrow bg-main-color d-flex justify-content-center align-items-center"
+                      (click)="goToDetails(selecedMarker)">
+                      <i class="pi pi-angle-right"></i>
+                    </a>
+                  </div>
+                </div>
+              </div> -->
+              <app-map-information [title]="selecedMarker?.title" [thumbnail]="selecedMarker?.thumbil_image"
+                (locationClick)="goToDetails(selecedMarker)">
+              </app-map-information>
+            </map-info-window>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </google-map>
+    <!-- <div class="search-container shadow-lg">
+      <i class="pi pi-search fs-5-1 position-absolute"></i>
+      <ng-container *ngIf="searchMapInput?.value">
+        <i class="pi pi-times text-danger position-absolute pointer" (click)="clearSearch($event)"></i>
+      </ng-container>
+
+      <input type="text" id="searchMapInput" #searchMapInput
+        class="form-control form-control-search-map rounded-start-0 border-start-0  bg-white-color"
+        [(ngModel)]="searchValue" placeholder="{{'placeholder.searchOnMap'|translate}}" pInputText
+        (keyup)="onSearchMap($event)">
+    </div> -->
+  </div>
+</div>

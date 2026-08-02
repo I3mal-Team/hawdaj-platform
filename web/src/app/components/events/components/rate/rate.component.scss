@@ -1,0 +1,15 @@
+:host::ng-deep {
+  #rate {
+    .form-control,
+    .form-control:focus {
+      background-color: var(--bg-white-color) !important;
+      border-color: #ccc;
+    }
+    .textarea {
+      height: 5rem !important;
+    }
+    label.star {
+      font-size: 25px !important;
+    }
+  }
+}

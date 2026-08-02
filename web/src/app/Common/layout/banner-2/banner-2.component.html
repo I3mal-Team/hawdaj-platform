@@ -1,0 +1,15 @@
+<div class="banner">
+    <div class="banner__wrapper">
+        <div class="img-container d-flex align-items-center justify-content-center h-100">
+            <picture class="w-100">
+                <source [srcset]="smallImage" media="(max-width: 1024px)">
+                <img class="w-100" [src]="largeImage" alt="banner" loading="lazy" aria-label="banner">
+            </picture>
+
+            <div class="banner-content position-absolute m-3">
+                <h2 class="fw-bold">{{ title | translate }}</h2>
+                <p *ngIf="subtitle" class="banner-subtitle">{{ subtitle | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>
