@@ -1,0 +1,25 @@
+/node_modules
+/server/node_modules
+/public/storage
+/public/uploads
+/storage/*.key
+/vendor
+.env
+/.idea
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/hwdaj
+# Laravel cache & logs
+/storage/*
+!/storage/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+
+storage/debugbar/*
+!/storage/debugbar/.gitignore

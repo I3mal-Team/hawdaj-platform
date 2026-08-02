@@ -1,0 +1,44 @@
+$(function(){
+    $('.owl-carousel.zad-details').owlCarousel({
+        loop:true,
+        margin:10,
+        items:1,
+        responsiveClass:true,
+        mouseDrag:true,
+        dots:false,
+        nave:true,
+        autoplay:true,
+        center:true,
+        autoWidth:true,
+    })
+    $('.owl-carousel.evnts-slider').owlCarousel({
+        loop:false,
+        margin:10,
+        items:4,
+        responsiveClass:true,
+        mouseDrag:true,
+        dots:true,
+        nave:false,
+        autoplay:true,
+        // center:true,
+        autoWidth:true,
+    })
+
+    $('.owl-carousel.one-carusel-tabs').owlCarousel({
+        loop:true,
+        margin:10,
+        items:1,
+        responsiveClass:true,
+        mouseDrag:true,
+        dots:true,
+        nave:false,
+        autoplay:true,
+    })
+    $(".show-more-country").click(function(){
+        $(".world-map").addClass("active")
+    })
+    $(".close-icon").click(function(){
+        $(".world-map").removeClass("active")
+    })
+});
+

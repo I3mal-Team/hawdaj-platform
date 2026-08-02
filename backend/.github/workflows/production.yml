@@ -1,0 +1,85 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_PRODUCTION }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          command_timeout: 30m
+          script_stop: true
+          debug: true
+          script: |
+            set -e  # Stop script immediately on any error
+
+            echo "Starting deployment..."
+
+            # 1. Define Target Directory
+            # Use the provided secret path or default to the new server structure
+            TARGET_DIR="${DEPLOY_PATH:-/var/www/hawdaj_project/hawdaj-dashboard-production}"
+
+            echo "Changing directory to: $TARGET_DIR"
+            cd "$TARGET_DIR" || {
+              echo "Failed to change directory to $TARGET_DIR"
+              exit 1
+            }
+
+            # 2. Fix Dubious Ownership Issue
+            # Allow Git to run commands even if the folder is owned by www-data
+            echo "Configuring git safe directory..."
+            git config --global --add safe.directory "$TARGET_DIR"
+
+            # 3. Check git status
+            echo "Checking git status..."
+            git status
+
+            # 4. Stash uncommitted changes
+            echo "Stashing uncommitted changes..."
+            git stash || true
+
+            # 5. Pull latest code
+            echo "Pulling latest changes..."
+            git pull origin main || {
+              echo "Failed to pull changes"
+              exit 1
+            }
+            echo "Code updated"
+
+            # 6. Restore stashed changes
+            echo "Popping stashed changes..."
+            git stash pop || true
+
+            # 7. Run migrations
+            # Using PHP 8.2 to match the server configuration
+            echo "Running migrations..."
+            php8.2 artisan migrate --force || {
+              echo "Failed to run migrations"
+              exit 1
+            }
+            echo "Migrations completed"
+
+            # 8. Clear and cache configuration
+            echo "Clearing cache..."
+            php8.2 artisan optimize:clear || echo "Cache clear had warnings"
+            php8.2 artisan config:cache
+
+            # 9. Fix permissions
+            # Critical step to ensure Nginx and Laravel can write to logs/storage
+            echo "Fixing permissions..."
+            sudo chown -R www-data:www-data "$TARGET_DIR"
+            sudo chmod -R 775 "$TARGET_DIR/storage" "$TARGET_DIR/bootstrap/cache"
+
+            echo "DEPLOYMENT SUCCESSFUL!"
+            echo "Production deployment completed successfully on Global-Apps-Server!"
