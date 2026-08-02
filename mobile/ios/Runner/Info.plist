@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Hawdaj</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>hawdaj</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Hawdaj uses your location to show nearby places, provide directions, and enhance your travel experience with location-based recommendations.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Hawdaj uses your location to show nearby places, provide directions, and enhance your travel experience with location-based recommendations.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Hawdaj needs access to your camera to take photos for your profile picture.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Hawdaj needs access to your photo library to select photos for your profile picture.</string>
+	<key>GMSApiKey</key>
+	<string>AIzaSyALALZ6HC13Ei5xfU922DwMQNvszF7aUhs</string>
+	<key>GIDClientID</key>
+	<string>21877191714-9sbs0pjdaq51m32nln3cc6m5aek8r0kl.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.hawdaj.google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.21877191714-9sbs0pjdaq51m32nln3cc6m5aek8r0kl</string>
+			</array>
+		</dict>
+	</array>
+	<!-- for the google sign in -->
+	<key>CLIENT_ID</key>
+	<string>21877191714-9sbs0pjdaq51m32nln3cc6m5aek8r0kl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.21877191714-9sbs0pjdaq51m32nln3cc6m5aek8r0kl</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hawdaj</string>
+	<key>CFBundleLocalizations</key>
+
+
+<array>
+    <string>en</string>
+    <string>ar</string>
+</array>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>http</string>
+  <string>https</string>
+  <string>tel</string>
+  <string>mailto</string>
+  <string>sms</string>
+  <string>whatsapp</string>
+  <string>wa</string>
+</array>
+
+</dict>
+</plist>

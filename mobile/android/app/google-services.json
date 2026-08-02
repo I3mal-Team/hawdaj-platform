@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "730395305822",
+    "project_id": "hawdaj-c131c",
+    "storage_bucket": "hawdaj-c131c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730395305822:android:25452cdb9bd1cdee9311cf",
+        "android_client_info": {
+          "package_name": "com.example.hawdaj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjUxdFnEIRBRA5jzPAV10r-qyYhhisNA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730395305822:android:788ad26fc0e981929311cf",
+        "android_client_info": {
+          "package_name": "com.hawdaj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjUxdFnEIRBRA5jzPAV10r-qyYhhisNA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730395305822:android:bca68e6b2b7e616a9311cf",
+        "android_client_info": {
+          "package_name": "com.hawdaj.wakeb.amh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjUxdFnEIRBRA5jzPAV10r-qyYhhisNA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
