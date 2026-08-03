@@ -1,0 +1,263 @@
+########################################################################
+# Codemagic CI/CD — hawdaj-platform monorepo
+#
+# 4 independent workflows, one per (app x environment). Each workflow only
+# triggers when a push touches its own folder (`when.changeset.includes`) —
+# pushing to web/ never triggers mobile/, and vice versa.
+#
+# Backend is intentionally NOT wired up here yet.
+#
+# NOTE (Codemagic behavior): the very first push after this file is added
+# will trigger ALL workflows once, regardless of changed paths. Path
+# filtering only kicks in starting from the next push after that.
+#
+# Required setup in the Codemagic dashboard (Team settings > Environment
+# variable groups / Code signing identities / Integrations) BEFORE these
+# workflows can run successfully — see the group names referenced below:
+#   - web_staging          (HOST, USERNAME, SSH_PRIVATE_KEY)
+#   - web_production       (HOST, USERNAME, SSH_PRIVATE_KEY)
+#   - google_play          (GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS)
+#   - Android keystore uploaded under "Code signing identities" with
+#     reference name: hawdaj_android_keystore
+#   - App Store Connect API key added under "Integrations" with
+#     integration name: hawdaj_app_store_connect
+########################################################################
+
+workflows:
+
+  # ------------------------------------------------------------------
+  # WEB (Angular SSR) — staging
+  # ------------------------------------------------------------------
+  web-staging:
+    name: Web · Staging
+    instance_type: linux_x2
+    max_build_duration: 30
+    working_directory: web
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: staging
+          include: true
+    when:
+      changeset:
+        includes:
+          - web/
+    environment:
+      node: 20
+      groups:
+        - web_staging
+      vars:
+        DEPLOY_BRANCH: staging
+        PROJECT_PATH: /var/www/hawdaj_project/hawdaj-frontend-staging
+        BUILD_CMD: build:ssr-staging
+        PM2_APP_NAME: hawdaj-staging
+        PM2_PORT: "4002"
+    scripts:
+      - name: Install dependencies
+        script: npm ci
+      - name: Build check (fails fast before touching the server)
+        script: npm run $BUILD_CMD
+      - name: Deploy via SSH
+        script: |
+          set -e
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/deploy_key "$USERNAME@$HOST" \
+            "PROJECT_PATH='$PROJECT_PATH' BRANCH='$DEPLOY_BRANCH' BUILD_CMD='$BUILD_CMD' APP_NAME='$PM2_APP_NAME' PORT='$PM2_PORT' bash -s" <<'REMOTE_SCRIPT'
+          set -e
+          cd "$PROJECT_PATH"
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          git config --global --add safe.directory "$PROJECT_PATH"
+          git stash || true
+          git pull origin "$BRANCH"
+          git stash pop || true
+          npm install
+          npm run "$BUILD_CMD"
+          if pm2 list | grep -q "$APP_NAME"; then
+            pm2 reload "$APP_NAME"
+          else
+            PORT="$PORT" pm2 start dist/hawdaj/server/main.js --name "$APP_NAME"
+          fi
+          pm2 save
+          sudo systemctl reload nginx
+          REMOTE_SCRIPT
+
+  # ------------------------------------------------------------------
+  # WEB (Angular SSR) — production
+  # ------------------------------------------------------------------
+  web-production:
+    name: Web · Production
+    instance_type: linux_x2
+    max_build_duration: 30
+    working_directory: web
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+    when:
+      changeset:
+        includes:
+          - web/
+    environment:
+      node: 20
+      groups:
+        - web_production
+      vars:
+        DEPLOY_BRANCH: main
+        PROJECT_PATH: /var/www/hawdaj_project/hawdaj-frontend-production
+        BUILD_CMD: build:ssr-prod
+        PM2_APP_NAME: hawdaj-production
+        PM2_PORT: "4001"
+    scripts:
+      - name: Install dependencies
+        script: npm ci
+      - name: Build check (fails fast before touching the server)
+        script: npm run $BUILD_CMD
+      - name: Deploy via SSH
+        script: |
+          set -e
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/deploy_key "$USERNAME@$HOST" \
+            "PROJECT_PATH='$PROJECT_PATH' BRANCH='$DEPLOY_BRANCH' BUILD_CMD='$BUILD_CMD' APP_NAME='$PM2_APP_NAME' PORT='$PM2_PORT' bash -s" <<'REMOTE_SCRIPT'
+          set -e
+          cd "$PROJECT_PATH"
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          git config --global --add safe.directory "$PROJECT_PATH"
+          git stash || true
+          git pull origin "$BRANCH"
+          git stash pop || true
+          npm install
+          npm run "$BUILD_CMD"
+          if pm2 list | grep -q "$APP_NAME"; then
+            pm2 reload "$APP_NAME"
+          else
+            PORT="$PORT" pm2 start dist/hawdaj/server/main.js --name "$APP_NAME"
+          fi
+          pm2 save
+          sudo systemctl reload nginx
+          REMOTE_SCRIPT
+
+  # ------------------------------------------------------------------
+  # MOBILE (Flutter) — staging  →  Play Internal track + TestFlight
+  # ------------------------------------------------------------------
+  mobile-staging:
+    name: Mobile · Staging
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    working_directory: mobile
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: staging
+          include: true
+    when:
+      changeset:
+        includes:
+          - mobile/
+    integrations:
+      app_store_connect: hawdaj_app_store_connect
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - google_play
+      android_signing:
+        - hawdaj_android_keystore
+      ios_signing:
+        distribution_type: ad_hoc
+        bundle_identifier: com.hawdaj
+    scripts:
+      - name: Write Android key.properties from Codemagic keystore
+        script: |
+          echo "storePassword=$CM_KEYSTORE_PASSWORD" > android/key.properties
+          echo "keyPassword=$CM_KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$CM_KEY_ALIAS" >> android/key.properties
+          echo "storeFile=$CM_KEYSTORE_PATH" >> android/key.properties
+      - name: Set up iOS code signing
+        script: xcode-project use-profiles
+      - name: Get Flutter packages
+        script: flutter packages pub get
+      - name: Build Android app bundle
+        script: flutter build appbundle --release
+      - name: Build iOS ipa
+        script: flutter build ipa --release --export-options-plist=$CM_EXPORT_OPTIONS_PLIST
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/ios/ipa/*.ipa
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+  # ------------------------------------------------------------------
+  # MOBILE (Flutter) — production  →  Play Production track + TestFlight
+  # ------------------------------------------------------------------
+  mobile-production:
+    name: Mobile · Production
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    working_directory: mobile
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+    when:
+      changeset:
+        includes:
+          - mobile/
+    integrations:
+      app_store_connect: hawdaj_app_store_connect
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - google_play
+      android_signing:
+        - hawdaj_android_keystore
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.hawdaj
+    scripts:
+      - name: Write Android key.properties from Codemagic keystore
+        script: |
+          echo "storePassword=$CM_KEYSTORE_PASSWORD" > android/key.properties
+          echo "keyPassword=$CM_KEY_PASSWORD" >> android/key.properties
+          echo "keyAlias=$CM_KEY_ALIAS" >> android/key.properties
+          echo "storeFile=$CM_KEYSTORE_PATH" >> android/key.properties
+      - name: Set up iOS code signing
+        script: xcode-project use-profiles
+      - name: Get Flutter packages
+        script: flutter packages pub get
+      - name: Build Android app bundle
+        script: flutter build appbundle --release
+      - name: Build iOS ipa
+        script: flutter build ipa --release --export-options-plist=$CM_EXPORT_OPTIONS_PLIST
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/ios/ipa/*.ipa
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: production
+        submit_as_draft: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
